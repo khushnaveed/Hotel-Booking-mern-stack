@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function RoomDetails() {
   return (
-    <div>RoomDetails</div>
+    <div>RoomDetails New Github tricks</div>
   )
 }
