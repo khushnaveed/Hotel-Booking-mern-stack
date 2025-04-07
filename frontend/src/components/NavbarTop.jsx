@@ -12,9 +12,9 @@ import {
 
 function NavbarTop() {
   return (
-    <div className="bg-gray-100">
+    <div className=" relative z-[100] bg-transparent">
       {/* Top Bar */}
-      <div className="bg-[#344a71] text-white py-2">
+      <div className=" text-white py-2 font-bold drop-shadow-md z-50">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-6">
@@ -35,7 +35,7 @@ function NavbarTop() {
             <div className="flex items-center space-x-4">
               {/* Language Selector */}
               <div className="group relative cursor-pointer">
-                <div className="flex items-center space-x-1 hover:text-gray-300">
+                <div className="flex items-center space-x-1 hover:text-gray-600">
                   <Globe size={16} />
                   <span className="text-sm">EN</span>
                   <ChevronDown size={14} />
@@ -66,7 +66,7 @@ function NavbarTop() {
 
               {/* Currency Selector */}
               <div className="group relative cursor-pointer">
-                <div className="flex items-center space-x-1 hover:text-gray-300">
+                <div className="flex items-center space-x-1 hover:text-gray-600">
                   <DollarSign size={16} />
                   <span className="text-sm">USD</span>
                   <ChevronDown size={14} />
@@ -97,11 +97,11 @@ function NavbarTop() {
 
               {/* Auth Buttons */}
               <div className="flex items-center space-x-4 ml-4">
-                <button className="flex items-center space-x-1 hover:text-gray-300">
+                <button className="flex items-center space-x-1 hover:text-gray-600">
                   <LogIn size={16} />
                   <span className="text-sm">Login</span>
                 </button>
-                <button className="flex items-center space-x-1 hover:text-gray-300">
+                <button className="flex items-center space-x-1 hover:text-gray-600">
                   <UserPlus size={16} />
                   <span className="text-sm">Register</span>
                 </button>
@@ -110,6 +110,7 @@ function NavbarTop() {
           </div>
         </div>
       </div>
+      
     </div>
   );
 }

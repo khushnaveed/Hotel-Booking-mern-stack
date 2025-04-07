@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import {
   Menu,
   X,
@@ -23,27 +23,33 @@ function Navbar() {
     navigate(`/rooms/${roomType.toLowerCase().replace(/ /g, "-")}`);
   };
 
-  const handleReservationClick  =(reservationType) =>{
-    navigate(`/reservation/${reservationType.toLowerCase().replace(/ /g, "-")}`);
-
-  }
+  const handleReservationClick = (reservationType) => {
+    navigate(
+      `/reservation/${reservationType.toLowerCase().replace(/ /g, "-")}`
+    );
+  };
+  const location = useLocation();
+  const isHome = location.pathname === "/";
   return (
-    <div className="bg-gray-100">
-      
-      <div className="bg-white shadow-md relative">
-        <div className="container mx-auto px-4">
+    <div className=" font-bold z-[50] sticky top-0  ">
+      <div
+        className={`relative z-[50] shadow-md  ${
+          isHome ? "bg-transparent" : "bg-black/80 backdrop-blur-md"
+        }`}>
+        <div className="container mx-auto px-4 ">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <NavLink to="/" className="text-2xl font-bold text-[#344a71]">
+            <NavLink to="/" className="text-2xl font-bold text-black">
               LOGO
             </NavLink>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-8 ">
               <NavItem text="HOME" path="/" />
-              
+
               <NavItem
                 text="ROOMS"
+                path="/rooms"
                 hasSubmenu
                 submenuItems={[
                   "Luxury Suite",
@@ -61,10 +67,7 @@ function Navbar() {
               <NavItem
                 text="RESERVATIONS"
                 hasSubmenu
-                submenuItems={[
-                  "Rooms",
-                  "Events",
-                ]}
+                submenuItems={["Rooms", "Events"]}
                 onSubmenuClick={handleReservationClick}
               />
 
@@ -77,21 +80,37 @@ function Navbar() {
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-600 hover:text-gray-900"
-              >
+                className="text-gray-600 hover:text-[#8E7037]">
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
           </div>
 
-          {/* Mobile Menu */}
           {isMenuOpen && (
-            <div className="md:hidden py-4">
+            <div className="md:hidden py-4 ">
               <MobileNavItem text="HOME" path="/" />
-              <MobileNavItem text="ROOMS" hasSubmenu submenuItems={[
-                "Luxury Suite", "Deluxe Room", "Single Room", "Family Suite", "Double Room", "Presidential Room"
-              ]} onSubmenuClick={handleRoomClick} />
+              <MobileNavItem
+                text="ROOMS"
+                hasSubmenu
+                submenuItems={[
+                  "Luxury Suite",
+                  "Deluxe Room",
+                  "Single Room",
+                  "Family Suite",
+                  "Double Room",
+                  "Presidential Room",
+                ]}
+                onSubmenuClick={handleRoomClick}
+              />
               <MobileNavItem text="RESTAURANT" path="/restaurant" />
+
+              <MobileNavItem
+                text="RESERVATIONS"
+                hasSubmenu
+                submenuItems={["Rooms", "Events"]}
+                onSubmenuClick={handleReservationClick}
+              />
+
               <MobileNavItem text="GALLERY" path="/gallery" />
               <MobileNavItem text="ABOUT" path="/about" />
               <MobileNavItem text="CONTACT" path="/contact" />
@@ -106,16 +125,15 @@ function Navbar() {
 function NavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
   return (
     <div className="relative group">
-      <div className="flex items-center space-x-1 cursor-pointer">
+      <div className="flex items-center space-x-1 cursor-pointer ">
         {path ? (
           <NavLink
             to={path}
-            className="text-gray-600 hover:text-[#344a71] transition-colors"
-          >
+            className="text-white hover:text-[#8E7037] transition-colors">
             {text}
           </NavLink>
         ) : (
-          <span className="text-gray-600 hover:text-[#344a71] transition-colors">
+          <span className="text-white hover:text-[#8E7037] transition-colors">
             {text}
           </span>
         )}
@@ -123,7 +141,7 @@ function NavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
         {hasSubmenu && (
           <ChevronDown
             size={16}
-            className="text-gray-600 group-hover:text-[#344a71] transition-transform group-hover:rotate-180"
+            className="text-white group-hover:text-[#8E7037] transition-transform group-hover:rotate-180"
           />
         )}
       </div>
@@ -136,8 +154,7 @@ function NavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
               <button
                 key={index}
                 onClick={() => onSubmenuClick(item)}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#344a71] w-full text-left"
-              >
+                className="block px-4 py-2 text-sm text-black hover:text-[#8E7037] hover:bg-gray-100 w-full text-left">
                 {item}
               </button>
             ))}
@@ -148,26 +165,31 @@ function NavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
   );
 }
 
-function MobileNavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
+function MobileNavItem({
+  text,
+  path,
+  hasSubmenu,
+  submenuItems,
+  onSubmenuClick,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
       <div
         className="flex items-center justify-between px-4 cursor-pointer"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+        onClick={() => setIsOpen(!isOpen)}>
         {path ? (
-          <NavLink to={path} className="text-gray-600">
+          <NavLink to={path} className="text-white hover:text-[#8E7037] ">
             {text}
           </NavLink>
         ) : (
-          <span className="text-gray-600">{text}</span>
+          <span className="text-white hover:text-[#8E7037]">{text}</span>
         )}
         {hasSubmenu && (
           <ChevronDown
             size={16}
-            className={`text-gray-600 transition-transform ${
+            className={`text-white group-hover:text-[#8E7037] hover:text-[#8E7037] transition-transform ${
               isOpen ? "rotate-180" : ""
             }`}
           />
@@ -176,13 +198,12 @@ function MobileNavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick })
 
       {/* Mobile Dropdown */}
       {hasSubmenu && isOpen && (
-        <div className="mt-2 bg-gray-50">
+        <div className="mt-2 bg-gray-50 ">
           {submenuItems.map((item, index) => (
             <button
               key={index}
               onClick={() => onSubmenuClick(item)}
-              className="block px-8 py-2 text-sm text-gray-600 hover:text-[#344a71] w-full text-left"
-            >
+              className="block px-8 py-2 text-sm text-black hover:text-[#8E7037] w-full text-left">
               {item}
             </button>
           ))}
