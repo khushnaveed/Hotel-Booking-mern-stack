@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@material-tailwind/react": "^2.1.10",
     "@tailwindcss/vite": "^4.1.2",
     "emailjs-com": "^3.2.0",
     "lucide-react": "^0.487.0",
