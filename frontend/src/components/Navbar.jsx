@@ -30,7 +30,7 @@ function Navbar() {
   return (
     <div className="bg-gray-100">
       
-      <div className="bg-white shadow-md relative">
+      <div className="relative z-10 bg-white shadow-md relative">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}

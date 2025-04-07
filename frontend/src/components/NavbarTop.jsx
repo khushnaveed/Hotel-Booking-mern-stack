@@ -12,7 +12,7 @@ import {
 
 function NavbarTop() {
   return (
-    <div className="bg-gray-100">
+    <div className=" relative z-10 bg-gray-100">
       {/* Top Bar */}
       <div className="bg-[#344a71] text-white py-2">
         <div className="container mx-auto px-4">
@@ -110,6 +110,7 @@ function NavbarTop() {
           </div>
         </div>
       </div>
+      
     </div>
   );
 }
