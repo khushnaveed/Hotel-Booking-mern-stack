@@ -12,7 +12,7 @@ import {
 
 function NavbarTop() {
   return (
-    <div className=" relative z-[100] bg-transparent">
+    <div className="fixed top-0 left-0 w-full z-[100] bg-transparent  ">
       {/* Top Bar */}
       <div className=" text-white py-2 font-bold drop-shadow-md z-50">
         <div className="container mx-auto px-4">
