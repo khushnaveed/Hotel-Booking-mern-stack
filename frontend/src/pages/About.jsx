@@ -7,7 +7,7 @@ export default function About() {
     <>
       {/* Hero Section */}
       <section
-        className="absolute top-0 left-0 w-full h-[30vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
+        className="absolute top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}>
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-opacity-40"></div>
@@ -109,8 +109,9 @@ export default function About() {
         {/* Optional: Add dark overlay */}
         <div className="absolute inset-0 z-0"></div>
 
-        <div className="max-w-6xl mx-auto text-center relative z-10"
-        style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
+        <div
+          className="max-w-6xl mx-auto text-center relative z-10"
+          style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
           <h2 className="text-4xl font-bold uppercase mb-10">
             Hotel Statistics
           </h2>
@@ -143,11 +144,67 @@ export default function About() {
           </div>
         </div>
       </section>
-      <section>
-        <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-bold text-gray-800 mb-4">Team Members</h2>
+
+      <section className="py-10 text-center overflow-x-auto">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-gray-800 mb-2 uppercase">
+            Team Member
+          </h2>
+          <p className="text-gray-600 mb-12">
+            Lorem Ipsum is simply dummy text of the printing
+          </p>
+
+          <div className="flex gap-10 min-w-max justify-start">
+            {[
+              {
+                name: "SHAMEEM ",
+                role: "Pixelated Perfectionist",
+                img: "/src/assets/member1.jpg",
+              },
+              {
+                name: "KHUSH",
+                role: "Debugging Ninja",
+                img: "/src/assets/member2.jpg",
+              },
+              {
+                name: "Luis",
+                role: "UX/UI Wizard",
+                img: "/src/assets/member3.jpg",
+              },
+              {
+                name: "ZAHRA ",
+                role: "Debugging Detective",
+                img: "/src/assets/member4.jpg",
+              },
+              {
+                name: "MILLION ",
+                role: "Ctrl+Z Heroes",
+                img: "/src/assets/member5.jpg",
+              },
+            ].map((member, idx) => (
+              <div key={idx} className="text-center w-64 flex-shrink-0">
+                <img
+                  src={member.img}
+                  alt={member.name}
+                  className="w-36 h-36 mx-auto rounded-full object-cover mb-4"
+                />
+                <h3 className="text-lg font-bold text-gray-800">
+                  {member.name}
+                </h3>
+                <p className="text-sm text-gray-500">{member.role}</p>
+                <p className="text-sm text-gray-600 mt-4">
+                Active Participation: Every member of the group contributes to discussions, offering ideas, feedback, and suggestions. They don’t just wait for instructions but take ownership of tasks and encourage each other to share their thoughts.
+                </p>
+                <div className="flex justify-center mt-4 space-x-4 text-gray-500 text-lg">
+                  <i className="fab fa-twitter"></i>
+                  <i className="fab fa-facebook-f"></i>
+                  <i className="fab fa-instagram"></i>
+                  <i className="fab fa-tripadvisor"></i>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-       
       </section>
     </>
   );
