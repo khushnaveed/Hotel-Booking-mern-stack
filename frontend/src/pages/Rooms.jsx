@@ -11,7 +11,7 @@ export default function Rooms() {
         className="absolute top-0 left-0 w-full h-[30vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}>
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-opacity-40"></div>
+        <div className="absolute inset-0 bg-black opacity-30"></div>
 
         {/* Centered Text */}
         <div className="relative text-white text-center">

@@ -4,7 +4,6 @@ import NavbarTop from "./NavbarTop";
 const images = [
   "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
   "https://images.unsplash.com/photo-1571003123771-bd6a099dd83a",
-  "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
   "https://images.unsplash.com/photo-1573663520878-8c38b10264fc",
 ];
 
@@ -53,8 +52,12 @@ export default function HeroContentCarousel() {
         ))}
       </div>
       <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 max-w-2xl w-full text-center text-white">
-        <p className="text-6xl p-5">Welcome to hotel name</p>
-        <p className="text-4xl p-5 ">Hotels & Resorts</p>
+        <p className=" font-['Playfair_Display'] text-6xl p-5">
+          Welcome to hotel name
+        </p>
+        <p className="font-['Playfair_Display'] text-4xl p-5 ">
+          Hotels & Resorts
+        </p>
       </div>
 
       {/* Booking Form */}

@@ -34,7 +34,7 @@ export default function RoomDetails() {
             className="absolute top-0 left-0 w-full h-[40vh] bg-cover bg-center flex items-center justify-center"
             style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}
           >
-            <div className="absolute inset-0 bg-opacity-40"></div>
+            <div className="absolute inset-0 bg-black opacity-30"></div>
             <div className="relative text-white text-center px-4 sm:px-6 md:px-10">
               <h1
                 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase"
