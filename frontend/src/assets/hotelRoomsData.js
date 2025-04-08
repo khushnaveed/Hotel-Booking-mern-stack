@@ -133,10 +133,11 @@ const hotelRooms = [
         slug: "luxury-suite",
 
         images: [
-            "https://www.home-designing.com/wp-content/uploads/2018/10/luxury-bedroom-arched-interior-1024x1365.jpg",
-            "https://landing.engotheme.com/html/skyline/demo/images/Product/img-2.jpg",
-            "https://landing.engotheme.com/html/skyline/demo/images/Product/img-3.jpg",
-            "https://landing.engotheme.com/html/skyline/demo/images/Product/Another-3.jpg"
+            "https://cf.bstatic.com/xdata/images/hotel/max1024x768/527909886.jpg?k=88d65c2b43b40702e8656c8b22d479763ab50c7d06cb33ee4f3938992a629ed2&o=&hp=1",
+            "https://cf.bstatic.com/xdata/images/hotel/max1024x768/527909732.jpg?k=94f53009886f69cc105c54fa0c22c346d8649d6f45c60d63e9a29fd0c44b4267&o=&hp=1",
+            "https://www.tiefenbrunner1810.at/wp-content/uploads/2022/06/rectangle-9.jpg",
+            "https://www.jagdhof-roehrnbach.de/imageservice/bilder/preise/zimmer/luxury-suite/jhr21_0269-badTypAluxury-rgb2500[b2500].jpg",
+            "https://www.venicecollection.com/palazzo-veneziano/wp-content/uploads/sites/2/2017/08/Luxury-Spa-Suite-08-1600x800.jpg"
         ],
         descOverview: "Spacious top-tier suite featuring modern décor, panoramic views, personalized services, and a private lounge.",
         price: 280,
@@ -218,8 +219,10 @@ const hotelRooms = [
 
         images: [
             "https://landing.engotheme.com/html/skyline/demo/images/Product/Another-3.jpg",
-            "https://landing.engotheme.com/html/skyline/demo/images/Product/Another-1.jpg",
-            "https://landing.engotheme.com/html/skyline/demo/images/Product/Another-.jpg"
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFUiDJtGtIWXIQ0zWG_s8-Ouz0g9EcIuOPOQ&s",
+            "https://www.ajulresort.com/uploads/images/1280/356_R9635.jpg",
+            "https://webbox.imgix.net/images/owvecfmxulwbfvxm/cfca3e26-3e33-4a69-8404-8e578394e12b.jpg?auto=format,compress&fit=crop&crop=entropy",
+            "https://www.hotelanabel.com/assets/cache/uploads/habitaciones/doble-standard/447x447/television-silla-camas-individuales-matrimonio-habitacion-doble-standard-hotel-anabel-lloret-de-mar-costa-brava-cataluna-espana-1738771256.jpg"
         ],
         descOverview: "A well-designed room with double occupancy in mind, offering comfort and convenience for two guests.",
         price: 190,
