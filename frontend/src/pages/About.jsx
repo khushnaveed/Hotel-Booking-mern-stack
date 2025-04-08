@@ -8,7 +8,7 @@ export default function About() {
       {/* Hero Section */}
       <section
         className="absolute top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}>
+        style={{ backgroundImage: "url('/src/assets/heroImage.jpg')" }}>
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-opacity-40"></div>
 
@@ -28,7 +28,7 @@ export default function About() {
       </section>
 
       {/* Wrapper to avoid overlap */}
-      <div className="relative pt-[60vh] md:pt-[30vh] ">
+      <div className="relative pt-[60vh] md:pt-[30vh] mt-10">
         {/* Section 1 */}
         <section className=" py-16 px-6 md:px-20">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -146,7 +146,7 @@ export default function About() {
       </section>
 
       <section className="py-10 text-center overflow-x-auto">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-gray-800 mb-2 uppercase">
             Team Member
           </h2>
@@ -162,12 +162,12 @@ export default function About() {
                 img: "/src/assets/member1.jpg",
               },
               {
-                name: "KHUSH",
+                name: "KHUSH BAKHT",
                 role: "Debugging Ninja",
                 img: "/src/assets/member2.jpg",
               },
               {
-                name: "Luis",
+                name: "LUIS",
                 role: "UX/UI Wizard",
                 img: "/src/assets/member3.jpg",
               },
