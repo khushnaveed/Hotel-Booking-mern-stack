@@ -33,11 +33,7 @@ function Navbar() {
             {/* Logo */}
 
             <NavLink to="/" className="w-80 block group">
-              <img
-                src={Logo}
-                alt="Logo"
-                className="w-full object-cover transform transition-transform duration-500 group-hover:scale-110"
-              />
+              LOGO
             </NavLink>
 
             {/* Desktop Menu */}
@@ -119,7 +115,7 @@ function Navbar() {
 
 function NavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
   return (
-    <div className="relative group">
+    <div className="relative group ">
       <div className="flex items-center space-x-1 cursor-pointer">
         {path ? (
           <NavLink
