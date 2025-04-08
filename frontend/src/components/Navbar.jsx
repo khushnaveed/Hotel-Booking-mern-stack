@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Logo from "../assets/Logo.svg"
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import {
   Menu,
@@ -12,6 +13,7 @@ import {
   UserPlus,
   LogIn,
 } from "lucide-react";
+
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,8 +41,12 @@ function Navbar() {
         <div className="container mx-auto px-4 ">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <NavLink to="/" className="text-2xl font-bold text-black">
-              LOGO
+            <NavLink to="/" className="w-80 block group">
+              <img
+                 src={Logo}
+                alt="Logo"
+                className="w-full object-cover transform transition-transform duration-500 group-hover:scale-110"
+              />
             </NavLink>
 
             {/* Desktop Menu */}
