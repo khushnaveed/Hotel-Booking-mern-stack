@@ -18,7 +18,7 @@ function App() {
     <BrowserRouter>
       <NavbarTop />
       <Navbar />
-      <div className="container mx-auto px-4 py-4">
+      <div className="mx-auto px-4 py-4">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/rooms" element={<Rooms />} />
