@@ -19,21 +19,21 @@ export default function Gallery() {
             className="text-5xl font-bold uppercase"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
-            Gallery
+            Memories Captured
           </h1>
           <p
             className="text-lg mt-2"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
-           Discover the beauty of our hotel in our gallery.
+            Discover the essence of our hotel in every image
           </p>
         </div>
       </section>
 
       {/* Wrapper to avoid overlap */}
-      <div className="relative pt-[60vh] md:pt-[30vh]">
+      <div className="relative pt-[60vh] md:pt-[40vh]">
         {/* Gallery Section */}
-        <section className="py-16 px-6 md:px-20">
+        <section className="py-16 px-6 md:px-0">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
             {galleryData[0].items.map((item, index) => (
               <div className="overflow-hidden shadow-lg group" key={index}>
