@@ -12,6 +12,7 @@ import Events from "./pages/Events";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NavbarTop from "./components/NavbarTop";
+import Checkout from "./pages/Checkout"
 
 function App() {
   return (
@@ -19,23 +20,23 @@ function App() {
       <NavbarTop />
       <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/rooms" element={<Rooms />} />
-          {/* <Route path="/rooms/:roomType" element={<RoomDetail />} /> */}
-          {/* zahra added next line */}
-          <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/rooms" element={<Rooms />} />
+        {/* <Route path="/rooms/:roomType" element={<RoomDetail />} /> */}
+        <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
+        <Route path="/checkout/:roomSlug" element={<Checkout />} />
 
-          <Route path="/restaurant" element={<Restaurant />} />
-          <Route path="/reservation/rooms" element={<Rooms />} />
-          <Route path="/reservation/events" element={<Events />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-     
+        <Route path="/restaurant" element={<Restaurant />} />
+        <Route path="/reservation/rooms" element={<Rooms />} />
+        <Route path="/reservation/events" element={<Events />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+
       <Footer />
     </BrowserRouter>
   );
