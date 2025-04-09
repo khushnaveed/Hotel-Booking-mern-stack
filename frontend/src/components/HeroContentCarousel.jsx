@@ -52,9 +52,9 @@ export default function HeroContentCarousel() {
           />
         ))}
       </div>
-      <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 max-w-2xl w-full text-center text-white">
+      <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 max-w-3xl w-full text-center text-white">
         <p className=" font-['Playfair_Display'] text-6xl p-5">
-          Welcome to hotel name
+          Welcome to Royal Grand
         </p>
         <p className="font-['Playfair_Display'] text-4xl p-5 ">
           Hotels & Resorts

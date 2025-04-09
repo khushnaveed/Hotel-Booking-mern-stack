@@ -58,7 +58,7 @@ export default function Register() {
           REGISTER FORM
         </h1>
         <p className="mb-6 text-white">
-          Register now to begin your stay at The Lotus Hotel.
+          Register now to begin your stay at the Royal Grand.
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input

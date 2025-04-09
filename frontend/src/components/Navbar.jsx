@@ -26,12 +26,11 @@ function Navbar() {
     <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold pt-4 pb-4 mt-4 ">
       <div
         className={`${
-          isHome ? "bg-transparent" : "bg-black/80 backdrop-blur-md"
+          isHome ? "bg-black/80 backdrop-blur-md" : "bg-black/80 backdrop-blur-md"
         }`}>
         <div className="container mx-auto px-3">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-
 
             <NavLink to="/" className="w-60 block group">
               <img
@@ -39,8 +38,7 @@ function Navbar() {
                 alt="Logo"
                 className="w-full object-cover transform transition-transform duration-500 group-hover:scale-110"
               />
-
-           
+            </NavLink>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">

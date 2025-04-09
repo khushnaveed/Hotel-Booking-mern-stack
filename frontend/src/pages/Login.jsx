@@ -37,7 +37,7 @@ export default function Login() {
         <h1 className="text-4xl font-extrabold mb-4 text-white">
           LOGIN ACCOUNT
         </h1>
-        <p className="mb-6 text-white">Welcome to our Hotel Name.</p>
+        <p className="mb-6 text-white">Welcome to Royal Grand Hotel.</p>
         <p className="text-red-500"></p>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
