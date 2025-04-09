@@ -11,7 +11,7 @@ export default function Rooms() {
         className="absolute top-0 left-0 w-full h-[30vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}>
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-opacity-40"></div>
+        <div className="absolute inset-0 bg-black opacity-30"></div>
 
         {/* Centered Text */}
         <div className="relative text-white text-center">
@@ -22,12 +22,12 @@ export default function Rooms() {
         </div>
       </section>
 
-      <div className="mt-[35vh] flex flex-row flex-wrap gap-4 justify-center items-center">
+      <div className="mt-[45vh] mb-1 flex flex-row flex-wrap gap-4 justify-center items-center">
         
         {/* Room 1 */}
-        <div className='relative overflow-hidden group sm:w-[100%] '>
+        <div className='relative overflow-hidden group sm:w-[80%] '>
           <img src="/src/assets/room-34.jpg" alt="" className="transition-all duration-300 transform group-hover:scale-120 object-cover w-full h-full group-hover:filter group-hover:brightness-75" />
-          <div className="absolute top-0 left-0 h-full w-[40%] bg-black bg-opacity-20 text-white p-4 flex flex-col pl-6 pt-14" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
+          <div className="absolute top-0 left-0 h-full w-[40%] bg-black bg-opacity-20 text-white p-4 flex flex-col pl-6 pt-10" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
             <h1 className='font-bold text-4xl'>LUXURY ROOM</h1>
             <h6 className='text-[#bfa76e]'>Start from $120 per day</h6>
             <p className="mt-6">Our luxury room is designed for guests who enjoy elegance and comfort. It features a spacious layout with a king-size bed, modern furniture, a private balcony, and a large bathroom with a spa-style bathtub. It’s perfect for those looking for a premium and relaxing experience.</p>
@@ -44,7 +44,7 @@ export default function Rooms() {
         </div>
 
         {/* Room 2 */}
-        <div className='relative overflow-hidden group sm:w-[100%]'>
+        <div className='relative overflow-hidden group sm:w-[80%]'>
           <img src="/src/assets/room-35.jpg" alt="" className="transition-all duration-300 transform group-hover:scale-120 object-cover w-full h-full group-hover:filter group-hover:brightness-75" />
           <div className="absolute top-0 right-0 h-full w-[40%] bg-black bg-opacity-20 text-white p-4 flex flex-col pl-6 pt-14" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
             <h1 className='font-bold text-4xl '>FAMILY ROOM</h1>
@@ -63,9 +63,9 @@ export default function Rooms() {
         </div>
 
         {/* Room 3 */}
-        <div className='relative overflow-hidden group sm:w-[100%]'>
+        <div className='relative overflow-hidden group sm:w-[80%]'>
           <img src="/src/assets/room-36.jpg" alt="" className="transition-all duration-300 transform group-hover:scale-120 object-cover w-full h-full group-hover:filter group-hover:brightness-75" />
-          <div className="absolute top-0 left-0 h-full w-[40%] bg-black bg-opacity-20 text-white p-4 flex flex-col pl-6 pt-14" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
+          <div className="absolute top-0 left-0 h-full w-[40%] bg-black bg-opacity-20 text-white p-4 flex flex-col pl-6 pt-10" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
             <h1 className='font-bold text-4xl mt-8'>COUPLE ROOM</h1>
             <h6 className='text-[#bfa76e]'>Start from $420 per day</h6>
             <p className="mt-6 ">Perfect for two, the couple room offers a romantic and peaceful setting. It includes a comfortable double bed, soft lighting, and stylish decor to create a cozy atmosphere. This room is great for couples looking to relax and enjoy quality time together.</p>
@@ -82,7 +82,7 @@ export default function Rooms() {
         </div>
 
         {/* Room 4 */}
-        <div className='relative overflow-hidden group sm:w-[100%]'>
+        <div className='relative overflow-hidden group sm:w-[80%]'>
           <img src="/src/assets/room-37.jpg" alt="" className="transition-all duration-300 transform group-hover:scale-120 object-cover w-full h-full group-hover:filter group-hover:brightness-75" />
           <div className="absolute top-0 right-0 h-full w-[40%] bg-black bg-opacity-20 text-white p-4 flex flex-col pl-6 pt-14" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
             <h1 className='font-bold text-4xl'>STANDARD ROOM</h1>

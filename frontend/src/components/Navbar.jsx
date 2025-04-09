@@ -32,13 +32,15 @@ function Navbar() {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
 
+
             <NavLink to="/" className="w-60 block group">
               <img
                 src={Logo}
                 alt="Logo"
                 className="w-full object-cover transform transition-transform duration-500 group-hover:scale-110"
               />
-            </NavLink>
+
+           
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
@@ -119,7 +121,7 @@ function Navbar() {
 
 function NavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
   return (
-    <div className="relative group">
+    <div className="relative group ">
       <div className="flex items-center space-x-1 cursor-pointer">
         {path ? (
           <NavLink

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import NavbarTop from "./NavbarTop";
+import { Calendar, Users } from "lucide-react";
 
 const images = [
   "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
   "https://images.unsplash.com/photo-1571003123771-bd6a099dd83a",
-  "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
   "https://images.unsplash.com/photo-1573663520878-8c38b10264fc",
 ];
 
@@ -53,51 +53,77 @@ export default function HeroContentCarousel() {
         ))}
       </div>
       <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 max-w-2xl w-full text-center text-white">
-        <p className="text-6xl p-5">Welcome to hotel name</p>
-        <p className="text-4xl p-5 ">Hotels & Resorts</p>
+        <p className=" font-['Playfair_Display'] text-6xl p-5">
+          Welcome to hotel name
+        </p>
+        <p className="font-['Playfair_Display'] text-4xl p-5 ">
+          Hotels & Resorts
+        </p>
       </div>
 
       {/* Booking Form */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/80 p-6 shadow-lg max-w-3xl w-full">
-        <form className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 items-end">
+      <div className=" absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/80 p-6 shadow-lg max-w-6xl w-full">
+        <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 items-end font-['Playfair_Display']">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Arrival
+            <label
+              htmlFor="check-in"
+              className="text-[#8E7037] text-2xl font-medium mb-2 flex items-center"
+            >
+              <Calendar size={30} className="mr-2 text-gold" />
+              Check In
             </label>
-            <input type="date" className="w-full border px-3 py-2" />
+            <input
+              type="date"
+              className="w-full border border-[#8E7037] px-3 py-2 text-xl text-gray-600"
+            />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Departure
+            <label
+              htmlFor="check-out"
+              className="text-[#8E7037] text-2xl font-medium mb-2 flex items-center"
+            >
+              <Calendar size={30} className="mr-2 text-gold" />
+              Check Out
             </label>
-            <input type="date" className="w-full border px-3 py-2" />
+            <input
+              type="date"
+              className="w-full border border-[#8E7037] px-3 py-2 text-xl text-gray-600"
+            />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Adults
+            <label
+              htmlFor="guests"
+              className="text-[#8E7037] text-2xl font-medium mb-2 flex items-center"
+            >
+              <Users size={30} className="mr-2 text-gold" />
+              Guests
             </label>
             <input
               type="number"
               min="1"
-              className="w-full border px-3 py-2"
+              className="w-full border border-[#8E7037] px-3 py-2 text-xl text-gray-600"
               defaultValue={1}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Children
+            <label
+              htmlFor="guests"
+              className="text-[#8E7037] text-2xl font-medium mb-2 flex items-center"
+            >
+              <Users size={30} className="mr-2 text-gold" />
+              Guests
             </label>
             <input
               type="number"
               min="0"
-              className="w-full border px-3 py-2"
+              className="w-full border border-[#8E7037] px-3 py-2 text-xl text-gray-600"
               defaultValue={0}
             />
           </div>
           <div className="col-span-2 lg:col-span-1">
             <button
               type="submit"
-              className="w-full bg-[#8E7037] text-white px-4 py-2 hover:bg-white/80 hover:text-[#8E7037] transition"
+              className="w-full bg-[#8E7037] text-white text-2xl px-4 py-2 border border-transparent  hover:border-[#8E7037] hover:text-[#8E7037] hover:bg-white/80 transition"
             >
               Check Availability
             </button>

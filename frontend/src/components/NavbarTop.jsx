@@ -9,6 +9,7 @@ import {
   UserPlus,
   LogIn,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function NavbarTop() {
   return (
@@ -28,7 +29,7 @@ function NavbarTop() {
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin size={16} />
-                <span className="text-sm">Location</span>
+                  <span className="text-sm">Location</span>
               </div>
             </div>
 
@@ -99,18 +100,21 @@ function NavbarTop() {
               <div className="flex items-center space-x-4 ml-4">
                 <button className="flex items-center space-x-1 hover:text-gray-300">
                   <LogIn size={16} />
-                  <span className="text-sm">Login</span>
+                  <Link to="/login">
+                    <span className="text-sm">Login</span>
+                  </Link>
                 </button>
                 <button className="flex items-center space-x-1 hover:text-gray-300">
                   <UserPlus size={16} />
-                  <span className="text-sm">Register</span>
+                  <Link to="/register">
+                    <span className="text-sm">Register</span>
+                  </Link>
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
     </div>
   );
 }
