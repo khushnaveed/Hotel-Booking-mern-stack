@@ -13,19 +13,29 @@ export default function Gallery() {
         className="absolute top-0 left-0 w-full h-[30vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/galleryHero.jpg')" }}
       >
-        <div className="absolute inset-0 bg-black opacity-30"></div>
-        <div className="relative text-white text-center">
+        <div className="absolute inset-0 bg-black opacity-30" />
+        <div className="relative text-white text-center px-4">
           <h1
-            className="text-5xl font-bold uppercase"
+            className="text-6xl md:text-7xl font-bold uppercase font-['Playfair_Display']"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
-            Memories Captured
+            Visual Elegance
           </h1>
           <p
-            className="text-lg mt-2"
+            className="text-xl md:text-2xl mt-2 font-['Playfair_Display']"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
-            Discover the essence of our hotel in every image
+            Welcome to{" "}
+            <span className="font-semibold">
+              {" "}
+              Royal Grand Gallery of Luxury
+            </span>
+          </p>
+          <p
+            className="text-lg mt-4 italic"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+          >
+            Step into the World of Luxurious Retreat
           </p>
         </div>
       </section>

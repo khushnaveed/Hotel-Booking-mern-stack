@@ -1,203 +1,267 @@
-
 export const restaurantData = [
-    {
-        title: "Breakfast",
-        time: "11h00 AM - 2h00 PM",
-        items: [
-            {
-                name: "Backon and Vagetable",
-                desc: "Fried bacon with fresh vegetables and fried pineapple.",
-                price: "$20",
-                img: "https://landing.engotheme.com/html/skyline/demo/images/Restaurants/Restaurants-1.jpg"
-            },
-            {
-                name: "Nihari",
-                desc: "Beef stew simmered overnight with spices,with naan.",
-                price: "$35",
-                img: "https://images.immediate.co.uk/production/volatile/sites/30/2024/12/Nihari-2c750c0.jpg?quality=90&resize=556,505"
-            },
-            {
-                name: "Ground meet",
-                desc: "Grined meet,tomato souce,vegetable,served with bread.",
-                price: "$25",
-                img: "https://cdn.tasteatlas.com//Images/Dishes/aed15b96c6384aef89ce3cefd4e6196d.jpg?w=375&h=280"
-            },
-            {
-                name: "Genfo",
-                desc: "Barley porridge with spiced butter,berbere in the center",
-                price: "$40",
-                img: "https://i.pinimg.com/736x/ea/6c/69/ea6c699816a913227da89736ff0e6e7a.jpg"
-            },
-            {
-                name: "Fried Egg",
-                desc: "Fried egg,fried bacon and potato,served withfresh toast .",
-                price: "$40",
-                img: "https://images.unsplash.com/photo-1710533788728-800be38530a8?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            },
-            {
-                name: "Cheese toast",
-                desc: "Creamy cheese,toast,bacon,served with fresh vegetables.",
-                price: "$20",
-                img: "https://sd-images.simplydelivery.io/cdn-cgi/image/format=auto,quality=85,width=500,height=350,fit=contain/https://sd-images.simplydelivery.io/5c9203bd5174a/images/articles/xufggog41q0xsgwo2jzi.jpg"
-            }
-        ]
-    },
-    {
-        title: "Lunch",
-        time: "2h00 PM - 5h00 PM",
-        items: [
-            {
+  {
+    title: "Breakfast",
+    time: "7:00 AM - 11:00 AM",
+    items: [
+      {
+        name: "Gourmet Eggs Benedict",
+        desc: "Poached eggs on toasted English muffins topped with velvety hollandaise and smoked salmon.",
+        price: "$28",
+        img: "https://static.vecteezy.com/system/resources/previews/048/799/454/large_2x/gourmet-eggs-benedict-on-toasted-muffins-with-ham-and-arugula-photo.jpg",
+      },
+      {
+        name: "Truffle Avocado Toast",
+        desc: "Smashed avocado on artisanal bread, drizzled with truffle oil and topped with heirloom tomatoes.",
+        price: "$22",
+        img: "https://myvegetarianroots.com/wp-content/uploads/2020/02/DSC_0027.jpeg",
+      },
+      {
+        name: "French Toast Soufflé",
+        desc: "Fluffy baked French toast with cinnamon, served with maple syrup and fresh berries.",
+        price: "$24",
+        img: "https://cdn.loveandlemons.com/wp-content/uploads/opengraph/2022/12/french-toast-casserole-1.jpg",
+      },
+      {
+        name: "Champagne and Caviar Brunch",
+        desc: "A luxurious combination of chilled champagne and premium caviar with buckwheat blinis.",
+        price: "$85",
+        img: "https://cdn.vox-cdn.com/thumbor/GvCpKIa2r1oXp_X8ZCAj1AM__hg=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/24888179/cid_ii_llzdinx30.jpeg",
+      },
+      {
+        name: "Signature Smoothie Bowl",
+        desc: "A blend of tropical fruits, topped with granola, nuts, and edible flowers.",
+        price: "$18",
+        img: "https://lovelilbucks.com/cdn/shop/articles/smoothie_bowl_copy_2_1024x1024.jpg?v=1645051077",
+      },
+      {
+        name: "Croissant with Almond Fillings",
+        desc: "Flaky croissant filled with almond cream and topped with powdered sugar.",
+        price: "$15",
+        img: "https://images.squarespace-cdn.com/content/v1/65c3e29954a54703b46fe0ae/1724841881133-G5KS0KKEJVEGWQ00MIOR/IMG_7478.jpg",
+      },
+      {
+        name: "Berry Parfait",
+        desc: "Layers of yogurt, granola, and fresh mixed berries, served in a glass.",
+        price: "$12",
+        img: "https://www.allrecipes.com/thmb/ms9w-YNZTsJqsvkfbypSofESHlc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/ALR-23182-vanilla-berry-parfaits-4x3-887572c396d64ebebe3ddbe96f909578.jpg",
+      },
+      {
+        name: "Savory Oatmeal Bowl",
+        desc: "Warm oatmeal topped with poached egg, sautéed spinach, and feta cheese.",
+        price: "$20",
+        img: "https://example.com/images/oatmeal_bowl.jpg",
+      },
+    ],
+    drinks: [
+      {
+        name: "Freshly Squeezed Orange Juice",
+        desc: "Refreshing and vibrant orange juice made from fresh, ripe oranges.",
+        price: "$10",
+        img: "https://media.zummocorp.com/Blog/zumo-conservar-mejor-1691236200TR9OP.webp",
+      },
+      {
+        name: "Coffee",
+        desc: "Rich, freshly brewed coffee with a choice of regular or decaf.",
+        price: "$5",
+        img: "https://example.com/images/coffee.jpg",
+      },
+      {
+        name: "Herbal Tea Selection",
+        desc: "A variety of herbal teas including chamomile, peppermint, and green tea.",
+        price: "$6",
+        img: "https://example.com/images/herbal_tea.jpg",
+      },
+      {
+        name: "Citrus Mojito",
+        desc: "A refreshing mix of mint, lime, and soda water, with a citrus twist.",
+        price: "$8",
+        img: "https://example.com/images/citrus_mojito.jpg",
+      },
+    ],
+  },
+  {
+    title: "Lunch",
+    time: "12:00 PM - 3:00 PM",
+    items: [
+      {
+        name: "Mediterranean Grilled Chicken Salad",
+        desc: "Herb-marinated chicken served over mixed greens with olives, feta, and a lemon vinaigrette.",
+        price: "$34",
+        img: "https://example.com/images/chicken_salad.jpg",
+      },
+      {
+        name: "Lobster Roll",
+        desc: "Warm buttered lobster in a toasted brioche roll, served with homemade potato chips.",
+        price: "$45",
+        img: "https://example.com/images/lobster_roll.jpg",
+      },
+      {
+        name: "Wagyu Beef Burger",
+        desc: "Juicy Wagyu beef patty with aged cheddar, lettuce, and truffle aioli on a brioche bun.",
+        price: "$48",
+        img: "https://example.com/images/wagyu_burger.jpg",
+      },
+      {
+        name: "Wild Mushroom Risotto",
+        desc: "Creamy Arborio rice cooked with wild mushrooms and finished with parmesan.",
+        price: "$36",
+        img: "https://example.com/images/mushroom_risotto.jpg",
+      },
+      {
+        name: "Seafood Paella",
+        desc: "A vibrant mix of saffron-infused rice, seafood, and vegetables, served in a traditional pan.",
+        price: "$52",
+        img: "https://example.com/images/seafood_paella.jpg",
+      },
+      {
+        name: "Roasted Beet Salad",
+        desc: "Roasted beets, goat cheese, and walnuts on mixed greens with a balsamic reduction.",
+        price: "$28",
+        img: "https://example.com/images/beet_salad.jpg",
+      },
+      {
+        name: "Pasta Primavera",
+        desc: "A mixture of seasonal vegetables sautéed with pasta in a light olive oil sauce.",
+        price: "$32",
+        img: "https://example.com/images/pasta_primavera.jpg",
+      },
+      {
+        name: "Grilled Vegetable Wrap",
+        desc: "Grilled seasonal vegetables wrapped in a spinach tortilla with hummus.",
+        price: "$24",
+        img: "https://example.com/images/vegetable_wrap.jpg",
+      },
+    ],
+    drinks: [
+      {
+        name: "Iced Tea",
+        desc: "Refreshing iced tea served with lemon and mint.",
+        price: "$8",
+        img: "https://example.com/images/iced_tea.jpg",
+      },
+      {
+        name: "Craft Beer Selection",
+        desc: "A rotating selection of local craft beers on tap.",
+        price: "$10",
+        img: "https://example.com/images/craft_beer.jpg",
+      },
+      {
+        name: "Sparkling Water",
+        desc: "Chilled sparkling water served with a slice of lemon.",
+        price: "$6",
+        img: "https://example.com/images/sparkling_water.jpg",
+      },
+      {
+        name: "Mango Smoothie",
+        desc: "A creamy and refreshing blend of ripe mangoes and yogurt.",
+        price: "$7",
+        img: "https://example.com/images/mango_smoothie.jpg",
+      },
+    ],
+  },
+  {
+    title: "Dinner",
+    time: "6:00 PM - 10:00 PM",
+    items: [
+      {
+        name: "Filet Mignon",
+        desc: "Prime cut of grilled beef tenderloin served with a red wine reduction and seasonal vegetables.",
+        price: "$75",
+        img: "https://example.com/images/filet_mignon.jpg",
+      },
+      {
+        name: "Pan-Seared Sea Bass",
+        desc: "Delicate sea bass served with a lemon beurre blanc and sautéed asparagus.",
+        price: "$68",
+        img: "https://example.com/images/sea_bass.jpg",
+      },
+      {
+        name: "Duck Confit",
+        desc: "Slow-cooked duck leg served with garlic mashed potatoes and braised red cabbage.",
+        price: "$55",
+        img: "https://example.com/images/duck_confit.jpg",
+      },
+      {
+        name: "Herb-Crusted Rack of Lamb",
+        desc: "Roasted rack of lamb coated in herbs and Dijon, served with rosemary-infused potatoes.",
+        price: "$85",
+        img: "https://example.com/images/rack_of_lamb.jpg",
+      },
+      {
+        name: "Vegetable Tart",
+        desc: "A flaky pastry filled with seasonal vegetables and goat cheese, accompanied by a salad.",
+        price: "$40",
+        img: "https://example.com/images/vegetable_tart.jpg",
+      },
+      {
+        name: "Seafood Fettuccine",
+        desc: "Fettuccine pasta tossed with shrimp, scallops, and a creamy garlic sauce.",
+        price: "$60",
+        img: "https://example.com/images/seafood_fettuccine.jpg",
+      },
+      {
+        name: "Risotto with Truffles",
+        desc: "Creamy risotto finished with black truffles and parmesan cheese.",
+        price: "$52",
+        img: "https://example.com/images/truffle_risotto.jpg",
+      },
+      {
+        name: "Beef Wellington",
+        desc: "Tender beef fillet coated with pâté and duxelles, wrapped in puff pastry.",
+        price: "$95",
+        img: "https://example.com/images/beef_wellington.jpg",
+      },
+      {
+        name: "Chocolate Lava Cake",
+        desc: "A rich chocolate cake with a gooey molten center, served with vanilla ice cream.",
+        price: "$15",
+        img: "https://example.com/images/chocolate_lava_cake.jpg",
+      },
+      {
+        name: "Passion Fruit Panna Cotta",
+        desc: "A creamy, luscious panna cotta infused with the vibrant taste of passion fruit, finished with a citrus glaze.",
+        price: "$16",
+        img: "https://example.com/images/passion_fruit_panna_cotta.jpg",
+      },
+      {
+        name: "Pistachio Macaron with Raspberry Coulis",
+        desc: "A delicate pistachio-flavored macaron, complemented by a tangy raspberry coulis.",
+        price: "$14",
+        img: "https://nomemadegf.com/wp-content/uploads/2020/03/DSC01933-2-1024x890.jpg",
+      },
+      {
+        name: "Crème Brûlée with Fresh Berries",
+        desc: "A silky smooth vanilla custard topped with a crisp, caramelized sugar layer and fresh seasonal berries.",
+        price: "$18",
+        img: "https://example.com/images/creme_brulee.jpg",
+      },
+    ],
 
-                name: "Kebab Plate",
-                desc: "Grilled marinate meat served with safron rice or bread,salad, and bread.",
-                price: "$70",
-                img: "https://images.unsplash.com/photo-1616486447077-f8d3f7bae6b7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fGtlYmFiJTIwcGxhdGV8ZW58MHx8MHx8fDA%3D"
-            },
-            {
-                name: "Zereshk polo",
-                desc: "Marinate chicken,berries,almon and petatues served with safron rice.",
-                price: "$60",
-                img: "https://persiangood.com/wp-content/uploads/2020/09/zereshk-polo-min-min.jpg"
-            },
-            {
-                name: "Biryani",
-                desc: "Fragrant rice with tender chicken,garnished with onions and saffron.",
-                price: "$55",
-                img: "https://www.thespruceeats.com/thmb/XDBL9gA6A6nYWUdsRZ3QwH084rk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SES-chicken-biryani-recipe-7367850-hero-A-ed211926bb0e4ca1be510695c15ce111.jpg"
-            },
-            {
-                name: "Chapli Kebab",
-                desc: "Juicy minced meat kebabs with spices, fried to a crispy perfection.",
-                price: "$50",
-                img: "https://images.unsplash.com/photo-1697155836215-425794e792cb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Q2hhcGxpJTIwS2ViYWJ8ZW58MHx8MHx8fDA%3D"
-            },
-            {
-                name: "Kabuli Pulao",
-                desc: "Flavorful rice with tender lamb or chicken, topped with fried carrots, raisins, and almonds.",
-                price: "$70",
-                img: "https://afghancooks.com/wp-content/uploads/2021/09/IMG_0858_jpg.jpg"
-            },
-            {
-                name: "Mantoo",
-                desc: "Steamed dumplings filled with spiced meat and served with a yogurt-based sauce.",
-                price: "$65",
-                img: "https://asiantoprecipes.weebly.com/uploads/5/3/4/0/5340076/mantoo.jpg?1476928905"
-            },
-            {
-                name: "Hamburger",
-                desc: "A juicy beef patty served in a bun with fresh veggies and condiments.",
-                price: "$35",
-                img: "https://www.wajos.de/cdn/shop/articles/20240126124146-1800x1000_hamburger_e75b9857-8775-4950-968f-fa5e9c6fc21b.jpg?v=1706285361&width=1800"
-            },
-            {
-                name: "Macaroni and Cheese",
-                desc: "Creamy cheese sauce mixed with tender macaroni pasta.",
-                price: "$40",
-                img: "https://www.southernliving.com/thmb/7tvEnGp-U8vG5YOgJjsItak-nmM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Baked-Mac-and-Cheese-3x4-1126-6509f428efe649d6afe1d2d65938bf51.jpg"
-            },
-            {
-                name: "Injera",
-                desc: "Soft, sour flatbread made from teff, served as a base for various stews and dishes.",
-                price: "$65",
-                img: "https://img.sndimg.com/food/image/upload/f_auto,c_thumb,q_55,w_744,ar_5:4/v1/img/submissions/recipe/33186/BzaHdnPRR6aN8sF4Y6XX_1489803482708.jpeg"
-            },
-            {
-                name: "Doro Wat",
-                desc: "Spicy chicken stew simmered with barbere spices,served with hard-boiled eggs.",
-                price: "$70",
-                img: "https://eggs.ca/wp-content/uploads/2024/06/EFC-doro-wat-hero-1280x720-1.jpg"
-            }
-
-        ]
-    },
-    {
-        title: "Dinner",
-        time: "6h00 PM - 10h00 PM",
-        items: [
-            {
-                name: "Luna Nuova",
-                desc: "Fresh pastas, wood-fired pizzas, and vibrant salads.",
-                price: "$30",
-                img: "https://images.squarespace-cdn.com/content/v1/5c844f05fb22a510b5fa6c1d/deaf5dc6-7419-46c7-a405-9850539b0ff7/ravioli.png"
-            },
-            {
-                name: "Salmon",
-                desc: "Grilled salmon fillet, tender and flaky, served with a side of roasted vegetables",
-                price: "$45",
-                img: "https://static01.nyt.com/images/2024/02/13/multimedia/LH-pan-seared-salmon-lwzt/LH-pan-seared-salmon-lwzt-superJumbo.jpg"
-            },
-            {
-                name: "Steak",
-                desc: "Grilled, juicy cut of beef, seasoned and cooked to your preference, served with crispy fries or a fresh side salad.",
-                price: "$55",
-                img: "https://landing.engotheme.com/html/skyline/demo/images/Restaurants/Restaurants-9.jpg"
-            },
-            {
-                name: "Fish",
-                desc: "seasoned and grilled, served with a side of seasonal vegetables or a tangy citrus dressing.",
-                price: "$45",
-                img: "https://landing.engotheme.com/html/skyline/demo/images/Restaurants/Restaurants-12.jpg"
-            },
-            {
-                name: "Pasta",
-                desc: "Al dente pasta served with sauce, topped with Parmesan.",
-                price: "$30",
-                img: "https://landing.engotheme.com/html/skyline/demo/images/Restaurants/Restaurants-4.jpg"
-            },
-            {
-                name: "Pumpkin Soup",
-                desc: "Roasted pumpkin, blended with aromatic spices and a hint of cream.",
-                price: "$25",
-                img: "https://landing.engotheme.com/html/skyline/demo/images/Restaurants/Restaurants-2.jpg"
-            }
-
-        ]
-    },
-    {
-        title: "Drinks",
-        time: "",
-        items: [
-            {
-                name: "Whiskey",
-                desc: " A smooth, amber spirit made from fermented grain mash, offering rich notes of caramel, vanilla, and oak.",
-                price: "$16",
-                img: "https://dudethatcookz.com/wp-content/uploads/2021/03/Rosemary_and_Honey_Whiskey_Cocktail_1-scaled.jpeg"
-            }, {
-                name: "Margarita",
-                desc: "tequila, lime juice, and orange liqueur, served with a salted rim for an extra burst of flavor.",
-                price: "$15",
-                img: "https://images.lecker.de/klassische-margarita/1x1,id=f6e8ba98,b=lecker,w=1600,h=,ca=12.51,0,87.49,100,rm=sk.jpeg"
-            },
-            {
-                name: "Beer",
-                desc: "Cold lager with a light malt flavor and a smooth finish, perfect for pairing with any meal or enjoying on its own.",
-                price: "$6",
-                img: "https://www.liquor.com/thmb/jxpeUzJp-i1sXFZZjaGrty9n2uc=/440x440/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-519728153-7dca4b18c59f4b1fa3654e4d5c9db884.jpg"
-            },
-
-            {
-                name: "Red Wine",
-                desc: "A rich and bold wine with deep fruit flavors, offering hints of berries, oak, and subtle spices.",
-                price: "$10",
-                img: "https://www.liquor.com/thmb/SmiL9OHwaGuN2xc13EHZ6LWvpJA=/440x440/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-843630694-13ab0d8e3f1f4b38b2271ee22be6d137.jpg"
-            },
-            {
-                name: "Soft drink",
-                desc: "A fizzy, sweetened beverage available in a variety of flavors, perfect for refreshing yourself during any meal.",
-                price: "$6",
-                img: "https://c8.alamy.com/compde/bg74y6/gruppe-von-drei-alkoholfreie-getranke-in-verschiedenen-glasern-mit-garnierung-bg74y6.jpg"
-            },
-            {
-                name: "Coctail",
-                desc: "A carefully crafted mix of spirits, juices, and syrups, designed to offer a balanced and flavorful drinking experience.",
-                price: "$18",
-                img: "https://media.diageocms.com/media/mzanix3d/sex-on-the-beach.jpg"
-            },
-
-
-        ]
-    }
+    drinks: [
+      {
+        name: "Red Wine Selection",
+        desc: "A curated selection of fine red wines from around the world.",
+        price: "$12 per glass",
+        img: "https://example.com/images/red_wine.jpg",
+      },
+      {
+        name: "Classic Martini",
+        desc: "A classic cocktail made with gin and dry vermouth, garnished with an olive.",
+        price: "$14",
+        img: "https://example.com/images/martini.jpg",
+      },
+      {
+        name: "Signature Cocktail",
+        desc: "A house special crafted cocktail uniquely designed by our mixologist.",
+        price: "$18",
+        img: "https://example.com/images/signature_cocktail.jpg",
+      },
+      {
+        name: "Moscato",
+        desc: "A sweet, fruity sparkling wine that pairs beautifully with desserts.",
+        price: "$10 per glass",
+        img: "https://quadywinery.com/wp-content/uploads/2023/08/dsc06640.jpg",
+      },
+    ],
+  },
 ];
-
-
-

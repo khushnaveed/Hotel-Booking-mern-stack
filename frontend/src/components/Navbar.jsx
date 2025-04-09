@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import Logo from "../assets/Logo.svg";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
