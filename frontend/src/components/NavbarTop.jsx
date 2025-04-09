@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 function NavbarTop() {
   return (
-    <div className="fixed top-0 left-0 w-full z-[100] bg-transparent  ">
+    <div className="fixed top-0 left-0 w-full z-[101] bg-transparent  ">
       {/* Top Bar */}
       <div className=" text-white py-2 font-bold drop-shadow-md z-50">
         <div className="container mx-auto px-4">
@@ -36,7 +36,7 @@ function NavbarTop() {
             <div className="flex items-center space-x-4">
               {/* Language Selector */}
               <div className="group relative cursor-pointer">
-                <div className="flex items-center space-x-1 hover:text-gray-600">
+                <div className="flex items-center space-x-1 hover:text-gray-300">
                   <Globe size={16} />
                   <span className="text-sm">EN</span>
                   <ChevronDown size={14} />
@@ -67,7 +67,7 @@ function NavbarTop() {
 
               {/* Currency Selector */}
               <div className="group relative cursor-pointer">
-                <div className="flex items-center space-x-1 hover:text-gray-600">
+                <div className="flex items-center space-x-1 hover:text-gray-300">
                   <DollarSign size={16} />
                   <span className="text-sm">USD</span>
                   <ChevronDown size={14} />
@@ -98,13 +98,13 @@ function NavbarTop() {
 
               {/* Auth Buttons */}
               <div className="flex items-center space-x-4 ml-4">
-                <button className="flex items-center space-x-1 hover:text-gray-600">
+                <button className="flex items-center space-x-1 hover:text-gray-300">
                   <LogIn size={16} />
                   <Link to="/login">
                     <span className="text-sm">Login</span>
                   </Link>
                 </button>
-                <button className="flex items-center space-x-1 hover:text-gray-600">
+                <button className="flex items-center space-x-1 hover:text-gray-300">
                   <UserPlus size={16} />
                   <Link to="/register">
                     <span className="text-sm">Register</span>
