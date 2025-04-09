@@ -32,7 +32,7 @@ function Navbar() {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
 
-            <NavLink to="/" className="w-80 block group">
+            <NavLink to="/" className="w-60 block group">
               <img
                 src={Logo}
                 alt="Logo"
