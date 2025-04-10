@@ -163,16 +163,93 @@ export default function RoomDetails() {
   );
 }
 
-// 👇 Tab Component (outside RoomDetails)
+// Tab Component (outside RoomDetails)
 function Tabs({ roomData }) {
   const [activeTab, setActiveTab] = useState("overview");
 
   const tabs = [
-    { key: "overview", label: "OVERVIEW", content: roomData.descOverview },
-    { key: "amenities", label: "AMENITIES", content: roomData.amenities },
+    {
+      key: "overview",
+      label: "OVERVIEW",
+      content: (
+        <div>
+          <p>{roomData.descOverview}</p>
+
+          {/* Two-column grid layout for the list items */}
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-5 mt-4 text-gray-600">
+            <li><strong>SPECIAL ROOM</strong></li>
+            <li><strong>Max:</strong> {roomData.additionalDetails.maxPersons} Person(s)</li>
+            <li><strong>Size:</strong> {roomData.additionalDetails.size}</li>
+            <li><strong>View:</strong> {roomData.additionalDetails.view}</li>
+            <li><strong>Bed:</strong> {roomData.additionalDetails.bed}</li>
+          </ul>
+        </div>
+      )
+    }
+    ,
+    {
+      key: "amenities",
+      label: "AMENITIES",
+      content: (
+        <div>
+          <p className="text-gray-600 mb-4">
+            Located in the heart of Aspen with a unique blend of contemporary luxury and historic heritage, deluxe accommodations, superb amenities, genuine hospitality, and dedicated service for an elevated experience in the Rocky Mountains.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+            {Object.keys(roomData.amenities).map((roomType, index) => (
+              <div key={index} className="mb-6">
+                <h4 className="text-lg font-semibold text-gray-700">{roomType}</h4>
+                <ul className="list-disc pl-5 text-gray-600">
+                  {roomData.amenities[roomType].map((amenity, idx) => (
+                    <li key={idx}>{amenity}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+    ,
     { key: "packages", label: "PACKAGES", content: roomData.packages.join(", ") },
-    { key: "rates", label: "RATES", content: roomData.rate },
-    { key: "calendar", label: "CALENDAR", content: roomData.calendar },
+
+    {
+      key: "rates",
+      label: "RATES",
+      content: roomData.pricing && roomData.ratings ? (
+        <div>
+          {/* Loop through the pricing array */}
+          {roomData.pricing.map((price, priceIndex) => {
+            // Find the corresponding rating for the price range
+            const matchingRating = roomData.ratings.find(rating =>
+              new Date(rating.startDate).getTime() <= new Date(price.endDate).getTime() &&
+              new Date(rating.endDate).getTime() >= new Date(price.startDate).getTime()
+            );
+
+            return (
+              <div key={priceIndex}>
+                {/* Price Information */}
+                <div>
+                  <p><strong>Price Range:</strong> From {new Date(price.startDate).toLocaleDateString()} To {new Date(price.endDate).toLocaleDateString()}</p>
+                  <p><strong>Price:</strong> ${price.price} per day</p>
+                </div>
+
+                {/* Rating Information */}
+                {matchingRating && (
+                  <div>
+
+                    <p><strong>Rating:</strong> {matchingRating.rating} / 5</p>
+                    <p><strong>Description:</strong> {matchingRating.description}</p>
+                    <p><strong>Rating Period:</strong> From {new Date(matchingRating.startDate).toLocaleDateString()} To {new Date(matchingRating.endDate).toLocaleDateString()}</p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : "No rates or ratings available"
+    }
   ];
 
   return (
@@ -229,55 +306,6 @@ function Tabs({ roomData }) {
     </>
   );
 }
-
-
-
-
-
-//BACKEND DB SHOULD BE UPDATE
-/* 
-{
-  "Living Room": [
-    "Oversized work desk",
-    "Hairdryer",
-    "Iron/ironing board upon request"
-  ],
-  "Bedroom": [
-    "Coffee maker",
-    "25 inch or larger TV",
-    "Cable/satellite TV channels",
-    "AM/FM clock radio",
-    "Voicemail"
-  ],
-  "Kitchen Room": [
-    "AM/FM clock radio",
-    "Voicemail",
-    "High-speed Internet access"
-  ],
-  "Bathroom": [
-    "Dataport",
-    "Phone access fees waived",
-    "24-hour Concierge service",
-    "Private concierge"
-  ],
-  "Balcony": [
-    "AM/FM clock radio",
-    "Voicemail",
-    "High-speed Internet access"
-  ],
-  "Oversized Work Desk": [
-    "Dataport",
-    "Phone access fees waived",
-    "24-hour Concierge service",
-    "Private concierge"
-  ]
-}
-
-
-
-
-
-*/
 
 
 
