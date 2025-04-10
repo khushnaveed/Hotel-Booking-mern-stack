@@ -1,6 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
 import roomRoutes from "./routes/roomRoutes.js"
+import guestRoutes from "./routes/guestRoutes.js"
 import { config } from "dotenv";
 //npm i cors
 import cors from "cors"
@@ -34,6 +35,9 @@ try {
 
 //routes
 app.use("/room", roomRoutes)
+app.use("/guest",guestRoutes)
+
+
 
 app.use('/events', eventRoutes);
 
