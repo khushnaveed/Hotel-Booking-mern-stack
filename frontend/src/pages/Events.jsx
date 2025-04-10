@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function BlogCard({ date, title, image, excerpt, showCountdown }) {
   const [day, month] = date.split(" ");
@@ -32,8 +33,8 @@ function BlogCard({ date, title, image, excerpt, showCountdown }) {
   return (
     <div className="flex flex-col lg:flex-row gap-4">
       {/* Image with Countdown */}
-      <div className="relative w-full lg:w-2/5">
-        <img src={image} alt={title} className="w-full h-auto rounded-md" />
+      <div className="relative w-full lg:w-2/5 group">
+        <img src={image} alt={title} className="w-full h-auto rounded-md transition-transform duration-300 group-hover:scale-102" />
         <div className="absolute top-2 left-2 bg-black text-white px-2 py-1 text-xs font-bold">
           <div>{day}</div>
           <div>{month}</div>
@@ -130,16 +131,21 @@ export default function Events() {
 
           <section>
             <h2 className="font-bold text-lg mb-4">DEAL</h2>
-            <div className="relative">
+            <div className="relative [&_img]:rounded-none group">
               <img
                 src="/src/assets/EventsLuxuryRoom.jpg"
                 alt="Luxury Room"
-                className="rounded-md w-full object-cover"
+                className="rounded-md w-full object-cover transition-transform duration-300 group-hover:scale-102"
               />
-              <div className="absolute bottom-2 left-2 bg-white px-3 py-1 font-bold text-black">
-                LUXURY ROOM
-                <br />
-                $320
+              <div className="absolute bottom-2 left-2 bg-white px-3 py-1 font-bold  hover:bg-[#6f5525]">
+                {/* Wrap the button text in Link */}
+                <Link
+                  to="/rooms/luxury-suite"
+                  className="block  text-black hover:text-white text-center py-2 px-4 rounded-lg  transition duration-300">
+                  LUXURY ROOM
+                  <br />
+                  $220
+                </Link>
               </div>
             </div>
           </section>
@@ -203,28 +209,28 @@ export default function Events() {
         <main className="lg:col-span-3 space-y-12 [&_img]:rounded-none">
           <BlogCard
             date="23 JAN"
-            title="RELAXING & TRAVEL IN OUR HOTEL"
+            title="SURFING"
             image="/src/assets/EventsSurfing.jpg"
-            excerpt="Lorem Ipsum is simply dummy text of the printing and typesetting industry..."
+            excerpt=" Dive into an unforgettable adventure with our exclusive Surfing experience. Whether you're a seasoned pro or a beginner eager to catch your first wave, we provide the perfect setting for surf enthusiasts of all levels. With expert instructors and pristine, crystal-clear waters, you’ll experience the thrill of the ocean like never before. Feel the rush as you ride the waves, soaking in the sun and the stunning surroundings. This is your ultimate surfing escape, where adventure and relaxation blend perfectly."
             showCountdown // 👈 only here
           />
           <BlogCard
             date="18 JAN"
-            title="NEW KIND OF CHICKEN FOOD FOR DINNER"
-            image="/src/assets/EventsBoat.jpg"
-            excerpt="Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, sit!"
+            title="EXCLUSIVE HELICOPTER CHARTER"
+            image="https://www.sme.org/globalassets/sme.org/technologies/articles/2018/10---october/airbus_exph-768x555.jpg"
+            excerpt="Elevate your journey with our Exclusive Helicopter Charter service, offering unparalleled luxury and convenience. Skip the crowded airports and experience the thrill of flying above the city in complete comfort. Whether you're heading to a business meeting, a special event, or taking in breathtaking aerial views, our private helicopter service ensures you travel in style and exclusivity. With personalized itineraries and first-class service, this is an experience designed for those who value both time and luxury."
           />
           <BlogCard
             date="16 JAN"
             title="ONE NIGHT WEDDING WITH JESSICA & ROBET"
             image="/src/assets/EventsWedding.jpg"
-            excerpt="Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, omnis!"
+            excerpt=" Step into a magical fairytale with the One Night Wedding of Jessica & Robet, an enchanting celebration of love and commitment. Held in the heart of our elegant venue, the event was a perfect blend of romance and sophistication. From the heartfelt vows exchanged under the stars to the dazzling reception surrounded by friends and family, every moment was filled with joy. It was an evening to remember, where timeless love and unforgettable memories were made, forever etched in the hearts of all who attended."
           />
           <BlogCard
             date="06 JAN"
-            title="FISHING WITH LOTUS HOTEL"
-            image="/src/assets/EventsFishing.jpg"
-            excerpt="Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, neque!"
+            title="LUXURY YACHT EXPERIENCE "
+            image="https://www.charterworld.com/images/headers-6/charter-yacht-11-11-at-night.jpg"
+            excerpt=" Experience the ultimate in luxury with our Luxury Yacht Experience, where elegance meets the open sea. Step aboard a world-class yacht and embark on a voyage through crystal-clear waters, enjoying the perfect blend of comfort and adventure. Whether you're cruising along the coastline, basking in the sun on the deck, or enjoying a gourmet meal prepared by a private chef, every detail of this journey is tailored to your desires. Set sail on a once-in-a-lifetime experience that offers exclusivity, relaxation, and unparalleled views."
           />
         </main>
       </div>

@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 function NavbarTop() {
   return (
-    <div className="fixed top-0 left-0 w-full z-[101] bg-transparent  ">
+    <div className="fixed top-0 left-0 w-full z-[101] bg-black/30 backdrop-blur-md">
       {/* Top Bar */}
       <div className=" text-white py-2 font-bold drop-shadow-md z-50">
         <div className="container mx-auto px-4">
