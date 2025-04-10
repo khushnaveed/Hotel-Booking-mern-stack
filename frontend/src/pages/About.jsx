@@ -128,7 +128,7 @@ export default function About() {
           <h2 className="text-4xl font-bold uppercase mb-10">
             Hotel Statistics
           </h2>
-          <div className="font-['Playfair_Display'] grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className=" grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { label: "Guest Stay", value: 768 },
               { label: "Book Room", value: 632 },

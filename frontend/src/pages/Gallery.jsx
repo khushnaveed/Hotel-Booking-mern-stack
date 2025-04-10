@@ -16,13 +16,13 @@ export default function Gallery() {
         <div className="absolute inset-0 bg-black opacity-30" />
         <div className="relative text-white text-center px-4">
           <h1
-            className="text-6xl md:text-7xl font-bold uppercase font-['Playfair_Display']"
+            className="text-6xl md:text-7xl font-bold uppercase   "
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
             Visual Elegance
           </h1>
           <p
-            className="text-xl md:text-2xl mt-2 font-['Playfair_Display']"
+            className="text-xl md:text-2xl mt-2   "
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
             Welcome to{" "}

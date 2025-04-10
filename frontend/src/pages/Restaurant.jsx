@@ -31,46 +31,49 @@ export default function Restaurant() {
 
   return (
     <>
-      {/* Hero Banner */}
+      {/* Hero Section */}
       <section
-        className="absolute top-0 left-0 w-full h-[30vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('https://img.freepik.com/premium-photo/chef-is-carefully-plating-dish-restaurant-kitchen-plate-is-arranged-with-variety-colorful-vegetables-small-portion-meat_36682-6799.jpg')" }}
+        className=" relative w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
+        style={{
+          backgroundImage: `url(https://img.freepik.com/premium-photo/chef-is-carefully-plating-dish-restaurant-kitchen-plate-is-arranged-with-variety-colorful-vegetables-small-portion-meat_36682-6799.jpg)`,
+        }}
       >
         <div className="absolute inset-0 bg-black opacity-30" />
-        <div className="relative text-white text-center px-4">
-          <h1 className="text-6xl md:text-7xl font-bold uppercase font-['Playfair_Display']">
+        <div className="relative text-white text-center z-10">
+          <h1
+            className="text-5xl font-bold uppercase"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+          >
             Culinary Elegance
           </h1>
-          <p className="text-xl md:text-2xl mt-2 font-['Playfair_Display']">
-            Welcome to{" "}
-            <span className="font-semibold">Restaurant Royal Grand</span>
-          </p>
-          <p className="text-lg mt-4 italic">
+          <p
+            className="text-lg mt-2"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+          >
             Indulge in an Exquisite Culinary Journey
           </p>
         </div>
       </section>
 
-     {/* Meal Selection */}
-<div className="flex justify-center space-x-100 mt-[50vh] mb-20">
-  {["Breakfast", "Lunch", "Dinner"].map((meal) => (
-    <button
-      key={meal}
-      className={`text-lg font-semibold focus:outline-none cursor-pointer ${
-        activeMeal === meal ? "text-[#8E7037]" : "text-gray-500"
-      }`}
-      onClick={() => setActiveMeal(meal)}
-    >
-      {meal}
-    </button>
-  ))}
-</div>
-
+      {/* Meal Selection */}
+      <div className="flex justify-center space-x-100 mt-10 mb-20">
+        {["Breakfast", "Lunch", "Dinner"].map((meal) => (
+          <button
+            key={meal}
+            className={`text-lg font-semibold focus:outline-none cursor-pointer ${
+              activeMeal === meal ? "text-[#8E7037]" : "text-gray-500"
+            }`}
+            onClick={() => setActiveMeal(meal)}
+          >
+            {meal}
+          </button>
+        ))}
+      </div>
 
       {/* Menu Section */}
       <div className="flex flex-col items-center justify-center relative px-4">
         <div className="w-full max-w-screen-lg space-y-12">
-          <h2 className="text-3xl font-semibold font-['Playfair_Display'] text-center mb-8">
+          <h2 className="text-3xl font-semibold   text-center mb-8">
             {activeMeal}
           </h2>
 
@@ -88,7 +91,7 @@ export default function Restaurant() {
                   className="w-[100px] h-[100px] object-cover"
                 />
                 <div className="text-left">
-                  <h4 className="text-lg font-semibold font-['Playfair_Display']">
+                  <h4 className="text-lg font-semibold  ">
                     {item.name}
                   </h4>
                   <p className="font-bold text-[#8E7037]">{item.price}</p>
@@ -100,7 +103,7 @@ export default function Restaurant() {
 
           {/* Drinks Section */}
           <div className="mt-12">
-            <h3 className="text-2xl font-semibold font-['Playfair_Display'] mb-6">
+            <h3 className="text-2xl font-semibold   mb-6">
               Drinks
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -116,7 +119,7 @@ export default function Restaurant() {
                     className="w-[100px] h-[100px] object-cover"
                   />
                   <div className="text-left">
-                    <h4 className="text-lg font-semibold font-['Playfair_Display']">
+                    <h4 className="text-lg font-semibold  ">
                       {drink.name}
                     </h4>
                     <p className="font-bold text-[#8E7037]">{drink.price}</p>
@@ -130,9 +133,9 @@ export default function Restaurant() {
       </div>
 
       {/* Reservation Section */}
-      <div className="bg-black/80 backdrop-blur-md py-12">
+      <div className="bg-black/80 backdrop-blur-md mt-10 py-12">
         <div className="max-w-screen-md mx-auto px-4">
-          <h2 className="text-3xl font-semibold font-['Playfair_Display'] text-center text-white mb-8">
+          <h2 className="text-3xl font-semibold   text-center text-white mb-8">
             Reservation
           </h2>
 
@@ -175,7 +178,7 @@ export default function Restaurant() {
 
       {/* Gallery Section */}
       <section className="my-10">
-        <h2 className="text-3xl font-semibold text-center font-['Playfair_Display'] mb-6">
+        <h2 className="text-3xl font-semibold text-center   mb-6">
           Gallery Restaurant
         </h2>
         <div className="flex justify-center space-x-4 mb-6">

@@ -24,7 +24,7 @@ function Navbar() {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold  pb-4 mt-16 ">
+    <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold  pb-4 mt-16  ">
       <div
         className={`${
           isHome
