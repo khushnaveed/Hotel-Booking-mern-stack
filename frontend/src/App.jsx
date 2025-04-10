@@ -9,7 +9,7 @@ import Gallery from "./pages/Gallery";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Events from "./pages/Events";
-import EventDetails from "./components/EventDetails";
+import EventDetails from "./components/EventDetails.jsx";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NavbarTop from "./components/NavbarTop";
@@ -20,26 +20,26 @@ function App() {
       <NavbarTop />
       <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/rooms" element={<Rooms />} />
-          {/* <Route path="/rooms/:roomType" element={<RoomDetail />} /> */}
-          {/* zahra added next line */}
-          <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/rooms" element={<Rooms />} />
+        {/* <Route path="/rooms/:roomType" element={<RoomDetail />} /> */}
+        {/* zahra added next line */}
+        <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
 
-          <Route path="/restaurant" element={<Restaurant />} />
-          <Route path="/reservation/rooms" element={<Rooms />} />
-          <Route path="/events" element={<Events />} />
+        <Route path="/restaurant" element={<Restaurant />} />
 
-          <Route path="/events/:eventId" element={<EventDetails />} />
+        <Route path="/events" element={<Events />} />
 
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-     
+        <Route path="/events/:id" element={<EventDetails />} />
+
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+
       <Footer />
     </BrowserRouter>
   );
