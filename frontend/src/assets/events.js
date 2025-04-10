@@ -1,4 +1,4 @@
-const events = [
+/* const events = [
   {
     id: "relaxing-travel-hotel",
     date: "23 JAN",
@@ -37,3 +37,4 @@ const events = [
 ];
 
 export default events;
+ */

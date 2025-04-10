@@ -4,6 +4,7 @@ import roomRoutes from "./routes/roomRoutes.js"
 import { config } from "dotenv";
 //npm i cors
 import cors from "cors"
+import eventRoutes from './routes/eventRoutes.js';
 
 config();
 console.clear()
@@ -33,6 +34,8 @@ try {
 
 //routes
 app.use("/room", roomRoutes)
+
+app.use('/events', eventRoutes);
 
 
 
