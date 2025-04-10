@@ -12,6 +12,8 @@ export default function Restaurant() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [activeMeal, setActiveMeal] = useState("Breakfast");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
 
   const openModal = (item) => {
     setSelectedItem(item);
@@ -29,11 +31,37 @@ export default function Restaurant() {
   const filteredDrinks =
     restaurantData.find((group) => group.title === activeMeal)?.drinks || [];
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const errors = {};
+    if (!form.name.value) errors.name = "Name is required.";
+    if (!form.email.value) errors.email = "Email is required.";
+    if (!form.phone.value) errors.phone = "Phone number is required.";
+    if (!form.date.value) errors.date = "Date is required.";
+    if (!form.guests.value) errors.guests = "Number of guests is required.";
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return; // If there are errors, this stops the form submission
+    }
+
+    setIsSubmitted(true);
+    setFormErrors({}); // Clear any previous errors
+    form.reset(); // Reset form fields immediately
+
+    // Reset confirmation message after 4 seconds
+    setTimeout(() => {
+      setIsSubmitted(false);
+    }, 4000);
+  };
+
   return (
     <>
       {/* Hero Section */}
       <section
-        className=" relative w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
+        className="relative w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{
           backgroundImage: `url(https://img.freepik.com/premium-photo/chef-is-carefully-plating-dish-restaurant-kitchen-plate-is-arranged-with-variety-colorful-vegetables-small-portion-meat_36682-6799.jpg)`,
         }}
@@ -56,7 +84,7 @@ export default function Restaurant() {
       </section>
 
       {/* Meal Selection */}
-      <div className="flex justify-center space-x-100 mt-10 mb-20">
+      <div className="flex justify-center space-x-10 mt-10 mb-20">
         {["Breakfast", "Lunch", "Dinner"].map((meal) => (
           <button
             key={meal}
@@ -73,21 +101,21 @@ export default function Restaurant() {
       {/* Menu Section */}
       <div className="flex flex-col items-center justify-center relative px-4">
         <div className="w-full max-w-screen-lg space-y-12">
-          <h2 className="text-3xl font-semibold   text-center mb-8">
+          <h2 className="text-3xl font-semibold text-center mb-8">
             {activeMeal}
           </h2>
 
           {/* Display items */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {filteredItems.map((item, index) => (
-              <div key={index} className="flex items-center gap-4 ">
+              <div key={index} className="flex items-center gap-4">
                 <img
                   src={item.img}
                   alt={item.name}
                   className="w-[100px] h-[100px] object-cover"
                 />
                 <div className="text-left">
-                  <h4 className="text-lg font-semibold  ">{item.name}</h4>
+                  <h4 className="text-lg font-semibold">{item.name}</h4>
                   <p className="font-bold text-[#8E7037]">{item.price}</p>
                   <p className="text-gray-600 text-sm">{item.desc}</p>
                 </div>
@@ -107,7 +135,7 @@ export default function Restaurant() {
                     className="w-[100px] h-[100px] object-cover"
                   />
                   <div className="text-left">
-                    <h4 className="text-lg font-semibold  ">{drink.name}</h4>
+                    <h4 className="text-lg font-semibold">{drink.name}</h4>
                     <p className="font-bold text-[#8E7037]">{drink.price}</p>
                     <p className="text-gray-600 text-sm">{drink.desc}</p>
                   </div>
@@ -121,50 +149,132 @@ export default function Restaurant() {
       {/* Reservation Section */}
       <div className="bg-black/80 backdrop-blur-md mt-10 py-12">
         <div className="max-w-screen-md mx-auto px-4">
-          <h2 className="text-3xl font-semibold   text-center text-white mb-8">
+          <h2 className="text-3xl font-semibold text-center text-white mb-8">
             Reservation
           </h2>
 
-          <form className="bg-white p-6 rounded shadow space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="Name"
-                className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
-              />
-              <input
-                type="text"
-                placeholder="Phone"
-                className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
-              />
-              <input
-                type="date"
-                className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
-              />
+          {isSubmitted ? (
+            <div className="bg-green-200 text-black-800 p-4 rounded text-center">
+              Thank you for choosing Royal Grand Dining! We appreciate your
+              reservation request and will contact you shortly with a
+              confirmation email.
             </div>
-            <textarea
-              placeholder="Message"
-              className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
-              rows="4"
-            ></textarea>
-            <button
-              type="submit"
-              className="bg-[#8E7037] text-white py-2 px-4 rounded hover:bg-[#7a5e2f] transition"
+          ) : (
+            <form
+              className="bg-white p-6 rounded shadow space-y-4"
+              onSubmit={handleFormSubmit}
             >
-              Book Table
-            </button>
-          </form>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                  />
+                  {formErrors.name && (
+                    <span className="text-red-500 text-sm absolute bottom-0 left-0">
+                      {formErrors.name}
+                    </span>
+                  )}
+                </div>
+                <div className="relative">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                  />
+                  {formErrors.email && (
+                    <span className="text-red-500 text-sm absolute bottom-0 left-0">
+                      {formErrors.email}
+                    </span>
+                  )}
+                </div>
+                <div className="flex space-x-2">
+                  {/* Country Code Dropdown */}
+                  <select
+                    name="countryCode"
+                    className="border border-[#8E7037] p-2 rounded w-1/3 focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                    defaultValue="+1"
+                  >
+                    {[
+                      { code: "+1", name: "USA" },
+                      { code: "+252", name: "Somalia" },
+                      { code: "+98", name: "Iran" },
+                      { code: "+92", name: "Pakistan" },
+                      { code: "+93", name: "Afghanistan" },
+                    ]
+                      .sort((a, b) => a.name.localeCompare(b.name)) // Alphabetical order by country name
+                      .map((country) => (
+                        <option key={country.code} value={country.code}>
+                          {country.code} 
+                        </option>
+                      ))}
+                  </select>
+                  {/* Phone Number Input */}
+                  <input
+                    name="phone"
+                    type="text"
+                    placeholder="Phone"
+                    className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                  />
+                  {formErrors.phone && (
+                    <span className="text-red-500 text-sm absolute bottom-0 left-0">
+                      {formErrors.phone}
+                    </span>
+                  )}
+                </div>
+                <div className="relative">
+                  <input
+                    name="date"
+                    type="date"
+                    className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                  />
+                  {formErrors.date && (
+                    <span className="text-red-500 text-sm absolute bottom-0 left-0">
+                      {formErrors.date}
+                    </span>
+                  )}
+                </div>
+
+                <select
+                  name="guests"
+                  className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                >
+                  <option value="">Number of Guests</option>
+                  {Array.from({ length: 10 }, (_, i) => (
+                    <option key={i} value={i + 1}>
+                      {i + 1}
+                    </option>
+                  ))}
+                </select>
+                {formErrors.guests && (
+                  <span className="text-red-500 text-sm absolute bottom-0 left-0">
+                    {formErrors.guests}
+                  </span>
+                )}
+              </div>
+              <textarea
+                name="message"
+                placeholder="Message"
+                className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                rows="4"
+              ></textarea>
+              <button
+                type="submit"
+                className="bg-[#8E7037] text-white py-2 px-4 rounded hover:bg-[#7a5e2f] transition"
+              >
+                Book Table
+              </button>
+            </form>
+          )}
         </div>
       </div>
 
       {/* Gallery Section */}
       <section className="my-10">
-        <h2 className="text-3xl font-semibold text-center   mb-6">
+        <h2 className="text-3xl font-semibold text-center mb-6">
           Select a photo to view it in detail.
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 px-4">
