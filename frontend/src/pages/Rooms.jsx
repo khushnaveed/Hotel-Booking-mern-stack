@@ -38,7 +38,8 @@ export default function Rooms() {
               <li>Bed: King-size or twin beds</li>
             </ul>
             <br />
-            <button   onClick={() => navigate('/rooms/luxury')}
+            <button   onClick={() => navigate('/rooms/luxury-suite')}
+
                       className="px-6 py-2 bg-[#8E7037] text-white hover:bg-white hover:text-[#8E7037] border-2 border-[#8E7037] w-max mt-4 ml-6">View Details</button>
           </div>
         </div>
@@ -57,7 +58,7 @@ export default function Rooms() {
               <li>Bed: King-size or twin beds</li>
             </ul>
             <br />
-            <button    onClick={() => navigate('/rooms/family')}
+            <button     onClick={() => navigate('/rooms/family-suite')}
                        className="px-6 py-2 bg-[#8E7037] text-white hover:bg-white hover:text-[#8E7037] border-2 border-[#8E7037] w-max mt-4 ml-6">View Details</button>
           </div>
         </div>
@@ -65,8 +66,8 @@ export default function Rooms() {
         {/* Room 3 */}
         <div className='relative overflow-hidden group sm:w-[80%]'>
           <img src="/src/assets/room-36.jpg" alt="" className="transition-all duration-300 transform group-hover:scale-120 object-cover w-full h-full group-hover:filter group-hover:brightness-75" />
-          <div className="absolute top-0 left-0 h-full w-[40%] bg-black bg-opacity-20 text-white p-4 flex flex-col pl-6 pt-10" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
-            <h1 className='font-bold text-4xl mt-8'>COUPLE ROOM</h1>
+          <div className="absolute top-0 left-0 h-full w-[40%] bg-black bg-opacity-20 text-white p-4 flex flex-col pl-6 pt-7" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
+            <h1 className='font-bold text-4xl mt-8'>DELUXE ROOM</h1>
             <h6 className='text-[#bfa76e]'>Start from $420 per day</h6>
             <p className="mt-6 ">Perfect for two, the couple room offers a romantic and peaceful setting. It includes a comfortable double bed, soft lighting, and stylish decor to create a cozy atmosphere. This room is great for couples looking to relax and enjoy quality time together.</p>
             <ul className="list-disc pl-5 mt-6">
@@ -76,7 +77,7 @@ export default function Rooms() {
               <li>Bed: King-size or twin beds</li>
             </ul>
             <br />
-            <button   onClick={() => navigate('/rooms/couple')}
+            <button   onClick={() => navigate('/rooms/deluxe-room')}
  className="px-6 py-2 bg-[#8E7037] text-white hover:bg-white hover:text-[#8E7037] border-2 border-[#8E7037] w-max mt-4 ml-6">View Details</button>
           </div>
         </div>
@@ -85,7 +86,7 @@ export default function Rooms() {
         <div className='relative overflow-hidden group sm:w-[80%]'>
           <img src="/src/assets/room-37.jpg" alt="" className="transition-all duration-300 transform group-hover:scale-120 object-cover w-full h-full group-hover:filter group-hover:brightness-75" />
           <div className="absolute top-0 right-0 h-full w-[40%] bg-black bg-opacity-20 text-white p-4 flex flex-col pl-6 pt-14" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
-            <h1 className='font-bold text-4xl'>STANDARD ROOM</h1>
+            <h1 className='font-bold text-4xl'>SINGLE ROOM</h1>
             <h6 className='text-[#bfa76e] '>Start from $100 per day</h6>
             <p className="mt-6 ">Our standard room is a simple yet comfortable option for solo travelers or short stays. It includes a single or double bed, a clean bathroom, and all the basic amenities needed for a pleasant stay at an affordable price.</p>
             <ul className="list-disc pl-5 mt-6">
@@ -95,7 +96,7 @@ export default function Rooms() {
               <li>Bed: King-size or twin beds</li>
             </ul>
             <br />
-            <button   onClick={() => navigate('/rooms/standard')}
+            <button   onClick={() => navigate('/rooms/single-room')}
 
         className="px-6 py-2 bg-[#8E7037] text-white hover:bg-white hover:text-[#8E7037] border-2 border-[#8E7037] w-max mt-4 ml-6">View Details</button>
           </div>

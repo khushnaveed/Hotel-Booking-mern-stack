@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import bgImage from "../assets/login.jpg";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    username: "",
+    userName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -15,36 +18,42 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Optional: check if passwords match
+  
+  
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
     }
-
+  
     try {
-      const response = await fetch("http://localhost:5005/register", {
+      const response = await fetch("http://localhost:5005/guest/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-
+  
       const data = await response.json();
+      console.log(data);  // Check the structure of the response
 
       if (response.ok) {
         alert("Registration successful!");
-        // You can redirect or clear form here
+        navigate("/login");
       } else {
-        alert(data.message || "Something went wrong.");
+        const messages = Array.isArray(data.message)
+          ? data.message.map(err => err.msg).join("\n")
+          : data.message;
+      
+        alert(messages || "Something went wrong.");
       }
+      
     } catch (error) {
       console.error("Error:", error);
       alert("Failed to register.");
     }
   };
-
+  
   return (
     <div className="relative w-full h-screen">
       <img
@@ -63,9 +72,9 @@ export default function Register() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="text"
-            name="username"
+            name="userName"
             placeholder="User Name *"
-            value={formData.username}
+            value={formData.userName}
             onChange={handleChange}
             className="border border-white p-2 bg-transparent text-white placeholder-white"
           />

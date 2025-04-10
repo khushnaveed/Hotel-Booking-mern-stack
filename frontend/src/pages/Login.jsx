@@ -1,28 +1,43 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // for displaying errors
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await fetch("http://localhost:5005/login", {
+      const response = await fetch("http://localhost:5005/guest/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ userName, password }),
       });
+      const token= response.headers.get("token")
+      localStorage.setItem("token",token)
+      const data = await response.json();
 
+      // Check if the response is okay, i.e., status 200
       if (!response.ok) {
-        throw new Error("Invalid username or password.");
+        throw new Error(data.message || "Invalid userName or password.");
       }
 
-      const data = await response.json();
-      // Handle successful login (e.g., store token, redirect)
+      // If login is successful, navigate to rooms page
+      if (data.success) {
+        alert("Login successful!");
+        navigate("/rooms");
+      } else {
+        setError("Login failed: " + data.message);
+      }
     } catch (error) {
-      setError(error.message);
+      console.error("Login error:", error);
+      setError(error.message); // Display error message in UI
     }
   };
 
@@ -38,15 +53,15 @@ export default function Login() {
           LOGIN ACCOUNT
         </h1>
         <p className="mb-6 text-white">Welcome to Royal Grand Hotel.</p>
-        <p className="text-red-500"></p>
+        {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="text"
-            name="username"
+            name="userName"
             placeholder="User Name *"
             className="border border-white p-2 bg-transparent text-white placeholder-white"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
           />
           <input
             type="password"
