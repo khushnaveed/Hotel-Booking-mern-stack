@@ -80,20 +80,14 @@ export default function Restaurant() {
           {/* Display items */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {filteredItems.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-4 cursor-pointer"
-                onClick={() => openModal(item)}
-              >
+              <div key={index} className="flex items-center gap-4 ">
                 <img
                   src={item.img}
                   alt={item.name}
                   className="w-[100px] h-[100px] object-cover"
                 />
                 <div className="text-left">
-                  <h4 className="text-lg font-semibold  ">
-                    {item.name}
-                  </h4>
+                  <h4 className="text-lg font-semibold  ">{item.name}</h4>
                   <p className="font-bold text-[#8E7037]">{item.price}</p>
                   <p className="text-gray-600 text-sm">{item.desc}</p>
                 </div>
@@ -103,25 +97,17 @@ export default function Restaurant() {
 
           {/* Drinks Section */}
           <div className="mt-12">
-            <h3 className="text-2xl font-semibold   mb-6">
-              Drinks
-            </h3>
+            <h3 className="text-2xl font-semibold mb-6">Drinks</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               {filteredDrinks.map((drink, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-4 cursor-pointer"
-                  onClick={() => openModal(drink)}
-                >
+                <div key={index} className="flex items-center gap-4">
                   <img
                     src={drink.img}
                     alt={drink.name}
                     className="w-[100px] h-[100px] object-cover"
                   />
                   <div className="text-left">
-                    <h4 className="text-lg font-semibold  ">
-                      {drink.name}
-                    </h4>
+                    <h4 className="text-lg font-semibold  ">{drink.name}</h4>
                     <p className="font-bold text-[#8E7037]">{drink.price}</p>
                     <p className="text-gray-600 text-sm">{drink.desc}</p>
                   </div>
@@ -179,18 +165,8 @@ export default function Restaurant() {
       {/* Gallery Section */}
       <section className="my-10">
         <h2 className="text-3xl font-semibold text-center   mb-6">
-          Gallery Restaurant
+          Select a photo to view it in detail.
         </h2>
-        <div className="flex justify-center space-x-4 mb-6">
-          {["All", "Breakfast", "Lunch", "Dinner", "Drinks"].map((tab) => (
-            <button
-              key={tab}
-              className="bg-[#8E7037] text-white px-4 py-2 rounded"
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 px-4">
           {restaurantData.flatMap((group) =>
             group.items.concat(group.drinks).map((item) => (
@@ -212,7 +188,7 @@ export default function Restaurant() {
 
       {/* Modal for Enlarged Image */}
       {modalOpen && selectedItem && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black">
           <div className="bg-white p-6 rounded shadow-lg relative">
             <button
               onClick={closeModal}
@@ -223,7 +199,7 @@ export default function Restaurant() {
             <img
               src={selectedItem.img}
               alt={selectedItem.name}
-              className="w-[400px] h-[400px] object-cover mb-4"
+              className="w-[500px] h-[400px] object-cover mb-4"
             />
             <h4 className="text-lg font-semibold mb-2">{selectedItem.name}</h4>
             <p className="text-gray-600">{selectedItem.desc}</p>
