@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import Logo from "../assets/Logo.svg";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
@@ -5,7 +6,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  /*  const [activeDropdown, setActiveDropdown] = useState(null); */
   const navigate = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === "/";
@@ -23,10 +24,12 @@ function Navbar() {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold pt-4 pb-4 mt-4 ">
+    <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold  pb-4 mt-16  ">
       <div
         className={`${
-          isHome ? "bg-black/80 backdrop-blur-md" : "bg-black/80 backdrop-blur-md"
+          isHome
+            ? "bg-black/80 backdrop-blur-md"
+            : "bg-black/80 backdrop-blur-md"
         }`}>
         <div className="container mx-auto px-3">
           <div className="flex justify-between items-center h-20">
@@ -58,12 +61,7 @@ function Navbar() {
                 onSubmenuClick={handleRoomClick}
               />
               <NavItem text="RESTAURANT" path="/restaurant" />
-              <NavItem
-                text="RESERVATIONS"
-                hasSubmenu
-                submenuItems={["Rooms", "Events"]}
-                onSubmenuClick={handleReservationClick}
-              />
+              <NavItem text="EVENTS" path="/events" />
               <NavItem text="GALLERY" path="/gallery" />
               <NavItem text="ABOUT" path="/about" />
               <NavItem text="CONTACT" path="/contact" />
@@ -76,7 +74,7 @@ function Navbar() {
                   console.log("Menu toggle");
                   setIsMenuOpen(!isMenuOpen);
                 }}
-                className="text-gray-800 hover:text-[#8E7037]">
+                className="text-gray-200 hover:text-[#8E7037]">
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
@@ -84,10 +82,11 @@ function Navbar() {
 
           {/* Mobile Menu */}
           {isMenuOpen && (
-            <div className="md:hidden py-4 bg-black/90 text-white z-50 relative rounded-b-lg">
+            <div className="md:hidden py-4 mt-16 bg-black/90 text-white z-50 relative rounded-b-lg">
               <MobileNavItem text="HOME" path="/" />
               <MobileNavItem
                 text="ROOMS"
+                path="/rooms"
                 hasSubmenu
                 submenuItems={[
                   "Luxury Suite",
@@ -100,12 +99,7 @@ function Navbar() {
                 onSubmenuClick={handleRoomClick}
               />
               <MobileNavItem text="RESTAURANT" path="/restaurant" />
-              <MobileNavItem
-                text="RESERVATIONS"
-                hasSubmenu
-                submenuItems={["Rooms", "Events"]}
-                onSubmenuClick={handleReservationClick}
-              />
+              <MobileNavItem text="EVENTS" path="/events" />
               <MobileNavItem text="GALLERY" path="/gallery" />
               <MobileNavItem text="ABOUT" path="/about" />
               <MobileNavItem text="CONTACT" path="/contact" />

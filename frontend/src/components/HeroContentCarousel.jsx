@@ -63,7 +63,7 @@ export default function HeroContentCarousel() {
 
       {/* Booking Form */}
       <div className=" absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/80 p-6 shadow-lg max-w-6xl w-full">
-        <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 items-end font-['Playfair_Display']">
+        <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 items-end">
           <div>
             <label
               htmlFor="check-in"

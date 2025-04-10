@@ -64,7 +64,7 @@ const HomePageRooms = () => {
   const [activeRoom, setActiveRoom] = useState(rooms[0]);
 
   return (
-    <section id="rooms" className="py-24 bg-gray-50 font-['Playfair_Display']">
+    <section id="rooms" className="py-24 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-5xl">Rooms & Suites</h2>

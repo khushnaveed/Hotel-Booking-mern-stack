@@ -51,7 +51,7 @@ const HomePageTestimonials = () => {
   ];
 
   return (
-    <section className="py-24 bg-white font-['Playfair_Display']">
+    <section className="py-24 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-5xl">What Our Guests Say</h2>

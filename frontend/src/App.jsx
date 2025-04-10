@@ -9,6 +9,7 @@ import Gallery from "./pages/Gallery";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Events from "./pages/Events";
+import EventDetails from "./components/EventDetails.jsx";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NavbarTop from "./components/NavbarTop";
@@ -23,13 +24,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/rooms" element={<Rooms />} />
-        {/* <Route path="/rooms/:roomType" element={<RoomDetail />} /> */}
-        <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
         <Route path="/checkout/:roomSlug" element={<Checkout />} />
-
         <Route path="/restaurant" element={<Restaurant />} />
-        <Route path="/reservation/rooms" element={<Rooms />} />
-        <Route path="/reservation/events" element={<Events />} />
+        <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
