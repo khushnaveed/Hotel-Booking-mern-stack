@@ -6,9 +6,9 @@ export default function RoomDetails() {
   const [roomData, setRoomData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const { roomSlug } = useParams();
   const navigate = useNavigate();
-
   useEffect(() => {
     const fetchRoom = async () => {
       try {
@@ -24,6 +24,7 @@ export default function RoomDetails() {
     fetchRoom();
   }, [roomSlug]);
 
+
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % roomData.images.length);
   };
@@ -37,6 +38,8 @@ export default function RoomDetails() {
   const handleBookingSubmit = (e) => {
     e.preventDefault();
     navigate(`/checkout/${roomSlug}`);
+    //navigate('/login');
+
   };
 
   if (loading) return <div>Loading...</div>;
@@ -105,11 +108,10 @@ export default function RoomDetails() {
               ))}
             </div>
           </div>
-
           {/* Booking Form */}
           <div className="bg-gray-100 p-6 shadow-lg h-fit">
             <h5 className="text-xl font-semibold mb-4">
-              STARTING ROOM FROM{" "}
+              ROOM PRICE{" "}
               <strong className="text-[#8E7037]">${roomData.defaultPrice}/day</strong>
             </h5>
             <form className="space-y-4" onSubmit={handleBookingSubmit}>
