@@ -1,19 +1,70 @@
-import React, { useState } from 'react';
-import { Phone, Mail,MapPin, Clock, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Facebook,
+  Twitter,
+  Instagram,
+  Youtube,
+} from "lucide-react";
+import emailjs from "emailjs-com";
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setStatus("error");
+      setMessage("Please enter a valid email address");
+      return;
+    }
+
+   
+
+    emailjs
+      .send(
+        "service_j2sur5t", // Replace with your EmailJS service ID
+        "template_gd6efhj", // Replace with your EmailJS template ID
+        {
+          email: email, // Use the dynamic email entered by the user
+        },
+        "7s3fyFXl9tvcHb_P8" // Replace with your EmailJS public key
+      )
+      .then(
+        (response) => {
+          console.log("SUCCESS!", response.status, response.text);
+          setStatus("success");
+          setMessage("Thank you for subscribing to our newsletter!");
+          setEmail("");
+        },
+        (err) => {
+          console.error("FAILED...", err);
+          setStatus("error");
+          setMessage("Something went wrong. Please try again later.");
+        }
+      );
+  };
+
   return (
     <>
-      {/* Footer */}
       <footer className="bg-[#232323] text-white">
-        {/* Main Footer */}
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* About Section */}
             <div>
-              <h3 className="text-xl font-bold mb-4">About Skyline</h3>
+              <h3 className="text-xl font-bold mb-4">
+                About Royal Grand Hotel
+              </h3>
               <p className="text-gray-300 mb-4">
-                Experience luxury and comfort at its finest. Our hotel offers world-class amenities and exceptional service to make your stay memorable.
+                Experience luxury and comfort at its finest. Our hotel offers
+                world-class amenities and exceptional service to make your stay
+                memorable.
               </p>
               <div className="flex space-x-4">
                 <a href="#" className="hover:text-[#8E7037] transition-colors">
@@ -50,7 +101,8 @@ export default function Footer() {
                 <div className="flex items-start space-x-3">
                   <Clock size={20} />
                   <p className="text-gray-300">
-                    Check-in: 3:00 PM<br />
+                    Check-in: 3:00 PM
+                    <br />
                     Check-out: 12:00 PM
                   </p>
                 </div>
@@ -62,19 +114,44 @@ export default function Footer() {
               <h3 className="text-xl font-bold mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="/rooms" className="text-gray-300 hover:text-[#8E7037] transition-colors">Our Rooms</a>
+                  <a
+                    href="/rooms"
+                    className="text-gray-300 hover:text-[#8E7037] transition-colors"
+                  >
+                    Our Rooms
+                  </a>
                 </li>
                 <li>
-                  <a href="/restaurant" className="text-gray-300 hover:text-[#8E7037] transition-colors">Restaurant</a>
+                  <a
+                    href="/restaurant"
+                    className="text-gray-300 hover:text-[#8E7037] transition-colors"
+                  >
+                    Restaurant
+                  </a>
                 </li>
                 <li>
-                  <a href="/gallery" className="text-gray-300 hover:text-[#8E7037] transition-colors">Gallery</a>
+                  <a
+                    href="/gallery"
+                    className="text-gray-300 hover:text-[#8E7037] transition-colors"
+                  >
+                    Gallery
+                  </a>
                 </li>
                 <li>
-                  <a href="/about" className="text-gray-300 hover:text-[#8E7037] transition-colors">About Us</a>
+                  <a
+                    href="/about"
+                    className="text-gray-300 hover:text-[#8E7037] transition-colors"
+                  >
+                    About Us
+                  </a>
                 </li>
                 <li>
-                  <a href="/contact" className="text-gray-300 hover:text-[#8E7037] transition-colors">Contact</a>
+                  <a
+                    href="/contact"
+                    className="text-gray-300 hover:text-[#8E7037] transition-colors"
+                  >
+                    Contact
+                  </a>
                 </li>
               </ul>
             </div>
@@ -82,17 +159,31 @@ export default function Footer() {
             {/* Newsletter */}
             <div>
               <h3 className="text-xl font-bold mb-4">Newsletter</h3>
-              <p className="text-gray-300 mb-4">Subscribe to our newsletter for special offers and updates.</p>
-              <form className="space-y-3">
+              <p className="text-gray-300 mb-4">
+                Subscribe to our newsletter for special offers and updates.
+              </p>
+              <form onSubmit={handleSubmit} className="space-y-3">
                 <input
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email address"
                   className="w-full px-4 py-2 rounded bg-[#3e3e3e] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
                 />
-                <button className="w-full bg-[#8E7037] text-white px-4 py-2 rounded font-semibold hover:bg-[#3e3e3e] transition-colors">
+                <button
+                  type="submit"
+                  className="w-full bg-[#8E7037] text-white px-4 py-2 rounded font-semibold hover:bg-[#3e3e3e] transition-colors"
+                >
                   Subscribe
                 </button>
               </form>
+
+              {status === "success" && (
+                <p className="mt-2 text-[#8E7037] text-sm">{message}</p>
+              )}
+              {status === "error" && (
+                <p className="mt-2 text-red-400 text-sm">{message}</p>
+              )}
             </div>
           </div>
         </div>
@@ -102,17 +193,33 @@ export default function Footer() {
           <div className="container mx-auto px-4 py-6">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-[#8E7037] text-sm">
-                © {new Date().getFullYear()} Skyline Hotel. All rights reserved.
+                © {new Date().getFullYear()} Royal Grand Hotel. All rights
+                reserved.
               </p>
               <div className="flex space-x-4 mt-4 md:mt-0">
-                <a href="#" className="text-gray-300 hover:text-[#8E7037] text-sm">Privacy Policy</a>
-                <a href="#" className="text-gray-300 hover:text-[#8E7037] text-sm">Terms & Conditions</a>
-                <a href="#" className="text-gray-300 hover:text-[#8E7037] text-sm">Sitemap</a>
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-[#8E7037] text-sm"
+                >
+                  Privacy Policy
+                </a>
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-[#8E7037] text-sm"
+                >
+                  Terms & Conditions
+                </a>
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-[#8E7037] text-sm"
+                >
+                  Sitemap
+                </a>
               </div>
             </div>
           </div>
         </div>
       </footer>
     </>
-  )
+  );
 }
