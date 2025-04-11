@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   const [userName, setUserName] = useState("");
@@ -77,6 +78,14 @@ export default function Login() {
           >
             LOGIN
           </button>
+          <p   className=" p-2 bg-transparent text-white"
+          ><Link to="/forgot-password" className="text-sm text-blue-600">
+          Forgot Password?
+        </Link>
+        </p>
+          <p className=" p-2 bg-transparent text-white">Don't have and account ?  <Link to="/register">
+          <span style={{ color: 'blue', cursor: 'pointer' }}> Register Now </span>
+         </Link></p>
         </form>
       </div>
     </div>
