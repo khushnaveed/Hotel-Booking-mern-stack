@@ -199,3 +199,77 @@ export const loginGuest = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
+
+
+// 1. Forgot Password (send email)
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const guest = await GuestModel.findOne({ email });
+
+    if (!guest) {
+      return res.status(404).json({ success: false, message: "No user with that email" });
+    }
+
+    const resetToken = jwt.sign(
+      { guestId: guest._id },
+      process.env.SECRET_KEY,
+      { expiresIn: "15m" }
+    );
+
+    const resetLink = `http://localhost:5173/reset-password/${resetToken}`; // Adjust frontend port
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"Royal Grand" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "Password Reset Request",
+      html: `
+        <p>Hello ${guest.userName},</p>
+        <p>You requested to reset your password. Click the link below to do so:</p>
+        <a href="${resetLink}">Reset Password</a>
+        <p>This link will expire in 15 minutes.</p>
+      `,
+    });
+
+    res.json({ success: true, message: "Reset link sent to your email" });
+  } catch (error) {
+    console.error("Error in forgot password:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+// 2. Reset Password (update the password in DB)
+export const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password, confirmPassword } = req.body;
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ success: false, message: "Passwords do not match!" });
+    }
+
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const guest = await GuestModel.findById(decoded.guestId);
+
+    if (!guest) {
+      return res.status(404).json({ success: false, message: "Invalid or expired token" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    guest.password = hashedPassword;
+    await guest.save();
+
+    res.json({ success: true, message: "Password reset successfully!" });
+  } catch (error) {
+    console.error("Error in reset password:", error);
+    res.status(500).json({ success: false, message: "Failed to reset password." });
+  }
+};
