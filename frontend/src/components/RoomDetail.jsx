@@ -7,8 +7,17 @@ export default function RoomDetails() {
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Booking data state
+  const [bookingData, setBookingData] = useState({
+    arrive: '',
+    departure: '',
+    adult: 1,
+    child: 0,
+  });
+
   const { roomSlug } = useParams();
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchRoom = async () => {
       try {
@@ -24,7 +33,6 @@ export default function RoomDetails() {
     fetchRoom();
   }, [roomSlug]);
 
-
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % roomData.images.length);
   };
@@ -37,10 +45,48 @@ export default function RoomDetails() {
 
   const handleBookingSubmit = (e) => {
     e.preventDefault();
-    navigate(`/checkout/${roomSlug}`);
-    //navigate('/login');
+    console.log("Booking Data: ", bookingData);
 
+    // Room base price
+    const basePrice = roomData.defaultPrice;
+
+    // Extra charges for adults and children
+    const extraAdultFee = 70; // Fee for each adult above 2
+    const childFee = 30; // Fee for each child
+
+    // Calculate the number of nights
+    const start = new Date(bookingData.arrive);
+    const end = new Date(bookingData.departure);
+    const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) || 1; // Ensure at least 1 night
+
+    // Calculate the total price
+    let totalPrice = basePrice * nights;
+
+    // Add extra charge for adults above the base number (2 adults)
+    if (bookingData.adult > 2) {
+      totalPrice += (bookingData.adult - 2) * extraAdultFee * nights;
+    }
+
+    // Add charge for children (calculated for each child)
+    totalPrice += bookingData.child * childFee * nights;
+
+    // Create payload with calculated totalPrice
+    const payload = {
+      slug: roomSlug,
+      arrivalDate: bookingData.arrive,
+      departureDate: bookingData.departure,
+      numAdults: parseInt(bookingData.adult),
+      numChildren: parseInt(bookingData.child),
+      selectedPackages: [], // Optional: you can add package selection later
+      totalPrice, // Pass the totalPrice calculated
+    };
+
+    // Navigate and pass the payload in the state
+    navigate(`/checkout/${roomSlug}`, {
+      state: payload // Pass the payload directly
+    });
   };
+
 
   if (loading) return <div>Loading...</div>;
   if (!roomData) return <div>Room not found</div>;
@@ -108,23 +154,32 @@ export default function RoomDetails() {
               ))}
             </div>
           </div>
+
           {/* Booking Form */}
           <div className="bg-gray-100 p-6 shadow-lg h-fit">
             <h5 className="text-xl font-semibold mb-4">
-              ROOM PRICE{" "}
+              STARTING PRICE FROM{" "}
               <strong className="text-[#8E7037]">${roomData.defaultPrice}/day</strong>
             </h5>
+
             <form className="space-y-4" onSubmit={handleBookingSubmit}>
               <div>
                 <label>ARRIVE</label>
-                <input type="date" name="arrive" className="w-full p-2 bg-white placeholder-gray-400 text-gray-700" />
+                <input
+                  type="date"
+                  name="arrive"
+                  value={bookingData.arrive}
+                  onChange={(e) => setBookingData({ ...bookingData, arrive: e.target.value })}
+                  className="w-full p-2 bg-white placeholder-gray-400 text-gray-700"
+                />
               </div>
               <div>
                 <label>DEPARTURE</label>
                 <input
                   type="date"
                   name="departure"
-                  placeholder="Arrival Date"
+                  value={bookingData.departure}
+                  onChange={(e) => setBookingData({ ...bookingData, departure: e.target.value })}
                   className="w-full p-2 bg-white"
                 />
               </div>
@@ -134,6 +189,8 @@ export default function RoomDetails() {
                   type="number"
                   name="adult"
                   min="1"
+                  value={bookingData.adult}
+                  onChange={(e) => setBookingData({ ...bookingData, adult: e.target.value })}
                   className="w-full p-2 bg-white"
                 />
               </div>
@@ -143,15 +200,19 @@ export default function RoomDetails() {
                   type="number"
                   name="child"
                   min="0"
+                  value={bookingData.child}
+                  onChange={(e) => setBookingData({ ...bookingData, child: e.target.value })}
                   className="w-full p-2 bg-white"
                 />
               </div>
-              <button
-                type="submit"
-                className="w-full bg-[#8E7037] text-white font-bold py-2 transition duration-300 ease-in-out hover:bg-white hover:text-[#8E7037]"
-              >
-                BOOK NOW
-              </button>
+              <div className="mt-4">
+                <button
+                  type="submit"
+                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
+                >
+                  Book Now
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -187,8 +248,7 @@ function Tabs({ roomData }) {
           </ul>
         </div>
       )
-    }
-    ,
+    },
     {
       key: "amenities",
       label: "AMENITIES",
@@ -212,8 +272,7 @@ function Tabs({ roomData }) {
           </div>
         </div>
       )
-    }
-    ,
+    },
     { key: "packages", label: "PACKAGES", content: roomData.packages.join(", ") },
 
     {
@@ -221,9 +280,7 @@ function Tabs({ roomData }) {
       label: "RATES",
       content: roomData.pricing && roomData.ratings ? (
         <div>
-          {/* Loop through the pricing array */}
           {roomData.pricing.map((price, priceIndex) => {
-            // Find the corresponding rating for the price range
             const matchingRating = roomData.ratings.find(rating =>
               new Date(rating.startDate).getTime() <= new Date(price.endDate).getTime() &&
               new Date(rating.endDate).getTime() >= new Date(price.startDate).getTime()
@@ -231,16 +288,13 @@ function Tabs({ roomData }) {
 
             return (
               <div key={priceIndex}>
-                {/* Price Information */}
                 <div>
                   <p><strong>Price Range:</strong> From {new Date(price.startDate).toLocaleDateString()} To {new Date(price.endDate).toLocaleDateString()}</p>
                   <p><strong>Price:</strong> ${price.price} per day</p>
                 </div>
 
-                {/* Rating Information */}
                 {matchingRating && (
                   <div>
-
                     <p><strong>Rating:</strong> {matchingRating.rating} / 5</p>
                     <p><strong>Description:</strong> {matchingRating.description}</p>
                     <p><strong>Rating Period:</strong> From {new Date(matchingRating.startDate).toLocaleDateString()} To {new Date(matchingRating.endDate).toLocaleDateString()}</p>
@@ -259,7 +313,6 @@ function Tabs({ roomData }) {
       {/* Mobile View */}
       <div className="block md:hidden ">
         <div className="flex flex-col items-center space-y-2 mb-6">
-
           {tabs.map((tab) => (
             <div key={tab.key}>
               <button
@@ -277,7 +330,6 @@ function Tabs({ roomData }) {
             </div>
           ))}
         </div>
-
       </div>
 
       {/* Desktop View */}
@@ -308,9 +360,3 @@ function Tabs({ roomData }) {
     </>
   );
 }
-
-
-
-
-
-
