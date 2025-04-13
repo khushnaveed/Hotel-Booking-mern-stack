@@ -1,4 +1,4 @@
-/* import React from 'react';
+import React from 'react';
 
 export default function Checkout() {
     return (
@@ -28,7 +28,8 @@ export default function Checkout() {
     );
 }
 
- */import { useLocation } from 'react-router-dom';
+
+/* import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Carousel } from 'react-responsive-carousel';
@@ -117,7 +118,6 @@ const Checkout = () => {
         <div className="p-6 max-w-3xl mx-auto flex flex-col items-center space-y-6 mt-8">
             <h1 className="text-2xl font-bold mb-4">Checkout Summary</h1>
 
-            {/* Image Carousel */}
             {roomDetails.images?.length > 0 && (
                 <Carousel showThumbs={false} className="mb-6 rounded-xl overflow-hidden max-w-full">
                     {roomDetails.images.map((img, i) => (
@@ -128,13 +128,11 @@ const Checkout = () => {
                 </Carousel>
             )}
 
-            {/* Overview */}
             <div className="mb-4 w-full">
                 <h2 className="text-xl font-semibold mb-2">Overview</h2>
                 <p>{roomDetails.descOverview}</p>
             </div>
 
-            {/* Booking Details */}
             <div className="mb-4 space-y-1 w-full">
                 <p><strong>Room:</strong> {summary.roomTitle}</p>
                 <p><strong>Arrival Date:</strong> {formatDate(summary.arrivalDate)}</p>
@@ -144,7 +142,6 @@ const Checkout = () => {
                 <p><strong>Total Price:</strong> ${summary.totalPrice}</p>
             </div>
 
-            {/* Selected Packages */}
             {summary.selectedPackages?.length > 0 && (
                 <div className="mb-4 w-full">
                     <h2 className="text-xl font-semibold mb-1">Selected Packages</h2>
@@ -156,7 +153,6 @@ const Checkout = () => {
                 </div>
             )}
 
-            {/* Available Packages */}
             {roomDetails.packages?.length > 0 && (
                 <div className="mb-4 w-full">
                     <h2 className="text-xl font-semibold mb-1">Available Packages</h2>
@@ -168,7 +164,6 @@ const Checkout = () => {
                 </div>
             )}
 
-            {/* Confirm Booking Button */}
             <div className="mt-6 w-full flex justify-center">
                 <button
                     onClick={handleBooking}
@@ -182,3 +177,4 @@ const Checkout = () => {
 };
 
 export default Checkout;
+ */
