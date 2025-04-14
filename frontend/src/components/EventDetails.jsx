@@ -46,11 +46,12 @@ function EventDetails() {
       />
       <h1 className="text-3xl font-bold mb-2">{event.title}</h1>
       <p className="text-sm text-gray-500 mb-6">Date: {event.date}</p>
+      <h2 className="text-lg text-gray-700 font-semibold mb-6">Price: ${event.price}</h2>
       <p className="text-lg">{event.excerpt}</p>
       <Link
             to="/login"
             className="w-full bg-[#8E7037] text-white mr-8 px-4 py-2 rounded font-semibold hover:bg-[#3e3e3e] transition-colors">
-            Book Now
+            Add Event
           </Link>
       <Link
         to={`/events`}
