@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import heroImage from "../assets/heroImage.jpg";
+import { useCurrency } from "../context/CurrencyContext";
 
 function EventDetails() {
+    const { currency } = useCurrency();
+    const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const { id } = useParams();
   const [event, setEvent] = useState(null);
 
@@ -46,7 +49,7 @@ function EventDetails() {
       />
       <h1 className="text-3xl font-bold mb-2">{event.title}</h1>
       <p className="text-sm text-gray-500 mb-6">Date: {event.date}</p>
-      <h2 className="text-lg text-gray-700 font-semibold mb-6">Price: ${event.price}</h2>
+      <h2 className="text-lg text-gray-700 font-semibold mb-6">Price: <span>{currencySymbols[currency]}{event.price}</span></h2>
       <p className="text-lg">{event.excerpt}</p>
       <Link
             to="/login"

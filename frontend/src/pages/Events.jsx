@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import BlogCard from "../components/BlogCard.jsx";
+import { useCurrency } from "../context/CurrencyContext";
 
 function Events() {
+  const { currency } = useCurrency();
+  const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
 
@@ -70,7 +73,13 @@ function Events() {
                   className="block text-black hover:text-white text-center py-2 px-4 rounded-lg transition duration-300">
                   LUXURY ROOM
                   <br />
-                  $220
+                  <p className="text-md text-gray-700 font-semibold mb-6">
+                    Price:{" "}
+                    <span>
+                      {currencySymbols[currency]}
+                      {event.price}
+                    </span>
+                  </p>
                 </Link>
               </div>
             </div>
