@@ -91,7 +91,8 @@ function Events() {
                   image={event.image}
                   excerpt={event.excerpt}
                   showCountdown={event.showCountdown}
-                  slug={event._id} // 👈 Pass slug here
+                  slug={event._id}
+                  price={event.price}
                 />
               </div>
             ))
