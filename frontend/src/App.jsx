@@ -14,16 +14,19 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile"; // Imported the Profile component
 import NavbarTop from "./components/NavbarTop";
-import Checkout from "./pages/Checkout"
+import Checkout from "./pages/Checkout";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import { CurrencyProvider } from "./context/CurrencyContext";
 
 
 function App() {
   return (
-    <BrowserRouter>
-      <NavbarTop />
-      <Navbar />
+    <CurrencyProvider>
+      <BrowserRouter>
+        <NavbarTop />
+        <Navbar />
+
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -43,8 +46,27 @@ function App() {
         <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
 
-      <Footer />
-    </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/rooms" element={<Rooms />} />
+          <Route path="/checkout/:roomSlug" element={<Checkout />} />
+          <Route path="/restaurant" element={<Restaurant />} />
+          <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/events/:id" element={<EventDetails />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+        </Routes>
+
+
+        <Footer />
+      </BrowserRouter>
+    </CurrencyProvider>
   );
 }
 
