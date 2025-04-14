@@ -10,8 +10,10 @@ import {
   LogIn,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCurrency } from "../context/CurrencyContext";
 
 function NavbarTop() {
+  const { currency, changeCurrency } = useCurrency();
   return (
     <div className="fixed top-0 left-0 w-full z-[101] bg-black/30 backdrop-blur-md">
       {/* Top Bar */}
@@ -29,7 +31,7 @@ function NavbarTop() {
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin size={16} />
-                  <span className="text-sm">Location</span>
+                <span className="text-sm">Location</span>
               </div>
             </div>
 
@@ -45,20 +47,17 @@ function NavbarTop() {
                   <div className="py-1">
                     <a
                       href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                       English
                     </a>
                     <a
                       href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                       Español
                     </a>
                     <a
                       href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                       Français
                     </a>
                   </div>
@@ -69,29 +68,25 @@ function NavbarTop() {
               <div className="group relative cursor-pointer">
                 <div className="flex items-center space-x-1 hover:text-gray-300">
                   <DollarSign size={16} />
-                  <span className="text-sm">USD</span>
+                  <span className="text-sm">{currency}</span>{" "}
+                  {/* <-- Shows current currency */}
                   <ChevronDown size={14} />
                 </div>
                 <div className="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   <div className="py-1">
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      USD
-                    </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      EUR
-                    </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      GBP
-                    </a>
+                    {["USD", "EUR", "GBP"].map((cur) => (
+                      <a
+                        key={cur}
+                        onClick={() => changeCurrency(cur)}
+                        href="#"
+                        className={`block px-4 py-2 text-sm ${
+                          currency === cur
+                            ? "text-blue-500 font-semibold"
+                            : "text-gray-700"
+                        } hover:bg-gray-100`}>
+                        {cur}
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>
