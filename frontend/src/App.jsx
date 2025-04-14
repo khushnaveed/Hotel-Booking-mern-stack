@@ -12,10 +12,12 @@ import Events from "./pages/Events";
 import EventDetails from "./components/EventDetails.jsx";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Profile from "./pages/Profile"; // Imported the Profile component
 import NavbarTop from "./components/NavbarTop";
 import Checkout from "./pages/Checkout"
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+
 
 function App() {
   return (
@@ -36,6 +38,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} /> {/* Added the profile route */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
