@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 
-function BlogCard({ date, title, image, excerpt, showCountdown }) {
+function BlogCard({ date, title, image, excerpt, showCountdown, slug }) {
   const [day, month] = date.split(" "); // Assume date format is "Day Month"
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -69,7 +69,7 @@ function BlogCard({ date, title, image, excerpt, showCountdown }) {
       {/* Text Content */}
       {/* Make sure only one Link component is wrapping the text content */}
       <Link
-        to={`/events/${title.toLowerCase().replace(/\s+/g, "-")}`}
+        to={`/events/${slug}`}
         className="lg:w-3/5 group cursor-pointer no-underline text-inherit"
       >
         <h3 className="text-xl font-bold mb-2 group-hover:underline">{title}</h3>

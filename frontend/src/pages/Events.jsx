@@ -84,17 +84,16 @@ function Events() {
             <div>Loading events...</div>
           ) : (
             events.map((event) => (
-              <Link key={event._id} to={`/events/${event._id}`}>
-                <div className="pb-8 [&_img]:rounded-none">
-                  <BlogCard
-                    date={event.date}
-                    title={event.title}
-                    image={event.image}
-                    excerpt={event.excerpt}
-                    showCountdown={event.showCountdown}
-                  />
-                </div>
-              </Link>
+              <div key={event._id} className="pb-8 [&_img]:rounded-none">
+                <BlogCard
+                  date={event.date}
+                  title={event.title}
+                  image={event.image}
+                  excerpt={event.excerpt}
+                  showCountdown={event.showCountdown}
+                  slug={event._id} // 👈 Pass slug here
+                />
+              </div>
             ))
           )}
         </main>
