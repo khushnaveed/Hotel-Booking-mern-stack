@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [userName, setUserName] = useState("");
@@ -20,8 +20,8 @@ export default function Login() {
         },
         body: JSON.stringify({ userName, password }),
       });
-      const token= response.headers.get("token")
-      localStorage.setItem("token",token)
+      const token = response.headers.get("token");
+      localStorage.setItem("token", token);
       const data = await response.json();
 
       // Check if the response is okay, i.e., status 200
@@ -54,7 +54,8 @@ export default function Login() {
           LOGIN ACCOUNT
         </h1>
         <p className="mb-6 text-white">Welcome to Royal Grand Hotel.</p>
-        {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
+        {error && <p className="text-red-500">{error}</p>}{" "}
+        {/* Display error message */}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -78,14 +79,20 @@ export default function Login() {
           >
             LOGIN
           </button>
-          <p   className=" p-2 bg-transparent text-white"
-          ><Link to="/forgot-password" className="text-sm text-blue-600">
-          Forgot Password?
-        </Link>
-        </p>
-          <p className=" p-2 bg-transparent text-white">Don't have and account ?  <Link to="/register">
-          <span style={{ color: 'blue', cursor: 'pointer' }}> Register Now </span>
-         </Link></p>
+          <p className=" p-2 bg-transparent text-white">
+            <Link to="/forgot-password" className="text-sm text-blue-600">
+              Forgot Password?
+            </Link>
+          </p>
+          <p className=" p-2 bg-transparent text-white">
+            Don't have and account ?{" "}
+            <Link to="/register">
+              <span style={{ color: "blue", cursor: "pointer" }}>
+                {" "}
+                Register Now{" "}
+              </span>
+            </Link>
+          </p>
         </form>
       </div>
     </div>

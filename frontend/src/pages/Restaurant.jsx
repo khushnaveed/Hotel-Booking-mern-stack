@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { restaurantData } from "../assets/restaurantData.js";
+import emailjs from "emailjs-com"; // Import EmailJS SDK
 import {
   FaTwitter,
   FaFacebookF,
@@ -46,15 +47,44 @@ export default function Restaurant() {
       setFormErrors(errors);
       return; // If there are errors, this stops the form submission
     }
+    // Prepare email parameters
+    const templateParams = {
+      name: form.name.value,
+      email: form.email.value,
+      phone: `${form.countryCode.value}${form.phone.value}`,
+      date: form.date.value,
+      guests: form.guests.value,
+      message: form.message.value,
+    };
 
-    setIsSubmitted(true);
-    setFormErrors({}); // Clear any previous errors
-    form.reset(); // Reset form fields immediately
+    // Send email using EmailJS
+    emailjs
+      .send(
+        "service_grgwfqx",
+        "template_4dimzkl",
+        templateParams,
+        "Q0RGdIfcq2A_dJRBm"
+      )
+      .then(
+        (response) => {
+          console.log(
+            "Email sent successfully!",
+            response.status,
+            response.text
+          );
+          setIsSubmitted(true);
+          setFormErrors({}); // Clear any previous errors
+          form.reset(); // Reset form fields immediately
 
-    // Reset confirmation message after 4 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 4000);
+          // Reset confirmation message after 4 seconds
+          setTimeout(() => {
+            setIsSubmitted(false);
+          }, 4000);
+        },
+        (error) => {
+          console.log("Failed to send email. Error: ", error);
+        }
+      );
   };
 
   return (
@@ -191,7 +221,7 @@ export default function Restaurant() {
                     </span>
                   )}
                 </div>
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 relative">
                   {/* Country Code Dropdown */}
                   <select
                     name="countryCode"
@@ -208,7 +238,7 @@ export default function Restaurant() {
                       .sort((a, b) => a.name.localeCompare(b.name)) // Alphabetical order by country name
                       .map((country) => (
                         <option key={country.code} value={country.code}>
-                          {country.code} 
+                          {country.code}
                         </option>
                       ))}
                   </select>
@@ -232,7 +262,7 @@ export default function Restaurant() {
                     className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
                   />
                   {formErrors.date && (
-                    <span className="text-red-500 text-sm absolute bottom-0 left-0">
+                    <span className="text-red-500 text-sm relative bottom-0 left-0">
                       {formErrors.date}
                     </span>
                   )}
@@ -298,20 +328,21 @@ export default function Restaurant() {
 
       {/* Modal for Enlarged Image */}
       {modalOpen && selectedItem && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black">
-          <div className="bg-white p-6 rounded shadow-lg relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
+          <div className="bg-white p-6 rounded-2xl shadow-2xl relative max-w-md w-full">
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-xl text-gray-600"
+              className="absolute top-3 right-3 text-2xl text-gray-500 hover:text-gray-800"
+              aria-label="Close modal"
             >
               &times;
             </button>
             <img
               src={selectedItem.img}
               alt={selectedItem.name}
-              className="w-[500px] h-[400px] object-cover mb-4"
+              className="w-full h-64 object-cover rounded-lg mb-4"
             />
-            <h4 className="text-lg font-semibold mb-2">{selectedItem.name}</h4>
+            <h4 className="text-xl font-semibold mb-2">{selectedItem.name}</h4>
             <p className="text-gray-600">{selectedItem.desc}</p>
           </div>
         </div>
