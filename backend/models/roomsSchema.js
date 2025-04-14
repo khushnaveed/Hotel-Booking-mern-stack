@@ -16,6 +16,7 @@ const calendarSchema = new Schema({
 }, { _id: false });
 
 const roomSchema = new Schema({
+
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
 
