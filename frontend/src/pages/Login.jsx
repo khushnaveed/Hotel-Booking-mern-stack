@@ -32,7 +32,7 @@ export default function Login() {
       // If login is successful, navigate to rooms page
       if (data.success) {
         alert("Login successful!");
-        navigate("/rooms");
+        navigate("/profile");
       } else {
         setError("Login failed: " + data.message);
       }
