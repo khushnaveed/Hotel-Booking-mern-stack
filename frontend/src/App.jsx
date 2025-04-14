@@ -19,32 +19,12 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import { CurrencyProvider } from "./context/CurrencyContext";
 
-
 function App() {
   return (
     <CurrencyProvider>
       <BrowserRouter>
         <NavbarTop />
         <Navbar />
-
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/rooms" element={<Rooms />} />
-        <Route path="/checkout/:roomSlug" element={<Checkout />} />
-        <Route path="/restaurant" element={<Restaurant />} />
-        <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/events/:id" element={<EventDetails />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} /> {/* Added the profile route */}
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
-      </Routes>
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -59,10 +39,11 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />{" "}
+          {/* Added the profile route */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
         </Routes>
-
 
         <Footer />
       </BrowserRouter>
