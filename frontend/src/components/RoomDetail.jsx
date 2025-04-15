@@ -103,7 +103,7 @@ export default function RoomDetails() {
     <div className="relative">
       {/* Hero Section */}
       <section
-        className="absolute top-0 left-0 w-full h-[40vh] bg-cover bg-center flex items-center justify-center"
+        className="absolute top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}
       >
         <div className="absolute inset-0 bg-opacity-40"></div>
