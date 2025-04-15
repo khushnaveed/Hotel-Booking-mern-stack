@@ -16,6 +16,22 @@ export const getRoomBySlug = async (req, res, next) => {
         next(err);
     }
 };
+//GET:Get all rooms
+export const getAllRooms = async (req, res, next) => {
+    try {
+
+        const rooms = await RoomModel.find();
+
+        if (rooms) {
+            res.json({ success: true, data: rooms });
+        } else {
+            res.status(404).json({ success: false, message: "Room not found" });
+        }
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 // POST: Create a new room
 export const createRoom = async (req, res, next) => {
