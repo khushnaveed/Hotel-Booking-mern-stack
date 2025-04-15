@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom"; // Make sure this is imported at the top
+import { useCurrency } from "../context/CurrencyContext.jsx"
 
 
 export default function RoomDetails() {
@@ -10,7 +11,9 @@ export default function RoomDetails() {
 
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  const { currency } = useCurrency();
+  //const { currency, convertPrice } = useCurrency();
+  const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   // Booking data state
   const [bookingData, setBookingData] = useState({
     arrive: '',
@@ -36,6 +39,7 @@ export default function RoomDetails() {
 
     fetchRoom();
 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
   }, [roomSlug]);
 
@@ -103,8 +107,9 @@ export default function RoomDetails() {
     <div className="relative">
       {/* Hero Section */}
       <section
-        className="absolute top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
+        className="absolute top-0 left-0 w-full h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}
+
       >
         <div className="absolute inset-0 bg-opacity-40"></div>
         <div className="relative text-white text-center px-4 sm:px-6 md:px-10">
@@ -115,7 +120,7 @@ export default function RoomDetails() {
             {roomData.title}
           </h1>
           <p
-            className="text-base sm:text-lg mt-2"
+            className="text-lg mt-2"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
             Lorem Ipsum is simply dummy text of the printing
@@ -123,7 +128,11 @@ export default function RoomDetails() {
         </div>
       </section>
 
-      <div className="pt-[40vh] md:pt-[40vh]">
+      {/* <div className="pt-[40vh] md:pt-[40vh]"> */}
+      <div className="pt-[45vh] sm:pt-[48vh] md:pt-[52vh] lg:pt-[45vh] xl:pt-[40vh]">
+
+
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto">
           {/* Image Gallery */}
           <div>
@@ -167,7 +176,10 @@ export default function RoomDetails() {
           <div className="bg-gray-100 p-6 shadow-lg h-fit">
             <h5 className="text-xl font-semibold mb-4">
               ROOM PRICE {" "}
-              <strong className="text-[#8E7037]">${roomData.defaultPrice}/day</strong>
+              <strong className="text-[#8E7037]"> <span>
+
+
+              </span> {currencySymbols[currency]} {roomData.defaultPrice}/day</strong>
             </h5>
 
             <form className="space-y-4" onSubmit={handleBookingSubmit}>
