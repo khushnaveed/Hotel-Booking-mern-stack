@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { restaurantData } from "../assets/restaurantData.js";
-import emailjs from "emailjs-com"; // Import EmailJS SDK
+/* eslint-disable no-unused-vars */
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import emailjs from "emailjs-com";
 import {
   FaTwitter,
   FaFacebookF,
@@ -15,6 +17,10 @@ export default function Restaurant() {
   const [activeMeal, setActiveMeal] = useState("Breakfast");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formErrors, setFormErrors] = useState({});
+  const [menuItems, setMenuItems] = useState([]);
+  const [drinks, setDrinks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const openModal = (item) => {
     setSelectedItem(item);
@@ -26,16 +32,50 @@ export default function Restaurant() {
     setSelectedItem(null);
   };
 
-  const filteredItems =
-    restaurantData.find((group) => group.title === activeMeal)?.items || [];
+  const fetchMenuItems = useCallback(async () => {
+    setLoading(true);
+    setError(null);
 
-  const filteredDrinks =
-    restaurantData.find((group) => group.title === activeMeal)?.drinks || [];
+    try {
+      const response = await fetch("http://localhost:5005/foods/foods");
+      if (!response.ok) {
+        throw new Error(`Fetch error: ${response.status}`);
+      }
+      const data = await response.json();
+
+      const items = Array.isArray(data)
+        ? data
+        : data.data || data.restaurantData || [];
+      if (!Array.isArray(items) || items.length === 0) {
+        throw new Error("Invalid or empty data");
+      }
+
+      const filteredMenuItems = items.filter(
+        (item) => item.title?.toLowerCase() === activeMeal.toLowerCase()
+      );
+      console.log("Fetched items:", items);
+      const filteredDrinks = items.filter(
+        (item) => item.title?.toLowerCase() === "drink"
+      );
+
+      setMenuItems(filteredMenuItems);
+      setDrinks(filteredDrinks);
+    } catch (err) {
+      console.error("Failed to fetch menu items:", err);
+      setError(`Unable to load menu. Error: ${err.message}`);
+      setError("Unable to load menu. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  }, [activeMeal]);
+
+  useEffect(() => {
+    fetchMenuItems();
+  }, [activeMeal, fetchMenuItems]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-
     const errors = {};
     if (!form.name.value) errors.name = "Name is required.";
     if (!form.email.value) errors.email = "Email is required.";
@@ -45,9 +85,9 @@ export default function Restaurant() {
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
-      return; // If there are errors, this stops the form submission
+      return;
     }
-    // Prepare email parameters
+
     const templateParams = {
       name: form.name.value,
       email: form.email.value,
@@ -57,7 +97,6 @@ export default function Restaurant() {
       message: form.message.value,
     };
 
-    // Send email using EmailJS
     emailjs
       .send(
         "service_grgwfqx",
@@ -73,16 +112,12 @@ export default function Restaurant() {
             response.text
           );
           setIsSubmitted(true);
-          setFormErrors({}); // Clear any previous errors
-          form.reset(); // Reset form fields immediately
-
-          // Reset confirmation message after 4 seconds
-          setTimeout(() => {
-            setIsSubmitted(false);
-          }, 4000);
+          setFormErrors({});
+          form.reset();
+          setTimeout(() => setIsSubmitted(false), 4000);
         },
         (error) => {
-          console.log("Failed to send email. Error: ", error);
+          console.log("Email failed:", error);
         }
       );
   };
@@ -135,44 +170,88 @@ export default function Restaurant() {
             {activeMeal}
           </h2>
 
+          {/* Loading and Error States */}
+          {loading && (
+            <div className="text-center py-8">
+              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#8E7037] border-r-transparent"></div>
+              <p className="mt-2">Loading menu items...</p>
+            </div>
+          )}
+
+          {error && !loading && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+              <strong className="font-bold">Error:</strong>
+              <span className="block sm:inline"> {error}</span>
+              <p className="mt-2">Using sample menu data instead.</p>
+            </div>
+          )}
+
           {/* Display items */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {filteredItems.map((item, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="w-[100px] h-[100px] object-cover"
-                />
-                <div className="text-left">
-                  <h4 className="text-lg font-semibold">{item.name}</h4>
-                  <p className="font-bold text-[#8E7037]">{item.price}</p>
-                  <p className="text-gray-600 text-sm">{item.desc}</p>
+          {!loading && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              {menuItems.length > 0 ? (
+                menuItems.map((item, index) => (
+                  <div key={index} className="flex items-center gap-4">
+                    <img
+                      src={item.img || "/placeholder.svg?height=100&width=100"}
+                      alt={item.name}
+                      className="w-[100px] h-[100px] object-cover rounded-md"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/placeholder.svg?height=100&width=100";
+                      }}
+                    />
+                    <div className="text-left">
+                      <h4 className="text-lg font-semibold">{item.name}</h4>
+                      <p className="font-bold text-[#8E7037]">${item.price}</p>
+                      <p className="text-gray-600 text-sm">{item.desc}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="col-span-2 text-center py-8">
+                  <p>
+                    No {activeMeal.toLowerCase()} items available at this time.
+                  </p>
                 </div>
-              </div>
-            ))}
-          </div>
+              )}
+            </div>
+          )}
 
           {/* Drinks Section */}
-          <div className="mt-12">
-            <h3 className="text-2xl font-semibold mb-6">Drinks</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              {filteredDrinks.map((drink, index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <img
-                    src={drink.img}
-                    alt={drink.name}
-                    className="w-[100px] h-[100px] object-cover"
-                  />
-                  <div className="text-left">
-                    <h4 className="text-lg font-semibold">{drink.name}</h4>
-                    <p className="font-bold text-[#8E7037]">{drink.price}</p>
-                    <p className="text-gray-600 text-sm">{drink.desc}</p>
-                  </div>
-                </div>
-              ))}
+          {!loading && (
+            <div className="mt-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                {drinks.length > 0 ? (
+                  drinks.map((drink, index) => (
+                    <div key={index} className="flex items-center gap-4">
+                      <img
+                        src={
+                          drink.img || "/placeholder.svg?height=100&width=100"
+                        }
+                        alt={drink.name}
+                        className="w-[100px] h-[100px] object-cover rounded-md"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src =
+                            "/placeholder.svg?height=100&width=100";
+                        }}
+                      />
+                      <div className="text-left">
+                        <h4 className="text-lg font-semibold">{drink.name}</h4>
+                        <p className="font-bold text-[#8E7037]">
+                          ${drink.price}
+                        </p>
+                        <p className="text-gray-600 text-sm">{drink.desc}</p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="col-span-2 text-center py-8"></div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -185,9 +264,8 @@ export default function Restaurant() {
 
           {isSubmitted ? (
             <div className="bg-green-200 text-black-800 p-4 rounded text-center">
-              Thank you for choosing Royal Grand Dining! We appreciate your
-              reservation request and will contact you shortly with a
-              confirmation email.
+              Thank you for choosing Royal Grand Dining! We'll contact you
+              shortly.
             </div>
           ) : (
             <form
@@ -200,10 +278,10 @@ export default function Restaurant() {
                     type="text"
                     name="name"
                     placeholder="Name"
-                    className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                    className="border border-[#8E7037] p-2 rounded w-full"
                   />
                   {formErrors.name && (
-                    <span className="text-red-500 text-sm absolute bottom-0 left-0">
+                    <span className="text-red-500 text-sm">
                       {formErrors.name}
                     </span>
                   )}
@@ -213,19 +291,18 @@ export default function Restaurant() {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                    className="border border-[#8E7037] p-2 rounded w-full"
                   />
                   {formErrors.email && (
-                    <span className="text-red-500 text-sm absolute bottom-0 left-0">
+                    <span className="text-red-500 text-sm">
                       {formErrors.email}
                     </span>
                   )}
                 </div>
                 <div className="flex space-x-2 relative">
-                  {/* Country Code Dropdown */}
                   <select
                     name="countryCode"
-                    className="border border-[#8E7037] p-2 rounded w-1/3 focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                    className="border border-[#8E7037] p-2 rounded w-1/3"
                     defaultValue="+1"
                   >
                     {[
@@ -235,34 +312,33 @@ export default function Restaurant() {
                       { code: "+92", name: "Pakistan" },
                       { code: "+93", name: "Afghanistan" },
                     ]
-                      .sort((a, b) => a.name.localeCompare(b.name)) // Alphabetical order by country name
+                      .sort((a, b) => a.name.localeCompare(b.name))
                       .map((country) => (
                         <option key={country.code} value={country.code}>
                           {country.code}
                         </option>
                       ))}
                   </select>
-                  {/* Phone Number Input */}
                   <input
                     name="phone"
                     type="text"
                     placeholder="Phone"
-                    className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                    className="border border-[#8E7037] p-2 rounded w-full"
                   />
-                  {formErrors.phone && (
-                    <span className="text-red-500 text-sm absolute bottom-0 left-0">
-                      {formErrors.phone}
-                    </span>
-                  )}
                 </div>
+                {formErrors.phone && (
+                  <span className="text-red-500 text-sm">
+                    {formErrors.phone}
+                  </span>
+                )}
                 <div className="relative">
                   <input
                     name="date"
                     type="date"
-                    className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                    className="border border-[#8E7037] p-2 rounded w-full"
                   />
                   {formErrors.date && (
-                    <span className="text-red-500 text-sm relative bottom-0 left-0">
+                    <span className="text-red-500 text-sm">
                       {formErrors.date}
                     </span>
                   )}
@@ -270,7 +346,7 @@ export default function Restaurant() {
 
                 <select
                   name="guests"
-                  className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                  className="border border-[#8E7037] p-2 rounded w-full"
                 >
                   <option value="">Number of Guests</option>
                   {Array.from({ length: 10 }, (_, i) => (
@@ -280,7 +356,7 @@ export default function Restaurant() {
                   ))}
                 </select>
                 {formErrors.guests && (
-                  <span className="text-red-500 text-sm absolute bottom-0 left-0">
+                  <span className="text-red-500 text-sm">
                     {formErrors.guests}
                   </span>
                 )}
@@ -288,12 +364,12 @@ export default function Restaurant() {
               <textarea
                 name="message"
                 placeholder="Message"
-                className="border border-[#8E7037] p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#8E7037]"
+                className="border border-[#8E7037] p-2 rounded w-full"
                 rows="4"
               ></textarea>
               <button
                 type="submit"
-                className="bg-[#8E7037] text-white py-2 px-4 rounded hover:bg-[#7a5e2f] transition"
+                className="bg-[#8E7037] text-white py-2 px-4 rounded hover:bg-[#a28344]"
               >
                 Book Table
               </button>
@@ -301,52 +377,6 @@ export default function Restaurant() {
           )}
         </div>
       </div>
-
-      {/* Gallery Section */}
-      <section className="my-10">
-        <h2 className="text-3xl font-semibold text-center mb-6">
-          Select a photo to view it in detail.
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 px-4">
-          {restaurantData.flatMap((group) =>
-            group.items.concat(group.drinks).map((item) => (
-              <div
-                key={item.name}
-                className="relative cursor-pointer"
-                onClick={() => openModal(item)}
-              >
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="w-full h-[200px] object-cover"
-                />
-              </div>
-            ))
-          )}
-        </div>
-      </section>
-
-      {/* Modal for Enlarged Image */}
-      {modalOpen && selectedItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
-          <div className="bg-white p-6 rounded-2xl shadow-2xl relative max-w-md w-full">
-            <button
-              onClick={closeModal}
-              className="absolute top-3 right-3 text-2xl text-gray-500 hover:text-gray-800"
-              aria-label="Close modal"
-            >
-              &times;
-            </button>
-            <img
-              src={selectedItem.img}
-              alt={selectedItem.name}
-              className="w-full h-64 object-cover rounded-lg mb-4"
-            />
-            <h4 className="text-xl font-semibold mb-2">{selectedItem.name}</h4>
-            <p className="text-gray-600">{selectedItem.desc}</p>
-          </div>
-        </div>
-      )}
     </>
   );
 }
