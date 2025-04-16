@@ -42,7 +42,9 @@ const WeatherPage = () => {
                 </div>
 
                 {/* Responsive Map */}
-                <div className="h-64 sm:h-72 w-full overflow-hidden rounded-xl">
+                {/* <div className="h-64 sm:h-72 w-full overflow-hidden mt-[85px] sm:mt-[100px] md:mt-[200px]"> */}
+                <div className="h-64 sm:h-72 w-full overflow-hidden" style={{ paddingTop: '70px' }}>
+
                     <MapContainer
                         center={position}
                         zoom={12}

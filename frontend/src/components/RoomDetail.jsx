@@ -54,7 +54,11 @@ export default function RoomDetails() {
       prev === 0 ? roomData.images.length - 1 : prev - 1
     );
   };
-
+  //new
+  const handleEventBooking = () => {
+    navigate('/events'); // Navigate to the events page
+  };
+  //till here
   const handleBookingSubmit = (e) => {
     e.preventDefault();
     console.log("Booking Data: ", bookingData);
@@ -233,6 +237,16 @@ export default function RoomDetails() {
                   Book Now
                 </button>
               </div>
+              <div className="mt-4">
+                <button
+                  type="button"
+                  onClick={handleEventBooking}
+                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
+                >
+                  Book Event
+                </button>
+              </div>
+
             </form>
           </div>
         </div>
