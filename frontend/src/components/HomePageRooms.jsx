@@ -79,9 +79,8 @@ const HomePageRooms = () => {
           {rooms.map((room) => (
             <div
               key={room.id}
-              className={`bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 ${
-                activeRoom.id === room.id ? "ring-2 ring-[#8E7037]" : ""
-              }`}
+              className={`bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 ${activeRoom.id === room.id ? "ring-2 ring-[#8E7037]" : ""
+                }`}
               onClick={() => setActiveRoom(room)}
             >
               <div className="relative h-64 overflow-hidden">
