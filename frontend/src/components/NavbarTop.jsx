@@ -1,4 +1,8 @@
+
 import React, { useState } from "react";
+
+import { useWeather } from "../context/WeatherContext";
+
 import {
   Phone,
   ChevronDown,
@@ -56,8 +60,13 @@ function LanguageSelector() {
 }
 
 function NavbarTop() {
+
   const { currency, changeCurrency } = useCurrency();
+
   const { t } = useTranslation(); // ✅
+
+
+  const { weather } = useWeather();
 
   return (
     <div className="fixed top-0 left-0 w-full z-[101] bg-black/30 backdrop-blur-md">
@@ -66,10 +75,25 @@ function NavbarTop() {
           <div className="flex justify-between items-center">
             {/* Left Section */}
             <div className="flex items-center space-x-6">
+
               <div className="flex items-center space-x-2">
                 <Cloud size={16} />
                 <span className="text-sm">{t("temp")}</span>
+
+
+              {/* Weather Info */}
+
+              <div className="relative flex items-center space-x-2 cursor-pointer">
+
+                <Link to="/weather">
+                  <Cloud size={16} />
+                  <span className="text-sm hover:underline">
+                    {weather ? `${Math.round(weather.main.temp)}°C` : "temp"}
+                  </span>
+                </Link>
+
               </div>
+
               <div className="flex items-center space-x-2">
                 <Phone size={16} />
                 <span className="text-sm">1-548-854-8898</span>
@@ -80,7 +104,6 @@ function NavbarTop() {
               </div>
             </div>
 
-            {/* Right Section */}
             <div className="flex items-center space-x-4">
               {/* Language Selector */}
               <LanguageSelector />
@@ -99,12 +122,14 @@ function NavbarTop() {
                         key={cur}
                         onClick={() => changeCurrency(cur)}
                         href="#"
+
                         className={`block px-4 py-2 text-sm ${
                           currency === cur
                             ? "text-blue-500 font-semibold"
                             : "text-gray-700"
                         } hover:bg-gray-100`}
                       >
+
                         {cur}
                       </a>
                     ))}
