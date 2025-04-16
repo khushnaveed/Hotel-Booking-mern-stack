@@ -21,6 +21,7 @@ import { CurrencyProvider } from "./context/CurrencyContext";
 import { WeatherProvider } from "./context/WeatherContext.jsx";
 import WeatherPage from "./pages/WeatherPage.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
+import Cart from "./pages/Cart.jsx";
 
 function App() {
   return (
@@ -52,6 +53,8 @@ function App() {
                 element={<ResetPassword />}
               />
               <Route path="/weather" element={<WeatherPage />} />
+              <Route path="/cart" element={<Cart />} />
+
             </Routes>
 
             <Footer />

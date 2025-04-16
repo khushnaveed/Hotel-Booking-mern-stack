@@ -23,12 +23,6 @@ function Navbar() {
     setIsMenuOpen(false);
   };
 
-  const handleReservationClick = (reservationType) => {
-    navigate(
-      `/reservation/${reservationType.toLowerCase().replace(/ /g, "-")}`
-    );
-    setIsMenuOpen(false);
-  };
 
   return (
     <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold pb-4 mt-16">
@@ -80,7 +74,7 @@ function Navbar() {
               {/* Cart Icon */}
               <div
                 className="relative cursor-pointer"
-                onClick={() => navigate("/checkout")}
+                onClick={() => navigate("/cart")}
               >
                 <ShoppingCart className="text-white hover:text-[#8E7037] transition" />
                 {cartItems.length > 0 && (
