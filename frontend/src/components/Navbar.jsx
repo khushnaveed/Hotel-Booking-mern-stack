@@ -74,7 +74,9 @@ function Navbar() {
               {/* Cart Icon */}
               <div
                 className="relative cursor-pointer"
-                onClick={() => navigate("/cart")}
+                onClick={() => {navigate("/cart")
+                  console.log(cartItems);
+                }}
               >
                 <ShoppingCart className="text-white hover:text-[#8E7037] transition" />
                 {cartItems.length > 0 && (
