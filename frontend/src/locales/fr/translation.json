@@ -1,0 +1,23 @@
+{
+  "temp": "21°C Dégagé",
+  "location": "123 Avenue de la Plage, Californie",
+  "login": "Connexion",
+  "register": "S'inscrire",
+  "events": "Événements",
+  "checkUpcomingEvents": "Découvrez nos événements à venir",
+  "categories": "Catégories",
+  "foodDrink": "Nourriture et Boissons",
+  "rendering": "Rendu",
+  "travel": "Voyage",
+  "uncategorized": "Non catégorisé",
+  "deal": "Offre",
+  "price": "Prix",
+  "loadingEvents": "Chargement des événements...",
+  "errorFetchingEvents": "Erreur lors du chargement des événements",  "home": "Accueil",
+  "rooms": "Chambres",
+  "restaurant": "Restaurant",
+  "events": "Événements",
+  "gallery": "Galerie",
+  "about": "À propos",
+  "contact": "Contact"
+}

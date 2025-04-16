@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import Logo from "../assets/Logo.svg";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { useTranslation } from "react-i18next"; // ✅ Import useTranslation
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  /*  const [activeDropdown, setActiveDropdown] = useState(null); */
   const navigate = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const { t } = useTranslation(); // ✅
 
   const handleRoomClick = (roomType) => {
     navigate(`/rooms/${roomType.toLowerCase().replace(/ /g, "-")}`);
@@ -24,17 +25,17 @@ function Navbar() {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold  pb-4 mt-16  ">
+    <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold pb-4 mt-16">
       <div
         className={`${
           isHome
             ? "bg-black/80 backdrop-blur-md"
             : "bg-black/80 backdrop-blur-md"
-        }`}>
+        }`}
+      >
         <div className="container mx-auto px-3">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-
             <NavLink to="/" className="w-60 block group">
               <img
                 src={Logo}
@@ -45,9 +46,9 @@ function Navbar() {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <NavItem text="HOME" path="/" />
+              <NavItem text={t("home").toUpperCase()} path="/" />
               <NavItem
-                text="ROOMS"
+                text={t("rooms").toUpperCase()}
                 path="/rooms"
                 hasSubmenu
                 submenuItems={[
@@ -60,11 +61,11 @@ function Navbar() {
                 ]}
                 onSubmenuClick={handleRoomClick}
               />
-              <NavItem text="RESTAURANT" path="/restaurant" />
-              <NavItem text="EVENTS" path="/events" />
-              <NavItem text="GALLERY" path="/gallery" />
-              <NavItem text="ABOUT" path="/about" />
-              <NavItem text="CONTACT" path="/contact" />
+              <NavItem text={t("restaurant").toUpperCase()} path="/restaurant" />
+              <NavItem text={t("events").toUpperCase()} path="/events" />
+              <NavItem text={t("gallery").toUpperCase()} path="/gallery" />
+              <NavItem text={t("about").toUpperCase()} path="/about" />
+              <NavItem text={t("contact").toUpperCase()} path="/contact" />
             </div>
 
             {/* Mobile Menu Button */}
@@ -74,7 +75,8 @@ function Navbar() {
                   console.log("Menu toggle");
                   setIsMenuOpen(!isMenuOpen);
                 }}
-                className="text-gray-200 hover:text-[#8E7037]">
+                className="text-gray-200 hover:text-[#8E7037]"
+              >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
@@ -83,9 +85,9 @@ function Navbar() {
           {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="md:hidden py-4 mt-16 bg-black/90 text-white z-50 relative rounded-b-lg">
-              <MobileNavItem text="HOME" path="/" />
+              <MobileNavItem text={t("home").toUpperCase()} path="/" />
               <MobileNavItem
-                text="ROOMS"
+                text={t("rooms").toUpperCase()}
                 path="/rooms"
                 hasSubmenu
                 submenuItems={[
@@ -98,11 +100,11 @@ function Navbar() {
                 ]}
                 onSubmenuClick={handleRoomClick}
               />
-              <MobileNavItem text="RESTAURANT" path="/restaurant" />
-              <MobileNavItem text="EVENTS" path="/events" />
-              <MobileNavItem text="GALLERY" path="/gallery" />
-              <MobileNavItem text="ABOUT" path="/about" />
-              <MobileNavItem text="CONTACT" path="/contact" />
+              <MobileNavItem text={t("restaurant").toUpperCase()} path="/restaurant" />
+              <MobileNavItem text={t("events").toUpperCase()} path="/events" />
+              <MobileNavItem text={t("gallery").toUpperCase()} path="/gallery" />
+              <MobileNavItem text={t("about").toUpperCase()} path="/about" />
+              <MobileNavItem text={t("contact").toUpperCase()} path="/contact" />
             </div>
           )}
         </div>
@@ -113,12 +115,13 @@ function Navbar() {
 
 function NavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
   return (
-    <div className="relative group ">
+    <div className="relative group">
       <div className="flex items-center space-x-1 cursor-pointer">
         {path ? (
           <NavLink
             to={path}
-            className="text-white hover:text-[#8E7037] transition-colors">
+            className="text-white hover:text-[#8E7037] transition-colors"
+          >
             {text}
           </NavLink>
         ) : (
@@ -140,7 +143,8 @@ function NavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
               <button
                 key={index}
                 onClick={() => onSubmenuClick(item)}
-                className="block px-4 py-2 text-sm text-black hover:text-[#8E7037] hover:bg-gray-100 w-full text-left">
+                className="block px-4 py-2 text-sm text-black hover:text-[#8E7037] hover:bg-gray-100 w-full text-left"
+              >
                 {item}
               </button>
             ))}
@@ -164,7 +168,8 @@ function MobileNavItem({
     <div>
       <div
         className="flex items-center justify-between px-4 py-2 cursor-pointer"
-        onClick={() => setIsOpen(!isOpen)}>
+        onClick={() => setIsOpen(!isOpen)}
+      >
         {path ? (
           <NavLink to={path} className="text-white hover:text-[#8E7037]">
             {text}
@@ -187,7 +192,8 @@ function MobileNavItem({
             <button
               key={index}
               onClick={() => onSubmenuClick(item)}
-              className="block px-8 py-2 text-sm text-black hover:text-[#8E7037] w-full text-left">
+              className="block px-8 py-2 text-sm text-black hover:text-[#8E7037] w-full text-left"
+            >
               {item}
             </button>
           ))}
