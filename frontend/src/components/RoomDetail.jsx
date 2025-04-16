@@ -54,7 +54,11 @@ export default function RoomDetails() {
       prev === 0 ? roomData.images.length - 1 : prev - 1
     );
   };
-
+  //new
+  const handleEventBooking = () => {
+    navigate('/events'); // Navigate to the events page
+  };
+  //till here
   const handleBookingSubmit = (e) => {
     e.preventDefault();
     console.log("Booking Data: ", bookingData);
@@ -107,7 +111,7 @@ export default function RoomDetails() {
     <div className="relative">
       {/* Hero Section */}
       <section
-        className="absolute top-0 left-0 w-full h-[40vh] bg-cover bg-center flex items-center justify-center"
+        className="absolute top-0 left-0 w-full h-[40vh] bg-cover bg-center flex items-center justify-center pt-20 sm:pt-24 md:pt-28 lg:pt-32"
         style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}
 
       >
@@ -128,10 +132,9 @@ export default function RoomDetails() {
         </div>
       </section>
 
-      {/* <div className="pt-[40vh] md:pt-[40vh]"> */}
-      <div className="pt-[45vh] sm:pt-[48vh] md:pt-[52vh] lg:pt-[45vh] xl:pt-[40vh]">
 
-
+      {/* <div className="pt-[45vh] sm:pt-[48vh] md:pt-[52vh] lg:pt-[45vh] xl:pt-[40vh]"> */}
+      <div className="pt-[60vh] sm:pt-[65vh] md:pt-[70vh] lg:pt-[60vh] xl:pt-[50vh]">
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto">
           {/* Image Gallery */}
@@ -233,6 +236,16 @@ export default function RoomDetails() {
                   Book Now
                 </button>
               </div>
+              <div className="mt-4">
+                <button
+                  type="button"
+                  onClick={handleEventBooking}
+                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
+                >
+                  Book Event
+                </button>
+              </div>
+
             </form>
           </div>
         </div>
