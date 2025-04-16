@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+/* import React, { useState } from "react";
 import { Bed, Users, Maximize, Check } from "lucide-react";
 
 const HomePageRooms = () => {
@@ -122,3 +122,159 @@ const HomePageRooms = () => {
 };
 
 export default HomePageRooms;
+ */
+
+/* import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+export default function HomePageRooms() {
+  const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRoomData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5005/room");
+        const allRooms = response.data.data;
+
+        // Filter by specific room types
+        const filtered = allRooms.filter(room => {
+          const title = room.title.toLowerCase();
+          return (
+            title.includes('presidential') ||
+            title.includes('luxury') ||
+            title.includes('deluxe')
+          );
+        }).slice(0, 3);
+
+        setRooms(filtered);
+      } catch (error) {
+        console.error('Error fetching room data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRoomData();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (!rooms.length) return <div>No matching rooms to show</div>;
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
+      
+      {rooms.map((room) => (
+        <div key={room._id} className="border p-4 shadow ">
+          <h2 className="text-xl font-bold mb-2">{room.title}</h2>
+          <img src={room.images[0]} alt={room.title} className="w-full h-40 object-cover  mb-3" />
+          <p>{room.descOverview}</p>
+          <p>Price: ${room.defaultPrice}</p>
+          <p>Bed: {room.additionalDetails.bed}</p>
+          <p>Persons: {room.additionalDetails.maxPersons}</p>
+          <button>BOOK NOW</button>
+        </div>
+      ))}
+    </div>
+  );
+} */
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Bed, Maximize } from "lucide-react"; // Optional icons from lucide-react
+
+export default function HomePageRooms() {
+  const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeRoom, setActiveRoom] = useState(null);
+
+  useEffect(() => {
+    const fetchRoomData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5005/room");
+        const allRooms = response.data.data;
+
+        const filtered = allRooms
+          .filter(room => {
+            const title = room.title.toLowerCase();
+            return (
+              title.includes('presidential') ||
+              title.includes('luxury') ||
+              title.includes('deluxe')
+            );
+          })
+          .slice(0, 3); // Show only 3 rooms
+
+        setRooms(filtered);
+        setActiveRoom(filtered[0]);
+      } catch (error) {
+        console.error('Error fetching room data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRoomData();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (!rooms.length) return <div>No matching rooms to show</div>;
+
+  return (
+    <section id="rooms" className="py-24 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <h2 className="text-5xl">Rooms & Suites</h2>
+          <p className="text-gray-500 m-4">
+            Discover our collection of thoughtfully designed rooms and suites,
+            each offering the perfect blend of comfort, style, and modern
+            amenities.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {rooms.map((room) => (
+            <div
+              key={room._id}
+              className={`bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 ${activeRoom?._id === room._id ? "ring-2 ring-[#8E7037]" : ""
+                }`}
+              onClick={() => setActiveRoom(room)}
+            >
+              <div className="relative h-64 overflow-hidden">
+                <img
+                  src={room.images[0]}
+                  alt={room.title}
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                />
+                <div className="absolute top-4 right-4 bg-[#8E7037] text-white px-4 py-2 text-sm font-medium">
+                  ${room.defaultPrice}
+                  <span className="text-xs">/night</span>
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl mb-2">{room.title}</h3>
+                <p className="text-gray-500 text-sm mb-4">{room.descOverview}</p>
+                <div className="flex justify-between text-sm text-gray-500 mb-4">
+                  <div className="flex items-center">
+                    <Bed size={16} className="mr-1 text-[#8E7037]" />
+                    <span>{room.additionalDetails.bed}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Maximize size={16} className="mr-1 text-[#8E7037]" />
+                    <span>{room.additionalDetails.maxPersons} {room.additionalDetails.maxPersons === 1 ? 'Guest' : 'Guests'}</span>
+                  </div>
+                </div>
+                <a href="#booking" className="block w-full text-center text-[#8E7037] font-semibold border border-[#8E7037] px-4 py-2 rounded hover:bg-[#8E7037] hover:text-white transition">
+                  Book Now
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+
+
