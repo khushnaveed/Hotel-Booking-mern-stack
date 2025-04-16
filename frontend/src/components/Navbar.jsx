@@ -2,15 +2,24 @@
 import React, { useState } from "react";
 import Logo from "../assets/Logo.svg";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
+
 import { Menu, X, ChevronDown, ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
+
+
+import { useTranslation } from "react-i18next"; // ✅ Import useTranslation
+
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === "/";
+
   const { cartItems } = useCart(); // ✅ Get cart items from context
+
+  const { t } = useTranslation(); // ✅
+
 
   const handleRoomClick = (roomType) => {
     navigate(`/rooms/${roomType.toLowerCase().replace(/ /g, "-")}`);
@@ -23,8 +32,9 @@ function Navbar() {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold pb-4 mt-16">
+    <div className="fixed top-0 l
       <div className={`${isHome ? "bg-black/80 backdrop-blur-md" : "bg-black/80 backdrop-blur-md"}`}>
+
         <div className="container mx-auto px-3">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
@@ -38,9 +48,9 @@ function Navbar() {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <NavItem text="HOME" path="/" />
+              <NavItem text={t("home").toUpperCase()} path="/" />
               <NavItem
-                text="ROOMS"
+                text={t("rooms").toUpperCase()}
                 path="/rooms"
                 hasSubmenu
                 submenuItems={[
@@ -53,13 +63,14 @@ function Navbar() {
                 ]}
                 onSubmenuClick={handleRoomClick}
               />
-              <NavItem text="RESTAURANT" path="/restaurant" />
-              <NavItem text="EVENTS" path="/events" />
-              <NavItem text="GALLERY" path="/gallery" />
-              <NavItem text="ABOUT" path="/about" />
-              <NavItem text="CONTACT" path="/contact" />
 
-              {/* Cart Icon */}
+              <NavItem text={t("restaurant").toUpperCase()} path="/restaurant" />
+              <NavItem text={t("events").toUpperCase()} path="/events" />
+              <NavItem text={t("gallery").toUpperCase()} path="/gallery" />
+              <NavItem text={t("about").toUpperCase()} path="/about" />
+              <NavItem text={t("contact").toUpperCase()} path="/contact" />
+              
+               {/* Cart Icon */}
               <div className="relative cursor-pointer" onClick={() => navigate("/checkout")}>
                 <ShoppingCart className="text-white hover:text-[#8E7037] transition" />
                 {cartItems.length > 0 && (
@@ -68,6 +79,7 @@ function Navbar() {
                   </span>
                 )}
               </div>
+
             </div>
 
             {/* Mobile Menu Button */}
@@ -81,7 +93,9 @@ function Navbar() {
                 )}
               </div>
               <button
+
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
+
                 className="text-gray-200 hover:text-[#8E7037]"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -92,9 +106,9 @@ function Navbar() {
           {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="md:hidden py-4 mt-16 bg-black/90 text-white z-50 relative rounded-b-lg">
-              <MobileNavItem text="HOME" path="/" />
+              <MobileNavItem text={t("home").toUpperCase()} path="/" />
               <MobileNavItem
-                text="ROOMS"
+                text={t("rooms").toUpperCase()}
                 path="/rooms"
                 hasSubmenu
                 submenuItems={[
@@ -107,11 +121,11 @@ function Navbar() {
                 ]}
                 onSubmenuClick={handleRoomClick}
               />
-              <MobileNavItem text="RESTAURANT" path="/restaurant" />
-              <MobileNavItem text="EVENTS" path="/events" />
-              <MobileNavItem text="GALLERY" path="/gallery" />
-              <MobileNavItem text="ABOUT" path="/about" />
-              <MobileNavItem text="CONTACT" path="/contact" />
+              <MobileNavItem text={t("restaurant").toUpperCase()} path="/restaurant" />
+              <MobileNavItem text={t("events").toUpperCase()} path="/events" />
+              <MobileNavItem text={t("gallery").toUpperCase()} path="/gallery" />
+              <MobileNavItem text={t("about").toUpperCase()} path="/about" />
+              <MobileNavItem text={t("contact").toUpperCase()} path="/contact" />
             </div>
           )}
         </div>
