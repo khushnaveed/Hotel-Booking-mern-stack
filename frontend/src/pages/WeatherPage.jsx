@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import React from "react";
 import { useWeather } from "../context/WeatherContext";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+
 
 
 const WeatherPage = () => {
