@@ -37,7 +37,7 @@ export default function Restaurant() {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5005/foods/foods");
+      const response = await fetch("http://localhost:5005/foods");
       if (!response.ok) {
         throw new Error(`Fetch error: ${response.status}`);
       }
