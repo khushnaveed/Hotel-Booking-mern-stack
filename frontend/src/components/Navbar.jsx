@@ -2,15 +2,24 @@
 import React, { useState } from "react";
 import Logo from "../assets/Logo.svg";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
+
+import { Menu, X, ChevronDown, ShoppingCart } from "lucide-react";
+import { useCart } from "../context/CartContext";
+
+
 import { useTranslation } from "react-i18next"; // ✅ Import useTranslation
+
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === "/";
+
+  const { cartItems } = useCart(); // ✅ Get cart items from context
+
   const { t } = useTranslation(); // ✅
+
 
   const handleRoomClick = (roomType) => {
     navigate(`/rooms/${roomType.toLowerCase().replace(/ /g, "-")}`);
@@ -18,21 +27,14 @@ function Navbar() {
   };
 
   const handleReservationClick = (reservationType) => {
-    navigate(
-      `/reservation/${reservationType.toLowerCase().replace(/ /g, "-")}`
-    );
+    navigate(`/reservation/${reservationType.toLowerCase().replace(/ /g, "-")}`);
     setIsMenuOpen(false);
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold pb-4 mt-16">
-      <div
-        className={`${
-          isHome
-            ? "bg-black/80 backdrop-blur-md"
-            : "bg-black/80 backdrop-blur-md"
-        }`}
-      >
+    <div className="fixed top-0 l
+      <div className={`${isHome ? "bg-black/80 backdrop-blur-md" : "bg-black/80 backdrop-blur-md"}`}>
+
         <div className="container mx-auto px-3">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
@@ -61,20 +63,39 @@ function Navbar() {
                 ]}
                 onSubmenuClick={handleRoomClick}
               />
+
               <NavItem text={t("restaurant").toUpperCase()} path="/restaurant" />
               <NavItem text={t("events").toUpperCase()} path="/events" />
               <NavItem text={t("gallery").toUpperCase()} path="/gallery" />
               <NavItem text={t("about").toUpperCase()} path="/about" />
               <NavItem text={t("contact").toUpperCase()} path="/contact" />
+              
+               {/* Cart Icon */}
+              <div className="relative cursor-pointer" onClick={() => navigate("/checkout")}>
+                <ShoppingCart className="text-white hover:text-[#8E7037] transition" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full">
+                    {cartItems.length}
+                  </span>
+                )}
+              </div>
+
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden z-[101]">
+            <div className="md:hidden z-[101] flex items-center gap-4">
+              <div className="relative cursor-pointer" onClick={() => navigate("/checkout/cart")}>
+                <ShoppingCart className="text-white hover:text-[#8E7037]" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full">
+                    {cartItems.length}
+                  </span>
+                )}
+              </div>
               <button
-                onClick={() => {
-                  console.log("Menu toggle");
-                  setIsMenuOpen(!isMenuOpen);
-                }}
+
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+
                 className="text-gray-200 hover:text-[#8E7037]"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -155,13 +176,7 @@ function NavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
   );
 }
 
-function MobileNavItem({
-  text,
-  path,
-  hasSubmenu,
-  submenuItems,
-  onSubmenuClick,
-}) {
+function MobileNavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -180,9 +195,7 @@ function MobileNavItem({
         {hasSubmenu && (
           <ChevronDown
             size={16}
-            className={`text-white transition-transform ${
-              isOpen ? "rotate-180" : ""
-            }`}
+            className={`text-white transition-transform ${isOpen ? "rotate-180" : ""}`}
           />
         )}
       </div>
