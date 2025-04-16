@@ -25,7 +25,7 @@ export default function Footer() {
       return;
     }
 
-   
+
 
     emailjs
       .send(
@@ -67,20 +67,21 @@ export default function Footer() {
                 memorable.
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="hover:text-[#8E7037] transition-colors">
+                <a href="https://www.facebook.com/royalgrandhotel" target="_blank" rel="noopener noreferrer" className="hover:text-[#8E7037] transition-colors">
                   <Facebook size={20} />
                 </a>
-                <a href="#" className="hover:text-[#8E7037] transition-colors">
+                <a href="https://twitter.com/royalgrandhotel" target="_blank" rel="noopener noreferrer" className="hover:text-[#8E7037] transition-colors">
                   <Twitter size={20} />
                 </a>
-                <a href="#" className="hover:text-[#8E7037] transition-colors">
+                <a href="https://www.instagram.com/royalgrandhotel" target="_blank" rel="noopener noreferrer" className="hover:text-[#8E7037] transition-colors">
                   <Instagram size={20} />
                 </a>
-                <a href="#" className="hover:text-[#8E7037] transition-colors">
+                <a href="https://www.youtube.com/@royalgrandhotel" target="_blank" rel="noopener noreferrer" className="hover:text-[#8E7037] transition-colors">
                   <Youtube size={20} />
                 </a>
               </div>
             </div>
+
 
             {/* Contact Info */}
             <div>
@@ -88,15 +89,17 @@ export default function Footer() {
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <MapPin className="mt-1" size={20} />
-                  <p className="text-gray-300">Address</p>
+                  <p className="text-gray-300">Hirschgässlein 15
+                    6073 Basel, Switzerland </p>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone size={20} />
-                  <p className="text-gray-300">1-548-854-8898</p>
+                  <p className="text-gray-300">+41 (0)61 5603-497
+                  </p>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail size={20} />
-                  <p className="text-gray-300">hello@logo.com</p>
+                  <p className="text-gray-300">grandroyal825@gmail.com </p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Clock size={20} />
@@ -198,13 +201,13 @@ export default function Footer() {
               </p>
               <div className="flex space-x-4 mt-4 md:mt-0">
                 <a
-                  href="#"
+                  href="https://cordova.co/pages/privacy-policy?gad_source=1&gclid=Cj0KCQjwqv2_BhC0ARIsAFb5Ac9VcMu-FdbKVhevx7-TddpVjsBRLe8ScIUcv_SS-1HG87HoWl7U864aAu67EALw_wcB"
                   className="text-gray-300 hover:text-[#8E7037] text-sm"
                 >
                   Privacy Policy
                 </a>
                 <a
-                  href="#"
+                  href="https://www.termsfeed.com/blog/sample-terms-and-conditions-template/"
                   className="text-gray-300 hover:text-[#8E7037] text-sm"
                 >
                   Terms & Conditions
