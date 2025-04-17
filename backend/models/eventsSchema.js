@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const eventSchema = new mongoose.Schema({
-  _id: {
+  id: {
     type: String,
     required: true
   },
@@ -10,7 +10,8 @@ const eventSchema = new mongoose.Schema({
     required: true
   },
   title: {
-    type: String,
+    type: Map,
+    of: String,
     required: true
   },
   image: {
@@ -18,12 +19,17 @@ const eventSchema = new mongoose.Schema({
     required: true
   },
   excerpt: {
-    type: String,
+    type: Map,
+    of: String,
     required: true
   },
   showCountdown: {
     type: Boolean,
     default: false // optional field, only used in one event
+  },
+  price: {
+    type: Number,
+    required: true
   }
 });
 

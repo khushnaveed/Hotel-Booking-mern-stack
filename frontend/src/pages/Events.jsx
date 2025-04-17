@@ -3,23 +3,36 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import BlogCard from "../components/BlogCard.jsx";
 import { useCurrency } from "../context/CurrencyContext";
+import { useTranslation } from "react-i18next";
 
 function Events() {
   const { currency } = useCurrency();
+  const { t, i18n } = useTranslation(); // ✅ Use i18n to access the current language
+
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const [events, setEvents] = useState([]);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
+  const [luxuryRoom, setLuxuryRoom] = useState(null);
+  const roomSlug = "luxury-suite";
 
-  // Fetch events data from backend
   useEffect(() => {
     axios
       .get("http://localhost:5005/events")
       .then((response) => {
-        setEvents(response.data); // Set the events data
+        setEvents(response.data);
+        setError(false);
       })
-      .catch((error) => {
-        console.error("Error fetching events:", error);
-        setError("An error occurred while fetching events.");
+      .catch(() => {
+        setError(true);
+      });
+
+    axios
+      .get(`http://localhost:5005/room/${roomSlug}`)
+      .then((res) => {
+        setLuxuryRoom(res.data.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching luxury room:", err);
       });
   }, []);
 
@@ -34,12 +47,12 @@ function Events() {
           <h1
             className="text-5xl font-bold uppercase"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            Events
+            {t("events")}
           </h1>
           <p
             className="text-lg mt-2"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            Check out our upcoming events!
+            {t("checkUpcomingEvents")}
           </p>
         </div>
       </section>
@@ -49,59 +62,62 @@ function Events() {
         {/* SIDEBAR */}
         <aside className="lg:col-span-1 space-y-8">
           <section>
-            <h2 className="font-bold text-lg mb-4">CATEGORIES</h2>
+            <h2 className="font-bold text-lg mb-4">{t("categories")}</h2>
             <ul className="space-y-2 text-gray-700">
-              <li>Food & Drink (4)</li>
-              <li>Rendering (2)</li>
-              <li>Travel (7)</li>
-              <li>Uncategorized (1)</li>
+              <li>{t("foodDrink")} (4)</li>
+              <li>{t("rendering")} (2)</li>
+              <li>{t("travel")} (7)</li>
+              <li>{t("uncategorized")} (1)</li>
             </ul>
           </section>
 
           {/* DEAL CARD */}
           <section>
-            <h2 className="font-bold text-lg mb-4">DEAL</h2>
-            <div className="relative [&_img]:rounded-none group">
-              <img
-                src="/src/assets/EventsLuxuryRoom.jpg"
-                alt="Luxury Room"
-                className="rounded-md w-full object-cover transition-transform duration-300 group-hover:scale-102"
-              />
-              <div className="absolute bottom-2 left-2 bg-white px-3 py-1 font-bold hover:bg-[#6f5525]">
-                <Link
-                  to="/rooms/luxury-suite"
-                  className="block text-black hover:text-white text-center py-2 px-4 rounded-lg transition duration-300">
-                  LUXURY ROOM
-                  <br />
-                  <p className="text-md text-gray-700 font-semibold mb-6">
-                    Price:{" "}
-                    <span>
-                      {currencySymbols[currency]}
-                      {event.price}
-                    </span>
-                  </p>
-                </Link>
+            <h2 className="font-bold text-lg mb-4">{t("deal")}</h2>
+
+            {luxuryRoom && (
+              <div className="relative [&_img]:rounded-none group">
+                <img
+                  src={luxuryRoom.images?.[0]}
+                  alt={luxuryRoom.title}
+                  className="rounded-md w-full object-cover transition-transform duration-300 group-hover:scale-102"
+                />
+                <div className="absolute bottom-2 left-2 bg-white rounded-none font-bold">
+                  <Link
+                    to={`/rooms/${luxuryRoom.slug}`}
+                    className="block text-sm text-black text-center px-2 py-1 transition duration-300 hover:bg-[#6f5525] hover:text-white">
+                    {luxuryRoom.title?.toUpperCase()}
+                    <p className="text-xs font-semibold mt-1">
+                      {t("price")}: {currencySymbols[currency]}
+                      {luxuryRoom.defaultPrice}
+                    </p>
+                  </Link>
+                </div>
               </div>
-            </div>
+            )}
           </section>
         </aside>
 
         {/* EVENT CARDS */}
         <main className="lg:col-span-3 space-y-8">
-          {error && <div className="text-red-500">{error}</div>}
-          {events.length === 0 ? (
-            <div>Loading events...</div>
+          {error && (
+            <div className="text-red-500">{t("errorFetchingEvents")}</div>
+          )}
+          {events.length === 0 && !error ? (
+            <div>{t("loadingEvents")}</div>
           ) : (
             events.map((event) => (
               <div key={event._id} className="pb-8 [&_img]:rounded-none">
                 <BlogCard
                   date={event.date}
-                  title={event.title}
+                  title={event.title[i18n.language]}
                   image={event.image}
-                  excerpt={event.excerpt}
+                  excerpt={event.excerpt[i18n.language]}
                   showCountdown={event.showCountdown}
                   slug={event._id}
                   price={event.price}
+                  currency={currency}
+                  currencySymbol={currencySymbols[currency]}
                 />
               </div>
             ))

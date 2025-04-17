@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useCurrency } from "../context/CurrencyContext";
 
-function BlogCard({ date, title, image, excerpt, showCountdown, slug, price }) {
+function BlogCard({ date, title, image, excerpt, showCountdown, slug, price}) {
   const { currency } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const [day, month] = date.split(" "); // Assume date format is "Day Month"
@@ -69,8 +69,7 @@ function BlogCard({ date, title, image, excerpt, showCountdown, slug, price }) {
         )}
       </div>
 
-      {/* Text Content */}
-      {/* Make sure only one Link component is wrapping the text content */}
+  
       <Link
         to={`/events/${slug}`}
         className="lg:w-3/5 group cursor-pointer no-underline text-inherit"

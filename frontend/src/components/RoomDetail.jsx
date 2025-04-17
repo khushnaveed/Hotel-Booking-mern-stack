@@ -1,23 +1,18 @@
-
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Link } from "react-router-dom"; // Make sure this is imported at the top
-import { useCurrency } from "../context/CurrencyContext.jsx"
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { useCurrency } from "../context/CurrencyContext.jsx";
 
 export default function RoomDetails() {
   const [roomData, setRoomData] = useState(null);
-
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { currency } = useCurrency();
-  //const { currency, convertPrice } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
-  // Booking data state
+
   const [bookingData, setBookingData] = useState({
-    arrive: '',
-    departure: '',
+    arrive: "",
+    departure: "",
     adult: 1,
     child: 0,
   });
@@ -31,19 +26,15 @@ export default function RoomDetails() {
         const res = await axios.get(`http://localhost:5005/room/${roomSlug}`);
         setRoomData(res.data.data);
       } catch (error) {
-        console.error('Error fetching room:', error);
+        console.error("Error fetching room:", error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchRoom();
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [roomSlug]);
-
-
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % roomData.images.length);
@@ -54,55 +45,52 @@ export default function RoomDetails() {
       prev === 0 ? roomData.images.length - 1 : prev - 1
     );
   };
-  //new
+
   const handleEventBooking = () => {
-    navigate('/events'); // Navigate to the events page
+    navigate("/events");
   };
-  //till here
-  const handleBookingSubmit = (e) => {
-    e.preventDefault();
-    console.log("Booking Data: ", bookingData);
 
-    // Room base price
-    const basePrice = roomData.defaultPrice;
+  const handleBookingClick = () => {
+    const { arrive, departure, adult, child } = bookingData;
 
-    // Extra charges for adults and children
-    const extraAdultFee = 70; // Fee for each adult above 2
-    const childFee = 30; // Fee for each child
-
-    // Calculate the number of nights
-    const start = new Date(bookingData.arrive);
-    const end = new Date(bookingData.departure);
-    const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) || 1; // Ensure at least 1 night
-
-    // Calculate the total price
-    let totalPrice = basePrice * nights;
-
-    // Add extra charge for adults above the base number (2 adults)
-    if (bookingData.adult > 2) {
-      totalPrice += (bookingData.adult - 2) * extraAdultFee * nights;
+    if (!arrive || !departure) {
+      alert("Please select both arrival and departure dates.");
+      return;
     }
 
-    // Add charge for children (calculated for each child)
-    totalPrice += bookingData.child * childFee * nights;
+    const start = new Date(arrive);
+    const end = new Date(departure);
 
-    // Create payload with calculated totalPrice
+    if (end <= start) {
+      alert("Departure date must be after arrival date.");
+      return;
+    }
+
+    const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    const basePrice = roomData.defaultPrice;
+    const extraAdultFee = 70;
+    const childFee = 30;
+    const numAdults = parseInt(adult) || 1;
+    const numChildren = parseInt(child) || 0;
+
+    let totalPrice = basePrice * nights;
+    if (numAdults > 2) {
+      totalPrice += (numAdults - 2) * extraAdultFee * nights;
+    }
+    totalPrice += numChildren * childFee * nights;
+
     const payload = {
       slug: roomSlug,
-      arrivalDate: bookingData.arrive,
-      departureDate: bookingData.departure,
-      numAdults: parseInt(bookingData.adult),
-      numChildren: parseInt(bookingData.child),
-      selectedPackages: [], // Optional: you can add package selection later
-      totalPrice, // Pass the totalPrice calculated
+      arrivalDate: arrive,
+      departureDate: departure,
+      numAdults,
+      numChildren,
+      selectedPackages: [],
+      totalPrice,
     };
 
-    // Navigate and pass the payload in the state
-    navigate(`/checkout/${roomSlug}`, {
-      state: payload // Pass the payload directly
-    });
+    navigate(`/checkout/${roomSlug}`, { state: payload });
   };
-
 
   if (loading) return <div>Loading...</div>;
   if (!roomData) return <div>Room not found</div>;
@@ -113,14 +101,10 @@ export default function RoomDetails() {
       <section
         className="absolute top-0 left-0 w-full h-[40vh] bg-cover bg-center flex items-center justify-center pt-20 sm:pt-24 md:pt-28 lg:pt-32"
         style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}
-
       >
         <div className="absolute inset-0 bg-opacity-40"></div>
         <div className="relative text-white text-center px-4 sm:px-6 md:px-10">
-          <h1
-            className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase">
             {roomData.title}
           </h1>
           <p
@@ -130,14 +114,12 @@ export default function RoomDetails() {
             Royal Grand Hotel is where timeless elegance meets modern luxury in every detail.
 
 
+
           </p>
         </div>
       </section>
 
-
-      {/* <div className="pt-[45vh] sm:pt-[48vh] md:pt-[52vh] lg:pt-[45vh] xl:pt-[40vh]"> */}
       <div className="pt-[60vh] sm:pt-[65vh] md:pt-[70vh] lg:pt-[60vh] xl:pt-[50vh]">
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto">
           {/* Image Gallery */}
           <div>
@@ -167,10 +149,11 @@ export default function RoomDetails() {
                   key={index}
                   src={img}
                   alt={`thumb-${index}`}
-                  className={`w-20 h-16 object-cover cursor-pointer border ${index === currentImageIndex
-                    ? "border-text-[#8E7037]"
-                    : "border-gray-300"
-                    }`}
+                  className={`w-20 h-16 object-cover cursor-pointer border ${
+                    index === currentImageIndex
+                      ? "border-[#8E7037]"
+                      : "border-gray-300"
+                  }`}
                   onClick={() => setCurrentImageIndex(index)}
                 />
               ))}
@@ -180,21 +163,22 @@ export default function RoomDetails() {
           {/* Booking Form */}
           <div className="bg-gray-100 p-6 shadow-lg h-fit">
             <h5 className="text-xl font-semibold mb-4">
-              ROOM PRICE {" "}
-              <strong className="text-[#8E7037]"> <span>
-
-
-              </span> {currencySymbols[currency]} {roomData.defaultPrice}/day</strong>
+              ROOM PRICE{" "}
+              <strong className="text-[#8E7037]">
+                {currencySymbols[currency]} {roomData.defaultPrice}/day
+              </strong>
             </h5>
 
-            <form className="space-y-4" onSubmit={handleBookingSubmit}>
+            <form className="space-y-4">
               <div>
                 <label>CHECK IN</label>
                 <input
                   type="date"
                   name="arrive"
                   value={bookingData.arrive}
-                  onChange={(e) => setBookingData({ ...bookingData, arrive: e.target.value })}
+                  onChange={(e) =>
+                    setBookingData({ ...bookingData, arrive: e.target.value })
+                  }
                   className="w-full p-2 bg-white placeholder-gray-400 text-gray-700"
                 />
               </div>
@@ -204,7 +188,12 @@ export default function RoomDetails() {
                   type="date"
                   name="departure"
                   value={bookingData.departure}
-                  onChange={(e) => setBookingData({ ...bookingData, departure: e.target.value })}
+                  onChange={(e) =>
+                    setBookingData({
+                      ...bookingData,
+                      departure: e.target.value,
+                    })
+                  }
                   className="w-full p-2 bg-white"
                 />
               </div>
@@ -215,7 +204,9 @@ export default function RoomDetails() {
                   name="adult"
                   min="1"
                   value={bookingData.adult}
-                  onChange={(e) => setBookingData({ ...bookingData, adult: e.target.value })}
+                  onChange={(e) =>
+                    setBookingData({ ...bookingData, adult: e.target.value })
+                  }
                   className="w-full p-2 bg-white"
                 />
               </div>
@@ -226,7 +217,9 @@ export default function RoomDetails() {
                   name="child"
                   min="0"
                   value={bookingData.child}
-                  onChange={(e) => setBookingData({ ...bookingData, child: e.target.value })}
+                  onChange={(e) =>
+                    setBookingData({ ...bookingData, child: e.target.value })
+                  }
                   className="w-full p-2 bg-white"
                 />
               </div>
@@ -234,19 +227,16 @@ export default function RoomDetails() {
                 <button
                   type="submit"
                   className="w-full p-3 bg-[#8E7037] text-white font-semibold cursor-pointer hover:bg-white hover:text-[#8E7037]"
+
+                  type="button"
+                  onClick={handleBookingClick}
+                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
+
                 >
                   Book Now
                 </button>
               </div>
-              {/*  <div className="mt-4">
-                <button
-                  type="button"
-                  onClick={handleEventBooking}
-                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
-                >
-                  Book Event
-                </button>
-              </div> */}
+              
 
             </form>
           </div>
@@ -254,7 +244,6 @@ export default function RoomDetails() {
 
         {/* Room Tabs Section */}
         <div className="p-6 max-w-6xl mx-auto">
-
           <Tabs roomData={roomData} />
         </div>
       </div>
@@ -262,44 +251,37 @@ export default function RoomDetails() {
   );
 }
 
-
-// Tab Component (outside RoomDetails)
+// -------------------------
+// Tabs Component
+// -------------------------
 function Tabs({ roomData }) {
   const [relatedRooms, setRelatedRooms] = useState([]);
+  const [activeTab, setActiveTab] = useState("overview");
   const { roomSlug } = useParams();
 
-  const [activeTab, setActiveTab] = useState("overview");
   useEffect(() => {
-
-
     const fetchRelatedRooms = async () => {
       try {
         const res = await axios.get(`http://localhost:5005/room`);
-        const filteredData = res.data.data.filter(value => roomSlug != value.slug)
-        console.log(filteredData)
-        setRelatedRooms(filteredData)
+        const filteredData = res.data.data.filter(
+          (value) => roomSlug !== value.slug
+        );
+        setRelatedRooms(filteredData);
       } catch (error) {
-        console.error('Error fetching room:', error);
-      } finally {
-        setLoading(false);
+        console.error("Error fetching related rooms:", error);
       }
-    }
+    };
 
-    fetchRelatedRooms()
-
+    fetchRelatedRooms();
   }, [roomSlug]);
 
-
   const tabs = [
-
     {
       key: "overview",
       label: "OVERVIEW",
       content: (
-        <div>
+        <>
           <p>{roomData.descOverview}</p>
-
-          {/* Two-column grid layout for the list items */}
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-5 mt-4 text-gray-600">
             <li><strong>SPECIAL ROOM</strong></li>
             <li><strong>Max:</strong> {roomData.additionalDetails.maxPersons} Person(s)</li>
@@ -307,110 +289,104 @@ function Tabs({ roomData }) {
             <li><strong>View:</strong> {roomData.additionalDetails.view}</li>
             <li><strong>Bed:</strong> {roomData.additionalDetails.bed}</li>
           </ul>
-        </div>
-      )
+        </>
+      ),
     },
     {
       key: "amenities",
       label: "AMENITIES",
       content: (
-        <div>
-          <p className="text-gray-600 mb-4">
-            Located in the heart of Aspen with a unique blend of contemporary luxury and historic heritage, deluxe accommodations, superb amenities, genuine hospitality, and dedicated service for an elevated experience in the Rocky Mountains.
-          </p>
-
+        <>
+          <p className="text-gray-600 mb-4">Located in the heart of Aspen...</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-            {Object.keys(roomData.amenities).map((roomType, index) => (
-              <div key={index} className="mb-6">
+            {Object.entries(roomData.amenities).map(([roomType, items], idx) => (
+              <div key={idx} className="mb-6">
                 <h4 className="text-lg font-semibold text-gray-700">{roomType}</h4>
                 <ul className="list-disc pl-5 text-gray-600">
-                  {roomData.amenities[roomType].map((amenity, idx) => (
-                    <li key={idx}>{amenity}</li>
+                  {items.map((amenity, i) => (
+                    <li key={i}>{amenity}</li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-        </div>
-      )
+        </>
+      ),
     },
-    { key: "packages", label: "PACKAGES", content: roomData.packages.join(", ") },
-
+    {
+      key: "packages",
+      label: "PACKAGES",
+      content: (
+        <ul className="list-disc pl-5 text-gray-600">
+          {roomData.packages.map((pkg, i) => (
+            <li key={i}>{pkg}</li>
+          ))}
+        </ul>
+      ),
+    },
     {
       key: "rates",
       label: "RATES",
       content: roomData.pricing && roomData.ratings ? (
-        <div>
-          {roomData.pricing.map((price, priceIndex) => {
-            const matchingRating = roomData.ratings.find(rating =>
+        roomData.pricing.map((price, index) => {
+          const matchingRating = roomData.ratings.find(
+            (rating) =>
               new Date(rating.startDate).getTime() <= new Date(price.endDate).getTime() &&
               new Date(rating.endDate).getTime() >= new Date(price.startDate).getTime()
-            );
-            return (
-              <div key={priceIndex}>
-                <div>
-                  <p><strong>Price Range:</strong> From {new Date(price.startDate).toLocaleDateString()} To {new Date(price.endDate).toLocaleDateString()}</p>
-                  <p><strong>Price:</strong> ${price.price} per day</p>
-                </div>
-
-                {matchingRating && (
-                  <div>
-                    <p><strong>Rating:</strong> {matchingRating.rating} / 5</p>
-                    <p><strong>Description:</strong> {matchingRating.description}</p>
-                    <p><strong>Rating Period:</strong> From {new Date(matchingRating.startDate).toLocaleDateString()} To {new Date(matchingRating.endDate).toLocaleDateString()}</p>
-                  </div>
-                )}
-
-              </div>
-            );
-          })}
-
-        </div>
-      ) : "No rates or ratings available"
-
-    }
-
-
+          );
+          return (
+            <div key={index} className="mb-4">
+              <p>
+                <strong>Price:</strong> ${price.price}/day from{" "}
+                {new Date(price.startDate).toLocaleDateString()} to{" "}
+                {new Date(price.endDate).toLocaleDateString()}
+              </p>
+              {matchingRating && (
+                <>
+                  <p><strong>Rating:</strong> {matchingRating.rating} / 5</p>
+                  <p><strong>Description:</strong> {matchingRating.description}</p>
+                </>
+              )}
+            </div>
+          );
+        })
+      ) : (
+        <p>No rates or ratings available.</p>
+      ),
+    },
   ];
-
-
 
   return (
     <>
-
-      {/* Mobile View */}
-      <div className="block md:hidden ">
+      <div className="block md:hidden">
         <div className="flex flex-col items-center space-y-2 mb-6">
           {tabs.map((tab) => (
             <div key={tab.key}>
               <button
                 onClick={() => setActiveTab(tab.key)}
-                className={`text-lg font-bold block border-b-2 pb-2 w-full text-left ${activeTab === tab.key
-                  ? "border-[#8E7037] text-[#8E7037]"
-                  : "border-gray-300"
-                  }`}
+                className={`text-lg font-bold block border-b-2 pb-2 w-full text-left ${
+                  activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
+                }`}
               >
                 {tab.label}
               </button>
               {activeTab === tab.key && (
-                <p className="text-gray-600 mt-2">{tab.content}</p>
+                <div className="text-gray-600 mt-2">{tab.content}</div>
               )}
             </div>
           ))}
         </div>
       </div>
 
-      {/* Desktop View */}
       <div className="hidden md:grid md:grid-cols-5 gap-6 mt-10">
         <div className="col-span-1 space-y-4 text-sm font-semibold">
           {tabs.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`block w-full text-left border-b-2 pb-2 ${activeTab === tab.key
-                ? "border-[#8E7037] text-[#8E7037]"
-                : "border-gray-300"
-                }`}
+              className={`block w-full text-left border-b-2 pb-2 ${
+                activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
+              }`}
             >
               {tab.label}
             </button>
@@ -420,58 +396,35 @@ function Tabs({ roomData }) {
           <h3 className="text-xl font-bold mb-2">
             {tabs.find((t) => t.key === activeTab).label}
           </h3>
-          <p className="text-gray-600">
-            {tabs.find((t) => t.key === activeTab).content}
-          </p>
+          <div className="text-gray-600">{tabs.find((t) => t.key === activeTab).content}</div>
         </div>
       </div>
-
-      {/* Another Accommodation Section */}
 
       <div>
         <div className="border-t-2 border-gray-300 my-10"></div>
         <div className="p-6 max-w-6xl mx-auto">
           <h3 className="text-xl font-semibold mb-4">ANOTHER ACCOMMODATION</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
-
-            {
-              relatedRooms.map(rooms => (
-                <Link to={`/rooms/${rooms.slug}`} key={rooms.slug}>
-                  <div className="flex flex-col gap-4 p-4   shadow hover:shadow-md hover:scale-105 transition">
-                    <div className="flex-shrink-0">
-                      <img
-                        src={rooms.images[0]}
-                        alt={rooms.title}
-                        className="w-full h-40 object-cover rounded"
-                      />
-                    </div>
-                    <ul className="text-gray-600 text-sm">
-                      <li className="font-semibold text-center">{rooms.title}</li>
-                      <li><strong>Max:</strong> {rooms.additionalDetails.maxPersons} Person(s)</li>
-                      <li><strong>Bed:</strong> {rooms.additionalDetails.bed}</li>
-                      <li><strong>View:</strong> {rooms.additionalDetails.view}</li>
-                    </ul>
-                  </div>
-                </Link>
-              ))
-            }
-
+            {relatedRooms.map((rooms) => (
+              <Link to={`/rooms/${rooms.slug}`} key={rooms.slug}>
+                <div className="flex flex-col gap-4 p-4 shadow hover:shadow-md hover:scale-105 transition">
+                  <img
+                    src={rooms.images[0]}
+                    alt={rooms.title}
+                    className="w-full h-40 object-cover rounded"
+                  />
+                  <ul className="text-gray-600 text-sm">
+                    <li className="font-semibold text-center">{rooms.title}</li>
+                    <li><strong>Max:</strong> {rooms.additionalDetails.maxPersons} Person(s)</li>
+                    <li><strong>Bed:</strong> {rooms.additionalDetails.bed}</li>
+                    <li><strong>View:</strong> {rooms.additionalDetails.view}</li>
+                  </ul>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
-      {/* until here is test */}
-
-
-
-
-
-
-
-
-
-
-
-
     </>
   );
 }
