@@ -46,9 +46,9 @@ export default function RoomDetails() {
     );
   };
 
- /*  const handleEventBooking = () => {
+  const handleEventBooking = () => {
     navigate("/events");
-  }; */
+  };
 
   const handleBookingClick = () => {
     const { arrive, departure, adult, child } = bookingData;
@@ -107,14 +107,8 @@ export default function RoomDetails() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase">
             {roomData.title}
           </h1>
-          <p
-            className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            Royal Grand Hotel is where timeless elegance meets modern luxury in every detail.
-
-
-
+          <p className="text-lg mt-2">
+            Lorem Ipsum is simply dummy text of the printing
           </p>
         </div>
       </section>
@@ -149,10 +143,11 @@ export default function RoomDetails() {
                   key={index}
                   src={img}
                   alt={`thumb-${index}`}
-                  className={`w-20 h-16 object-cover cursor-pointer border ${index === currentImageIndex
+                  className={`w-20 h-16 object-cover cursor-pointer border ${
+                    index === currentImageIndex
                       ? "border-[#8E7037]"
                       : "border-gray-300"
-                    }`}
+                  }`}
                   onClick={() => setCurrentImageIndex(index)}
                 />
               ))}
@@ -170,9 +165,7 @@ export default function RoomDetails() {
 
             <form className="space-y-4">
               <div>
-
-                <label>Check In</label>
-
+                <label>ARRIVE</label>
                 <input
                   type="date"
                   name="arrive"
@@ -184,9 +177,7 @@ export default function RoomDetails() {
                 />
               </div>
               <div>
-
-                <label>Check Out</label>
-
+                <label>DEPARTURE</label>
                 <input
                   type="date"
                   name="departure"
@@ -201,7 +192,7 @@ export default function RoomDetails() {
                 />
               </div>
               <div>
-                <label>Adult</label>
+                <label>ADULT</label>
                 <input
                   type="number"
                   name="adult"
@@ -214,7 +205,7 @@ export default function RoomDetails() {
                 />
               </div>
               <div>
-                <label>Child</label>
+                <label>CHILD</label>
                 <input
                   type="number"
                   name="child"
@@ -228,18 +219,14 @@ export default function RoomDetails() {
               </div>
               <div className="mt-4">
                 <button
-                  type="submit"
-                  className="w-full p-3 bg-[#8E7037] text-white font-semibold cursor-pointer hover:bg-white hover:text-[#8E7037]"
-
+                  type="button"
                   onClick={handleBookingClick}
-
-
+                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
                 >
                   Book Now
                 </button>
               </div>
-
-              {/* <div className="mt-4">
+              <div className="mt-4">
                 <button
                   type="button"
                   onClick={handleEventBooking}
@@ -247,8 +234,7 @@ export default function RoomDetails() {
                 >
                   Book Event
                 </button>
-              </div> */}
-
+              </div>
             </form>
           </div>
         </div>
@@ -375,8 +361,9 @@ function Tabs({ roomData }) {
             <div key={tab.key}>
               <button
                 onClick={() => setActiveTab(tab.key)}
-                className={`text-lg font-bold block border-b-2 pb-2 w-full text-left ${activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
-                  }`}
+                className={`text-lg font-bold block border-b-2 pb-2 w-full text-left ${
+                  activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
+                }`}
               >
                 {tab.label}
               </button>
@@ -394,8 +381,9 @@ function Tabs({ roomData }) {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`block w-full text-left border-b-2 pb-2 ${activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
-                }`}
+              className={`block w-full text-left border-b-2 pb-2 ${
+                activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
+              }`}
             >
               {tab.label}
             </button>
