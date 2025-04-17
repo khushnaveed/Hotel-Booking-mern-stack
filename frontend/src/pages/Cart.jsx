@@ -1,13 +1,17 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCart, Package, Users, Calendar, X } from "lucide-react";
+import { Package, Users, Calendar, X, CalendarClock, CalendarCheck } from "lucide-react";
 
-function CartPage() {
+function Cart() {
   const { cartItems, removeFromCart } = useCart();
   const navigate = useNavigate();
 
   const total = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
+
+  const handleViewEvents = (arrivalDate, departureDate) => {
+    navigate(`/events?from=${arrivalDate}&to=${departureDate}`);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -39,18 +43,25 @@ function CartPage() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 mt-[40vh] space-y-12 lg:space-y-0 lg:space-x-8 ">
         {cartItems.length === 0 ? (
           <div className="text-center py-16">
-            <ShoppingCart className="w-16 h-16 mx-auto text-gray-400 mb-4" />
+            <CalendarCheck className="w-16 h-16 mx-auto text-gray-400 mb-4" />
             <h2 className="text-2xl font-semibold text-gray-600 mb-2">
-              Your cart is empty
+            Enjoy your stay at our hotel with luxury rooms and joyful events.
             </h2>
             <p className="text-gray-500 mb-8">
               Looks like you haven't added any reservations yet.
             </p>
             <button
               onClick={() => navigate("/rooms")}
-              className="bg-[#8E7037] text-white px-8 py-3 rounded-md hover:bg-[#a0844d] transition duration-300"
+              className="bg-[#8E7037] text-white px-8 py-3 rounded-md hover:bg-[#a0844d] m-5 transition duration-300"
             >
               Browse Rooms
+            </button>
+
+            <button
+              onClick={() => navigate("/events")}
+              className="bg-[#8E7037] text-white px-8 py-3 rounded-md hover:bg-[#a0844d] m-5 transition duration-300"
+            >
+              Browse Events
             </button>
           </div>
         ) : (
@@ -69,7 +80,7 @@ function CartPage() {
                         </h2>
                         <button
                           onClick={() => removeFromCart(item.slug)}
-                          className="text-gray-400 hover:text-red-600 transition duration-300"
+                          className="text-gray-400 hover:text-[#8E7037] transition duration-300"
                         >
                           <X className="w-6 h-6" />
                         </button>
@@ -111,7 +122,14 @@ function CartPage() {
                         )}
                       </div>
 
-                      <div className="mt-6 flex justify-end">
+                      <div className="mt-6 flex justify-between items-center">
+                        <button
+                          onClick={() => handleViewEvents(item.arrivalDate, item.departureDate)}
+                          className="flex items-center space-x-2 text-[#8E7037] hover:text-[#a0844d] transition duration-300"
+                        >
+                          <CalendarClock className="w-5 h-5" />
+                          <span>View Events During Stay</span>
+                        </button>
                         <p className="text-2xl font-semibold text-[#8E7037]">
                           ${item.totalPrice}
                         </p>
@@ -145,7 +163,7 @@ function CartPage() {
                     </div>
                   </div>
                   <button
-                    onClick={() => navigate("/checkout")}
+                    onClick={() => navigate("/payment")}
                     className="w-full bg-[#8E7037] text-white py-3 rounded-md hover:bg-[#a0844d] transition duration-300 mt-6"
                   >
                     Proceed to Checkout
@@ -160,4 +178,4 @@ function CartPage() {
   );
 }
 
-export default CartPage;
+export default Cart;

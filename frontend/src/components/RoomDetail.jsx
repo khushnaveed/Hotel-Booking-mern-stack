@@ -46,10 +46,6 @@ export default function RoomDetails() {
     );
   };
 
-  const handleEventBooking = () => {
-    navigate("/events");
-  };
-
   const handleBookingClick = () => {
     const { arrive, departure, adult, child } = bookingData;
 
@@ -90,6 +86,7 @@ export default function RoomDetails() {
     };
 
     navigate(`/checkout/${roomSlug}`, { state: payload });
+
   };
 
   if (loading) return <div>Loading...</div>;
@@ -226,15 +223,6 @@ export default function RoomDetails() {
                   Book Now
                 </button>
               </div>
-              <div className="mt-4">
-                <button
-                  type="button"
-                  onClick={handleEventBooking}
-                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
-                >
-                  Book Event
-                </button>
-              </div>
             </form>
           </div>
         </div>
@@ -280,11 +268,22 @@ function Tabs({ roomData }) {
         <>
           <p>{roomData.descOverview}</p>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-5 mt-4 text-gray-600">
-            <li><strong>SPECIAL ROOM</strong></li>
-            <li><strong>Max:</strong> {roomData.additionalDetails.maxPersons} Person(s)</li>
-            <li><strong>Size:</strong> {roomData.additionalDetails.size}</li>
-            <li><strong>View:</strong> {roomData.additionalDetails.view}</li>
-            <li><strong>Bed:</strong> {roomData.additionalDetails.bed}</li>
+            <li>
+              <strong>SPECIAL ROOM</strong>
+            </li>
+            <li>
+              <strong>Max:</strong> {roomData.additionalDetails.maxPersons}{" "}
+              Person(s)
+            </li>
+            <li>
+              <strong>Size:</strong> {roomData.additionalDetails.size}
+            </li>
+            <li>
+              <strong>View:</strong> {roomData.additionalDetails.view}
+            </li>
+            <li>
+              <strong>Bed:</strong> {roomData.additionalDetails.bed}
+            </li>
           </ul>
         </>
       ),
@@ -296,16 +295,20 @@ function Tabs({ roomData }) {
         <>
           <p className="text-gray-600 mb-4">Located in the heart of Aspen...</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-            {Object.entries(roomData.amenities).map(([roomType, items], idx) => (
-              <div key={idx} className="mb-6">
-                <h4 className="text-lg font-semibold text-gray-700">{roomType}</h4>
-                <ul className="list-disc pl-5 text-gray-600">
-                  {items.map((amenity, i) => (
-                    <li key={i}>{amenity}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {Object.entries(roomData.amenities).map(
+              ([roomType, items], idx) => (
+                <div key={idx} className="mb-6">
+                  <h4 className="text-lg font-semibold text-gray-700">
+                    {roomType}
+                  </h4>
+                  <ul className="list-disc pl-5 text-gray-600">
+                    {items.map((amenity, i) => (
+                      <li key={i}>{amenity}</li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            )}
           </div>
         </>
       ),
@@ -324,32 +327,39 @@ function Tabs({ roomData }) {
     {
       key: "rates",
       label: "RATES",
-      content: roomData.pricing && roomData.ratings ? (
-        roomData.pricing.map((price, index) => {
-          const matchingRating = roomData.ratings.find(
-            (rating) =>
-              new Date(rating.startDate).getTime() <= new Date(price.endDate).getTime() &&
-              new Date(rating.endDate).getTime() >= new Date(price.startDate).getTime()
-          );
-          return (
-            <div key={index} className="mb-4">
-              <p>
-                <strong>Price:</strong> ${price.price}/day from{" "}
-                {new Date(price.startDate).toLocaleDateString()} to{" "}
-                {new Date(price.endDate).toLocaleDateString()}
-              </p>
-              {matchingRating && (
-                <>
-                  <p><strong>Rating:</strong> {matchingRating.rating} / 5</p>
-                  <p><strong>Description:</strong> {matchingRating.description}</p>
-                </>
-              )}
-            </div>
-          );
-        })
-      ) : (
-        <p>No rates or ratings available.</p>
-      ),
+      content:
+        roomData.pricing && roomData.ratings ? (
+          roomData.pricing.map((price, index) => {
+            const matchingRating = roomData.ratings.find(
+              (rating) =>
+                new Date(rating.startDate).getTime() <=
+                  new Date(price.endDate).getTime() &&
+                new Date(rating.endDate).getTime() >=
+                  new Date(price.startDate).getTime()
+            );
+            return (
+              <div key={index} className="mb-4">
+                <p>
+                  <strong>Price:</strong> ${price.price}/day from{" "}
+                  {new Date(price.startDate).toLocaleDateString()} to{" "}
+                  {new Date(price.endDate).toLocaleDateString()}
+                </p>
+                {matchingRating && (
+                  <>
+                    <p>
+                      <strong>Rating:</strong> {matchingRating.rating} / 5
+                    </p>
+                    <p>
+                      <strong>Description:</strong> {matchingRating.description}
+                    </p>
+                  </>
+                )}
+              </div>
+            );
+          })
+        ) : (
+          <p>No rates or ratings available.</p>
+        ),
     },
   ];
 
@@ -362,7 +372,9 @@ function Tabs({ roomData }) {
               <button
                 onClick={() => setActiveTab(tab.key)}
                 className={`text-lg font-bold block border-b-2 pb-2 w-full text-left ${
-                  activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
+                  activeTab === tab.key
+                    ? "border-[#8E7037] text-[#8E7037]"
+                    : "border-gray-300"
                 }`}
               >
                 {tab.label}
@@ -382,7 +394,9 @@ function Tabs({ roomData }) {
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={`block w-full text-left border-b-2 pb-2 ${
-                activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
+                activeTab === tab.key
+                  ? "border-[#8E7037] text-[#8E7037]"
+                  : "border-gray-300"
               }`}
             >
               {tab.label}
@@ -393,7 +407,9 @@ function Tabs({ roomData }) {
           <h3 className="text-xl font-bold mb-2">
             {tabs.find((t) => t.key === activeTab).label}
           </h3>
-          <div className="text-gray-600">{tabs.find((t) => t.key === activeTab).content}</div>
+          <div className="text-gray-600">
+            {tabs.find((t) => t.key === activeTab).content}
+          </div>
         </div>
       </div>
 
@@ -412,9 +428,16 @@ function Tabs({ roomData }) {
                   />
                   <ul className="text-gray-600 text-sm">
                     <li className="font-semibold text-center">{rooms.title}</li>
-                    <li><strong>Max:</strong> {rooms.additionalDetails.maxPersons} Person(s)</li>
-                    <li><strong>Bed:</strong> {rooms.additionalDetails.bed}</li>
-                    <li><strong>View:</strong> {rooms.additionalDetails.view}</li>
+                    <li>
+                      <strong>Max:</strong> {rooms.additionalDetails.maxPersons}{" "}
+                      Person(s)
+                    </li>
+                    <li>
+                      <strong>Bed:</strong> {rooms.additionalDetails.bed}
+                    </li>
+                    <li>
+                      <strong>View:</strong> {rooms.additionalDetails.view}
+                    </li>
                   </ul>
                 </div>
               </Link>
