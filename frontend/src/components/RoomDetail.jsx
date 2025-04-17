@@ -107,8 +107,14 @@ export default function RoomDetails() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase">
             {roomData.title}
           </h1>
-          <p className="text-lg mt-2">
-            Lorem Ipsum is simply dummy text of the printing
+          <p
+            className="text-lg mt-2"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+          >
+            Royal Grand Hotel is where timeless elegance meets modern luxury in every detail.
+
+
+
           </p>
         </div>
       </section>
@@ -165,7 +171,7 @@ export default function RoomDetails() {
 
             <form className="space-y-4">
               <div>
-                <label>ARRIVE</label>
+                <label>CHECK IN</label>
                 <input
                   type="date"
                   name="arrive"
@@ -177,7 +183,7 @@ export default function RoomDetails() {
                 />
               </div>
               <div>
-                <label>DEPARTURE</label>
+                <label>CHECK OUT </label>
                 <input
                   type="date"
                   name="departure"
@@ -219,22 +225,19 @@ export default function RoomDetails() {
               </div>
               <div className="mt-4">
                 <button
+                  type="submit"
+                  className="w-full p-3 bg-[#8E7037] text-white font-semibold cursor-pointer hover:bg-white hover:text-[#8E7037]"
+
                   type="button"
                   onClick={handleBookingClick}
                   className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
+
                 >
                   Book Now
                 </button>
               </div>
-              <div className="mt-4">
-                <button
-                  type="button"
-                  onClick={handleEventBooking}
-                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
-                >
-                  Book Event
-                </button>
-              </div>
+              
+
             </form>
           </div>
         </div>
