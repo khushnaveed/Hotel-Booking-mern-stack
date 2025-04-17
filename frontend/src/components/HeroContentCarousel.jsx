@@ -96,7 +96,7 @@ export default function HeroContentCarousel() {
               className="text-[#8E7037] text-2xl font-medium mb-2 flex items-center"
             >
               <Users size={30} className="mr-2 text-gold" />
-              Guests
+              Adult
             </label>
             <input
               type="number"
@@ -111,7 +111,7 @@ export default function HeroContentCarousel() {
               className="text-[#8E7037] text-2xl font-medium mb-2 flex items-center"
             >
               <Users size={30} className="mr-2 text-gold" />
-              Guests
+              Child
             </label>
             <input
               type="number"

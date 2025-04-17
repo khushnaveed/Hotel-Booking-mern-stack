@@ -46,9 +46,9 @@ export default function RoomDetails() {
     );
   };
 
-  const handleEventBooking = () => {
+ /*  const handleEventBooking = () => {
     navigate("/events");
-  };
+  }; */
 
   const handleBookingClick = () => {
     const { arrive, departure, adult, child } = bookingData;
@@ -165,7 +165,7 @@ export default function RoomDetails() {
 
             <form className="space-y-4">
               <div>
-                <label>ARRIVE</label>
+                <label>Check In</label>
                 <input
                   type="date"
                   name="arrive"
@@ -177,7 +177,7 @@ export default function RoomDetails() {
                 />
               </div>
               <div>
-                <label>DEPARTURE</label>
+                <label>Check Out</label>
                 <input
                   type="date"
                   name="departure"
@@ -192,7 +192,7 @@ export default function RoomDetails() {
                 />
               </div>
               <div>
-                <label>ADULT</label>
+                <label>Adult</label>
                 <input
                   type="number"
                   name="adult"
@@ -205,7 +205,7 @@ export default function RoomDetails() {
                 />
               </div>
               <div>
-                <label>CHILD</label>
+                <label>Child</label>
                 <input
                   type="number"
                   name="child"
@@ -226,7 +226,7 @@ export default function RoomDetails() {
                   Book Now
                 </button>
               </div>
-              <div className="mt-4">
+              {/* <div className="mt-4">
                 <button
                   type="button"
                   onClick={handleEventBooking}
@@ -234,7 +234,7 @@ export default function RoomDetails() {
                 >
                   Book Event
                 </button>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>
