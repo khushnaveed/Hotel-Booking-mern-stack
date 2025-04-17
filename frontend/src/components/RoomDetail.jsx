@@ -149,11 +149,10 @@ export default function RoomDetails() {
                   key={index}
                   src={img}
                   alt={`thumb-${index}`}
-                  className={`w-20 h-16 object-cover cursor-pointer border ${
-                    index === currentImageIndex
+                  className={`w-20 h-16 object-cover cursor-pointer border ${index === currentImageIndex
                       ? "border-[#8E7037]"
                       : "border-gray-300"
-                  }`}
+                    }`}
                   onClick={() => setCurrentImageIndex(index)}
                 />
               ))}
@@ -228,15 +227,14 @@ export default function RoomDetails() {
                   type="submit"
                   className="w-full p-3 bg-[#8E7037] text-white font-semibold cursor-pointer hover:bg-white hover:text-[#8E7037]"
 
-                  type="button"
                   onClick={handleBookingClick}
-                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
+
 
                 >
                   Book Now
                 </button>
               </div>
-              
+
 
             </form>
           </div>
@@ -364,9 +362,8 @@ function Tabs({ roomData }) {
             <div key={tab.key}>
               <button
                 onClick={() => setActiveTab(tab.key)}
-                className={`text-lg font-bold block border-b-2 pb-2 w-full text-left ${
-                  activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
-                }`}
+                className={`text-lg font-bold block border-b-2 pb-2 w-full text-left ${activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
+                  }`}
               >
                 {tab.label}
               </button>
@@ -384,9 +381,8 @@ function Tabs({ roomData }) {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`block w-full text-left border-b-2 pb-2 ${
-                activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
-              }`}
+              className={`block w-full text-left border-b-2 pb-2 ${activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
+                }`}
             >
               {tab.label}
             </button>
