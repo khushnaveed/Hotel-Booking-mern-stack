@@ -172,9 +172,8 @@ export default function HeroContentCarousel() {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`h-3 w-3 rounded-full transition-all duration-300 ${
-              index === currentIndex ? "bg-[#8E7037] scale-125" : "bg-white/70"
-            }`}
+            className={`h-3 w-3 rounded-full transition-all duration-300 ${index === currentIndex ? "bg-[#8E7037] scale-125" : "bg-white/70"
+              }`}
           ></button>
         ))}
       </div>

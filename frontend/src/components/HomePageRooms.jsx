@@ -117,4 +117,6 @@ export default function HomePageRooms() {
       </div>
     </section>
   );
+
 }
+
