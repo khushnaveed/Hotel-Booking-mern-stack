@@ -91,7 +91,7 @@ function Navbar() {
             <div className="md:hidden z-[101] flex items-center gap-4">
               <div
                 className="relative cursor-pointer"
-                onClick={() => navigate("/checkout/cart")}
+                onClick={() => navigate("/cart")}
               >
                 <ShoppingCart className="text-white hover:text-[#8E7037]" />
                 {cartItems.length > 0 && (
