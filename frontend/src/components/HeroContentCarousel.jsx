@@ -96,7 +96,7 @@ export default function HeroContentCarousel() {
               className="text-[#8E7037] text-2xl font-medium mb-2 flex items-center"
             >
               <Users size={30} className="mr-2 text-gold" />
-              Guests
+              Adult
             </label>
             <input
               type="number"
@@ -111,7 +111,7 @@ export default function HeroContentCarousel() {
               className="text-[#8E7037] text-2xl font-medium mb-2 flex items-center"
             >
               <Users size={30} className="mr-2 text-gold" />
-              Guests
+              Child
             </label>
             <input
               type="number"
@@ -172,9 +172,8 @@ export default function HeroContentCarousel() {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`h-3 w-3 rounded-full transition-all duration-300 ${
-              index === currentIndex ? "bg-[#8E7037] scale-125" : "bg-white/70"
-            }`}
+            className={`h-3 w-3 rounded-full transition-all duration-300 ${index === currentIndex ? "bg-[#8E7037] scale-125" : "bg-white/70"
+              }`}
           ></button>
         ))}
       </div>

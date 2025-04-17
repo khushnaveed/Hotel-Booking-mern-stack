@@ -127,7 +127,9 @@ export default function RoomDetails() {
             className="text-lg mt-2"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
-            Lorem Ipsum is simply dummy text of the printing
+            Royal Grand Hotel is where timeless elegance meets modern luxury in every detail.
+
+
           </p>
         </div>
       </section>
@@ -187,7 +189,7 @@ export default function RoomDetails() {
 
             <form className="space-y-4" onSubmit={handleBookingSubmit}>
               <div>
-                <label>ARRIVE</label>
+                <label>CHECK IN</label>
                 <input
                   type="date"
                   name="arrive"
@@ -197,7 +199,7 @@ export default function RoomDetails() {
                 />
               </div>
               <div>
-                <label>DEPARTURE</label>
+                <label>CHECK OUT </label>
                 <input
                   type="date"
                   name="departure"
@@ -231,12 +233,12 @@ export default function RoomDetails() {
               <div className="mt-4">
                 <button
                   type="submit"
-                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
+                  className="w-full p-3 bg-[#8E7037] text-white font-semibold cursor-pointer hover:bg-white hover:text-[#8E7037]"
                 >
                   Book Now
                 </button>
               </div>
-              <div className="mt-4">
+              {/*  <div className="mt-4">
                 <button
                   type="button"
                   onClick={handleEventBooking}
@@ -244,7 +246,7 @@ export default function RoomDetails() {
                 >
                   Book Event
                 </button>
-              </div>
+              </div> */}
 
             </form>
           </div>

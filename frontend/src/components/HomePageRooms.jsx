@@ -1,191 +1,17 @@
-/* import React, { useState } from "react";
-import { Bed, Users, Maximize, Check } from "lucide-react";
 
-const HomePageRooms = () => {
-  const rooms = [
-    {
-      id: 1,
-      name: "Deluxe King Room",
-      description:
-        "Spacious room with a king-sized bed, modern amenities, and a stunning city view.",
-      price: 199,
-      image:
-        "https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
-      capacity: 2,
-      size: 32,
-      amenities: [
-        "Free WiFi",
-        "Breakfast Included",
-        "Air Conditioning",
-        "Flat-screen TV",
-        "Mini Bar",
-      ],
-    },
-    {
-      id: 2,
-      name: "Premium Suite",
-      description:
-        "Luxurious suite featuring a separate living area, premium amenities, and panoramic views.",
-      price: 349,
-      image:
-        "https://images.unsplash.com/photo-1591088398332-8a7791972843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1774&q=80",
-      capacity: 4,
-      size: 50,
-      amenities: [
-        "Free WiFi",
-        "Breakfast Included",
-        "Air Conditioning",
-        "Flat-screen TV",
-        "Mini Bar",
-        "Bathtub",
-        "City View",
-      ],
-    },
-    {
-      id: 3,
-      name: "Executive Twin Room",
-      description:
-        "Elegant room with two twin beds, perfect for business travelers or friends traveling together.",
-      price: 229,
-      image:
-        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1774&q=80",
-      capacity: 2,
-      size: 30,
-      amenities: [
-        "Free WiFi",
-        "Breakfast Included",
-        "Air Conditioning",
-        "Flat-screen TV",
-        "Work Desk",
-      ],
-    },
-  ];
-
-  const [activeRoom, setActiveRoom] = useState(rooms[0]);
-
-  return (
-    <section id="rooms" className="py-24 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-5xl">Rooms & Suites</h2>
-          <p className="text-gray-500  m-4">
-            Discover our collection of thoughtfully designed rooms and suites,
-            each offering the perfect blend of comfort, style, and modern
-            amenities.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {rooms.map((room) => (
-            <div
-              key={room.id}
-              className={`bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 ${activeRoom.id === room.id ? "ring-2 ring-[#8E7037]" : ""
-                }`}
-              onClick={() => setActiveRoom(room)}
-            >
-              <div className="relative h-64 overflow-hidden">
-                <img
-                  src={room.image}
-                  alt={room.name}
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                />
-                <div className="absolute top-4 right-4 bg-[#8E7037] text-white px-4 py-2 text-sm font-medium">
-                  ${room.price}
-                  <span className="text-xs">/night</span>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl mb-2">{room.name}</h3>
-                <p className="text-gray-500 text-sm mb-4">{room.description}</p>
-                <div className="flex justify-between text-sm text-gray-500  mb-4">
-                  <div className="flex items-center">
-                    <Bed size={16} className="mr-1 text-[#8E7037]" />
-                    <span>
-                      {room.capacity} {room.capacity === 1 ? "Guest" : "Guests"}
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <Maximize size={16} className="mr-1 text-[#8E7037]" />
-                    <span>{room.size} m²</span>
-                  </div>
-                </div>
-                <a href="#booking" className="w-full text-center ">
-                  Book Now
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default HomePageRooms;
- */
-
-/* import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-export default function HomePageRooms() {
-  const [rooms, setRooms] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchRoomData = async () => {
-      try {
-        const response = await axios.get("http://localhost:5005/room");
-        const allRooms = response.data.data;
-
-        // Filter by specific room types
-        const filtered = allRooms.filter(room => {
-          const title = room.title.toLowerCase();
-          return (
-            title.includes('presidential') ||
-            title.includes('luxury') ||
-            title.includes('deluxe')
-          );
-        }).slice(0, 3);
-
-        setRooms(filtered);
-      } catch (error) {
-        console.error('Error fetching room data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRoomData();
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
-  if (!rooms.length) return <div>No matching rooms to show</div>;
-
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
-      
-      {rooms.map((room) => (
-        <div key={room._id} className="border p-4 shadow ">
-          <h2 className="text-xl font-bold mb-2">{room.title}</h2>
-          <img src={room.images[0]} alt={room.title} className="w-full h-40 object-cover  mb-3" />
-          <p>{room.descOverview}</p>
-          <p>Price: ${room.defaultPrice}</p>
-          <p>Bed: {room.additionalDetails.bed}</p>
-          <p>Persons: {room.additionalDetails.maxPersons}</p>
-          <button>BOOK NOW</button>
-        </div>
-      ))}
-    </div>
-  );
-} */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Bed, Maximize } from "lucide-react"; // Optional icons from lucide-react
+import { Bed } from "lucide-react";
+import { useCurrency } from "../context/CurrencyContext.jsx"
+import { Link } from 'react-router-dom';
 
 export default function HomePageRooms() {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeRoom, setActiveRoom] = useState(null);
+  const { currency } = useCurrency();
+  const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
+  const [expandedRoom, setExpandedRoom] = useState(null);
 
   useEffect(() => {
     const fetchRoomData = async () => {
@@ -202,10 +28,11 @@ export default function HomePageRooms() {
               title.includes('deluxe')
             );
           })
-          .slice(0, 3); // Show only 3 rooms
+          .slice(0, 3);
 
         setRooms(filtered);
         setActiveRoom(filtered[0]);
+
       } catch (error) {
         console.error('Error fetching room data:', error);
       } finally {
@@ -215,6 +42,10 @@ export default function HomePageRooms() {
 
     fetchRoomData();
   }, []);
+
+  const handleReadMoreToggle = (roomId) => {
+    setExpandedRoom((prevState) => (prevState === roomId ? null : roomId));
+  };
 
   if (loading) return <div>Loading...</div>;
   if (!rooms.length) return <div>No matching rooms to show</div>;
@@ -246,26 +77,39 @@ export default function HomePageRooms() {
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                 />
                 <div className="absolute top-4 right-4 bg-[#8E7037] text-white px-4 py-2 text-sm font-medium">
-                  ${room.defaultPrice}
+                  {currencySymbols[currency]} {room.defaultPrice}
                   <span className="text-xs">/night</span>
                 </div>
               </div>
               <div className="p-6">
                 <h3 className="text-xl mb-2">{room.title}</h3>
-                <p className="text-gray-500 text-sm mb-4">{room.descOverview}</p>
+                <p className="text-gray-500 text-sm mb-4">
+                  {expandedRoom === room._id
+                    ? room.descOverview
+                    : `${room.descOverview.slice(0, 150)}...`}
+                </p>
+                <button
+                  onClick={() => handleReadMoreToggle(room._id)}
+                  className="text-blue-500 text-sm"
+                >
+                  {expandedRoom === room._id ? 'Read Less' : 'Read More'}
+                </button>
                 <div className="flex justify-between text-sm text-gray-500 mb-4">
                   <div className="flex items-center">
                     <Bed size={16} className="mr-1 text-[#8E7037]" />
                     <span>{room.additionalDetails.bed}</span>
                   </div>
                   <div className="flex items-center">
-                    <Maximize size={16} className="mr-1 text-[#8E7037]" />
                     <span>{room.additionalDetails.maxPersons} {room.additionalDetails.maxPersons === 1 ? 'Guest' : 'Guests'}</span>
                   </div>
                 </div>
-                <a href="#booking" className="block w-full text-center text-[#8E7037] font-semibold border border-[#8E7037] px-4 py-2 rounded hover:bg-[#8E7037] hover:text-white transition">
+
+                <Link
+                  to={`/rooms/${room.slug}`}
+                  className="inline-block mx-auto text-sm text-white bg-[#8E7037] font-semibold border border-[#8E7037] px-4 py-2 hover:bg-white hover:text-[#8E7037] transition rounded"
+                >
                   Book Now
-                </a>
+                </Link>
               </div>
             </div>
           ))}
@@ -274,7 +118,3 @@ export default function HomePageRooms() {
     </section>
   );
 }
-
-
-
-
