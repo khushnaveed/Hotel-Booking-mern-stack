@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import NavbarTop from "./NavbarTop";
 import { Calendar, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const images = [
   "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80",
@@ -11,6 +12,7 @@ const images = [
 export default function HeroContentCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const isPausedRef = useRef(false); // Ref to track pause state
+  const navigate = useNavigate()
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -23,13 +25,44 @@ export default function HeroContentCarousel() {
   const goToSlide = (index) => {
     setCurrentIndex(index);
   };
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  //testin
+  const handleCheckAvailability = async (e) => {
+    e.preventDefault();
 
+    if (!checkIn || !checkOut) {
+      alert("Please select both dates");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5005/room/available?start=${checkIn}&end=${checkOut}`);
+      const data = await response.json();
+
+      if (data.success && data.data.length > 0) {
+        console.log("Available Rooms:", data.data);
+        // Redirect to the room's details page and scroll to the calendar section
+        const firstAvailableRoom = data.data[0];
+        navigate(`/rooms/${firstAvailableRoom.slug}#calendar`);
+      } else {
+        alert("No rooms available or something went wrong.");
+      }
+    } catch (err) {
+      console.error("Error fetching availability:", err);
+      alert("Server error.");
+    }
+  };
+
+  //testing
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isPausedRef.current) {
         nextSlide();
       }
     }, 5000);
+
+
 
     return () => clearInterval(interval);
   }, []);
@@ -74,6 +107,8 @@ export default function HeroContentCarousel() {
             </label>
             <input
               type="date"
+              value={checkIn}
+              onChange={(e) => setCheckIn(e.target.value)}
               className="w-full border border-[#8E7037] px-3 py-2 text-xl text-gray-600"
             />
           </div>
@@ -87,6 +122,8 @@ export default function HeroContentCarousel() {
             </label>
             <input
               type="date"
+              value={checkOut}
+              onChange={(e) => setCheckOut(e.target.value)}
               className="w-full border border-[#8E7037] px-3 py-2 text-xl text-gray-600"
             />
           </div>
@@ -122,7 +159,9 @@ export default function HeroContentCarousel() {
           </div>
           <div className="col-span-2 lg:col-span-1">
             <button
-              type="submit"
+              type="button"
+              onClick={handleCheckAvailability}
+
               className="w-full bg-[#8E7037] text-white text-2xl px-4 py-2 border border-transparent  hover:border-[#8E7037] hover:text-[#8E7037] hover:bg-white/80 transition"
             >
               Check Availability

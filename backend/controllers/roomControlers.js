@@ -57,7 +57,10 @@ export const createRoom = async (req, res, next) => {
             defaultPrice: defaultPrice || 100,
             packages: packages || [],
             ratings: ratings || [],
-            calendar: calendar || []
+            calendar: calendar || [],
+            //test
+            bookings: bookings || []
+            //test
         });
 
         const savedRoom = await newRoom.save();
@@ -67,3 +70,31 @@ export const createRoom = async (req, res, next) => {
         res.status(500).json({ success: false, message: "Server Error", error: err.message });
     }
 };
+//testing calendar
+// GET: Get unavailable dates for a specific room
+
+
+export const getAvailableRooms = async (req, res, next) => {
+    try {
+        const { start, end } = req.query;
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+
+        const availableRooms = await RoomModel.find({
+            bookings: {
+                $not: {
+                    $elemMatch: {
+                        checkIn: { $lt: endDate },
+                        checkOut: { $gt: startDate }
+                    }
+                }
+            }
+        });
+
+        res.json({ success: true, data: availableRooms });
+    } catch (err) {
+        next(err);
+    }
+};
+
+//testing calendar

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCurrency } from "../context/CurrencyContext.jsx";
+import RoomAvailabilityCalendar from "./RoomAvailabilityCalenar.jsx";
 
 export default function RoomDetails() {
   const [roomData, setRoomData] = useState(null);
@@ -9,6 +10,7 @@ export default function RoomDetails() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { currency } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
+  const calendarRef = useRef(null)
 
   const [bookingData, setBookingData] = useState({
     arrive: "",
@@ -92,6 +94,8 @@ export default function RoomDetails() {
     navigate(`/checkout/${roomSlug}`, { state: payload });
   };
 
+
+
   if (loading) return <div>Loading...</div>;
   if (!roomData) return <div>Room not found</div>;
 
@@ -150,8 +154,8 @@ export default function RoomDetails() {
                   src={img}
                   alt={`thumb-${index}`}
                   className={`w-20 h-16 object-cover cursor-pointer border ${index === currentImageIndex
-                      ? "border-[#8E7037]"
-                      : "border-gray-300"
+                    ? "border-[#8E7037]"
+                    : "border-gray-300"
                     }`}
                   onClick={() => setCurrentImageIndex(index)}
                 />
@@ -242,7 +246,7 @@ export default function RoomDetails() {
 
         {/* Room Tabs Section */}
         <div className="p-6 max-w-6xl mx-auto">
-          <Tabs roomData={roomData} />
+          <Tabs roomData={roomData} calendarRef={calendarRef} />
         </div>
       </div>
     </div>
@@ -252,10 +256,11 @@ export default function RoomDetails() {
 // -------------------------
 // Tabs Component
 // -------------------------
-function Tabs({ roomData }) {
+function Tabs({ roomData, calendarRef }) {
   const [relatedRooms, setRelatedRooms] = useState([]);
   const [activeTab, setActiveTab] = useState("overview");
   const { roomSlug } = useParams();
+
 
   useEffect(() => {
     const fetchRelatedRooms = async () => {
@@ -272,6 +277,10 @@ function Tabs({ roomData }) {
 
     fetchRelatedRooms();
   }, [roomSlug]);
+  // Scroll to Calendar when the "Check Availability" button is clicked
+  const handleCheckAvailabilityClick = () => {
+    calendarRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   const tabs = [
     {
@@ -352,6 +361,29 @@ function Tabs({ roomData }) {
         <p>No rates or ratings available.</p>
       ),
     },
+    {
+      key: "calendar",
+      label: "CALENDAR",
+      content: (
+        <div ref={calendarRef} className="mt-4 space-y-4">
+          {/* Legend */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 bg-black border border-gray-400"></div>
+              <span className="text-gray-700 text-sm">Unavailable</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 bg-white border border-gray-400"></div>
+              <span className="text-gray-700 text-sm">Available</span>
+            </div>
+          </div >
+
+
+          <RoomAvailabilityCalendar slug={roomData.slug} />
+        </div>
+      ),
+    },
+
   ];
 
   return (
