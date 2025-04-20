@@ -3,7 +3,10 @@ import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCurrency } from "../context/CurrencyContext.jsx";
 import RoomAvailabilityCalendar from "./RoomAvailabilityCalenar.jsx";
-
+import AnotherAccommodation from "./AnotherAccommodation.jsx";
+import RoomGallery from "./RoomGallery.jsx";
+//import Tabs from "./Tabs.jsx"
+import BookingForm from "./BookingForm.jsx";
 export default function RoomDetails() {
   const [roomData, setRoomData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -117,16 +120,17 @@ export default function RoomDetails() {
           >
             Royal Grand Hotel is where timeless elegance meets modern luxury in every detail.
 
-
-
           </p>
         </div>
       </section>
 
       <div className="pt-[60vh] sm:pt-[65vh] md:pt-[70vh] lg:pt-[60vh] xl:pt-[50vh]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto">
-          {/* Image Gallery */}
-          <div>
+
+
+          {/* Room Gallery */}
+
+          {/* <div>
             <div className="relative">
               <img
                 src={roomData.images[currentImageIndex]}
@@ -161,10 +165,15 @@ export default function RoomDetails() {
                 />
               ))}
             </div>
-          </div>
+          </div> */}
+          <RoomGallery
+            images={roomData.images}
+            currentImageIndex={currentImageIndex}
+            setCurrentImageIndex={setCurrentImageIndex}
+          />
 
           {/* Booking Form */}
-          <div className="bg-gray-100 p-6 shadow-lg h-fit">
+          {/*  <div className="bg-gray-100 p-6 shadow-lg h-fit">
             <h5 className="text-xl font-semibold mb-4">
               ROOM PRICE{" "}
               <strong className="text-[#8E7037]">
@@ -241,7 +250,16 @@ export default function RoomDetails() {
 
 
             </form>
-          </div>
+          </div> */}
+          <BookingForm
+            bookingData={bookingData}
+            setBookingData={setBookingData}
+            roomData={roomData}
+            handleBookingClick={handleBookingClick}
+            currency={currency}
+            currencySymbols={currencySymbols}
+          />
+
         </div>
 
         {/* Room Tabs Section */}
@@ -430,7 +448,7 @@ function Tabs({ roomData, calendarRef }) {
 
       <div>
         <div className="border-t-2 border-gray-300 my-10"></div>
-        <div className="p-6 max-w-6xl mx-auto">
+        {/*  <div className="p-6 max-w-6xl mx-auto">
           <h3 className="text-xl font-semibold mb-4">ANOTHER ACCOMMODATION</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
             {relatedRooms.map((rooms) => (
@@ -451,7 +469,9 @@ function Tabs({ roomData, calendarRef }) {
               </Link>
             ))}
           </div>
-        </div>
+        </div> */}
+        <AnotherAccommodation relatedRooms={relatedRooms} />
+
       </div>
     </>
   );
