@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCurrency } from "../context/CurrencyContext.jsx";
+import { useCart } from "../context/CartContext";
 
 export default function RoomDetails() {
   const [roomData, setRoomData] = useState(null);
@@ -9,6 +10,7 @@ export default function RoomDetails() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { currency } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
+  const { addToCart } = useCart();
 
   const [bookingData, setBookingData] = useState({
     arrive: "",
@@ -85,8 +87,8 @@ export default function RoomDetails() {
       totalPrice,
     };
 
-    navigate(`/checkout/${roomSlug}`, { state: payload });
-
+    addToCart(payload); // Add to cart context
+    navigate("/cart"); // Go to cart page
   };
 
   if (loading) return <div>Loading...</div>;

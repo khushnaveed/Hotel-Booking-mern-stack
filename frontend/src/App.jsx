@@ -22,7 +22,6 @@ import { WeatherProvider } from "./context/WeatherContext.jsx";
 import WeatherPage from "./pages/WeatherPage.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import Cart from "./pages/Cart.jsx";
-import PaymentCheckout from "./pages/PaymentCheckout.jsx";
 
 function App() {
   return (
@@ -36,7 +35,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/rooms" element={<Rooms />} />
-              <Route path="/checkout/:roomSlug" element={<Checkout />} />
+             {/*  <Route path="/checkout/:roomSlug" element={<Checkout />} /> */}
               <Route path="/restaurant" element={<Restaurant />} />
               <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
               <Route path="/events" element={<Events />} />
@@ -55,7 +54,7 @@ function App() {
               />
               <Route path="/weather" element={<WeatherPage />} />
               <Route path="/cart" element={<Cart />} />
-              <Route path="/payment" element={<PaymentCheckout />} />
+
             </Routes>
 
             <Footer />
