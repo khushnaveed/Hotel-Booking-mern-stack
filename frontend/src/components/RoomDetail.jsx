@@ -123,7 +123,7 @@ export default function RoomDetails() {
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
             Royal Grand Hotel is where timeless elegance meets modern luxury in every detail.
-
+</p>
           <p className="text-lg mt-2">
             Lorem Ipsum is simply dummy text of the printing
           </p>

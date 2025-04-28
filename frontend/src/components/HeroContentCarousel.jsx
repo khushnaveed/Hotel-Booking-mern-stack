@@ -161,9 +161,8 @@ export default function HeroContentCarousel() {
           </div>
           <div className="col-span-2 lg:col-span-1 w-full">
             <button
-              type="button"
+            /*   type="button" */
               onClick={handleCheckAvailability}
-
 
               type="submit"
               className="w-full bg-[#8E7037] text-white text-xl sm:text-2xl lg:text-2xl px-4 py-2 border border-transparent hover:border-[#8E7037] hover:text-[#8E7037] hover:bg-white/80 transition"
