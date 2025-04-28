@@ -74,7 +74,7 @@ function Navbar() {
               {/* Cart Icon */}
               <div
                 className="relative cursor-pointer"
-                onClick={() => {navigate("/cart")
+                onClick={() => {navigate("/checkout")
                   console.log(cartItems);
                 }}
               >

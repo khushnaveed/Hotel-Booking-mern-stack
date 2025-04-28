@@ -50,33 +50,33 @@ export default function RoomDetails() {
 
   const handleBookingClick = () => {
     const { arrive, departure, adult, child } = bookingData;
-
+  
     if (!arrive || !departure) {
       alert("Please select both arrival and departure dates.");
       return;
     }
-
+  
     const start = new Date(arrive);
     const end = new Date(departure);
-
+  
     if (end <= start) {
       alert("Departure date must be after arrival date.");
       return;
     }
-
+  
     const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
     const basePrice = roomData.defaultPrice;
     const extraAdultFee = 70;
     const childFee = 30;
     const numAdults = parseInt(adult) || 1;
     const numChildren = parseInt(child) || 0;
-
+  
     let totalPrice = basePrice * nights;
     if (numAdults > 2) {
       totalPrice += (numAdults - 2) * extraAdultFee * nights;
     }
     totalPrice += numChildren * childFee * nights;
-
+  
     const payload = {
       slug: roomSlug,
       arrivalDate: arrive,
@@ -85,11 +85,14 @@ export default function RoomDetails() {
       numChildren,
       selectedPackages: [],
       totalPrice,
+      nights,
+      image: roomData.images[0],
     };
-
-    addToCart(payload); // Add to cart context
-    navigate("/cart"); // Go to cart page
+  
+    addToCart(payload);
+    navigate("/checkout");
   };
+  
 
   if (loading) return <div>Loading...</div>;
   if (!roomData) return <div>Room not found</div>;
