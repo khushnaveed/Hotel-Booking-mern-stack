@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useCurrency } from "../context/CurrencyContext";
 
-function BlogCard({ date, title, image, excerpt, showCountdown, slug, price}) {
+function BlogCard({ date, title, image, excerpt, showCountdown, slug, price, button}) {
   const { currency } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const [day, month] = date.split(" "); // Assume date format is "Day Month"
@@ -78,6 +78,12 @@ function BlogCard({ date, title, image, excerpt, showCountdown, slug, price}) {
         <p className="text-gray-700 mb-2">{excerpt}</p>
         <span className="text-blue-500">Read More</span>
         <p className="text-gray-800 font-semibold mt-2">Price:<span>{currencySymbols[currency]}{price}</span></p>
+        {button && (
+        <div className="mt-4">
+          {button}
+        </div>
+      )}
+
         
       </Link>
     </div>
