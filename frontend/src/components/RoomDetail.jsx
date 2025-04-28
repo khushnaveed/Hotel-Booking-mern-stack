@@ -7,6 +7,8 @@ import AnotherAccommodation from "./AnotherAccommodation.jsx";
 import RoomGallery from "./RoomGallery.jsx";
 //import Tabs from "./Tabs.jsx"
 import BookingForm from "./BookingForm.jsx";
+import { useCart } from "../context/CartContext";
+
 export default function RoomDetails() {
   const [roomData, setRoomData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,6 +16,8 @@ export default function RoomDetails() {
   const { currency } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const calendarRef = useRef(null)
+
+  const { addToCart } = useCart();
 
   const [bookingData, setBookingData] = useState({
     arrive: "",
@@ -51,39 +55,35 @@ export default function RoomDetails() {
     );
   };
 
-  const handleEventBooking = () => {
-    navigate("/events");
-  };
-
   const handleBookingClick = () => {
     const { arrive, departure, adult, child } = bookingData;
-
+  
     if (!arrive || !departure) {
       alert("Please select both arrival and departure dates.");
       return;
     }
-
+  
     const start = new Date(arrive);
     const end = new Date(departure);
-
+  
     if (end <= start) {
       alert("Departure date must be after arrival date.");
       return;
     }
-
+  
     const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
     const basePrice = roomData.defaultPrice;
     const extraAdultFee = 70;
     const childFee = 30;
     const numAdults = parseInt(adult) || 1;
     const numChildren = parseInt(child) || 0;
-
+  
     let totalPrice = basePrice * nights;
     if (numAdults > 2) {
       totalPrice += (numAdults - 2) * extraAdultFee * nights;
     }
     totalPrice += numChildren * childFee * nights;
-
+  
     const payload = {
       slug: roomSlug,
       arrivalDate: arrive,
@@ -92,10 +92,14 @@ export default function RoomDetails() {
       numChildren,
       selectedPackages: [],
       totalPrice,
+      nights,
+      image: roomData.images[0],
     };
-
-    navigate(`/checkout/${roomSlug}`, { state: payload });
+  
+    addToCart(payload);
+    navigate("/checkout");
   };
+  
 
 
 
@@ -120,6 +124,8 @@ export default function RoomDetails() {
           >
             Royal Grand Hotel is where timeless elegance meets modern luxury in every detail.
 
+          <p className="text-lg mt-2">
+            Lorem Ipsum is simply dummy text of the printing
           </p>
         </div>
       </section>
@@ -157,10 +163,12 @@ export default function RoomDetails() {
                   key={index}
                   src={img}
                   alt={`thumb-${index}`}
-                  className={`w-20 h-16 object-cover cursor-pointer border ${index === currentImageIndex
-                    ? "border-[#8E7037]"
-                    : "border-gray-300"
-                    }`}
+
+                  className={`w-20 h-16 object-cover cursor-pointer border ${
+                    index === currentImageIndex
+                      ? "border-[#8E7037]"
+                      : "border-gray-300"
+                  }`}
                   onClick={() => setCurrentImageIndex(index)}
                 />
               ))}
@@ -183,7 +191,7 @@ export default function RoomDetails() {
 
             <form className="space-y-4">
               <div>
-                <label>CHECK IN</label>
+                <label>ARRIVE</label>
                 <input
                   type="date"
                   name="arrive"
@@ -195,7 +203,7 @@ export default function RoomDetails() {
                 />
               </div>
               <div>
-                <label>CHECK OUT </label>
+                <label>DEPARTURE</label>
                 <input
                   type="date"
                   name="departure"
@@ -237,18 +245,13 @@ export default function RoomDetails() {
               </div>
               <div className="mt-4">
                 <button
-                  type="submit"
-                  className="w-full p-3 bg-[#8E7037] text-white font-semibold cursor-pointer hover:bg-white hover:text-[#8E7037]"
-
+                  type="button"
                   onClick={handleBookingClick}
-
-
+                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
                 >
                   Book Now
                 </button>
               </div>
-
-
             </form>
           </div> */}
           <BookingForm
@@ -308,11 +311,22 @@ function Tabs({ roomData, calendarRef }) {
         <>
           <p>{roomData.descOverview}</p>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-5 mt-4 text-gray-600">
-            <li><strong>SPECIAL ROOM</strong></li>
-            <li><strong>Max:</strong> {roomData.additionalDetails.maxPersons} Person(s)</li>
-            <li><strong>Size:</strong> {roomData.additionalDetails.size}</li>
-            <li><strong>View:</strong> {roomData.additionalDetails.view}</li>
-            <li><strong>Bed:</strong> {roomData.additionalDetails.bed}</li>
+            <li>
+              <strong>SPECIAL ROOM</strong>
+            </li>
+            <li>
+              <strong>Max:</strong> {roomData.additionalDetails.maxPersons}{" "}
+              Person(s)
+            </li>
+            <li>
+              <strong>Size:</strong> {roomData.additionalDetails.size}
+            </li>
+            <li>
+              <strong>View:</strong> {roomData.additionalDetails.view}
+            </li>
+            <li>
+              <strong>Bed:</strong> {roomData.additionalDetails.bed}
+            </li>
           </ul>
         </>
       ),
@@ -324,16 +338,20 @@ function Tabs({ roomData, calendarRef }) {
         <>
           <p className="text-gray-600 mb-4">Located in the heart of Aspen...</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-            {Object.entries(roomData.amenities).map(([roomType, items], idx) => (
-              <div key={idx} className="mb-6">
-                <h4 className="text-lg font-semibold text-gray-700">{roomType}</h4>
-                <ul className="list-disc pl-5 text-gray-600">
-                  {items.map((amenity, i) => (
-                    <li key={i}>{amenity}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {Object.entries(roomData.amenities).map(
+              ([roomType, items], idx) => (
+                <div key={idx} className="mb-6">
+                  <h4 className="text-lg font-semibold text-gray-700">
+                    {roomType}
+                  </h4>
+                  <ul className="list-disc pl-5 text-gray-600">
+                    {items.map((amenity, i) => (
+                      <li key={i}>{amenity}</li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            )}
           </div>
         </>
       ),
@@ -352,32 +370,39 @@ function Tabs({ roomData, calendarRef }) {
     {
       key: "rates",
       label: "RATES",
-      content: roomData.pricing && roomData.ratings ? (
-        roomData.pricing.map((price, index) => {
-          const matchingRating = roomData.ratings.find(
-            (rating) =>
-              new Date(rating.startDate).getTime() <= new Date(price.endDate).getTime() &&
-              new Date(rating.endDate).getTime() >= new Date(price.startDate).getTime()
-          );
-          return (
-            <div key={index} className="mb-4">
-              <p>
-                <strong>Price:</strong> ${price.price}/day from{" "}
-                {new Date(price.startDate).toLocaleDateString()} to{" "}
-                {new Date(price.endDate).toLocaleDateString()}
-              </p>
-              {matchingRating && (
-                <>
-                  <p><strong>Rating:</strong> {matchingRating.rating} / 5</p>
-                  <p><strong>Description:</strong> {matchingRating.description}</p>
-                </>
-              )}
-            </div>
-          );
-        })
-      ) : (
-        <p>No rates or ratings available.</p>
-      ),
+      content:
+        roomData.pricing && roomData.ratings ? (
+          roomData.pricing.map((price, index) => {
+            const matchingRating = roomData.ratings.find(
+              (rating) =>
+                new Date(rating.startDate).getTime() <=
+                  new Date(price.endDate).getTime() &&
+                new Date(rating.endDate).getTime() >=
+                  new Date(price.startDate).getTime()
+            );
+            return (
+              <div key={index} className="mb-4">
+                <p>
+                  <strong>Price:</strong> ${price.price}/day from{" "}
+                  {new Date(price.startDate).toLocaleDateString()} to{" "}
+                  {new Date(price.endDate).toLocaleDateString()}
+                </p>
+                {matchingRating && (
+                  <>
+                    <p>
+                      <strong>Rating:</strong> {matchingRating.rating} / 5
+                    </p>
+                    <p>
+                      <strong>Description:</strong> {matchingRating.description}
+                    </p>
+                  </>
+                )}
+              </div>
+            );
+          })
+        ) : (
+          <p>No rates or ratings available.</p>
+        ),
     },
     {
       key: "calendar",
@@ -412,8 +437,11 @@ function Tabs({ roomData, calendarRef }) {
             <div key={tab.key}>
               <button
                 onClick={() => setActiveTab(tab.key)}
-                className={`text-lg font-bold block border-b-2 pb-2 w-full text-left ${activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
-                  }`}
+                className={`text-lg font-bold block border-b-2 pb-2 w-full text-left ${
+                  activeTab === tab.key
+                    ? "border-[#8E7037] text-[#8E7037]"
+                    : "border-gray-300"
+                }`}
               >
                 {tab.label}
               </button>
@@ -431,8 +459,11 @@ function Tabs({ roomData, calendarRef }) {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`block w-full text-left border-b-2 pb-2 ${activeTab === tab.key ? "border-[#8E7037] text-[#8E7037]" : "border-gray-300"
-                }`}
+              className={`block w-full text-left border-b-2 pb-2 ${
+                activeTab === tab.key
+                  ? "border-[#8E7037] text-[#8E7037]"
+                  : "border-gray-300"
+              }`}
             >
               {tab.label}
             </button>
@@ -442,7 +473,9 @@ function Tabs({ roomData, calendarRef }) {
           <h3 className="text-xl font-bold mb-2">
             {tabs.find((t) => t.key === activeTab).label}
           </h3>
-          <div className="text-gray-600">{tabs.find((t) => t.key === activeTab).content}</div>
+          <div className="text-gray-600">
+            {tabs.find((t) => t.key === activeTab).content}
+          </div>
         </div>
       </div>
 
@@ -461,9 +494,16 @@ function Tabs({ roomData, calendarRef }) {
                   />
                   <ul className="text-gray-600 text-sm">
                     <li className="font-semibold text-center">{rooms.title}</li>
-                    <li><strong>Max:</strong> {rooms.additionalDetails.maxPersons} Person(s)</li>
-                    <li><strong>Bed:</strong> {rooms.additionalDetails.bed}</li>
-                    <li><strong>View:</strong> {rooms.additionalDetails.view}</li>
+                    <li>
+                      <strong>Max:</strong> {rooms.additionalDetails.maxPersons}{" "}
+                      Person(s)
+                    </li>
+                    <li>
+                      <strong>Bed:</strong> {rooms.additionalDetails.bed}
+                    </li>
+                    <li>
+                      <strong>View:</strong> {rooms.additionalDetails.view}
+                    </li>
                   </ul>
                 </div>
               </Link>

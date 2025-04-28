@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Logo from "../assets/Logo.svg";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 
-import { Menu, X, ChevronDown, ShoppingCart } from "lucide-react";
+import { Menu, X, ChevronDown, CalendarCheck } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 import { useTranslation } from "react-i18next"; // ✅ Import useTranslation
@@ -74,11 +74,11 @@ function Navbar() {
               {/* Cart Icon */}
               <div
                 className="relative cursor-pointer"
-                onClick={() => {navigate("/cart")
+                onClick={() => {navigate("/checkout")
                   console.log(cartItems);
                 }}
               >
-                <ShoppingCart className="text-white hover:text-[#8E7037] transition" />
+                <CalendarCheck className="text-white hover:text-[#8E7037] transition" />
                 {cartItems.length > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full">
                     {cartItems.length}
@@ -93,7 +93,7 @@ function Navbar() {
                 className="relative cursor-pointer"
                 onClick={() => navigate("/cart")}
               >
-                <ShoppingCart className="text-white hover:text-[#8E7037]" />
+                <CalendarCheck className="text-white hover:text-[#8E7037]" />
                 {cartItems.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full">
                     {cartItems.length}
