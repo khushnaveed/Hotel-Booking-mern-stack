@@ -14,51 +14,59 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile"; // Imported the Profile component
 import NavbarTop from "./components/NavbarTop";
-import Checkout from "./pages/Checkout";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import { CurrencyProvider } from "./context/CurrencyContext";
 import { WeatherProvider } from "./context/WeatherContext.jsx";
 import WeatherPage from "./pages/WeatherPage.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
-import Cart from "./pages/Cart.jsx";
+
+
+// Stripe setup
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckoutFlow from "./pages/CheckoutFlow.jsx";
+
+// Load Stripe with your publishable key
+const stripePromise = loadStripe("your-publishable-key-here");
 
 function App() {
   return (
     <WeatherProvider>
       <CurrencyProvider>
         <CartProvider>
-          <BrowserRouter>
-            <NavbarTop />
-            <Navbar />
+          <Elements stripe={stripePromise}>
+            <BrowserRouter>
+              <NavbarTop />
+              <Navbar />
 
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/rooms" element={<Rooms />} />
-             {/*  <Route path="/checkout/:roomSlug" element={<Checkout />} /> */}
-              <Route path="/restaurant" element={<Restaurant />} />
-              <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/events/:id" element={<EventDetails />} />
-              <Route path="/gallery" element={<Gallery />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/profile" element={<Profile />} />{" "}
-              {/* Added the profile route */}
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route
-                path="/reset-password/:token"
-                element={<ResetPassword />}
-              />
-              <Route path="/weather" element={<WeatherPage />} />
-              <Route path="/cart" element={<Cart />} />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/rooms" element={<Rooms />} />
+                {/*  <Route path="/checkout/:roomSlug" element={<Checkout />} /> */}
+                <Route path="/restaurant" element={<Restaurant />} />
+                <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
+                <Route path="/events" element={<Events />} />
+                <Route path="/events/:id" element={<EventDetails />} />
+                <Route path="/gallery" element={<Gallery />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/profile" element={<Profile />} />{" "}
+                {/* Added the profile route */}
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route
+                  path="/reset-password/:token"
+                  element={<ResetPassword />}
+                />
+                <Route path="/weather" element={<WeatherPage />} />
+                <Route path="/checkout" element={<CheckoutFlow />} />
+              </Routes>
 
-            </Routes>
-
-            <Footer />
-          </BrowserRouter>
+              <Footer />
+            </BrowserRouter>
+          </Elements>
         </CartProvider>
       </CurrencyProvider>
     </WeatherProvider>
