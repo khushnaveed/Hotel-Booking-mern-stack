@@ -6,6 +6,7 @@ import { config } from "dotenv";
 //npm i cors
 import cors from "cors"
 import eventRoutes from './routes/eventRoutes.js';
+import restaurantRoutes from "./routes/restaurantRoutes.js"
 
 config();
 console.clear()
@@ -19,31 +20,16 @@ app.use(express.json())
 try {
     await mongoose.connect(process.env.MONGO_URI, { dbName: "hotel-booking" })
     console.log("Data Base connected successfully!")
-
-
 } catch (err) {
     console.log(err.message)
 
 }
 
-
-
-
-
-
-
-
 //routes
 app.use("/room", roomRoutes)
 app.use("/guest",guestRoutes)
-
-
-
 app.use('/events', eventRoutes);
-
-
-
-
+app.use('/menu', restaurantRoutes);
 
 //error handling middlewares
 app.use((err, req, res, next) => {
@@ -56,10 +42,5 @@ app.use((req, res, next) => {
         .status(404)
         .send({ success: false, message: "No such route exist in our server!" });
 });
-
-
-
-
-
 
 app.listen(PORT, () => console.log("Server is running on port:", PORT))
