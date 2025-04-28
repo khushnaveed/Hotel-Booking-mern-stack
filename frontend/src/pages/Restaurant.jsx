@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -31,86 +29,48 @@ export default function Restaurant() {
     setLoading(true);
     setError(null);
 
+    
     try {
-      const response = await fetch("http://localhost:5005/foods");
-      if (!response.ok) {
-        throw new Error(`Fetch error: ${response.status}`);
-      }
-      const data = await response.json();
+      const response = await fetch("http://localhost:5005/menu/foods");
+      console.log(response); 
 
-      const items = Array.isArray(data)
-        ? data
-        : data.data || data.restaurantData || [];
-      if (!Array.isArray(items) || items.length === 0) {
-        throw new Error("Invalid or empty data");
-      }
-
-      // Generate 40 items regardless of API response
-      const generatedItems = Array.from({ length: 40 }, (_, i) => {
-        // Use real data for the first items if available
-        if (i < items.length) {
-          return items[i];
+       if (!response.ok) {
+            throw new Error(`Fetching menu items failed with status: ${response.status} ${response.statusText}`);
         }
-        // Generate sample data for the rest
-        return {
-          id: i + 1,
-          name: `Food Item ${i + 1}`,
-          price: ((i % 10) + 5).toFixed(2),
-          desc: `Delicious food item ${i + 1}`,
-          title:
-            i % 4 === 0
-              ? "Breakfast"
-              : i % 4 === 1
-              ? "Lunch"
-              : i % 4 === 2
-              ? "Dinner"
-              : "Drink",
-          img: null, // No image, will use placeholder
-        };
-      });
 
-      // Store all 40 food items
-      setAllFoodItems(generatedItems);
+      const data = await response.json();
+      setAllFoodItems(data);
 
-      // Filter items for the active meal
-      const filteredMenuItems = items.filter(
-        (item) => item.title?.toLowerCase() === activeMeal.toLowerCase()
-      );
-      console.log("Fetched items:", items);
-      const filteredDrinks = items.filter(
-        (item) => item.title?.toLowerCase() === "drink"
-      );
+      // Filter items according to active meal selection
+      const filteredMenuItems = data.filter(item => item.title.toLowerCase() === activeMeal.toLowerCase());
+      const filteredDrinks = data.filter(item => item.title.toLowerCase() === 'drink');
 
       setMenuItems(filteredMenuItems);
       setDrinks(filteredDrinks);
     } catch (err) {
       console.error("Failed to fetch menu items:", err);
       setError(`Unable to load menu. Error: ${err.message}`);
-      setError("Unable to load menu. Please try again later.");
-
-      // Create sample data if API fails - ensure we have 40 items
-      const sampleData = Array.from({ length: 40 }, (_, i) => ({
-        id: i + 1,
-        name: `Sample Food Item ${i + 1}`,
-        price: ((i % 10) + 5).toFixed(2),
-        desc: `Delicious sample food item ${i + 1}`,
-        title:
-          i % 4 === 0
-            ? "Breakfast"
-            : i % 4 === 1
-            ? "Lunch"
-            : i % 4 === 2
-            ? "Dinner"
-            : "Drink",
-      }));
-
+      
+      // Handle fallback sample data
+      const sampleData = generateSampleData();
       setAllFoodItems(sampleData);
-      setMenuItems(sampleData.filter((item) => item.title === activeMeal));
-      setDrinks(sampleData.filter((item) => item.title === "Drink"));
+      setMenuItems(sampleData.filter(item => item.title === activeMeal));
+      setDrinks(sampleData.filter(item => item.title === "Drink"));
     } finally {
       setLoading(false);
     }
   }, [activeMeal]);
+
+  // Function to generate sample data
+  const generateSampleData = () => {
+    return Array.from({ length: 40 }, (_, i) => ({
+      id: i + 1,
+      name: `Sample Food Item ${i + 1}`,
+      price: ((i % 10) + 5).toFixed(2),
+      desc: `Delicious sample food item ${i + 1}`,
+      title: i % 4 === 0 ? "Breakfast" : i % 4 === 1 ? "Lunch" : i % 4 === 2 ? "Dinner" : "Drink",
+    }));
+  };
 
   useEffect(() => {
     fetchMenuItems();
@@ -151,11 +111,7 @@ export default function Restaurant() {
       )
       .then(
         (response) => {
-          console.log(
-            "Email sent successfully!",
-            response.status,
-            response.text
-          );
+          console.log("Email sent successfully!", response.status, response.text);
           setIsSubmitted(true);
           setFormErrors({});
           form.reset();
@@ -166,6 +122,7 @@ export default function Restaurant() {
         }
       );
   };
+
 
   return (
     <>
