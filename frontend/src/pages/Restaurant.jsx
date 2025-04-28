@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
 import emailjs from "emailjs-com";
-
+import { useCurrency } from "../context/CurrencyContext.jsx";
 export default function Restaurant() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -14,6 +15,8 @@ export default function Restaurant() {
   const [allFoodItems, setAllFoodItems] = useState([]); // New state for all food items
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { currency } = useCurrency();
+  const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
 
   const openModal = (item) => {
     setSelectedItem(item);
@@ -29,33 +32,38 @@ export default function Restaurant() {
     setLoading(true);
     setError(null);
 
-    
     try {
       const response = await fetch("http://localhost:5005/menu/foods");
-      console.log(response); 
+      console.log(response);
 
-       if (!response.ok) {
-            throw new Error(`Fetching menu items failed with status: ${response.status} ${response.statusText}`);
-        }
+      if (!response.ok) {
+        throw new Error(
+          `Fetching menu items failed with status: ${response.status} ${response.statusText}`
+        );
+      }
 
       const data = await response.json();
       setAllFoodItems(data);
 
       // Filter items according to active meal selection
-      const filteredMenuItems = data.filter(item => item.title.toLowerCase() === activeMeal.toLowerCase());
-      const filteredDrinks = data.filter(item => item.title.toLowerCase() === 'drink');
+      const filteredMenuItems = data.filter(
+        (item) => item.title.toLowerCase() === activeMeal.toLowerCase()
+      );
+      const filteredDrinks = data.filter(
+        (item) => item.title.toLowerCase() === "drink"
+      );
 
       setMenuItems(filteredMenuItems);
       setDrinks(filteredDrinks);
     } catch (err) {
       console.error("Failed to fetch menu items:", err);
       setError(`Unable to load menu. Error: ${err.message}`);
-      
+
       // Handle fallback sample data
       const sampleData = generateSampleData();
       setAllFoodItems(sampleData);
-      setMenuItems(sampleData.filter(item => item.title === activeMeal));
-      setDrinks(sampleData.filter(item => item.title === "Drink"));
+      setMenuItems(sampleData.filter((item) => item.title === activeMeal));
+      setDrinks(sampleData.filter((item) => item.title === "Drink"));
     } finally {
       setLoading(false);
     }
@@ -68,7 +76,14 @@ export default function Restaurant() {
       name: `Sample Food Item ${i + 1}`,
       price: ((i % 10) + 5).toFixed(2),
       desc: `Delicious sample food item ${i + 1}`,
-      title: i % 4 === 0 ? "Breakfast" : i % 4 === 1 ? "Lunch" : i % 4 === 2 ? "Dinner" : "Drink",
+      title:
+        i % 4 === 0
+          ? "Breakfast"
+          : i % 4 === 1
+          ? "Lunch"
+          : i % 4 === 2
+          ? "Dinner"
+          : "Drink",
     }));
   };
 
@@ -111,7 +126,11 @@ export default function Restaurant() {
       )
       .then(
         (response) => {
-          console.log("Email sent successfully!", response.status, response.text);
+          console.log(
+            "Email sent successfully!",
+            response.status,
+            response.text
+          );
           setIsSubmitted(true);
           setFormErrors({});
           form.reset();
@@ -122,7 +141,6 @@ export default function Restaurant() {
         }
       );
   };
-
 
   return (
     <>
@@ -205,7 +223,10 @@ export default function Restaurant() {
                     />
                     <div className="text-left">
                       <h4 className="text-lg font-semibold">{item.name}</h4>
-                      <p className="font-bold text-[#8E7037]">${item.price}</p>
+                      <p className="font-bold text-[#8E7037]">
+                        {currencySymbols[currency]}
+                        {item.price}
+                      </p>
                       <p className="text-gray-600 text-sm">{item.desc}</p>
                     </div>
                   </div>
@@ -266,7 +287,8 @@ export default function Restaurant() {
 
           {isSubmitted ? (
             <div className="bg-green-200 text-black-800 p-4 rounded text-center">
-              Thank you for selecting Royal Grand Dining! Our team will be in touch shortly.
+              Thank you for selecting Royal Grand Dining! Our team will be in
+              touch shortly.
             </div>
           ) : (
             <form
@@ -381,7 +403,7 @@ export default function Restaurant() {
       {/* Gallery Section */}
       <section className="py-16 bg-white px-4">
         <h2 className="text-3xl font-semibold text-center mb-8">
-        Choose from the Gallery
+          Choose from the Gallery
         </h2>
         <p className="text-center text-gray-600 mb-8">
           Explore our collection of 40 culinary creations
