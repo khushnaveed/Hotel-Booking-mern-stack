@@ -87,8 +87,8 @@ export default function Rooms() {
                   {room.defaultPrice} per day
                 </h6>
 
-                <p className="mt-4">
-                  {expandedRoom === room._id
+                <p className={`mt-4 ${expandedRoom === room._id ? "text-[12px]" : ""}`}>
+                {expandedRoom === room._id
                     ? room.descOverview
                     : `${room.descOverview.slice(0, 200)}...`}
                 </p>
