@@ -11,16 +11,23 @@
   },
   "dependencies": {
     "@material-tailwind/react": "^2.1.10",
+    "@stripe/react-stripe-js": "^3.6.0",
+    "@stripe/stripe-js": "^7.1.0",
     "@tailwindcss/vite": "^4.1.2",
     "axios": "^1.8.4",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
     "emailjs-com": "^3.2.0",
+
+
+    "framer-motion": "^12.7.4",
+
     "i18next": "^25.0.0",
     "i18next-browser-languagedetector": "^8.0.4",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.487.0",
     "react": "^19.0.0",
+    "react-calendar": "^5.1.0",
     "react-countup": "^6.5.3",
     "react-datepicker": "^8.2.1",
     "react-dom": "^19.0.0",

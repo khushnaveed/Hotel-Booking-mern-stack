@@ -26,7 +26,7 @@ const WeatherPage = () => {
                     Weather in {weather.name}
                 </h1>
 
-                <div className="space-y-3 text-sm sm:text-base sm:text-left text-center sm:text-start mb-6">
+                <div className="space-y-3 text-sm sm:text-base sm:text-left text-center mb-6">
                     <p>
                         <strong>Description:</strong> {weather.weather[0].description}
                     </p>
