@@ -28,7 +28,12 @@ const roomSchema = new Schema({
 
     // Optional calendar for room-specific events
     calendar: [calendarSchema],
-
+    //testing calendar
+    bookings: [{
+        checkIn: { type: Date, required: true },
+        checkOut: { type: Date, required: true }
+    }],
+    //testing
     // Pricing based on date range
     pricing: [{
         startDate: { type: Date, required: true },

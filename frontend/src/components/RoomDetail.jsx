@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCurrency } from "../context/CurrencyContext.jsx";
+import RoomAvailabilityCalendar from "./RoomAvailabilityCalenar.jsx";
+import AnotherAccommodation from "./AnotherAccommodation.jsx";
+import RoomGallery from "./RoomGallery.jsx";
+//import Tabs from "./Tabs.jsx"
+import BookingForm from "./BookingForm.jsx";
 import { useCart } from "../context/CartContext";
 
 export default function RoomDetails() {
@@ -10,6 +15,8 @@ export default function RoomDetails() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { currency } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
+  const calendarRef = useRef(null)
+
   const { addToCart } = useCart();
 
   const [bookingData, setBookingData] = useState({
@@ -94,6 +101,8 @@ export default function RoomDetails() {
   };
   
 
+
+
   if (loading) return <div>Loading...</div>;
   if (!roomData) return <div>Room not found</div>;
 
@@ -109,6 +118,12 @@ export default function RoomDetails() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase">
             {roomData.title}
           </h1>
+          <p
+            className="text-lg mt-2"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+          >
+            Royal Grand Hotel is where timeless elegance meets modern luxury in every detail.
+
           <p className="text-lg mt-2">
             Lorem Ipsum is simply dummy text of the printing
           </p>
@@ -117,8 +132,11 @@ export default function RoomDetails() {
 
       <div className="pt-[60vh] sm:pt-[65vh] md:pt-[70vh] lg:pt-[60vh] xl:pt-[50vh]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto">
-          {/* Image Gallery */}
-          <div>
+
+
+          {/* Room Gallery */}
+
+          {/* <div>
             <div className="relative">
               <img
                 src={roomData.images[currentImageIndex]}
@@ -145,6 +163,7 @@ export default function RoomDetails() {
                   key={index}
                   src={img}
                   alt={`thumb-${index}`}
+
                   className={`w-20 h-16 object-cover cursor-pointer border ${
                     index === currentImageIndex
                       ? "border-[#8E7037]"
@@ -154,10 +173,15 @@ export default function RoomDetails() {
                 />
               ))}
             </div>
-          </div>
+          </div> */}
+          <RoomGallery
+            images={roomData.images}
+            currentImageIndex={currentImageIndex}
+            setCurrentImageIndex={setCurrentImageIndex}
+          />
 
           {/* Booking Form */}
-          <div className="bg-gray-100 p-6 shadow-lg h-fit">
+          {/*  <div className="bg-gray-100 p-6 shadow-lg h-fit">
             <h5 className="text-xl font-semibold mb-4">
               ROOM PRICE{" "}
               <strong className="text-[#8E7037]">
@@ -229,12 +253,21 @@ export default function RoomDetails() {
                 </button>
               </div>
             </form>
-          </div>
+          </div> */}
+          <BookingForm
+            bookingData={bookingData}
+            setBookingData={setBookingData}
+            roomData={roomData}
+            handleBookingClick={handleBookingClick}
+            currency={currency}
+            currencySymbols={currencySymbols}
+          />
+
         </div>
 
         {/* Room Tabs Section */}
         <div className="p-6 max-w-6xl mx-auto">
-          <Tabs roomData={roomData} />
+          <Tabs roomData={roomData} calendarRef={calendarRef} />
         </div>
       </div>
     </div>
@@ -244,10 +277,11 @@ export default function RoomDetails() {
 // -------------------------
 // Tabs Component
 // -------------------------
-function Tabs({ roomData }) {
+function Tabs({ roomData, calendarRef }) {
   const [relatedRooms, setRelatedRooms] = useState([]);
   const [activeTab, setActiveTab] = useState("overview");
   const { roomSlug } = useParams();
+
 
   useEffect(() => {
     const fetchRelatedRooms = async () => {
@@ -264,6 +298,10 @@ function Tabs({ roomData }) {
 
     fetchRelatedRooms();
   }, [roomSlug]);
+  // Scroll to Calendar when the "Check Availability" button is clicked
+  const handleCheckAvailabilityClick = () => {
+    calendarRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   const tabs = [
     {
@@ -366,6 +404,29 @@ function Tabs({ roomData }) {
           <p>No rates or ratings available.</p>
         ),
     },
+    {
+      key: "calendar",
+      label: "CALENDAR",
+      content: (
+        <div ref={calendarRef} className="mt-4 space-y-4">
+          {/* Legend */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 bg-black border border-gray-400"></div>
+              <span className="text-gray-700 text-sm">Unavailable</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 bg-white border border-gray-400"></div>
+              <span className="text-gray-700 text-sm">Available</span>
+            </div>
+          </div >
+
+
+          <RoomAvailabilityCalendar slug={roomData.slug} />
+        </div>
+      ),
+    },
+
   ];
 
   return (
@@ -420,7 +481,7 @@ function Tabs({ roomData }) {
 
       <div>
         <div className="border-t-2 border-gray-300 my-10"></div>
-        <div className="p-6 max-w-6xl mx-auto">
+        {/*  <div className="p-6 max-w-6xl mx-auto">
           <h3 className="text-xl font-semibold mb-4">ANOTHER ACCOMMODATION</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
             {relatedRooms.map((rooms) => (
@@ -448,7 +509,9 @@ function Tabs({ roomData }) {
               </Link>
             ))}
           </div>
-        </div>
+        </div> */}
+        <AnotherAccommodation relatedRooms={relatedRooms} />
+
       </div>
     </>
   );
