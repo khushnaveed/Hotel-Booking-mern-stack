@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, Copy, Calendar, Clock, User, MapPin, Phone, Mail, CreditCard, Info } from "lucide-react";
+import {
+  CheckCircle,
+  Copy,
+  User,
+  MapPin,
+  Phone,
+  Mail,
+  CreditCard,
+  Info,
+} from "lucide-react";
 
-const Confirmation = ({ bookingNumber, formData, cartItems }) => {
+const Confirmation = ({ bookingNumber, bookingDetails}) => {
   const [copied, setCopied] = useState(false);
 
+  const { guest, payment } = bookingDetails || {};
   const formattedDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -25,15 +35,6 @@ const Confirmation = ({ bookingNumber, formData, cartItems }) => {
 
   const iconClass = "text-[#8E7037] mr-2";
 
-  const formatCurrency = (amount) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount);
-
-  // Handle cases where cartItems might be empty or undefined
-  const firstItem = cartItems && cartItems.length > 0 ? cartItems[0] : null;
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -42,7 +43,7 @@ const Confirmation = ({ bookingNumber, formData, cartItems }) => {
       className="bg-white shadow-lg p-8 max-w-3xl mx-auto"
     >
       <div id="confirmation-content">
-        {/* Success Header */}
+        {/* Header */}
         <div className="text-center mb-8">
           <motion.div
             className="flex justify-center mb-4"
@@ -52,13 +53,18 @@ const Confirmation = ({ bookingNumber, formData, cartItems }) => {
           >
             <CheckCircle size={70} className="text-[#8E7037]" />
           </motion.div>
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">Booking Confirmed!</h2>
-          <p className="text-gray-600">Thank you for your reservation. We're looking forward to hosting you.</p>
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">
+            Booking Confirmed!
+          </h2>
+          <p className="text-gray-600">
+            Thank you for your reservation. We're looking forward to hosting
+            you.
+          </p>
         </div>
 
         {/* Booking Reference */}
         <div className="mb-8">
-          <div className="flex justify-between items-center bg-gray-100 p-4 ">
+          <div className="flex justify-between items-center bg-gray-100 p-4">
             <div>
               <span className="text-sm text-gray-500">Booking Reference</span>
               <h3 className="text-2xl font-bold">{bookingNumber}</h3>
@@ -84,40 +90,28 @@ const Confirmation = ({ bookingNumber, formData, cartItems }) => {
           </div>
         </div>
 
-        {/* Reservation + Guest Details */}
+        {/* Guest Details */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <div>
-            <h3 className="text-lg font-bold mb-4 border-b pb-2">Reservation Details</h3>
+            <h3 className="text-lg font-bold mb-4 border-b pb-2">
+              Guest Details
+            </h3>
             <ul className="space-y-4">
               <li className="flex items-start">
-                <Calendar className={iconClass} size={20} />
+                <User className={iconClass} size={20} />
                 <div>
-                  <span className="font-semibold block">Check-in / Check-out</span>
+                  <span className="font-semibold block">Guest</span>
                   <span className="text-gray-600">
-                    {firstItem ? (
-                      <>
-                        {new Date(firstItem.arrivalDate).toLocaleDateString()} to{" "}
-                        {new Date(firstItem.departureDate).toLocaleDateString()}
-                      </>
-                    ) : (
-                      "Not available"
-                    )}
+                    {guest?.firstName} {guest?.lastName}
                   </span>
                 </div>
               </li>
               <li className="flex items-start">
-                <Clock className={iconClass} size={20} />
+                <MapPin className={iconClass} size={20} />
                 <div>
-                  <span className="font-semibold block">Duration</span>
-                  <span className="text-gray-600">{firstItem ? firstItem.nights : 0} nights</span>
-                </div>
-              </li>
-              <li className="flex items-start">
-                <User className={iconClass} size={20} />
-                <div>
-                  <span className="font-semibold block">Guests</span>
+                  <span className="font-semibold block">Address</span>
                   <span className="text-gray-600">
-                    {formData.guest.firstName} {formData.guest.lastName}
+                    {guest?.address}, {guest?.city}, {guest?.country}
                   </span>
                 </div>
               </li>
@@ -125,29 +119,22 @@ const Confirmation = ({ bookingNumber, formData, cartItems }) => {
           </div>
 
           <div>
-            <h3 className="text-lg font-bold mb-4 border-b pb-2">Guest Details</h3>
+            <h3 className="text-lg font-bold mb-4 border-b pb-2">
+              Contact Information
+            </h3>
             <ul className="space-y-4">
-              <li className="flex items-start">
-                <MapPin className={iconClass} size={20} />
-                <div>
-                  <span className="font-semibold block">Address</span>
-                  <span className="text-gray-600">
-                    {formData.guest.address}, {formData.guest.city}, {formData.guest.zipCode}, {formData.guest.country}
-                  </span>
-                </div>
-              </li>
               <li className="flex items-start">
                 <Phone className={iconClass} size={20} />
                 <div>
                   <span className="font-semibold block">Phone</span>
-                  <span className="text-gray-600">{formData.guest.phone}</span>
+                  <span className="text-gray-600">{guest?.phone}</span>
                 </div>
               </li>
               <li className="flex items-start">
                 <Mail className={iconClass} size={20} />
                 <div>
                   <span className="font-semibold block">Email</span>
-                  <span className="text-gray-600">{formData.guest.email}</span>
+                  <span className="text-gray-600">{guest?.email}</span>
                 </div>
               </li>
             </ul>
@@ -156,29 +143,31 @@ const Confirmation = ({ bookingNumber, formData, cartItems }) => {
 
         {/* Payment Information */}
         <div className="mb-8">
-          <h3 className="text-lg font-bold mb-4 border-b pb-2">Payment Information</h3>
+          <h3 className="text-lg font-bold mb-4 border-b pb-2">
+            Payment Information
+          </h3>
           <div className="flex items-start">
             <CreditCard className={iconClass} size={20} />
             <div>
-              <span className="font-semibold block">
-                {formData.payment.paymentType === "credit-card" ? "Credit Card" : "PayPal"}
-              </span>
+              <span className="font-semibold block">{payment?.method}</span>
               <span className="text-gray-600">
-                {formData.payment.paymentType === "credit-card"
-                  ? `**** **** **** ${formData.payment.cardNumber.slice(-4)}`
-                  : "Payment processed through PayPal"}
+                Transaction ID: {payment?.transactionId}
               </span>
             </div>
           </div>
         </div>
 
         {/* Important Info */}
-        <div className="bg-blue-50 border border-blue-200  p-4 mb-8 flex items-start">
+        <div className="bg-blue-50 border border-blue-200 p-4 mb-8 flex items-start">
           <Info size={20} className="text-blue-500 mt-0.5 mr-3 flex-shrink-0" />
           <div>
-            <h4 className="font-semibold text-blue-700">Important Information</h4>
+            <h4 className="font-semibold text-blue-700">
+              Important Information
+            </h4>
             <p className="text-blue-800 text-sm mt-1">
-              A confirmation email has been sent to {formData.guest.email}. Please check your inbox. Check-in starts at 3:00 PM and checkout is by 12:00 PM.
+              A confirmation email has been sent to {guest?.email}. Please check
+              your inbox. Check-in starts at 3:00 PM and checkout is by 12:00
+              PM.
             </p>
           </div>
         </div>
@@ -199,7 +188,7 @@ const Confirmation = ({ bookingNumber, formData, cartItems }) => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               href="/"
-              className="px-6 py-3 bg-[#8E7037] text-white  font-medium hover:bg-[#7a602f] transition-all duration-300 shadow-md"
+              className="px-6 py-3 bg-[#8E7037] text-white font-medium hover:bg-[#7a602f] transition-all duration-300 shadow-md"
             >
               Return to Home
             </motion.a>

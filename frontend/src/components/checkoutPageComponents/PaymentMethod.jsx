@@ -69,9 +69,23 @@ const PaymentMethod = ({ onNext, onBack, setPaymentData }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      setPaymentData({ ...formData, paymentType });
+      setPaymentData({
+        method: 'Credit Card',
+        transactionId: `CARD-${Math.floor(100000 + Math.random() * 900000)}`,
+        cardDetails: {
+          ...formData,
+        },
+      });
       onNext();
     }
+  };
+
+  const handlePaypal = () => {
+    setPaymentData({
+      method: 'PayPal',
+      transactionId: `PAYPAL-${Math.floor(100000 + Math.random() * 900000)}`,
+    });
+    onNext();
   };
 
   const inputBase = 'w-full px-4 py-3 border focus:outline-none focus:ring-2 transition-all duration-300 bg-white';
@@ -177,10 +191,7 @@ const PaymentMethod = ({ onNext, onBack, setPaymentData }) => {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => {
-                setPaymentData({ paymentType: 'paypal' });
-                onNext();
-              }}
+              onClick={handlePaypal}
               className="bg-[#0070ba] text-white px-8 py-3 hover:bg-[#005ea6]"
             >
               Pay with PayPal

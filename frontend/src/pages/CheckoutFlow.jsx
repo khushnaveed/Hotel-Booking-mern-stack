@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import GuestDetails from "../components/checkoutPageComponents/GuestDetails";
 import PaymentMethod from "../components/checkoutPageComponents/PaymentMethod";
@@ -19,16 +19,60 @@ const CheckoutFlow = () => {
   const [step, setStep] = useState("guest");
   const [guestData, setGuestData] = useState(null);
   const [paymentData, setPaymentData] = useState(null);
+  const [bookingReference, setBookingReference] = useState(null);
+  const [bookingDetails, setBookingDetails] = useState(null);
+  const [priceDetails, setPriceDetails] = useState({
+    subtotal: 0,
+    taxes: 0,
+    total: 0,
+  });
 
-  const next = async () => {
-    // Submit booking on confirmation step entry
-    if (step === "payment") {
-      await submitBooking();
-      console.log(guestData);
-    }
+  const next = () => {
     setStep(steps[steps.indexOf(step) + 1]);
   };
+
   const prev = () => setStep(steps[steps.indexOf(step) - 1]);
+
+  useEffect(() => {
+    const submitBooking = async () => {
+      const bookingPayload = {
+        guest: guestData,
+        payment: {
+          ...paymentData,
+          transactionId: `TXN-${Math.floor(Math.random() * 1000000)}`,
+        },
+        cartItems,
+        subtotal: priceDetails.subtotal,
+        taxes: priceDetails.taxes,
+        total: priceDetails.total,
+      };
+
+      try {
+        const response = await fetch("http://localhost:5005/bookings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bookingPayload),
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || "Failed to save booking");
+        }
+
+        const result = await response.json();
+        console.log("Booking submitted successfully:", result);
+        setBookingDetails(result.booking);
+        setBookingReference(result.bookingReference);
+        console.log(cartItems);
+      } catch (error) {
+        console.error("Booking submission error:", error.message);
+      }
+    };
+
+    if (step === "confirmation" && guestData && paymentData) {
+      submitBooking();
+    }
+  }, [step, guestData, paymentData]);
 
   const transitionVariants = {
     initial: { opacity: 0, x: 100 },
@@ -42,39 +86,6 @@ const CheckoutFlow = () => {
     exit: { opacity: 0, scale: 0.98 },
   };
 
-  const calculateOrderSummary = () => {
-    const roomTotal = cartItems.reduce(
-      (sum, item) => sum + item.price * item.quantity * item.nights,
-      0
-    );
-    const taxes = roomTotal * 0.1;
-    const total = roomTotal + taxes;
-    return { roomTotal, taxes, total };
-  };
-
-  const orderSummary = calculateOrderSummary();
-
-  const submitBooking = async () => {
-    try {
-      const response = await fetch("http://localhost:5005/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(guestData),
-      });
-  
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || "Failed to save guest");
-      }
-  
-      const result = await response.json();
-      console.log("Guest saved successfully:", result);
-    } catch (error) {
-      console.error("Guest submission error:", error.message);
-    }
-  };
-
-  
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero */}
@@ -200,20 +211,8 @@ const CheckoutFlow = () => {
                   )}
                   {step === "confirmation" && guestData && paymentData && (
                     <Confirmation
-                      bookingNumber={`BK-${Math.floor(
-                        100000 + Math.random() * 900000
-                      )}`}
-                      formData={{
-                        guest: guestData,
-                        payment: {
-                          ...paymentData,
-                          transactionId: `TXN-${Math.floor(
-                            Math.random() * 1000000
-                          )}`,
-                        },
-                      }}
-                      orderSummary={orderSummary}
-                      cartItems={cartItems}
+                      bookingNumber={bookingReference}
+                      bookingDetails={bookingDetails}
                     />
                   )}
                 </motion.div>
@@ -222,7 +221,7 @@ const CheckoutFlow = () => {
 
             {/* Reservation Summary */}
             <div className="mt-10 lg:mt-0 ml-5">
-              <ReservationSummary />
+              <ReservationSummary setPriceDetails={setPriceDetails} />
             </div>
           </motion.div>
         </AnimatePresence>
