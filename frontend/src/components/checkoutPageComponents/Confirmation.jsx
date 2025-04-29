@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Copy, Calendar, Clock, User, MapPin, Phone, Mail, CreditCard, Info } from "lucide-react";
 
-const Confirmation = ({ bookingNumber, formData, orderSummary, cartItems }) => {
+const Confirmation = ({ bookingNumber, formData, cartItems }) => {
   const [copied, setCopied] = useState(false);
 
   const formattedDate = new Date().toLocaleDateString("en-US", {
@@ -39,7 +39,7 @@ const Confirmation = ({ bookingNumber, formData, orderSummary, cartItems }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white rounded-lg shadow-lg p-8 max-w-3xl mx-auto"
+      className="bg-white shadow-lg p-8 max-w-3xl mx-auto"
     >
       <div id="confirmation-content">
         {/* Success Header */}
@@ -50,7 +50,7 @@ const Confirmation = ({ bookingNumber, formData, orderSummary, cartItems }) => {
             animate={{ scale: 1 }}
             transition={{ type: "spring", delay: 0.2, stiffness: 100 }}
           >
-            <CheckCircle size={70} className="text-green-500" />
+            <CheckCircle size={70} className="text-[#8E7037]" />
           </motion.div>
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Booking Confirmed!</h2>
           <p className="text-gray-600">Thank you for your reservation. We're looking forward to hosting you.</p>
@@ -58,7 +58,7 @@ const Confirmation = ({ bookingNumber, formData, orderSummary, cartItems }) => {
 
         {/* Booking Reference */}
         <div className="mb-8">
-          <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg">
+          <div className="flex justify-between items-center bg-gray-100 p-4 ">
             <div>
               <span className="text-sm text-gray-500">Booking Reference</span>
               <h3 className="text-2xl font-bold">{bookingNumber}</h3>
@@ -173,7 +173,7 @@ const Confirmation = ({ bookingNumber, formData, orderSummary, cartItems }) => {
         </div>
 
         {/* Important Info */}
-        <div className="bg-blue-50 border border-blue-200 rounded-md p-4 mb-8 flex items-start">
+        <div className="bg-blue-50 border border-blue-200  p-4 mb-8 flex items-start">
           <Info size={20} className="text-blue-500 mt-0.5 mr-3 flex-shrink-0" />
           <div>
             <h4 className="font-semibold text-blue-700">Important Information</h4>
@@ -191,7 +191,7 @@ const Confirmation = ({ bookingNumber, formData, orderSummary, cartItems }) => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => window.print()}
-              className="px-6 py-3 border border-[#8E7037] text-[#8E7037] rounded-md font-medium hover:bg-[#8E7037] hover:text-white transition-all duration-300"
+              className="px-6 py-3 border border-[#8E7037] text-[#8E7037] font-medium hover:bg-[#8E7037] hover:text-white transition-all duration-300"
             >
               Print Confirmation
             </motion.button>
@@ -199,7 +199,7 @@ const Confirmation = ({ bookingNumber, formData, orderSummary, cartItems }) => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               href="/"
-              className="px-6 py-3 bg-[#8E7037] text-white rounded-md font-medium hover:bg-[#7a602f] transition-all duration-300 shadow-md"
+              className="px-6 py-3 bg-[#8E7037] text-white  font-medium hover:bg-[#7a602f] transition-all duration-300 shadow-md"
             >
               Return to Home
             </motion.a>

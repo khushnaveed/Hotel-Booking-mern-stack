@@ -40,7 +40,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
       newErrors.firstName = "First name is required";
     if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^a\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!emailRegex.test(formData.email)) {
@@ -86,7 +86,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
   ];
 
   const inputClasses =
-    "w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#8E7037] transition-all duration-300 bg-white";
+    "w-full px-4 py-3 border focus:outline-none focus:ring-2 focus:ring-[#8E7037] transition-all duration-300 bg-white";
   const errorClasses = "text-red-500 text-sm mt-1";
   const iconClasses = "absolute left-3 top-1/2 -translate-y-1/2 text-gray-400";
 
@@ -95,7 +95,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white rounded-lg shadow-lg p-8"
+      className="bg-white  shadow-lg p-8"
     >
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Guest Details</h2>
       <form onSubmit={handleSubmit}>
@@ -285,7 +285,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
-            className="bg-[#8E7037] text-white px-8 py-3 rounded-md font-semibold 
+            className="bg-[#8E7037] text-white px-8 py-3 font-semibold 
               hover:bg-[#7a602f] transition-all duration-300 shadow-md"
           >
             Continue to Payment

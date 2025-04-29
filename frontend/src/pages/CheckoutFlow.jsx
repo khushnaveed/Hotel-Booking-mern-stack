@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import GuestDetails from "../components/checkoutPageComponents/GuestDetails";
 import PaymentMethod from "../components/checkoutPageComponents/PaymentMethod";
@@ -8,7 +8,6 @@ import { CheckCircle } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 const steps = ["guest", "payment", "confirmation"];
-
 const stepLabels = {
   guest: "Guest Details",
   payment: "Payment",
@@ -21,7 +20,14 @@ const CheckoutFlow = () => {
   const [guestData, setGuestData] = useState(null);
   const [paymentData, setPaymentData] = useState(null);
 
-  const next = () => setStep(steps[steps.indexOf(step) + 1]);
+  const next = async () => {
+    // Submit booking on confirmation step entry
+    if (step === "payment") {
+      await submitBooking();
+      console.log(guestData);
+    }
+    setStep(steps[steps.indexOf(step) + 1]);
+  };
   const prev = () => setStep(steps[steps.indexOf(step) - 1]);
 
   const transitionVariants = {
@@ -48,9 +54,30 @@ const CheckoutFlow = () => {
 
   const orderSummary = calculateOrderSummary();
 
+  const submitBooking = async () => {
+    try {
+      const response = await fetch("http://localhost:5005/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(guestData),
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Failed to save guest");
+      }
+  
+      const result = await response.json();
+      console.log("Guest saved successfully:", result);
+    } catch (error) {
+      console.error("Guest submission error:", error.message);
+    }
+  };
+
+  
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
+      {/* Hero */}
       <section
         className="relative w-full h-[30vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{
@@ -65,7 +92,6 @@ const CheckoutFlow = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl font-bold uppercase"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
             Complete Your Booking
           </motion.h1>
@@ -74,7 +100,6 @@ const CheckoutFlow = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
             Just a few steps away from your perfect stay
           </motion.p>
@@ -87,7 +112,6 @@ const CheckoutFlow = () => {
           {steps.map((item, index) => {
             const isActive = step === item;
             const isCompleted = steps.indexOf(step) > index;
-
             return (
               <div key={item} className="flex-1 flex items-center">
                 <div className="flex flex-col items-center text-center">
@@ -133,7 +157,7 @@ const CheckoutFlow = () => {
         </div>
       </div>
 
-      {/* Main Checkout Content */}
+      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-10">
         <AnimatePresence mode="wait">
           <motion.div
@@ -181,7 +205,12 @@ const CheckoutFlow = () => {
                       )}`}
                       formData={{
                         guest: guestData,
-                        payment: paymentData,
+                        payment: {
+                          ...paymentData,
+                          transactionId: `TXN-${Math.floor(
+                            Math.random() * 1000000
+                          )}`,
+                        },
                       }}
                       orderSummary={orderSummary}
                       cartItems={cartItems}
@@ -192,7 +221,6 @@ const CheckoutFlow = () => {
             </div>
 
             {/* Reservation Summary */}
-
             <div className="mt-10 lg:mt-0 ml-5">
               <ReservationSummary />
             </div>
