@@ -5,8 +5,8 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
+  // Add to cart
   const addToCart = (item) => {
-    // Check if the item already exists in the cart
     const existingItemIndex = cartItems.findIndex((cartItem) => cartItem.slug === item.slug);
 
     if (existingItemIndex >= 0) {
@@ -15,19 +15,30 @@ export const CartProvider = ({ children }) => {
       updatedItems[existingItemIndex].quantity += item.quantity; // Increment quantity
       setCartItems(updatedItems);
     } else {
-      // If it's a new item, add it to the cart with a quantity of 1 (or the initial quantity if provided)
+      // If it's a new item, add it to the cart
       setCartItems((prev) => [...prev, { ...item, quantity: item.quantity || 1 }]);
     }
   };
 
+  // Remove from cart
   const removeFromCart = (slug) => {
-    setCartItems((prev) => prev.filter((item) => item.slug !== slug));
+    setCartItems((prev) => prev.filter((item) => item.slug !== slug)); // Remove by slug
   };
 
+  // Clear the entire cart
   const clearCart = () => setCartItems([]);
 
+  // Update the quantity of an item in the cart
+  const updateItemQuantity = (slug, quantity) => {
+    if (quantity <= 0) return; // Avoid setting quantity to zero or negative
+    const updatedItems = cartItems.map((item) =>
+      item.slug === slug ? { ...item, quantity } : item
+    );
+    setCartItems(updatedItems);
+  };
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, updateItemQuantity }}>
       {children}
     </CartContext.Provider>
   );

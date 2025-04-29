@@ -90,7 +90,7 @@ const CheckoutFlow = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Hero */}
       <section
-        className="relative w-full h-[30vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
+        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{
           backgroundImage:
             "url('https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",

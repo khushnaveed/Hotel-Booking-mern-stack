@@ -56,7 +56,7 @@ export default function Contact() {
     <>
       {/* Hero Section */}
       <section
-        className="absolute top-0 left-0 w-full h-[30vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center "
+        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/heroImage.jpg')" }}
       >
         {/* Dark Overlay */}
@@ -79,7 +79,7 @@ export default function Contact() {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 mt-[40vh] flex flex-col lg:flex-row justify-between space-y-12 lg:space-y-0 lg:space-x-8">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 flex flex-col lg:flex-row justify-between space-y-12 lg:space-y-0 lg:space-x-8">
         {/* Paragraph section */}
         <div className="flex-1">
           <h2 className="text-2xl mb-4 font-bold">Get In Touch</h2>
