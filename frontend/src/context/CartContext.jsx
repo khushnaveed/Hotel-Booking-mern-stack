@@ -4,7 +4,9 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-
+  /*  const [weather, setWeather] = useState(null);
+   const [showWeather, setShowWeather] = useState(false);
+   const [currency, setCurrency] = useState("USD"); */
   const addToCart = (item) => {
     // Check if the item already exists in the cart
     const existingItemIndex = cartItems.findIndex((cartItem) => cartItem.slug === item.slug);
