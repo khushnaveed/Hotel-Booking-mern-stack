@@ -2,15 +2,20 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCurrency } from "../context/CurrencyContext.jsx";
-import RoomAvailabilityCalendar from "./RoomAvailabilityCalenar.jsx";
-import AnotherAccommodation from "./AnotherAccommodation.jsx";
+//import RoomAvailabilityCalendar from "./RoomAvailabilityCalenar.jsx";
+//import AnotherAccommodation from "./AnotherAccommodation.jsx";
 import RoomGallery from "./RoomGallery.jsx";
-//import Tabs from "./Tabs.jsx"
+import RoomTabs from "./RoomTabs.jsx";
 import BookingForm from "./BookingForm.jsx";
 import { useCart } from "../context/CartContext";
-
+import { useRoomDetail } from "../context/RoomDetailContext.jsx";
 export default function RoomDetails() {
-  const [roomData, setRoomData] = useState(null);
+  //testing context
+  //const [roomData, setRoomData] = useState(null);
+  const { roomData, setRoomData, bookingData, setBookingData } = useRoomDetail();
+
+
+
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { currency } = useCurrency();
@@ -18,13 +23,13 @@ export default function RoomDetails() {
   const calendarRef = useRef(null)
 
   const { addToCart } = useCart();
-
-  const [bookingData, setBookingData] = useState({
-    arrive: "",
-    departure: "",
-    adult: 1,
-    child: 0,
-  });
+  //testing context
+  /*  const [bookingData, setBookingData] = useState({
+     arrive: "",
+     departure: "",
+     adult: 1,
+     child: 0,
+   }); */
 
   const { roomSlug } = useParams();
   const navigate = useNavigate();
@@ -156,17 +161,16 @@ export default function RoomDetails() {
 
         {/* Room Tabs Section */}
         <div className="p-6 max-w-6xl mx-auto">
-          <Tabs roomData={roomData} calendarRef={calendarRef} />
+          <RoomTabs roomData={roomData} calendarRef={calendarRef} />
         </div>
       </div>
     </div>
   );
 }
 
-// -------------------------
 // Tabs Component
-// -------------------------
-function Tabs({ roomData, calendarRef }) {
+
+/* function Tabs({ roomData, calendarRef }) {
   const [relatedRooms, setRelatedRooms] = useState([]);
   const [activeTab, setActiveTab] = useState("overview");
   const { roomSlug } = useParams();
@@ -374,4 +378,4 @@ function Tabs({ roomData, calendarRef }) {
       </div>
     </>
   );
-}
+} */

@@ -1,17 +1,21 @@
-// Tabs.jsx
-import React, { useState, useEffect } from 'react';
-import RoomAvailabilityCalendar from './RoomAvailabilityCalenar.jsx';
+// src/components/RoomTabs.jsx
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import RoomAvailabilityCalendar from "./RoomAvailabilityCalenar.jsx";
+import AnotherAccommodation from "./AnotherAccommodation.jsx";
 
-export default function Tabs({ roomData, calendarRef }) {
-    const [activeTab, setActiveTab] = useState("overview");
+export default function RoomTabs({ roomData, calendarRef }) {
     const [relatedRooms, setRelatedRooms] = useState([]);
+    const [activeTab, setActiveTab] = useState("overview");
+    const { roomSlug } = useParams();
 
     useEffect(() => {
         const fetchRelatedRooms = async () => {
             try {
                 const res = await axios.get(`http://localhost:5005/room`);
                 const filteredData = res.data.data.filter(
-                    (value) => roomData.slug !== value.slug
+                    (value) => roomSlug !== value.slug
                 );
                 setRelatedRooms(filteredData);
             } catch (error) {
@@ -20,9 +24,8 @@ export default function Tabs({ roomData, calendarRef }) {
         };
 
         fetchRelatedRooms();
-    }, [roomData.slug]);
+    }, [roomSlug]);
 
-    // Tab content
     const tabs = [
         {
             key: "overview",
@@ -51,9 +54,7 @@ export default function Tabs({ roomData, calendarRef }) {
                             <div key={idx} className="mb-6">
                                 <h4 className="text-lg font-semibold text-gray-700">{roomType}</h4>
                                 <ul className="list-disc pl-5 text-gray-600">
-                                    {items.map((amenity, i) => (
-                                        <li key={i}>{amenity}</li>
-                                    ))}
+                                    {items.map((amenity, i) => <li key={i}>{amenity}</li>)}
                                 </ul>
                             </div>
                         ))}
@@ -75,38 +76,49 @@ export default function Tabs({ roomData, calendarRef }) {
         {
             key: "rates",
             label: "RATES",
-            content: roomData.pricing && roomData.ratings ? (
-                roomData.pricing.map((price, index) => {
-                    const matchingRating = roomData.ratings.find(
-                        (rating) =>
-                            new Date(rating.startDate).getTime() <= new Date(price.endDate).getTime() &&
-                            new Date(rating.endDate).getTime() >= new Date(price.startDate).getTime()
-                    );
-                    return (
-                        <div key={index} className="mb-4">
-                            <p>
-                                <strong>Price:</strong> ${price.price}/day from{" "}
-                                {new Date(price.startDate).toLocaleDateString()} to{" "}
-                                {new Date(price.endDate).toLocaleDateString()}
-                            </p>
-                            {matchingRating && (
-                                <>
-                                    <p><strong>Rating:</strong> {matchingRating.rating} / 5</p>
-                                    <p><strong>Description:</strong> {matchingRating.description}</p>
-                                </>
-                            )}
-                        </div>
-                    );
-                })
-            ) : (
-                <p>No rates or ratings available.</p>
-            ),
+            content:
+                roomData.pricing && roomData.ratings ? (
+                    roomData.pricing.map((price, index) => {
+                        const matchingRating = roomData.ratings.find(
+                            (rating) =>
+                                new Date(rating.startDate).getTime() <= new Date(price.endDate).getTime() &&
+                                new Date(rating.endDate).getTime() >= new Date(price.startDate).getTime()
+                        );
+                        return (
+                            <div key={index} className="mb-4">
+                                <p>
+                                    <strong>Price:</strong> ${price.price}/day from{" "}
+                                    {new Date(price.startDate).toLocaleDateString()} to{" "}
+                                    {new Date(price.endDate).toLocaleDateString()}
+                                </p>
+                                {matchingRating && (
+                                    <>
+                                        <p><strong>Rating:</strong> {matchingRating.rating} / 5</p>
+                                        <p><strong>Description:</strong> {matchingRating.description}</p>
+                                    </>
+                                )}
+                            </div>
+                        );
+                    })
+                ) : (
+                    <p>No rates or ratings available.</p>
+                ),
         },
         {
             key: "calendar",
             label: "CALENDAR",
             content: (
                 <div ref={calendarRef} className="mt-4 space-y-4">
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-black border border-gray-400"></div>
+                            <span className="text-gray-700 text-sm">Unavailable</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white border border-gray-400"></div>
+                            <span className="text-gray-700 text-sm">Available</span>
+                        </div>
+                    </div>
                     <RoomAvailabilityCalendar slug={roomData.slug} />
                 </div>
             ),
@@ -114,7 +126,8 @@ export default function Tabs({ roomData, calendarRef }) {
     ];
 
     return (
-        <div className="p-6 max-w-6xl mx-auto">
+        <>
+            {/* Mobile View */}
             <div className="block md:hidden">
                 <div className="flex flex-col items-center space-y-2 mb-6">
                     {tabs.map((tab) => (
@@ -126,14 +139,13 @@ export default function Tabs({ roomData, calendarRef }) {
                             >
                                 {tab.label}
                             </button>
-                            {activeTab === tab.key && (
-                                <div className="text-gray-600 mt-2">{tab.content}</div>
-                            )}
+                            {activeTab === tab.key && <div className="text-gray-600 mt-2">{tab.content}</div>}
                         </div>
                     ))}
                 </div>
             </div>
 
+            {/* Desktop View */}
             <div className="hidden md:grid md:grid-cols-5 gap-6 mt-10">
                 <div className="col-span-1 space-y-4 text-sm font-semibold">
                     {tabs.map((tab) => (
@@ -148,12 +160,13 @@ export default function Tabs({ roomData, calendarRef }) {
                     ))}
                 </div>
                 <div className="col-span-4">
-                    <h3 className="text-xl font-bold mb-2">
-                        {tabs.find((t) => t.key === activeTab).label}
-                    </h3>
+                    <h3 className="text-xl font-bold mb-2">{tabs.find((t) => t.key === activeTab).label}</h3>
                     <div className="text-gray-600">{tabs.find((t) => t.key === activeTab).content}</div>
                 </div>
             </div>
-        </div>
+
+            <div className="border-t-2 border-gray-300 my-10"></div>
+            <AnotherAccommodation relatedRooms={relatedRooms} />
+        </>
     );
 }
