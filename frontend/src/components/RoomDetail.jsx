@@ -100,7 +100,7 @@ export default function RoomDetails() {
     navigate("/checkout");
   };
   if (loading) return <div>Loading...</div>;
-  if (!roomData) return <div>Room not found</div>;
+  if (!roomData) return <div>Room information not found.</div>;
 
   return (
     <div className="relative">
