@@ -164,7 +164,6 @@ export default function RoomTabs({ roomData, calendarRef }) {
                     <div className="text-gray-600">{tabs.find((t) => t.key === activeTab).content}</div>
                 </div>
             </div>
-
             <div className="border-t-2 border-gray-300 my-10"></div>
             <AnotherAccommodation relatedRooms={relatedRooms} />
         </>
