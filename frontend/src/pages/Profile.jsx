@@ -1,33 +1,24 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GuestContext } from "../context/GuestContext.jsx";
 
 const Profile = () => {
-  const { guest, logout, loading, isLoggedIn } = useContext(GuestContext);
+  const { logout, guest } = useContext(GuestContext);
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
-
-  if (loading) return <div>Loading...</div>;
-  if (!isLoggedIn) {
-    navigate("/login");
-    return null;
-  }
-
+console.log(guest)
   return (
-    <div className="relative w-full h-screen">
-      <img
-        src="https://img.freepik.com/premium-photo/luxury-hotel-entrance-with-water-fountain_1287986-20413.jpg"
-        alt="Royal Grand Hotel"
-        className="w-full h-full object-cover opacity-60"
-      />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-10 max-w-lg w-full text-left bg-white rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-4 text-gray-800">User Profile</h1>
-
-        <div className="space-y-2 text-gray-700">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Your Profile
+        </h1>
+        <div className="space-y-4 text-gray-700 text-base">
           <p>
             <strong>First Name:</strong> {guest.firstName}
           </p>
@@ -38,30 +29,26 @@ const Profile = () => {
             <strong>Email:</strong> {guest.email}
           </p>
           <p>
-            <strong>Phone:</strong> {guest.phonenumber}
+            <strong>Phone:</strong> {guest.phonenumber || "Not provided"}
           </p>
           <p>
-            <strong>Address:</strong> {guest.address}
+            <strong>Address:</strong> {guest.address || "Not provided"}
           </p>
           <p>
-            <strong>City:</strong> {guest.city}
+            <strong>City:</strong> {guest.city || "Not provided"}
           </p>
           <p>
-            <strong>Zip Code:</strong> {guest.zipcode}
+            <strong>Zip Code:</strong> {guest.zipcode || "Not provided"}
           </p>
           <p>
-            <strong>Country:</strong> {guest.country}
+            <strong>Country:</strong> {guest.country || "Not provided"}
           </p>
         </div>
-
-        <div className="mt-4">
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors"
-          >
-            Logout
-          </button>
-        </div>
+        <button
+          onClick={handleLogout}
+          className="mt-6 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
+          Logout
+        </button>
       </div>
     </div>
   );
