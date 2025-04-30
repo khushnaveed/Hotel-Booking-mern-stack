@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Bed } from "lucide-react";
-import { useCurrency } from "../context/CurrencyContext.jsx"
+import { useCurrency } from "../../context/CurrencyContext.jsx"
 import { Link } from 'react-router-dom';
 
 export default function HomePageRooms() {

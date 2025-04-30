@@ -21,6 +21,7 @@ import { WeatherProvider } from "./context/WeatherContext.jsx";
 import WeatherPage from "./pages/WeatherPage.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import { GuestProvider } from "./context/GuestContext.jsx";
+import { RoomDetailProvider } from "./context/RoomDetailContext.jsx";
 
 // Stripe setup
 import { Elements } from "@stripe/react-stripe-js";
@@ -47,7 +48,15 @@ function App() {
                 <Route path="/rooms" element={<Rooms />} />
                 {/*  <Route path="/checkout/:roomSlug" element={<Checkout />} /> */}
                 <Route path="/restaurant" element={<Restaurant />} />
-                <Route path="/rooms/:roomSlug" element={<RoomDetail />} />
+                {/* <Route path="/rooms/:roomSlug" element={<RoomDetail />} /> */}
+                {/*  testing context */}
+                <Route
+                  path="/rooms/:roomSlug"
+                  element={
+                    <RoomDetailProvider>
+                      <RoomDetail />
+                    </RoomDetailProvider>
+                  } />
                 <Route path="/events" element={<Events />} />
                 <Route path="/events/:id" element={<EventDetails />} />
                 <Route path="/gallery" element={<Gallery />} />

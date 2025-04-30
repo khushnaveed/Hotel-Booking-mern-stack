@@ -2,15 +2,20 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCurrency } from "../context/CurrencyContext.jsx";
-import RoomAvailabilityCalendar from "./RoomAvailabilityCalenar.jsx";
-import AnotherAccommodation from "./AnotherAccommodation.jsx";
+//import RoomAvailabilityCalendar from "./RoomAvailabilityCalenar.jsx";
+//import AnotherAccommodation from "./AnotherAccommodation.jsx";
 import RoomGallery from "./RoomGallery.jsx";
-//import Tabs from "./Tabs.jsx"
+import RoomTabs from "./RoomTabs.jsx";
 import BookingForm from "./BookingForm.jsx";
 import { useCart } from "../context/CartContext";
-
+import { useRoomDetail } from "../context/RoomDetailContext.jsx";
 export default function RoomDetails() {
-  const [roomData, setRoomData] = useState(null);
+  //testing context
+  //const [roomData, setRoomData] = useState(null);
+  const { roomData, setRoomData, bookingData, setBookingData } = useRoomDetail();
+
+
+
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { currency } = useCurrency();
@@ -18,13 +23,13 @@ export default function RoomDetails() {
   const calendarRef = useRef(null)
 
   const { addToCart } = useCart();
-
-  const [bookingData, setBookingData] = useState({
-    arrive: "",
-    departure: "",
-    adult: 1,
-    child: 0,
-  });
+  //testing context
+  /*  const [bookingData, setBookingData] = useState({
+     arrive: "",
+     departure: "",
+     adult: 1,
+     child: 0,
+   }); */
 
   const { roomSlug } = useParams();
   const navigate = useNavigate();
@@ -57,33 +62,33 @@ export default function RoomDetails() {
 
   const handleBookingClick = () => {
     const { arrive, departure, adult, child } = bookingData;
-  
+
     if (!arrive || !departure) {
       alert("Please select both arrival and departure dates.");
       return;
     }
-  
+
     const start = new Date(arrive);
     const end = new Date(departure);
-  
+
     if (end <= start) {
       alert("Departure date must be after arrival date.");
       return;
     }
-  
+
     const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
     const basePrice = roomData.defaultPrice;
     const extraAdultFee = 70;
     const childFee = 30;
     const numAdults = parseInt(adult) || 1;
     const numChildren = parseInt(child) || 0;
-  
+
     let totalPrice = basePrice * nights;
     if (numAdults > 2) {
       totalPrice += (numAdults - 2) * extraAdultFee * nights;
     }
     totalPrice += numChildren * childFee * nights;
-  
+
     const payload = {
       slug: roomSlug,
       arrivalDate: arrive,
@@ -95,11 +100,11 @@ export default function RoomDetails() {
       nights,
       image: roomData.images[0],
     };
-  
+
     addToCart(payload);
     navigate("/checkout");
   };
-  
+
 
 
 
@@ -110,7 +115,7 @@ export default function RoomDetails() {
     <div className="relative">
       {/* Hero Section */}
       <section
-        className="absolute top-0 left-0 w-full h-[40vh] bg-cover bg-center flex items-center justify-center pt-20 sm:pt-24 md:pt-28 lg:pt-32"
+        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}
       >
         <div className="absolute inset-0 bg-opacity-40"></div>
@@ -123,57 +128,18 @@ export default function RoomDetails() {
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
             Royal Grand Hotel is where timeless elegance meets modern luxury in every detail.
-</p>
-          <p className="text-lg mt-2">
-            Lorem Ipsum is simply dummy text of the printing
           </p>
+
         </div>
       </section>
 
-      <div className="pt-[60vh] sm:pt-[65vh] md:pt-[70vh] lg:pt-[60vh] xl:pt-[50vh]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto">
+      <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto m-5">
 
 
           {/* Room Gallery */}
 
-          {/* <div>
-            <div className="relative">
-              <img
-                src={roomData.images[currentImageIndex]}
-                alt="Room"
-                className="w-full h-[400px] object-cover"
-              />
-              <button
-                onClick={prevImage}
-                className="absolute top-1/2 left-2 transform -translate-y-1/2 p-1 rounded-full shadow"
-              >
-                ⬅
-              </button>
-              <button
-                onClick={nextImage}
-                className="absolute top-1/2 right-2 transform -translate-y-1/2 p-1 rounded-full shadow"
-              >
-                ➡
-              </button>
-            </div>
 
-            <div className="flex mt-4 space-x-2">
-              {roomData.images.map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt={`thumb-${index}`}
-
-                  className={`w-20 h-16 object-cover cursor-pointer border ${
-                    index === currentImageIndex
-                      ? "border-[#8E7037]"
-                      : "border-gray-300"
-                  }`}
-                  onClick={() => setCurrentImageIndex(index)}
-                />
-              ))}
-            </div>
-          </div> */}
           <RoomGallery
             images={roomData.images}
             currentImageIndex={currentImageIndex}
@@ -181,79 +147,7 @@ export default function RoomDetails() {
           />
 
           {/* Booking Form */}
-          {/*  <div className="bg-gray-100 p-6 shadow-lg h-fit">
-            <h5 className="text-xl font-semibold mb-4">
-              ROOM PRICE{" "}
-              <strong className="text-[#8E7037]">
-                {currencySymbols[currency]} {roomData.defaultPrice}/day
-              </strong>
-            </h5>
 
-            <form className="space-y-4">
-              <div>
-                <label>ARRIVE</label>
-                <input
-                  type="date"
-                  name="arrive"
-                  value={bookingData.arrive}
-                  onChange={(e) =>
-                    setBookingData({ ...bookingData, arrive: e.target.value })
-                  }
-                  className="w-full p-2 bg-white placeholder-gray-400 text-gray-700"
-                />
-              </div>
-              <div>
-                <label>DEPARTURE</label>
-                <input
-                  type="date"
-                  name="departure"
-                  value={bookingData.departure}
-                  onChange={(e) =>
-                    setBookingData({
-                      ...bookingData,
-                      departure: e.target.value,
-                    })
-                  }
-                  className="w-full p-2 bg-white"
-                />
-              </div>
-              <div>
-                <label>ADULT</label>
-                <input
-                  type="number"
-                  name="adult"
-                  min="1"
-                  value={bookingData.adult}
-                  onChange={(e) =>
-                    setBookingData({ ...bookingData, adult: e.target.value })
-                  }
-                  className="w-full p-2 bg-white"
-                />
-              </div>
-              <div>
-                <label>CHILD</label>
-                <input
-                  type="number"
-                  name="child"
-                  min="0"
-                  value={bookingData.child}
-                  onChange={(e) =>
-                    setBookingData({ ...bookingData, child: e.target.value })
-                  }
-                  className="w-full p-2 bg-white"
-                />
-              </div>
-              <div className="mt-4">
-                <button
-                  type="button"
-                  onClick={handleBookingClick}
-                  className="w-full p-3 bg-[#8E7037] text-white font-semibold hover:bg-white hover:text-[#8E7037]"
-                >
-                  Book Now
-                </button>
-              </div>
-            </form>
-          </div> */}
           <BookingForm
             bookingData={bookingData}
             setBookingData={setBookingData}
@@ -267,17 +161,16 @@ export default function RoomDetails() {
 
         {/* Room Tabs Section */}
         <div className="p-6 max-w-6xl mx-auto">
-          <Tabs roomData={roomData} calendarRef={calendarRef} />
+          <RoomTabs roomData={roomData} calendarRef={calendarRef} />
         </div>
       </div>
     </div>
   );
 }
 
-// -------------------------
 // Tabs Component
-// -------------------------
-function Tabs({ roomData, calendarRef }) {
+
+/* function Tabs({ roomData, calendarRef }) {
   const [relatedRooms, setRelatedRooms] = useState([]);
   const [activeTab, setActiveTab] = useState("overview");
   const { roomSlug } = useParams();
@@ -376,9 +269,9 @@ function Tabs({ roomData, calendarRef }) {
             const matchingRating = roomData.ratings.find(
               (rating) =>
                 new Date(rating.startDate).getTime() <=
-                  new Date(price.endDate).getTime() &&
+                new Date(price.endDate).getTime() &&
                 new Date(rating.endDate).getTime() >=
-                  new Date(price.startDate).getTime()
+                new Date(price.startDate).getTime()
             );
             return (
               <div key={index} className="mb-4">
@@ -409,7 +302,7 @@ function Tabs({ roomData, calendarRef }) {
       label: "CALENDAR",
       content: (
         <div ref={calendarRef} className="mt-4 space-y-4">
-          {/* Legend */}
+
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <div className="w-5 h-5 bg-black border border-gray-400"></div>
@@ -437,11 +330,10 @@ function Tabs({ roomData, calendarRef }) {
             <div key={tab.key}>
               <button
                 onClick={() => setActiveTab(tab.key)}
-                className={`text-lg font-bold block border-b-2 pb-2 w-full text-left ${
-                  activeTab === tab.key
-                    ? "border-[#8E7037] text-[#8E7037]"
-                    : "border-gray-300"
-                }`}
+                className={`text-lg font-bold block border-b-2 pb-2 w-full text-left ${activeTab === tab.key
+                  ? "border-[#8E7037] text-[#8E7037]"
+                  : "border-gray-300"
+                  }`}
               >
                 {tab.label}
               </button>
@@ -459,11 +351,10 @@ function Tabs({ roomData, calendarRef }) {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`block w-full text-left border-b-2 pb-2 ${
-                activeTab === tab.key
-                  ? "border-[#8E7037] text-[#8E7037]"
-                  : "border-gray-300"
-              }`}
+              className={`block w-full text-left border-b-2 pb-2 ${activeTab === tab.key
+                ? "border-[#8E7037] text-[#8E7037]"
+                : "border-gray-300"
+                }`}
             >
               {tab.label}
             </button>
@@ -481,38 +372,10 @@ function Tabs({ roomData, calendarRef }) {
 
       <div>
         <div className="border-t-2 border-gray-300 my-10"></div>
-        {/*  <div className="p-6 max-w-6xl mx-auto">
-          <h3 className="text-xl font-semibold mb-4">ANOTHER ACCOMMODATION</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
-            {relatedRooms.map((rooms) => (
-              <Link to={`/rooms/${rooms.slug}`} key={rooms.slug}>
-                <div className="flex flex-col gap-4 p-4 shadow hover:shadow-md hover:scale-105 transition">
-                  <img
-                    src={rooms.images[0]}
-                    alt={rooms.title}
-                    className="w-full h-40 object-cover rounded"
-                  />
-                  <ul className="text-gray-600 text-sm">
-                    <li className="font-semibold text-center">{rooms.title}</li>
-                    <li>
-                      <strong>Max:</strong> {rooms.additionalDetails.maxPersons}{" "}
-                      Person(s)
-                    </li>
-                    <li>
-                      <strong>Bed:</strong> {rooms.additionalDetails.bed}
-                    </li>
-                    <li>
-                      <strong>View:</strong> {rooms.additionalDetails.view}
-                    </li>
-                  </ul>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div> */}
+
         <AnotherAccommodation relatedRooms={relatedRooms} />
 
       </div>
     </>
   );
-}
+} */

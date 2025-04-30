@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import NavbarTop from "./NavbarTop";
+import NavbarTop from "../NavbarTop";
 import { Calendar, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
