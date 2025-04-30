@@ -215,7 +215,7 @@ export default function Restaurant() {
                     <img
                       src={item.img || "/placeholder.svg?height=100&width=100"}
                       alt={item.name}
-                      className="w-[100px] h-[100px] object-cover rounded-md"
+                      className="w-[100px] h-[100px] object-cover "
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = "/placeholder.svg?height=100&width=100";
@@ -253,7 +253,7 @@ export default function Restaurant() {
                           drink.img || "/placeholder.svg?height=100&width=100"
                         }
                         alt={drink.name}
-                        className="w-[100px] h-[100px] object-cover rounded-md"
+                        className="w-[100px] h-[100px] object-cover"
                         onError={(e) => {
                           e.target.onerror = null;
                           e.target.src =
@@ -436,7 +436,7 @@ export default function Restaurant() {
             ).map((item, index) => (
               <div
                 key={index}
-                className="cursor-pointer group relative overflow-hidden rounded-xl shadow-lg"
+                className="cursor-pointer group relative overflow-hidden  shadow-lg"
                 onClick={() => openModal(item)}
               >
                 <img
@@ -473,7 +473,7 @@ export default function Restaurant() {
             onClick={closeModal}
           >
             <div
-              className="bg-white rounded-lg p-4 max-w-2xl w-full relative"
+              className="bg-white  p-4 max-w-2xl w-full relative"
               onClick={(e) => e.stopPropagation()}
             >
               <button
