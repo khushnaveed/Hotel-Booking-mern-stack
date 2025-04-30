@@ -50,7 +50,7 @@ const CheckoutFlow = () => {
       try {
         const response = await fetch("http://localhost:5005/bookings", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", token:localStorage.getItem("token") },
           body: JSON.stringify(bookingPayload),
         });
 

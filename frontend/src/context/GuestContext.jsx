@@ -14,15 +14,22 @@ export const GuestProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const guestData = JSON.parse(localStorage.getItem("guestData"));
 
-    if (token && guestData) {
-      setIsLoggedIn(true);
-      setGuest(guestData.data);
-    } else {
-      setIsLoggedIn(false);
-      setGuest(null);
-    }
+    fetch("http://localhost:5005/guest/verifytoken",{
+      method:"get",
+      headers:{token:token}
+    }).then(res=>res.json( 
+      
+    )) .then(result=>{
+      if (result.success) {
+        setIsLoggedIn(true);
+        setGuest(result.data);
+      } else {
+        setIsLoggedIn(false);
+        setGuest(null);
+      }    })
+    
+    
 
     setLoading(false);
   }, []);
@@ -30,7 +37,12 @@ export const GuestProvider = ({ children }) => {
   // Handle login
   const login = (token, guestData) => {
     localStorage.setItem("token", token); // Store token in localStorage
-    localStorage.setItem("guestData", JSON.stringify(guestData)); // Store guest data
+
+
+
+
+
+    //localStorage.setItem("guestData", JSON.stringify(guestData)); // Store guest data
     setIsLoggedIn(true);
     setGuest(guestData.data); // Set guest data
     navigate("/profile");

@@ -1,18 +1,18 @@
 import bookingSchema from "../models/bookingSchema.js";
+import GuestModel from "../models/guestSchema.js";
 
 export async function createBooking(req, res) {
   try {
-    const { guest, payment, cartItems, subtotal, taxes, total } = req.body;
+    const { payment, cartItems, subtotal, taxes, total } = req.body;
 
     // Basic validation
-    if (!guest || !payment) {
+    if ( !payment) {
       return res
         .status(400)
         .json({ error: "Guest and payment information are required." });
     }
 
     const newBooking = new bookingSchema({
-      guest,
       payment,
       cartItems,
       subtotal,
@@ -21,7 +21,9 @@ export async function createBooking(req, res) {
     });
 
     const savedBooking = await newBooking.save();
-
+    const guest= await GuestModel.findById(req.guest._id)
+    guest.bookings.push(savedBooking._id)
+    await guest.save()
     res.status(201).json({
       message: "Booking created successfully",
       bookingId: savedBooking._id,

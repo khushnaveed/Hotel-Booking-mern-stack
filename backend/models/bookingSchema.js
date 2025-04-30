@@ -29,7 +29,7 @@ const bookingSchema = new Schema(
         return `BK-${Math.floor(100000 + Math.random() * 900000)}`;
       },
     },
-    guest: {
+   /**  guest: {
       firstName: { type: String, required: true },
       lastName: { type: String, required: true },
       email: { type: String, required: true },
@@ -38,7 +38,7 @@ const bookingSchema = new Schema(
       city: { type: String },
       country: { type: String },
       zipCode: { type: String },
-    },
+    },*/
     payment: {
       method: { type: String, required: true },
       transactionId: { type: String, required: true },
