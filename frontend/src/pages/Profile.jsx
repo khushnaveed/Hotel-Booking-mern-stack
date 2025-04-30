@@ -1,17 +1,36 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GuestContext } from "../context/GuestContext.jsx";
+import axios from "axios";
 
 const Profile = () => {
   const { logout, guest } = useContext(GuestContext);
-
   const navigate = useNavigate();
+  const [bookings, setBookings] = useState([]);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
-console.log(guest)
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const res = await axios.get("/api/bookings/my-bookings", {
+          withCredentials: true,
+        });
+        setBookings(Array.isArray(res.data) ? res.data : []);
+      } catch (err) {
+        console.error("Failed to fetch bookings", err);
+        setBookings([]); 
+      }
+    };
+
+    if (guest?._id) {
+      fetchBookings();
+    }
+  }, [guest]);
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
@@ -44,9 +63,39 @@ console.log(guest)
             <strong>Country:</strong> {guest.country || "Not provided"}
           </p>
         </div>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-800">Your Bookings</h2>
+        {Array.isArray(bookings) && bookings.length > 0 ? (
+          bookings.map((booking) => (
+            <div
+              key={booking._id}
+              className="border border-gray-200 rounded-md p-4 mb-4 text-sm"
+            >
+              <p>
+                <strong>Hotel:</strong> {booking.hotelName || "N/A"}
+              </p>
+              <p>
+                <strong>Check-in:</strong> {booking.checkInDate?.slice(0, 10)}
+              </p>
+              <p>
+                <strong>Check-out:</strong> {booking.checkOutDate?.slice(0, 10)}
+              </p>
+              <p>
+                <strong>Guests:</strong> {booking.numGuests || "N/A"}
+              </p>
+              <p>
+                <strong>Total Price:</strong> ${booking.totalPrice || "N/A"}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-600 text-sm">No bookings yet.</p>
+        )}
+
         <button
           onClick={handleLogout}
-          className="mt-6 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
+          className="mt-6 w-full bg-[#8E7037] text-white py-2 rounded-lg hover:bg-red-700"
+        >
           Logout
         </button>
       </div>
