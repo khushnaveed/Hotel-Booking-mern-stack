@@ -56,29 +56,33 @@ export default function Contact() {
     <>
       {/* Hero Section */}
       <section
-  className="relative w-full h-[35vh] md:h-[45vh] bg-cover bg-center flex items-center justify-center pt-35 sm:pt-40"
-  style={{ backgroundImage: "url('/src/assets/heroImage.jpg')" }}
->
-  {/* Centered Text */}
-  <div className="relative text-white text-center">
-    <h1
-      className="text-5xl font-bold uppercase"
-      style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-    >
-      CONTACT US
-    </h1>
-    <p
-      className="text-lg mt-2 font-bold"
-      style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-    >
-We'd love to hear from you. Please feel free to reach out with any questions, feedback, or inquiries.
+        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
+        style={{ backgroundImage: "url('/src/assets/heroImage.jpg')" }}
+      >
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black opacity-30"></div>
 
-</p>
-  </div>
-</section>
+        {/* Centered Text */}
+        <div className="relative text-white text-center">
+          <h1
+            className="text-5xl font-bold uppercase "
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+          >
+            CONTACT US{" "}
+          </h1>
+          <p
+            className="text-lg mt-2"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+          >
+            Lorem Ipsum is simply dummy text of the printing
+          </p>
+        </div>
+      </section>
 
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 mt-[5vh] flex flex-col lg:flex-row justify-between space-y-12 lg:space-y-0 lg:space-x-8">
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 flex flex-col lg:flex-row justify-between space-y-12 lg:space-y-0 lg:space-x-8">
+
         {/* Paragraph section */}
         <div className="flex-1">
           <h2 className="text-2xl mb-4 font-bold">Get In Touch</h2>
