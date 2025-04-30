@@ -2,8 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCurrency } from "../context/CurrencyContext.jsx";
-//import RoomAvailabilityCalendar from "./RoomAvailabilityCalenar.jsx";
-//import AnotherAccommodation from "./AnotherAccommodation.jsx";
 import RoomGallery from "./roomDetailComponents/RoomGallery.jsx";
 import RoomTabs from "./roomDetailComponents/RoomTabs.jsx";
 import BookingForm from "./roomDetailComponents/BookingForm.jsx";
@@ -97,20 +95,22 @@ export default function RoomDetails() {
       image: roomData.images[0],
     };
     addToCart(payload);
-    navigate("/login");
+    const token = localStorage.getItem("token");
+    navigate(token ? "/checkout" : "/login");
+    console.log("Token:", localStorage.getItem("token"));
+
   };
   if (loading) return <div>Loading...</div>;
   if (!roomData) return <div>Room information not found.</div>;
 
   return (
-    <div className="relative">
-      {/* Hero Section */}
+    <div className="relative" >
       <section
         className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}
       >
-        <div className="absolute inset-0 bg-opacity-40"></div>
-        <div className="relative text-white text-center px-4 sm:px-6 md:px-10">
+        <div className="absolute inset-0 bg-opacity-30"></div>
+        <div className="relative text-white text-center px-4 sm:px-6 md:px-10 pt-25">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
             {roomData.title}
@@ -124,33 +124,33 @@ export default function RoomDetails() {
         </div>
       </section>
 
-      <div className="pt-[60vh] sm:pt-[65vh] md:pt-[70vh] lg:pt-[60vh] xl:pt-[50vh]">
-       
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto m-5">
+      <div >
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto m-5 ">
 
 
-          {/* Room Gallery */}
-          <RoomGallery
-            images={roomData.images}
-            currentImageIndex={currentImageIndex}
-            setCurrentImageIndex={setCurrentImageIndex}
-          />
-          {/* Booking Form */}
-          <BookingForm
-            bookingData={bookingData}
-            setBookingData={setBookingData}
-            roomData={roomData}
-            handleBookingClick={handleBookingClick}
-            currency={currency}
-            currencySymbols={currencySymbols}
-          />
-        </div>
-        {/* Room Tabs Section */}
-        <div className="p-6 max-w-6xl mx-auto">
-          <RoomTabs roomData={roomData} calendarRef={calendarRef} />
-        </div>
+        {/* Room Gallery */}
+        <RoomGallery
+          images={roomData.images}
+          currentImageIndex={currentImageIndex}
+          setCurrentImageIndex={setCurrentImageIndex}
+        />
+        {/* Booking Form */}
+        <BookingForm
+          bookingData={bookingData}
+          setBookingData={setBookingData}
+          roomData={roomData}
+          handleBookingClick={handleBookingClick}
+          currency={currency}
+          currencySymbols={currencySymbols}
+        />
+      </div>
+      {/* Room Tabs Section */}
+      <div className="p-6 max-w-6xl mx-auto">
+        <RoomTabs roomData={roomData} calendarRef={calendarRef} />
       </div>
     </div>
+
   );
 }
 
