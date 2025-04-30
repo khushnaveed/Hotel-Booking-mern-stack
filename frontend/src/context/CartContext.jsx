@@ -5,7 +5,13 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
+
   // Add to cart
+
+  /*  const [weather, setWeather] = useState(null);
+   const [showWeather, setShowWeather] = useState(false);
+   const [currency, setCurrency] = useState("USD"); */
+
   const addToCart = (item) => {
     const existingItemIndex = cartItems.findIndex((cartItem) => cartItem.slug === item.slug);
 

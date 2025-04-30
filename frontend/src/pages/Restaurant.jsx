@@ -1,10 +1,9 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
 import emailjs from "emailjs-com";
-
+import { useCurrency } from "../context/CurrencyContext.jsx";
 export default function Restaurant() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -16,6 +15,8 @@ export default function Restaurant() {
   const [allFoodItems, setAllFoodItems] = useState([]); // New state for all food items
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { currency } = useCurrency();
+  const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
 
   const openModal = (item) => {
     setSelectedItem(item);
@@ -32,53 +33,24 @@ export default function Restaurant() {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5005/foods");
+      const response = await fetch("http://localhost:5005/menu/foods");
+      console.log(response);
+
       if (!response.ok) {
-        throw new Error(`Fetch error: ${response.status}`);
+        throw new Error(
+          `Fetching menu items failed with status: ${response.status} ${response.statusText}`
+        );
       }
+
       const data = await response.json();
+      setAllFoodItems(data);
 
-      const items = Array.isArray(data)
-        ? data
-        : data.data || data.restaurantData || [];
-      if (!Array.isArray(items) || items.length === 0) {
-        throw new Error("Invalid or empty data");
-      }
-
-      // Generate 40 items regardless of API response
-      const generatedItems = Array.from({ length: 40 }, (_, i) => {
-        // Use real data for the first items if available
-        if (i < items.length) {
-          return items[i];
-        }
-        // Generate sample data for the rest
-        return {
-          id: i + 1,
-          name: `Food Item ${i + 1}`,
-          price: ((i % 10) + 5).toFixed(2),
-          desc: `Delicious food item ${i + 1}`,
-          title:
-            i % 4 === 0
-              ? "Breakfast"
-              : i % 4 === 1
-              ? "Lunch"
-              : i % 4 === 2
-              ? "Dinner"
-              : "Drink",
-          img: null, // No image, will use placeholder
-        };
-      });
-
-      // Store all 40 food items
-      setAllFoodItems(generatedItems);
-
-      // Filter items for the active meal
-      const filteredMenuItems = items.filter(
-        (item) => item.title?.toLowerCase() === activeMeal.toLowerCase()
+      // Filter items according to active meal selection
+      const filteredMenuItems = data.filter(
+        (item) => item.title.toLowerCase() === activeMeal.toLowerCase()
       );
-      console.log("Fetched items:", items);
-      const filteredDrinks = items.filter(
-        (item) => item.title?.toLowerCase() === "drink"
+      const filteredDrinks = data.filter(
+        (item) => item.title.toLowerCase() === "drink"
       );
 
       setMenuItems(filteredMenuItems);
@@ -86,24 +58,9 @@ export default function Restaurant() {
     } catch (err) {
       console.error("Failed to fetch menu items:", err);
       setError(`Unable to load menu. Error: ${err.message}`);
-      setError("Unable to load menu. Please try again later.");
 
-      // Create sample data if API fails - ensure we have 40 items
-      const sampleData = Array.from({ length: 40 }, (_, i) => ({
-        id: i + 1,
-        name: `Sample Food Item ${i + 1}`,
-        price: ((i % 10) + 5).toFixed(2),
-        desc: `Delicious sample food item ${i + 1}`,
-        title:
-          i % 4 === 0
-            ? "Breakfast"
-            : i % 4 === 1
-            ? "Lunch"
-            : i % 4 === 2
-            ? "Dinner"
-            : "Drink",
-      }));
-
+      // Handle fallback sample data
+      const sampleData = generateSampleData();
       setAllFoodItems(sampleData);
       setMenuItems(sampleData.filter((item) => item.title === activeMeal));
       setDrinks(sampleData.filter((item) => item.title === "Drink"));
@@ -111,6 +68,24 @@ export default function Restaurant() {
       setLoading(false);
     }
   }, [activeMeal]);
+
+  // Function to generate sample data
+  const generateSampleData = () => {
+    return Array.from({ length: 40 }, (_, i) => ({
+      id: i + 1,
+      name: `Sample Food Item ${i + 1}`,
+      price: ((i % 10) + 5).toFixed(2),
+      desc: `Delicious sample food item ${i + 1}`,
+      title:
+        i % 4 === 0
+          ? "Breakfast"
+          : i % 4 === 1
+          ? "Lunch"
+          : i % 4 === 2
+          ? "Dinner"
+          : "Drink",
+    }));
+  };
 
   useEffect(() => {
     fetchMenuItems();
@@ -248,7 +223,10 @@ export default function Restaurant() {
                     />
                     <div className="text-left">
                       <h4 className="text-lg font-semibold">{item.name}</h4>
-                      <p className="font-bold text-[#8E7037]">${item.price}</p>
+                      <p className="font-bold text-[#8E7037]">
+                        {currencySymbols[currency]}
+                        {item.price}
+                      </p>
                       <p className="text-gray-600 text-sm">{item.desc}</p>
                     </div>
                   </div>
@@ -309,7 +287,8 @@ export default function Restaurant() {
 
           {isSubmitted ? (
             <div className="bg-green-200 text-black-800 p-4 rounded text-center">
-              Thank you for selecting Royal Grand Dining! Our team will be in touch shortly.
+              Thank you for selecting Royal Grand Dining! Our team will be in
+              touch shortly.
             </div>
           ) : (
             <form
@@ -424,7 +403,7 @@ export default function Restaurant() {
       {/* Gallery Section */}
       <section className="py-16 bg-white px-4">
         <h2 className="text-3xl font-semibold text-center mb-8">
-        Choose from the Gallery
+          Choose from the Gallery
         </h2>
         <p className="text-center text-gray-600 mb-8">
           Explore our collection of 40 culinary creations

@@ -3,9 +3,12 @@ import mongoose from "mongoose";
 import roomRoutes from "./routes/roomRoutes.js";
 import guestRoutes from "./routes/guestRoutes.js";
 import { config } from "dotenv";
-import cors from "cors";
 import eventRoutes from "./routes/eventRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
+//npm i cors
+import cors from "cors"
+import restaurantRoutes from "./routes/restaurantRoutes.js"
+
 
 config();
 console.clear();
@@ -17,17 +20,20 @@ app.use(express.json());
 
 //make mongoose connection
 try {
-  await mongoose.connect(process.env.MONGO_URI, { dbName: "hotel-booking" });
-  console.log("Data Base connected successfully!");
+    await mongoose.connect(process.env.MONGO_URI, { dbName: "hotel-booking" })
+    console.log("Data Base connected successfully!")
 } catch (err) {
   console.log(err.message);
 }
 
 //routes
-app.use("/room", roomRoutes);
-app.use("/guest", guestRoutes);
+
 app.use("/bookings", bookingRoutes);
-app.use("/events", eventRoutes);
+app.use("/room", roomRoutes)
+app.use("/guest",guestRoutes)
+app.use('/events', eventRoutes);
+app.use('/menu', restaurantRoutes);
+
 
 //error handling middlewares
 app.use((err, req, res, next) => {
@@ -41,4 +47,6 @@ app.use((req, res, next) => {
     .send({ success: false, message: "No such route exist in our server!" });
 });
 
+
 app.listen(PORT, () => console.log("Server is running on port:", PORT));
+
