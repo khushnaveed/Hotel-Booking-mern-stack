@@ -97,7 +97,7 @@ export default function RoomDetails() {
       image: roomData.images[0],
     };
     addToCart(payload);
-    navigate("/checkout");
+    navigate("/login");
   };
   if (loading) return <div>Loading...</div>;
   if (!roomData) return <div>Room information not found.</div>;
