@@ -111,7 +111,8 @@ export default function RoomDetails() {
       >
         <div className="absolute inset-0 bg-opacity-40"></div>
         <div className="relative text-white text-center px-4 sm:px-6 md:px-10">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
             {roomData.title}
           </h1>
           <p
