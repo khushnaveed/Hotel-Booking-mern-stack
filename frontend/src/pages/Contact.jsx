@@ -63,7 +63,7 @@ export default function Contact() {
         <div className="absolute inset-0 bg-black opacity-30"></div>
 
         {/* Centered Text */}
-        <div className="relative text-white text-center">
+        <div className="relative text-white text-center mt-5">
           <h1
             className="text-5xl font-bold uppercase "
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
