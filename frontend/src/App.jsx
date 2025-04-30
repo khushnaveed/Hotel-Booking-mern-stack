@@ -20,7 +20,7 @@ import { CurrencyProvider } from "./context/CurrencyContext";
 import { WeatherProvider } from "./context/WeatherContext.jsx";
 import WeatherPage from "./pages/WeatherPage.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
-
+import { GuestProvider } from "./context/GuestContext.jsx";
 
 // Stripe setup
 import { Elements } from "@stripe/react-stripe-js";
@@ -32,11 +32,13 @@ const stripePromise = loadStripe("your-publishable-key-here");
 
 function App() {
   return (
+    
     <WeatherProvider>
       <CurrencyProvider>
         <CartProvider>
           <Elements stripe={stripePromise}>
             <BrowserRouter>
+<GuestProvider>
               <NavbarTop />
               <Navbar />
 
@@ -63,8 +65,10 @@ function App() {
                 <Route path="/weather" element={<WeatherPage />} />
                 <Route path="/checkout" element={<CheckoutFlow />} />
               </Routes>
+    </GuestProvider>
 
               <Footer />
+
             </BrowserRouter>
           </Elements>
         </CartProvider>
