@@ -35,14 +35,14 @@ export default function Rooms() {
     <>
       {/* Hero Section */}
       <section
-        className="absolute top-[64px] left-0 w-full h-[30vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
+        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}
       >
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black opacity-30"></div>
 
         {/* Centered Text */}
-        <div className="relative text-white text-center">
+        <div className="relative text-white text-center mt-5">
           <h1
             className="text-5xl font-bold uppercase "
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
@@ -58,14 +58,14 @@ export default function Rooms() {
         </div>
       </section>
 
-      <div className="mt-[40vh] md:mt-[50vh] lg:mt-[50vh] mb-1 flex flex-row flex-wrap gap-4 justify-center items-center">
+      <div className="mt-[5vh] md:mt-[5vh] lg:mt-[5vh] mb-1 flex flex-row flex-wrap gap-4 justify-center items-center">
         {error && <p className="text-red-600">{error}</p>}{" "}
         {/* Show error message if any */}
         {rooms.length > 0 ? (
           rooms.map((room, index) => (
             <div
               key={room._id}
-              className="relative overflow-hidden group sm:w-[80%]"
+              className="relative overflow-hidden group sm:w-[80%] m-5"
             >
               <img
                 src={room.images?.[0] || "/fallback-image.jpg"} // Use the first image from the room data, or a fallback image

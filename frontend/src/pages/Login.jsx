@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useContext } from "react";
+import { GuestContext } from "../context/GuestContext.jsx";
 
 export default function Login() {
-  const [userName, setUserName] = useState("");
+  const { login } = useContext(GuestContext);
+
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // for displaying errors
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/profile");
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,20 +30,22 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userName, password }),
+        body: JSON.stringify({ email, password }),
       });
       const token = response.headers.get("token");
-      localStorage.setItem("token", token);
       const data = await response.json();
 
       // Check if the response is okay, i.e., status 200
       if (!response.ok) {
-        throw new Error(data.message || "Invalid userName or password.");
+        throw new Error(data.message || "Invalid email or password.");
       }
+      localStorage.setItem("token", token);
 
       // If login is successful, navigate to rooms page
       if (data.success) {
         alert("Login successful!");
+        login(token, data); // ✅ This will store both token and guestData properly
+
         navigate("/profile");
       } else {
         setError("Login failed: " + data.message);
@@ -59,11 +73,11 @@ export default function Login() {
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="text"
-            name="userName"
-            placeholder="User Name *"
+            name="email"
+            placeholder="email *"
             className="border border-white p-2 bg-transparent text-white placeholder-white"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"

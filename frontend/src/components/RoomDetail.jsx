@@ -106,7 +106,7 @@ export default function RoomDetails() {
     <div className="relative">
       {/* Hero Section */}
       <section
-        className="absolute top-0 left-0 w-full h-[40vh] bg-cover bg-center flex items-center justify-center pt-20 sm:pt-24 md:pt-28 lg:pt-32"
+        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}
       >
         <div className="absolute inset-0 bg-opacity-40"></div>
@@ -125,7 +125,10 @@ export default function RoomDetails() {
       </section>
 
       <div className="pt-[60vh] sm:pt-[65vh] md:pt-[70vh] lg:pt-[60vh] xl:pt-[50vh]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto">
+       
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto m-5">
+
+
           {/* Room Gallery */}
           <RoomGallery
             images={roomData.images}

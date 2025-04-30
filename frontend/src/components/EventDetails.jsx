@@ -1,93 +1,208 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import heroImage from "../assets/heroImage.jpg";
+
+import { Calendar, Minus, Plus, ArrowLeft } from "lucide-react";
 import { useCurrency } from "../context/CurrencyContext";
 import { useTranslation } from "react-i18next";
+import { useCart } from "../context/CartContext";
 
 function EventDetails() {
   const { currency } = useCurrency();
-  const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const { id } = useParams();
   const { i18n, t } = useTranslation();
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
   const language = i18n.language;
+  const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
 
   const [event, setEvent] = useState(null);
+  const [ticketCount, setTicketCount] = useState(1);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
     axios
       .get(`http://localhost:5005/events/${id}`)
-      .then((res) => {
-        setEvent(res.data);
-      })
+      .then((res) => setEvent(res.data))
       .catch((err) => console.error("Error fetching event:", err));
   }, [id]);
 
-  if (!event)
-    return <div className="p-10 text-center">{t("loadingEvents")}</div>;
+  const handleImageLoad = () => {
+    setIsImageLoaded(true);
+  };
+
+  const increment = () => setTicketCount((prev) => prev + 1);
+  const decrement = () => setTicketCount((prev) => (prev > 1 ? prev - 1 : 1));
+
+  const handleBookNow = () => {
+    const slug = event.title?.[language]
+      ? event.title[language].replace(/\s+/g, "-").toLowerCase()
+      : "untitled-event";
+
+    addToCart({
+      slug,
+      title: event.title?.[language] || "Untitled",
+      price: event.price,
+      quantity: ticketCount,
+      image: event.image,
+      totalPrice: event.price * ticketCount,
+      date: event.date,
+    });
+
+    navigate("/checkout");
+  };
+
+  if (!event) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-pulse text-gray-500">{t("loadingEvents")}</div>
+      </div>
+    );
+  }
 
   return (
-    <>
-      {/* HERO SECTION */}
+    <div className="bg-gray-50 min-h-screen">
       <section
-        className="relative w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: `url(${heroImage})` }}>
-        <div className="absolute inset-0 bg-opacity-40"></div>
+        className="relative top-0 left-0 w-full h-[30vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
+        style={{ backgroundImage: "url('/src/assets/heroImage.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-black opacity-30"></div>
         <div className="relative text-white text-center">
           <h1
             className="text-5xl font-bold uppercase"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            {event.title?.[language] || "Untitled"}
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+          >
+            Events
           </h1>
           <p
             className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            {t("checkUpcomingEvents")}
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+          >
+            Discover unforgettable experiences
           </p>
         </div>
       </section>
 
-      <div className="p-10 max-w-4xl mx-auto [&_img]:rounded-none">
-        <img
-          src={event.image}
-          alt={event.title?.[language]}
-          className="rounded-md w-full mb-6"
-        />
-        <h1 className="text-3xl font-bold mb-2">{event.title?.[language]}</h1>
-        <p className="text-sm text-gray-500 mb-6">
-          {t("date")}: {event.date}
-        </p>
-        <h2 className="text-lg text-gray-700 font-semibold mb-6">
-          {t("price")}:{" "}
-          <span>
-            {currencySymbols[currency]}
-            {event.price}
-          </span>
-        </h2>
-        <p className="text-lg">{event.excerpt?.[language]}</p>
-
-        <Link
-          to="/checkout"
-          state={{
-            slug: event.title?.[language], // use event title as 'slug'
-            arrivalDate: "-", // event has no arrival date
-            departureDate: "-", // event has no departure date
-            numAdults: "-", // optional or set default
-            numChildren: "-", // optional or set default
-            selectedPackages: [], // empty if not needed
-            totalPrice: event.price, // actual event price
-          }}
-          className="w-full bg-[#8E7037] text-white mr-8 px-4 py-2 rounded font-semibold hover:bg-[#3e3e3e] transition-colors">
-          {t("Book Event")}
-        </Link>
-
-        <Link
-          to="/events"
-          className="inline-block mt-6 text-blue-500 underline">
-          ← {t("backToEvents")}
-        </Link>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <button className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors group">
+          <ArrowLeft
+            size={18}
+            className="mr-2 group-hover:-translate-x-1 transition-transform duration-200"
+          />
+          <span className="text-sm font-medium">Back to events</span>
+        </button>
       </div>
-    </>
+
+      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <div className="lg:col-span-2 space-y-10">
+            <div className="overflow-hidden shadow-sm bg-white">
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <div
+                  className={`absolute inset-0 bg-gray-200 animate-pulse ${
+                    isImageLoaded ? "hidden" : "block"
+                  }`}
+                ></div>
+                <img
+                  src={event.image}
+                  alt={event.title.en}
+                  className={`w-full h-full object-cover object-center transition-opacity duration-700 ${
+                    isImageLoaded ? "opacity-100" : "opacity-0"
+                  }`}
+                  onLoad={handleImageLoad}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-4">
+                  {event.title.en}
+                </h1>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 text-gray-700">
+                  <Calendar size={16} className="text-gray-500" />
+                  <span className="text-sm font-medium">{event.date}</span>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold text-gray-900">
+                  About This Event
+                </h2>
+                <p className="text-gray-700 leading-relaxed text-lg">
+                  {event.excerpt.en}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-1">
+            <div className="sticky top-8 rounded-2xl bg-white shadow-md border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg">
+              <div className="p-8">
+                <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                  Reserve Tickets
+                </h3>
+
+                <div className="flex justify-between items-center mb-8">
+                  <span className="text-gray-700">Price per ticket</span>
+                  <span className="text-2xl font-semibold text-gray-900">
+                    {currencySymbols[currency]}
+                    {event.price.toFixed(2)}
+                  </span>
+                </div>
+
+                <div className="mb-8">
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Number of tickets
+                  </label>
+                  <div className="flex items-center justify-between p-2 border border-gray-200 rounded-lg">
+                    <button
+                      onClick={decrement}
+                      className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors"
+                      aria-label="Decrease ticket count"
+                    >
+                      <Minus size={18} className="text-gray-700" />
+                    </button>
+
+                    <span className="text-2xl font-medium text-gray-900">
+                      {ticketCount}
+                    </span>
+
+                    <button
+                      onClick={increment}
+                      className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors"
+                      aria-label="Increase ticket count"
+                    >
+                      <Plus size={18} className="text-gray-700" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center py-6 border-t border-gray-200 mb-8">
+                  <span className="font-medium text-gray-900">Total</span>
+                  <div className="text-right">
+                    <span className="text-2xl font-bold text-gray-900 block">
+                      {currencySymbols[currency]}
+                      {(event.price * ticketCount).toFixed(2)}
+                    </span>
+                    <span className="text-xs text-gray-500 block mt-1">
+                      All taxes included
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleBookNow}
+                  className="w-full py-3 px-6 bg-[#8E7037] text-white text-lg font-semibold rounded-lg hover:bg-[#705832] transition-colors"
+                >
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
