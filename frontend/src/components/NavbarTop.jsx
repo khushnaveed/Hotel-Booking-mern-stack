@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { useWeather } from "../context/WeatherContext";
+import React, { useState, useEffect } from "react";
+import { useContext } from "react";
+import { GuestContext } from "../context/GuestContext.jsx";
+import { useWeather } from "../context/WeatherContext.jsx";
 import {
   Phone,
   ChevronDown,
@@ -36,7 +38,8 @@ function LanguageSelector() {
             <a
               key={lang}
               onClick={() => handleLanguageChange(lang)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+            >
               {lang === "EN"
                 ? "English"
                 : lang === "ES"
@@ -54,6 +57,7 @@ function NavbarTop() {
   const { currency, changeCurrency } = useCurrency();
   const { t } = useTranslation();
   const { weather } = useWeather();
+  const { isLoggedIn } = useContext(GuestContext);
 
   return (
     <div className="fixed top-0 left-0 w-full z-[101] bg-black/80 backdrop-blur-md font-bold text-white">
@@ -65,7 +69,8 @@ function NavbarTop() {
             {/* Weather - always visible */}
             <Link
               to="/weather"
-              className="flex items-center space-x-2 hover:text-[#8E7037]">
+              className="flex items-center space-x-2 hover:text-[#8E7037]"
+            >
               <Cloud size={16} />
               <span className="text-sm">
                 {weather ? `${Math.round(weather.main.temp)}°C` : "Temp"}
@@ -112,7 +117,8 @@ function NavbarTop() {
                         currency === cur
                           ? "text-[#8E7037] font-semibold"
                           : "text-gray-700"
-                      } hover:bg-gray-100 cursor-pointer`}>
+                      } hover:bg-gray-100 cursor-pointer`}
+                    >
                       {cur}
                     </a>
                   ))}
@@ -122,18 +128,25 @@ function NavbarTop() {
 
             {/* Auth Buttons */}
             <div className="flex items-center space-x-4 ml-4">
-              <Link
-                to="/login"
-                className="flex items-center space-x-1 hover:text-[#8E7037]">
-                <LogIn size={16} />
-                <span className="text-sm">{t("login")}</span>
-              </Link>
-              <Link
-                to="/register"
-                className="flex items-center space-x-1 hover:text-[#8E7037]">
-                <UserPlus size={16} />
-                <span className="text-sm">{t("register")}</span>
-              </Link>
+              {isLoggedIn ? (
+                <Link
+                  to="/profile"
+                  className="flex items-center space-x-1 hover:text-[#8E7037]"
+                >
+                  <UserPlus size={16} />
+                  <span className="text-sm">{t("profile")}</span>
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="flex items-center space-x-1 hover:text-[#8E7037]"
+                  >
+                    <LogIn size={16} />
+                    <span className="text-sm">{t("login")}</span>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

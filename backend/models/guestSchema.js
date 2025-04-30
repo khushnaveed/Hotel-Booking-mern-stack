@@ -1,11 +1,32 @@
 import { Schema, model } from "mongoose";
 
 const guestSchema = new Schema({
-  userName:        { type: String, required: true },
-  email:           { type: String, required: true, unique: true },
-  password:        { type: String, required: true, minlength: [6, "Password must be at least 6 characters long."],
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  phonenumber: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: function (v) {
+        return /^\+?[1-9]\d{1,14}$/.test(v); // E.164 format
+      },
+      message: (props) =>
+        `${props.value} is not a valid international phone number!`,
+    },
   },
-  confirmPassword: { type: String, required: false }
+  address: { type: String, required: true },
+  city: { type: String, required: true },
+  zipcode: { type: String, required: true },
+  country: { type: String, required: true },
+  password: {
+    unique: true,
+    type: String,
+    required: true,
+    minlength: [6, "Password must be at least 6 characters long."],
+  },
+  // confirmPassword is not saved to DB
 });
 
 const GuestModel = model("Guest", guestSchema);

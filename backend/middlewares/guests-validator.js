@@ -1,45 +1,58 @@
 import { body, validationResult } from "express-validator";
 
 export const validators = [
-  // Validate userName
-  body("userName")
+  body("firstName")
     .isString()
-    .withMessage("This is not a valid string. Please provide us with a correct name.")
+    .withMessage("First name must be a string.")
     .trim()
     .notEmpty()
-    .withMessage("User name cannot be empty."),
+    .withMessage("First name is required."),
 
-  // Validate email
+  body("lastName")
+    .isString()
+    .withMessage("Last name must be a string.")
+    .trim()
+    .notEmpty()
+    .withMessage("Last name is required."),
+
   body("email")
     .isEmail()
-    .withMessage("This is not a valid email!")
+    .withMessage("Invalid email address.")
     .normalizeEmail(),
 
-  // Validate password
+  body("phonenumber")
+    .matches(/^\+?[1-9]\d{1,14}$/)
+    .withMessage("Please enter a valid international phone number."),
+
+  body("address").trim().notEmpty().withMessage("Address is required."),
+
+  body("city").trim().notEmpty().withMessage("City is required."),
+
+  body("zipcode").trim().notEmpty().withMessage("Zip code is required."),
+
+  body("country").trim().notEmpty().withMessage("Country is required."),
+
   body("password")
     .isStrongPassword()
-    .withMessage("Password is too weak!")
+    .withMessage("Password is too weak.")
     .trim()
     .notEmpty()
-    .withMessage("Password cannot be empty."),
+    .withMessage("Password is required."),
 
-  // Validate confirmPassword
-  body("confirmPassword")
-    .custom((value, { req }) => {
-      if (value !== req.body.password) {
-        throw new Error("Passwords do not match!");
-      }
-      return true;
-    }),
-
-  // Check if validation results are empty
-  (req, res, next) => {
-    const results = validationResult(req);
-    if (results.isEmpty()) {
-      next(); // No validation errors, proceed to the next middleware
-    } else {
-      console.log("Validation errors:", results.errors); // Log validation errors
-      res.status(400).send({ success: false, message: results.errors });
+  body("confirmPassword").custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error("Passwords do not match.");
     }
+    return true;
+  }),
+
+  // Final middleware to check validation result
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      return next();
+    }
+    res.status(400).json({ success: false, errors: errors.array() });
   },
 ];
+
