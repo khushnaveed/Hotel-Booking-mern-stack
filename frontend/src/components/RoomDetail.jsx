@@ -4,24 +4,20 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCurrency } from "../context/CurrencyContext.jsx";
 //import RoomAvailabilityCalendar from "./RoomAvailabilityCalenar.jsx";
 //import AnotherAccommodation from "./AnotherAccommodation.jsx";
-import RoomGallery from "./RoomGallery.jsx";
-import RoomTabs from "./RoomTabs.jsx";
-import BookingForm from "./BookingForm.jsx";
+import RoomGallery from "./roomDetailComponents/RoomGallery.jsx";
+import RoomTabs from "./roomDetailComponents/RoomTabs.jsx";
+import BookingForm from "./roomDetailComponents/BookingForm.jsx";
 import { useCart } from "../context/CartContext";
 import { useRoomDetail } from "../context/RoomDetailContext.jsx";
 export default function RoomDetails() {
   //testing context
   //const [roomData, setRoomData] = useState(null);
   const { roomData, setRoomData, bookingData, setBookingData } = useRoomDetail();
-
-
-
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { currency } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const calendarRef = useRef(null)
-
   const { addToCart } = useCart();
   //testing context
   /*  const [bookingData, setBookingData] = useState({
@@ -100,16 +96,11 @@ export default function RoomDetails() {
       nights,
       image: roomData.images[0],
     };
-
     addToCart(payload);
-    navigate("/checkout");
+    navigate("/login");
   };
-
-
-
-
   if (loading) return <div>Loading...</div>;
-  if (!roomData) return <div>Room not found</div>;
+  if (!roomData) return <div>Room information not found.</div>;
 
   return (
     <div className="relative">
@@ -120,7 +111,8 @@ export default function RoomDetails() {
       >
         <div className="absolute inset-0 bg-opacity-40"></div>
         <div className="relative text-white text-center px-4 sm:px-6 md:px-10">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
             {roomData.title}
           </h1>
           <p
@@ -129,25 +121,21 @@ export default function RoomDetails() {
           >
             Royal Grand Hotel is where timeless elegance meets modern luxury in every detail.
           </p>
-
         </div>
       </section>
 
-      <div>
+      <div className="pt-[60vh] sm:pt-[65vh] md:pt-[70vh] lg:pt-[60vh] xl:pt-[50vh]">
+       
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto m-5">
 
 
           {/* Room Gallery */}
-
-
           <RoomGallery
             images={roomData.images}
             currentImageIndex={currentImageIndex}
             setCurrentImageIndex={setCurrentImageIndex}
           />
-
           {/* Booking Form */}
-
           <BookingForm
             bookingData={bookingData}
             setBookingData={setBookingData}
@@ -156,9 +144,7 @@ export default function RoomDetails() {
             currency={currency}
             currencySymbols={currencySymbols}
           />
-
         </div>
-
         {/* Room Tabs Section */}
         <div className="p-6 max-w-6xl mx-auto">
           <RoomTabs roomData={roomData} calendarRef={calendarRef} />
