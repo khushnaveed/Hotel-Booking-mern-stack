@@ -10,7 +10,7 @@ export default function Gallery() {
     <>
       {/* Hero Section */}
       <section
-        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
+        className="relative top-16 left-0 w-full h-[80vh] md:h-[34vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('/src/assets/galleryHero.jpg')" }}>
         <div className="absolute inset-0 bg-opacity-40"></div>
         <div className="relative text-white text-center mt-10">
@@ -36,7 +36,7 @@ export default function Gallery() {
       {/* Wrapper to avoid overlap */}
       <div className="relative">
         {/* Gallery Section */}
-        <section className="py-16 px-6 md:px-0">
+        <section className="py-25 px-6 md:px-0">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
             {galleryData[0].items.map((item, index) => (
               <div className="overflow-hidden shadow-lg group" key={index}>
