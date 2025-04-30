@@ -146,7 +146,7 @@ export default function Restaurant() {
     <>
       {/* Hero Section */}
       <section
-        className="relative w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
+        className="relative top-10 left-0 w-full h-[80vh] md:h-[36vh] bg-cover bg-center flex items-center justify-center"
         style={{
           backgroundImage: `url(https://img.freepik.com/premium-photo/chef-is-carefully-plating-dish-restaurant-kitchen-plate-is-arranged-with-variety-colorful-vegetables-small-portion-meat_36682-6799.jpg)`,
         }}
@@ -169,7 +169,7 @@ export default function Restaurant() {
       </section>
 
       {/* Meal Selection */}
-      <div className="flex justify-center space-x-10 mt-10 mb-20">
+      <div className="flex justify-center space-x-10 mt-18 mb-20">
         {["Breakfast", "Lunch", "Dinner"].map((meal) => (
           <button
             key={meal}
