@@ -4,6 +4,7 @@ const guestSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
+  bookings:[{type: Schema.Types.ObjectId, ref:"Booking"}],
   phonenumber: {
     type: String,
     required: true,

@@ -115,7 +115,7 @@ function Events() {
                   title={event.title[i18n.language]}
                   image={event.image}
                   excerpt={event.excerpt[i18n.language]}
-                  showCountdown={event.showCountdown}
+                  showCountdown={events[0]?._id === event._id}
                   slug={event._id}
                   price={event.price}
                   currency={currency}
@@ -124,15 +124,13 @@ function Events() {
                     <button
                       onClick={() => navigate(`/events/${event.slug}`)}
                       className="px-4 sm:px-6 py-2 sm:pb-2 pb-4 text-sm sm:text-base 
-                     bg-[#8E7037] font-semibold text-white 
+                    bg-[#8E7037] font-semibold text-white 
                      hover:bg-white hover:text-[#8E7037] 
-                     border-2 border-[#8E7037] w-max mt-4 ml-2 sm:ml-6"
-                    >
+                     border-2 border-[#8E7037] w-max mt-4 ml-2 sm:ml-6">
                       View Details
                     </button>
                   }
                 />
-              
               </div>
             ))
           )}

@@ -49,7 +49,10 @@ function EventDetails() {
       date: event.date,
     });
 
-    navigate("/checkout");
+    /* navigate("/checkout"); */
+    const token = localStorage.getItem("token");
+    navigate(token ? "/checkout" : "/login");
+    console.log("Token:", localStorage.getItem("token"));
   };
 
   if (!event) {
@@ -193,7 +196,7 @@ function EventDetails() {
 
                 <button
                   onClick={handleBookNow}
-                  className="w-full py-3 px-6 bg-[#8E7037] text-white text-lg font-semibold rounded-lg hover:bg-[#705832] transition-colors"
+                  className="w-full py-3 px-6 bg-[#8E7037] text-white text-lg font-semibold hover:bg-[#705832] transition-colors"
                 >
                   Book Now
                 </button>

@@ -18,7 +18,7 @@ export const GuestProvider = ({ children }) => {
 
     if (token && guestData) {
       setIsLoggedIn(true);
-      setGuest(guestData);
+      setGuest(guestData.data);
     } else {
       setIsLoggedIn(false);
       setGuest(null);
@@ -32,7 +32,7 @@ export const GuestProvider = ({ children }) => {
     localStorage.setItem("token", token); // Store token in localStorage
     localStorage.setItem("guestData", JSON.stringify(guestData)); // Store guest data
     setIsLoggedIn(true);
-    setGuest(guestData); // Set guest data
+    setGuest(guestData.data); // Set guest data
     navigate("/profile");
   };
   // Handle logout

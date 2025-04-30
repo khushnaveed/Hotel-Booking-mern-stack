@@ -8,6 +8,7 @@ import bookingRoutes from "./routes/bookingRoutes.js";
 //npm i cors
 import cors from "cors"
 import restaurantRoutes from "./routes/restaurantRoutes.js"
+import {auth} from "./middlewares/authentication.js"
 
 
 config();
@@ -28,11 +29,12 @@ try {
 
 //routes
 
-app.use("/bookings", bookingRoutes);
+app.use("/bookings", auth, bookingRoutes);
 app.use("/room", roomRoutes)
 app.use("/guest",guestRoutes)
 app.use('/events', eventRoutes);
 app.use('/menu', restaurantRoutes);
+
 
 
 //error handling middlewares
