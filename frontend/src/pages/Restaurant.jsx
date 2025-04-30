@@ -154,7 +154,7 @@ export default function Restaurant() {
         <div className="absolute inset-0 bg-black opacity-30" />
         <div className="relative text-white text-center z-10">
           <h1
-            className="text-5xl font-bold uppercase"
+            className="text-5xl font-bold uppercase mt-5"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
           >
             Culinary Elegance

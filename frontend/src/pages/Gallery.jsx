@@ -11,34 +11,27 @@ export default function Gallery() {
       {/* Hero Section */}
       <section
         className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('/src/assets/galleryHero.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black opacity-30" />
-        <div className="relative text-white text-center px-4">
+        style={{ backgroundImage: "url('/src/assets/galleryHero.jpg')" }}>
+        <div className="absolute inset-0 bg-opacity-40"></div>
+        <div className="relative text-white text-center mt-10">
           <h1
-            className="text-6xl md:text-7xl font-bold uppercase   "
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
+            className="text-5xl font-bold uppercase"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
             Visual Elegance
           </h1>
           <p
-            className="text-xl md:text-2xl mt-2   "
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            Welcome to{" "}
-            <span className="font-semibold">
-              {" "}
-              Royal Grand Gallery of Luxury
-            </span>
+            className="text-lg mt-2"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
+            Welcome to Royal Grand Gallery of Luxury
           </p>
           <p
-            className="text-lg mt-4 italic"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
+            className="text-lg mt-2"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
             Step into the World of Luxurious Retreat
           </p>
         </div>
       </section>
+
 
       {/* Wrapper to avoid overlap */}
       <div className="relative">

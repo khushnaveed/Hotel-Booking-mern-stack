@@ -34,7 +34,7 @@ export default function About() {
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-black opacity-30" />
-        <div className="relative text-white text-center z-10">
+        <div className="relative text-white text-center z-10 mt-5">
           <h1
             className="text-5xl font-bold uppercase"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}

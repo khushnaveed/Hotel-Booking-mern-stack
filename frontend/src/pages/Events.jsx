@@ -45,7 +45,7 @@ function Events() {
         className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: "url('src/assets/heroImage.jpg')" }}>
         <div className="absolute inset-0 bg-opacity-40"></div>
-        <div className="relative text-white text-center">
+        <div className="relative text-white text-center mt-8">
           <h1
             className="text-5xl font-bold uppercase"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
