@@ -28,6 +28,8 @@ const guestSchema = new Schema({
     minlength: [6, "Password must be at least 6 characters long."],
   },
   // confirmPassword is not saved to DB
+
+  role: { type: String, enum: ["admin","guest"], default: "guest" },
 });
 
 const GuestModel = model("Guest", guestSchema);

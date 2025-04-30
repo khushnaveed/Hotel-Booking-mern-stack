@@ -199,7 +199,7 @@ export const loginGuest = async (req, res) => {
     const { email, password } = req.body;
 
     // Find the guest by their email
-    const guest = await GuestModel.findOne({ email });
+    const guest = await GuestModel.findOne({ email }).populate("bookings");
 
     if (!guest) {
       return res
@@ -218,9 +218,13 @@ export const loginGuest = async (req, res) => {
         .status(401)
         .json({ success: false, message: "Invalid password" });
     }
-
+    const token = jwt.sign(
+      { _id: guest._id, email: guest.email },
+      process.env.SECRET_KEY,
+      { expiresIn: "1d" }
+    );
     // Send a response with the guest data (could also send a JWT token if needed)
-    res.json({
+    res.header("token",token).json({
       success: true,
       message: "Login successful",
       data: guest, // Or send token instead of guest data for security reasons
@@ -311,3 +315,7 @@ export const resetPassword = async (req, res) => {
       .json({ success: false, message: "Failed to reset password." });
   }
 };
+
+export const verifyguesttoken = (req,res,next)=> {
+  res.json({success:true, data:req.guest})
+}

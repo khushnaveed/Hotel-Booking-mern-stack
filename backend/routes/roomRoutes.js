@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { createRoom, getAllRooms, getAvailableRooms, getRoomBySlug } from "../controllers/roomControlers.js"
+//import { isAdmin } from "../middlewares/isAdmin.js"
 const router = Router()
 //router.get("/:slug", getRoomBySlug);
 router.post("/create", createRoom)

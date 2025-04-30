@@ -14,7 +14,7 @@ import {auth} from "./middlewares/authentication.js"
 config();
 console.clear();
 const app = express();
-app.use(cors());
+app.use(cors({exposedHeaders:["token"]}));
 
 const PORT = process.env.PORT;
 app.use(express.json());
