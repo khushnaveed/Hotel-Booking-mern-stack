@@ -1,21 +1,41 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { User, Mail, Phone, MapPin, MessageSquare } from "lucide-react";
+import { GuestContext } from "../../context/GuestContext";
 
 const GuestDetails = ({ onNext, setGuestData }) => {
+  const { guest } = useContext(GuestContext);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
+    phonenumber: "",
     address: "",
     city: "",
-    zipCode: "",
+    zipcode: "",
     country: "",
     specialRequests: "",
   });
 
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (guest) {
+      console.log("GUEST DATA:", guest); // Debug line to check key names
+      setFormData((prev) => ({
+        ...prev,
+        firstName: guest.firstName || "",
+        lastName: guest.lastName || "",
+        email: guest.email || "",
+        phonenumber: guest.phonenumber || "",
+        address: guest.address || "",
+        city: guest.city || "",
+        zipcode: guest.zipcode  || "",
+        country: guest.country || "",
+        specialRequests: guest.specialRequests || "",
+      }));
+    }
+  }, [guest]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,28 +55,26 @@ const GuestDetails = ({ onNext, setGuestData }) => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.firstName.trim())
-      newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim())
-      newErrors.lastName = "Last name is required";
-    if (!formData.email.trim())
-      newErrors.email = "Email is required";
+    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
 
-    const phoneRegex = /^\+?[0-9]{10,15}$/;
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (!phoneRegex.test(formData.phone.replace(/\s/g, ""))) {
-      newErrors.phone = "Please enter a valid phone number";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
     }
 
-    if (!formData.address.trim())
-      newErrors.address = "Address is required";
-    if (!formData.city.trim())
-      newErrors.city = "City is required";
-    if (!formData.zipCode.trim())
-      newErrors.zipCode = "Zip code is required";
-    if (!formData.country.trim())
-      newErrors.country = "Country is required";
+    const phoneRegex = /^\+?[0-9]{10,15}$/;
+    if (!formData.phonenumber.trim()) {
+      newErrors.phonenumber = "Phone number is required";
+    } else if (!phoneRegex.test(formData.phonenumber.replace(/\s/g, ""))) {
+      newErrors.phonenumber = "Please enter a valid phone number";
+    }
+
+    if (!formData.address.trim()) newErrors.address = "Address is required";
+    if (!formData.city.trim()) newErrors.city = "City is required";
+    if (!formData.zipcode.trim()) newErrors.zipcode = "Zip code is required";
+    if (!formData.country.trim()) newErrors.country = "Country is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -71,16 +89,8 @@ const GuestDetails = ({ onNext, setGuestData }) => {
   };
 
   const countries = [
-    "United States",
-    "Canada",
-    "United Kingdom",
-    "Australia",
-    "Germany",
-    "France",
-    "Spain",
-    "Italy",
-    "Japan",
-    "China",
+    "United States", "Canada", "United Kingdom", "Australia",
+    "Germany", "France", "Spain", "Italy", "Japan", "China"
   ];
 
   const inputClasses =
@@ -108,16 +118,12 @@ const GuestDetails = ({ onNext, setGuestData }) => {
                 value={formData.firstName}
                 onChange={handleChange}
                 className={`${inputClasses} pl-10 ${
-                  errors.firstName
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300"
+                  errors.firstName ? "border-red-500 focus:ring-red-500" : "border-gray-300"
                 }`}
                 placeholder="John"
               />
             </div>
-            {errors.firstName && (
-              <p className={errorClasses}>{errors.firstName}</p>
-            )}
+            {errors.firstName && <p className={errorClasses}>{errors.firstName}</p>}
           </div>
           <div>
             <label className="block text-gray-700 mb-2">Last Name</label>
@@ -129,16 +135,12 @@ const GuestDetails = ({ onNext, setGuestData }) => {
                 value={formData.lastName}
                 onChange={handleChange}
                 className={`${inputClasses} pl-10 ${
-                  errors.lastName
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300"
+                  errors.lastName ? "border-red-500 focus:ring-red-500" : "border-gray-300"
                 }`}
                 placeholder="Doe"
               />
             </div>
-            {errors.lastName && (
-              <p className={errorClasses}>{errors.lastName}</p>
-            )}
+            {errors.lastName && <p className={errorClasses}>{errors.lastName}</p>}
           </div>
         </div>
 
@@ -153,9 +155,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
                 value={formData.email}
                 onChange={handleChange}
                 className={`${inputClasses} pl-10 ${
-                  errors.email
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300"
+                  errors.email ? "border-red-500 focus:ring-red-500" : "border-gray-300"
                 }`}
                 placeholder="john.doe@example.com"
               />
@@ -169,17 +169,15 @@ const GuestDetails = ({ onNext, setGuestData }) => {
               <input
                 type="tel"
                 name="phone"
-                value={formData.phone}
+                value={formData.phonenumber}
                 onChange={handleChange}
                 className={`${inputClasses} pl-10 ${
-                  errors.phone
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300"
+                  errors.phonenumber ? "border-red-500 focus:ring-red-500" : "border-gray-300"
                 }`}
                 placeholder="+1 123 456 7890"
               />
             </div>
-            {errors.phone && <p className={errorClasses}>{errors.phone}</p>}
+            {errors.phonenumber && <p className={errorClasses}>{errors.phonenumber}</p>}
           </div>
         </div>
 
@@ -193,9 +191,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
               value={formData.address}
               onChange={handleChange}
               className={`${inputClasses} pl-10 ${
-                errors.address
-                  ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-300"
+                errors.address ? "border-red-500 focus:ring-red-500" : "border-gray-300"
               }`}
               placeholder="123 Main St"
             />
@@ -212,9 +208,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
               value={formData.city}
               onChange={handleChange}
               className={`${inputClasses} ${
-                errors.city
-                  ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-300"
+                errors.city ? "border-red-500 focus:ring-red-500" : "border-gray-300"
               }`}
               placeholder="New York"
             />
@@ -224,17 +218,15 @@ const GuestDetails = ({ onNext, setGuestData }) => {
             <label className="block text-gray-700 mb-2">Zip Code</label>
             <input
               type="text"
-              name="zipCode"
-              value={formData.zipCode}
+              name="zipcode"
+              value={formData.zipcode}
               onChange={handleChange}
               className={`${inputClasses} ${
-                errors.zipCode
-                  ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-300"
+                errors.zipcode ? "border-red-500 focus:ring-red-500" : "border-gray-300"
               }`}
               placeholder="10001"
             />
-            {errors.zipCode && <p className={errorClasses}>{errors.zipCode}</p>}
+            {errors.zipcode && <p className={errorClasses}>{errors.zipcode}</p>}
           </div>
           <div>
             <label className="block text-gray-700 mb-2">Country</label>
@@ -243,9 +235,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
               value={formData.country}
               onChange={handleChange}
               className={`${inputClasses} ${
-                errors.country
-                  ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-300"
+                errors.country ? "border-red-500 focus:ring-red-500" : "border-gray-300"
               }`}
             >
               <option value="">Select Country</option>
@@ -264,10 +254,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
             Special Requests (Optional)
           </label>
           <div className="relative">
-            <MessageSquare
-              size={18}
-              className="absolute left-3 top-4 text-gray-400"
-            />
+            <MessageSquare size={18} className="absolute left-3 top-4 text-gray-400" />
             <textarea
               name="specialRequests"
               value={formData.specialRequests}
