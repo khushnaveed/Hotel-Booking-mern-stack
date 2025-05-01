@@ -1,54 +1,59 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
 import { GuestContext } from "../context/GuestContext.jsx";
+import ProfileSidebar from "../components/profilePageComponents/ProfileSidebar";
+import ProfileData from "../components/profilePageComponents/ProfileData";
+import ReservationHistory from "../components/profilePageComponents/ReservationHistory";
+import PaymentMethod from "../components/profilePageComponents/PaymentMethod";
+import HelpCenter from "../components/profilePageComponents/HelpCenter";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { logout, guest } = useContext(GuestContext);
-
+  const [activeSection, setActiveSection] = useState("profile");
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
-console.log(guest)
+
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case "profile":
+        return <ProfileData guest={guest} />;
+      case "reservations":
+        return <ReservationHistory />;
+      case "payments":
+        return <PaymentMethod />;
+      case "help":
+        return <HelpCenter />;
+      default:
+        return <ProfileData guest={guest} />;
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          Your Profile
-        </h1>
-        <div className="space-y-4 text-gray-700 text-base">
-          <p>
-            <strong>First Name:</strong> {guest.firstName}
-          </p>
-          <p>
-            <strong>Last Name:</strong> {guest.lastName}
-          </p>
-          <p>
-            <strong>Email:</strong> {guest.email}
-          </p>
-          <p>
-            <strong>Phone:</strong> {guest.phonenumber || "Not provided"}
-          </p>
-          <p>
-            <strong>Address:</strong> {guest.address || "Not provided"}
-          </p>
-          <p>
-            <strong>City:</strong> {guest.city || "Not provided"}
-          </p>
-          <p>
-            <strong>Zip Code:</strong> {guest.zipcode || "Not provided"}
-          </p>
-          <p>
-            <strong>Country:</strong> {guest.country || "Not provided"}
-          </p>
+    <div className="container mx-auto px-4 py-8 mt-40">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {/* Sidebar with Logout */}
+        <div className="md:col-span-1">
+          <ProfileSidebar
+            guest={guest}
+            onLogout={handleLogout}
+            activeSection={activeSection}
+            onSectionChange={setActiveSection}
+          />
         </div>
-        <button
-          onClick={handleLogout}
-          className="mt-6 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
-          Logout
-        </button>
+
+        {/* Main Content */}
+        <div className="md:col-span-2 lg:col-span-3">
+          <div className="space-y-6">
+            <h1 className="text-3xl font-bold text-[#8E7037]">
+              {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}
+            </h1>
+            {renderActiveSection()}
+          </div>
+        </div>
       </div>
     </div>
   );
