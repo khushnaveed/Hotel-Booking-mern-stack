@@ -4,6 +4,7 @@ import GuestDetails from "../components/checkoutPageComponents/GuestDetails";
 import PaymentMethod from "../components/checkoutPageComponents/PaymentMethod";
 import Confirmation from "../components/checkoutPageComponents/Confirmation";
 import ReservationSummary from "../components/checkoutPageComponents/ReservationSummary";
+import BookingDetails from "../components/checkoutPageComponents/BookingDetails";
 import { CheckCircle } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
@@ -15,7 +16,7 @@ const stepLabels = {
 };
 
 const CheckoutFlow = () => {
-  const { cartItems } = useCart();
+  const { cartItems, clearCart } = useCart();
   const [step, setStep] = useState("guest");
   const [guestData, setGuestData] = useState(null);
   const [paymentData, setPaymentData] = useState(null);
@@ -27,10 +28,7 @@ const CheckoutFlow = () => {
     total: 0,
   });
 
-  const next = () => {
-    setStep(steps[steps.indexOf(step) + 1]);
-  };
-
+  const next = () => setStep(steps[steps.indexOf(step) + 1]);
   const prev = () => setStep(steps[steps.indexOf(step) - 1]);
 
   useEffect(() => {
@@ -50,7 +48,10 @@ const CheckoutFlow = () => {
       try {
         const response = await fetch("http://localhost:5005/bookings", {
           method: "POST",
-          headers: { "Content-Type": "application/json", token:localStorage.getItem("token") },
+          headers: {
+            "Content-Type": "application/json",
+            token: localStorage.getItem("token"),
+          },
           body: JSON.stringify(bookingPayload),
         });
 
@@ -60,17 +61,22 @@ const CheckoutFlow = () => {
         }
 
         const result = await response.json();
-        console.log("Booking submitted successfully:", result);
         setBookingDetails(result.booking);
         setBookingReference(result.bookingReference);
-        console.log(cartItems);
       } catch (error) {
         console.error("Booking submission error:", error.message);
       }
     };
 
-    if (step === "confirmation" && guestData && paymentData) {
-      submitBooking();
+    if (
+      step === "confirmation" &&
+      guestData &&
+      paymentData &&
+      !bookingReference
+    ) {
+      submitBooking().then(() => {
+        clearCart(); // Clear cart only after booking is created
+      });
     }
   }, [step, guestData, paymentData]);
 
@@ -144,7 +150,6 @@ const CheckoutFlow = () => {
                     {stepLabels[item]}
                   </span>
                 </div>
-
                 {index < steps.length - 1 && (
                   <div className="flex-1 h-1 mx-2 bg-gray-300 relative">
                     <motion.div
@@ -178,18 +183,10 @@ const CheckoutFlow = () => {
             animate="animate"
             exit="exit"
             transition={{ duration: 0.4 }}
-            className={
-              step === "confirmation"
-                ? "flex justify-center"
-                : "lg:grid lg:grid-cols-3 lg:gap-8"
-            }
+            className="lg:grid lg:grid-cols-3 lg:gap-8"
           >
-            {/* Checkout Form */}
-            <div
-              className={
-                step === "confirmation" ? "w-full max-w-3xl" : "lg:col-span-2"
-              }
-            >
+            {/* Left Column */}
+            <div className="lg:col-span-2">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={step}
@@ -219,9 +216,20 @@ const CheckoutFlow = () => {
               </AnimatePresence>
             </div>
 
-            {/* Reservation Summary */}
+            {/* Right Column */}
             <div className="mt-10 lg:mt-0 ml-5">
-              <ReservationSummary setPriceDetails={setPriceDetails} />
+              {step !== "confirmation" ? (
+                <ReservationSummary
+                  setPriceDetails={setPriceDetails}
+                  isConfirmationStep={false}
+                />
+              ) : bookingReference ? (
+                <BookingDetails bookingReference={bookingReference} />
+              ) : (
+                <div className="text-center text-gray-500 p-4">
+                  Loading your booking...
+                </div>
+              )}
             </div>
           </motion.div>
         </AnimatePresence>

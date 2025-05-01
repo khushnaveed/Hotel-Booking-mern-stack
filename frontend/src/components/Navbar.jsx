@@ -23,7 +23,6 @@ function Navbar() {
     setIsMenuOpen(false);
   };
 
-
   return (
     <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold pb-4 mt-16">
       <div
@@ -74,8 +73,15 @@ function Navbar() {
               {/* Cart Icon */}
               <div
                 className="relative cursor-pointer"
-                onClick={() => {navigate("/checkout")
-                  console.log(cartItems);
+                onClick={() => {
+                 /*  navigate("/checkout");
+                  console.log(cartItems); */
+                  const token = localStorage.getItem("token");
+                  if (!token) {
+                    alert("Please log in first to view your cart.");
+                    return;
+                  }
+                  navigate("/checkout");
                 }}
               >
                 <CalendarCheck className="text-white hover:text-[#8E7037] transition" />
@@ -91,7 +97,14 @@ function Navbar() {
             <div className="md:hidden z-[101] flex items-center gap-4">
               <div
                 className="relative cursor-pointer"
-                onClick={() => navigate("/cart")}
+                onClick={() => {
+                  const token = localStorage.getItem("token");
+                  if (!token) {
+                    alert("Please log in first to view your cart.");
+                    return;
+                  }
+                  navigate("/checkout");
+                }}
               >
                 <CalendarCheck className="text-white hover:text-[#8E7037]" />
                 {cartItems.length > 0 && (

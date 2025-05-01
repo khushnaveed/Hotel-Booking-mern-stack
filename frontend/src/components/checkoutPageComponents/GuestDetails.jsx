@@ -168,7 +168,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
               <Phone size={18} className={iconClasses} />
               <input
                 type="tel"
-                name="phone"
+                name="phonenumber"
                 value={formData.phonenumber}
                 onChange={handleChange}
                 className={`${inputClasses} pl-10 ${

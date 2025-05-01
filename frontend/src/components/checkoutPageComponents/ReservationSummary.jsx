@@ -1,12 +1,13 @@
+// src/components/ReservationSummary.js
 import React, { useEffect } from "react";
 import { useCart } from "../../context/CartContext.jsx";
 
-const ReservationSummary = ({ setPriceDetails }) => {
+const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
   const { cartItems, removeFromCart, updateItemQuantity } = useCart();
 
   // Function to update the total price of an event item based on its quantity
   const updateTotalPrice = (item) => {
-    return item.totalPrice = item.price * item.quantity; // price is multiplied by quantity to get total price
+    return (item.totalPrice = item.price * item.quantity); // Price is multiplied by quantity to get total price
   };
 
   // Calculate the total of all items in the cart
@@ -29,7 +30,7 @@ const ReservationSummary = ({ setPriceDetails }) => {
 
     // Update the total price of the item based on its new quantity
     updateTotalPrice(updatedItem);
-    
+
     // Now update the item in the cart
     updateItemQuantity(slug, newQuantity);
   };
@@ -46,7 +47,7 @@ const ReservationSummary = ({ setPriceDetails }) => {
             alt={item.slug}
             className="w-20 h-20 object-cover "
           />
-          
+
           {/* Item Info */}
           <div className="text-sm flex-1">
             <p className="font-semibold capitalize">{item.slug.replace(/-/g, " ")}</p>
@@ -56,21 +57,23 @@ const ReservationSummary = ({ setPriceDetails }) => {
                 <p>{item.numAdults} Adults, {item.numChildren} Children</p>
               </>
             ) : (
-              <p>Total Tickets: {item.quantity}</p> 
+              <p>Total Tickets: {item.quantity}</p>
             )}
             <p className="text-[#8E7037] font-medium">${item.totalPrice ? item.totalPrice.toFixed(2) : '0.00'}</p>
           </div>
 
-          {/* X Button to Remove Item */}
-          <button 
-            onClick={() => handleRemoveItem(item.slug)} // Remove by slug
-            className="absolute top-2 right-2 text-black text-xl cursor-pointer hover:text-[#8E7037]"
-          >
-            &times; {/* X button */}
-          </button>
-          
-          {/* Quantity Controls (only for event items) */}
-          {!item.arrivalDate && !item.departureDate && (
+          {/* X Button to Remove Item (Only visible if not in confirmation step) */}
+          {!isConfirmationStep && (
+            <button
+              onClick={() => handleRemoveItem(item.slug)} // Remove by slug
+              className="absolute top-2 right-2 text-black text-xl cursor-pointer hover:text-[#8E7037]"
+            >
+              &times; {/* X button */}
+            </button>
+          )}
+
+          {/* Quantity Controls (Only visible if not in confirmation step and the item doesn't have arrival/departure dates) */}
+          {!isConfirmationStep && !item.arrivalDate && !item.departureDate && (
             <div className="flex items-center gap-2 mt-2">
               <button
                 onClick={() => handleChangeQuantity(item.slug, item.quantity - 1)}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import {
   CheckCircle,
@@ -10,11 +10,13 @@ import {
   CreditCard,
   Info,
 } from "lucide-react";
+import { GuestContext } from "../../context/GuestContext";
 
-const Confirmation = ({ bookingNumber, bookingDetails}) => {
+const Confirmation = ({ bookingNumber, bookingDetails }) => {
+  const { guest } = useContext(GuestContext);
   const [copied, setCopied] = useState(false);
 
-  const { guest, payment } = bookingDetails || {};
+  const { payment } = bookingDetails || {};
   const formattedDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -111,7 +113,8 @@ const Confirmation = ({ bookingNumber, bookingDetails}) => {
                 <div>
                   <span className="font-semibold block">Address</span>
                   <span className="text-gray-600">
-                    {guest?.address}, {guest?.city}, {guest?.country}
+                    {guest?.address}, {guest?.city}, {guest?.zipcode},{" "}
+                    {guest?.country}
                   </span>
                 </div>
               </li>
@@ -127,7 +130,7 @@ const Confirmation = ({ bookingNumber, bookingDetails}) => {
                 <Phone className={iconClass} size={20} />
                 <div>
                   <span className="font-semibold block">Phone</span>
-                  <span className="text-gray-600">{guest?.phone}</span>
+                  <span className="text-gray-600">{guest?.phonenumber}</span>
                 </div>
               </li>
               <li className="flex items-start">
