@@ -17,10 +17,16 @@ const Confirmation = ({ bookingNumber, bookingDetails }) => {
   const [copied, setCopied] = useState(false);
 
   const { payment } = bookingDetails || {};
-  const formattedDate = new Date().toLocaleDateString("en-US", {
+
+  // Format the date to include both date and time
+  const formattedDate = new Date().toLocaleString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true, // Optional: uses 12-hour clock with AM/PM
   });
 
   const copyToClipboard = () => {
