@@ -22,7 +22,7 @@ const Profile = () => {
       case "profile":
         return <ProfileData guest={guest} />;
       case "reservations":
-        return <ReservationHistory />;
+        return <ReservationHistory guest={guest} />;
       case "payments":
         return <PaymentMethod />;
       case "help":
