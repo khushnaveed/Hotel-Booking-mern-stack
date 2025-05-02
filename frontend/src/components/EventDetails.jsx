@@ -87,7 +87,10 @@ function EventDetails() {
       </section>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <button className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors group">
+        <button
+          onClick={() => navigate("/events")}
+          className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors group"
+        >
           <ArrowLeft
             size={18}
             className="mr-2 group-hover:-translate-x-1 transition-transform duration-200"
