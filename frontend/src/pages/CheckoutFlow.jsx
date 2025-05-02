@@ -29,7 +29,15 @@ const CheckoutFlow = () => {
     total: 0,
   });
 
-  const next = () => setStep(steps[steps.indexOf(step) + 1]);
+/*   const next = () => setStep(steps[steps.indexOf(step) + 1]); */
+  const next = () => {
+    if (step === "guest" && cartItems.length === 0) {
+      alert("Your cart is empty. Please add items before proceeding.");
+      return;
+    }
+    setStep(steps[steps.indexOf(step) + 1]);
+  };
+  
   const prev = () => setStep(steps[steps.indexOf(step) - 1]);
   const navigate = useNavigate();
 
