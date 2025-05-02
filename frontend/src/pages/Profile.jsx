@@ -1,103 +1,59 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
 import { GuestContext } from "../context/GuestContext.jsx";
-import axios from "axios";
+import ProfileSidebar from "../components/profilePageComponents/ProfileSidebar";
+import ProfileData from "../components/profilePageComponents/ProfileData";
+import ReservationHistory from "../components/profilePageComponents/ReservationHistory";
+import PaymentMethod from "../components/profilePageComponents/PaymentMethod";
+import HelpCenter from "../components/profilePageComponents/HelpCenter";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { logout, guest } = useContext(GuestContext);
+  const [activeSection, setActiveSection] = useState("profile");
   const navigate = useNavigate();
-  const [bookings, setBookings] = useState([]);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
-  useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        const res = await axios.get("/api/bookings/my-bookings", {
-          withCredentials: true,
-        });
-        setBookings(Array.isArray(res.data) ? res.data : []);
-      } catch (err) {
-        console.error("Failed to fetch bookings", err);
-        setBookings([]); 
-      }
-    };
-
-    if (guest?._id) {
-      fetchBookings();
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case "profile":
+        return <ProfileData guest={guest} />;
+      case "reservations":
+        return <ReservationHistory guest={guest} />;
+      case "payments":
+        return <PaymentMethod />;
+      case "help":
+        return <HelpCenter />;
+      default:
+        return <ProfileData guest={guest} />;
     }
-  }, [guest]);
+  };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          Your Profile
-        </h1>
-        <div className="space-y-4 text-gray-700 text-base">
-          <p>
-            <strong>First Name:</strong> {guest.firstName}
-          </p>
-          <p>
-            <strong>Last Name:</strong> {guest.lastName}
-          </p>
-          <p>
-            <strong>Email:</strong> {guest.email}
-          </p>
-          <p>
-            <strong>Phone:</strong> {guest.phonenumber || "Not provided"}
-          </p>
-          <p>
-            <strong>Address:</strong> {guest.address || "Not provided"}
-          </p>
-          <p>
-            <strong>City:</strong> {guest.city || "Not provided"}
-          </p>
-          <p>
-            <strong>Zip Code:</strong> {guest.zipcode || "Not provided"}
-          </p>
-          <p>
-            <strong>Country:</strong> {guest.country || "Not provided"}
-          </p>
+    <div className="container mx-auto px-4 py-8 mt-40">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {/* Sidebar with Logout */}
+        <div className="md:col-span-1">
+          <ProfileSidebar
+            guest={guest}
+            onLogout={handleLogout}
+            activeSection={activeSection}
+            onSectionChange={setActiveSection}
+          />
         </div>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-800">Your Bookings</h2>
-        {Array.isArray(bookings) && bookings.length > 0 ? (
-          bookings.map((booking) => (
-            <div
-              key={booking._id}
-              className="border border-gray-200 rounded-md p-4 mb-4 text-sm"
-            >
-              <p>
-                <strong>Hotel:</strong> {booking.hotelName || "N/A"}
-              </p>
-              <p>
-                <strong>Check-in:</strong> {booking.checkInDate?.slice(0, 10)}
-              </p>
-              <p>
-                <strong>Check-out:</strong> {booking.checkOutDate?.slice(0, 10)}
-              </p>
-              <p>
-                <strong>Guests:</strong> {booking.numGuests || "N/A"}
-              </p>
-              <p>
-                <strong>Total Price:</strong> ${booking.totalPrice || "N/A"}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-600 text-sm">No bookings yet.</p>
-        )}
-
-        <button
-          onClick={handleLogout}
-          className="mt-6 w-full bg-[#8E7037] text-white py-2 rounded-lg hover:bg-red-700"
-        >
-          Logout
-        </button>
+        {/* Main Content */}
+        <div className="md:col-span-2 lg:col-span-3">
+          <div className="space-y-6">
+            <h1 className="text-3xl font-bold text-[#8E7037]">
+              {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}
+            </h1>
+            {renderActiveSection()}
+          </div>
+        </div>
       </div>
     </div>
   );
