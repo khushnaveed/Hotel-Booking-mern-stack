@@ -7,6 +7,7 @@ import ReservationSummary from "../components/checkoutPageComponents/Reservation
 import BookingDetails from "../components/checkoutPageComponents/BookingDetails";
 import { CheckCircle } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const steps = ["guest", "payment", "confirmation"];
 const stepLabels = {
@@ -30,6 +31,7 @@ const CheckoutFlow = () => {
 
   const next = () => setStep(steps[steps.indexOf(step) + 1]);
   const prev = () => setStep(steps[steps.indexOf(step) - 1]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const submitBooking = async () => {
@@ -230,6 +232,20 @@ const CheckoutFlow = () => {
                   Loading your booking...
                 </div>
               )}
+              <div className="flex flex-col">
+                <button
+                  onClick={() => navigate("/rooms")}
+                  className="mt-6 p-5 py-2 bg-[#8E7037] text-white flex items-center justify-center  border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
+                >
+                  Continue to book more rooms
+                </button>
+                <button
+                  onClick={() => navigate("/events")}
+                  className="mt-6 p-5 py-2 bg-[#8E7037] text-white flex items-center justify-center  border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
+                >
+                  Continue to book more events
+                </button>
+              </div>
             </div>
           </motion.div>
         </AnimatePresence>
