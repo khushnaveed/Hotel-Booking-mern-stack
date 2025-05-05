@@ -90,7 +90,7 @@ app.use((err, req, res, next) => {
 
 //page not found error handler
 app.use((req, res, next) => {
-  console.log(req.url, req.method)
+  //console.log(req.url, req.method)
   res
     .status(404)
     .send({ success: false, message: "No such route exist in our server!" });
