@@ -8,7 +8,6 @@ export default function Register() {
   const { guest } = useContext(GuestContext); // Using context
 
   const navigate = useNavigate();
-  // Check if the user is already logged in
   useEffect(() => {
     if (guest && guest.token) {
       navigate("/profile");
@@ -61,7 +60,6 @@ export default function Register() {
           : data.message;
 
       alert(messages || "Something went wrong.");
-      // alert(JSON.stringify(data.errors))
       }
     } catch (error) {
       console.error("Error:", error);
@@ -129,7 +127,6 @@ export default function Register() {
             className="border border-white p-2 bg-transparent placeholder-white"
           />
 
-          {/* City, Zipcode, Country Row */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <input
               name="city"
