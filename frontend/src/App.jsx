@@ -27,6 +27,7 @@ import { RoomDetailProvider } from "./context/RoomDetailContext.jsx";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutFlow from "./pages/CheckoutFlow.jsx";
+import AdminPanel from "./pages/AdminPanel.jsx";
 
 // Load Stripe with your publishable key
 const stripePromise = loadStripe("your-publishable-key-here");
@@ -73,6 +74,7 @@ function App() {
                 />
                 <Route path="/weather" element={<WeatherPage />} />
                 <Route path="/checkout" element={<CheckoutFlow />} />
+                <Route path="/adminPanel" element={<AdminPanel />} />
               </Routes>
     </GuestProvider>
 

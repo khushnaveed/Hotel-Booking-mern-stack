@@ -69,6 +69,7 @@ function Navbar() {
               <NavItem text={t("gallery").toUpperCase()} path="/gallery" />
               <NavItem text={t("about").toUpperCase()} path="/about" />
               <NavItem text={t("contact").toUpperCase()} path="/contact" />
+              <NavItem text={t("admin").toUpperCase()} path="/adminPanel" />
 
               {/* Cart Icon */}
               <div
