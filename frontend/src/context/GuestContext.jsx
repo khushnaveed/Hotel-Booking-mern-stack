@@ -27,7 +27,8 @@ export const GuestProvider = ({ children }) => {
       } else {
         setIsLoggedIn(false);
         setGuest(null);
-      }    })
+      }   
+     })
     
     
 

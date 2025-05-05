@@ -7,7 +7,8 @@ import { Menu, X, ChevronDown, CalendarCheck } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 import { useTranslation } from "react-i18next"; // ✅ Import useTranslation
-
+import { useContext } from "react";
+import { GuestContext } from "../context/GuestContext.jsx";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ function Navbar() {
   const { cartItems } = useCart(); // ✅ Get cart items from context
 
   const { t } = useTranslation(); // ✅
+  const { guest, isLoggedIn } = useContext(GuestContext);
 
   const handleRoomClick = (roomType) => {
     navigate(`/rooms/${roomType.toLowerCase().replace(/ /g, "-")}`);
@@ -69,7 +71,9 @@ function Navbar() {
               <NavItem text={t("gallery").toUpperCase()} path="/gallery" />
               <NavItem text={t("about").toUpperCase()} path="/about" />
               <NavItem text={t("contact").toUpperCase()} path="/contact" />
-              <NavItem text={t("admin").toUpperCase()} path="/adminPanel" />
+              {isLoggedIn && guest?.role === "admin" && (
+             <NavItem text="ADMIN" path="/adminPanel" />
+               )}
 
               {/* Cart Icon */}
               <div
@@ -155,6 +159,10 @@ function Navbar() {
                 text={t("contact").toUpperCase()}
                 path="/contact"
               />
+              {isLoggedIn && guest?.role === "admin" && (
+            <MobileNavItem text="ADMIN" path="/adminPanel" />
+            )}
+
             </div>
           )}
         </div>
