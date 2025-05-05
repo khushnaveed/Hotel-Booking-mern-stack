@@ -32,7 +32,7 @@ const CheckoutFlow = () => {
 /*   const next = () => setStep(steps[steps.indexOf(step) + 1]); */
   const next = () => {
     if (step === "guest" && cartItems.length === 0) {
-      alert("Your cart is empty. Please add items before proceeding.");
+      alert("Please Book your rooms and Events Before checkout.");
       return;
     }
     setStep(steps[steps.indexOf(step) + 1]);
