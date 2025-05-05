@@ -35,16 +35,14 @@ export default function Login() {
       const token = response.headers.get("token");
       const data = await response.json();
 
-      // Check if the response is okay, i.e., status 200
       if (!response.ok) {
         throw new Error(data.message || "Invalid email or password.");
       }
       localStorage.setItem("token", token);
 
-      // If login is successful, navigate to rooms page
       if (data.success) {
         alert("Login successful!");
-        login(token, data); // ✅ This will store both token and guestData properly
+        login(token, data); 
 
         navigate("/profile");
       } else {
@@ -52,7 +50,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error("Login error:", error);
-      setError(error.message); // Display error message in UI
+      setError(error.message); 
     }
   };
 
@@ -69,7 +67,6 @@ export default function Login() {
         </h1>
         <p className="mb-6 text-white">Welcome to Royal Grand Hotel.</p>
         {error && <p className="text-red-500">{error}</p>}{" "}
-        {/* Display error message */}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="text"
