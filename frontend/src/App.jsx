@@ -27,54 +27,57 @@ import { RoomDetailProvider } from "./context/RoomDetailContext.jsx";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutFlow from "./pages/CheckoutFlow.jsx";
+import SuccessPage from "./components/checkoutPageComponents/SuccessPage.jsx";
 
 // Load Stripe with your publishable key
 const stripePromise = loadStripe("your-publishable-key-here");
 
 function App() {
   return (
-    
+
     <WeatherProvider>
       <CurrencyProvider>
         <CartProvider>
           <Elements stripe={stripePromise}>
             <BrowserRouter>
-<GuestProvider>
-              <NavbarTop />
-              <Navbar />
+              <GuestProvider>
+                <NavbarTop />
+                <Navbar />
 
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/rooms" element={<Rooms />} />
-                {/*  <Route path="/checkout/:roomSlug" element={<Checkout />} /> */}
-                <Route path="/restaurant" element={<Restaurant />} />
-                {/* <Route path="/rooms/:roomSlug" element={<RoomDetail />} /> */}
-                {/*  testing context */}
-                <Route
-                  path="/rooms/:roomSlug"
-                  element={
-                    <RoomDetailProvider>
-                      <RoomDetail />
-                    </RoomDetailProvider>
-                  } />
-                <Route path="/events" element={<Events />} />
-                <Route path="/events/:id" element={<EventDetails />} />
-                <Route path="/gallery" element={<Gallery />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/profile" element={<Profile />} />{" "}
-                {/* Added the profile route */}
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route
-                  path="/reset-password/:token"
-                  element={<ResetPassword />}
-                />
-                <Route path="/weather" element={<WeatherPage />} />
-                <Route path="/checkout" element={<CheckoutFlow />} />
-              </Routes>
-    </GuestProvider>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/rooms" element={<Rooms />} />
+                  {/*  <Route path="/checkout/:roomSlug" element={<Checkout />} /> */}
+                  <Route path="/restaurant" element={<Restaurant />} />
+                  {/* <Route path="/rooms/:roomSlug" element={<RoomDetail />} /> */}
+                  {/*  testing context */}
+                  <Route
+                    path="/rooms/:roomSlug"
+                    element={
+                      <RoomDetailProvider>
+                        <RoomDetail />
+                      </RoomDetailProvider>
+                    } />
+                  <Route path="/events" element={<Events />} />
+                  <Route path="/events/:id" element={<EventDetails />} />
+                  <Route path="/gallery" element={<Gallery />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/profile" element={<Profile />} />{" "}
+                  <Route path="/success" element={<SuccessPage />} />
+
+                  {/* Added the profile route */}
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route
+                    path="/reset-password/:token"
+                    element={<ResetPassword />}
+                  />
+                  <Route path="/weather" element={<WeatherPage />} />
+                  <Route path="/checkout" element={<CheckoutFlow />} />
+                </Routes>
+              </GuestProvider>
 
               <Footer />
 
