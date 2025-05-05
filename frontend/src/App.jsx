@@ -27,30 +27,43 @@ import { RoomDetailProvider } from "./context/RoomDetailContext.jsx";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutFlow from "./pages/CheckoutFlow.jsx";
+
+import SuccessPage from "./components/checkoutPageComponents/SuccessPage.jsx";
+
 import AdminPanel from "./pages/AdminPanel.jsx";
+
 
 // Load Stripe with your publishable key
 const stripePromise = loadStripe("your-publishable-key-here");
 
 function App() {
   return (
-    
+
     <WeatherProvider>
       <CurrencyProvider>
         <CartProvider>
           <Elements stripe={stripePromise}>
             <BrowserRouter>
-<GuestProvider>
-              <NavbarTop />
-              <Navbar />
+              <GuestProvider>
+                <NavbarTop />
+                <Navbar />
+
+   
+               
+                
+
+
+                  
+           
 
               <Routes>
+                    
+                    
+                    
                 <Route path="/" element={<Home />} />
                 <Route path="/rooms" element={<Rooms />} />
-                {/*  <Route path="/checkout/:roomSlug" element={<Checkout />} /> */}
                 <Route path="/restaurant" element={<Restaurant />} />
-                {/* <Route path="/rooms/:roomSlug" element={<RoomDetail />} /> */}
-                {/*  testing context */}
+              
                 <Route
                   path="/rooms/:roomSlug"
                   element={
@@ -66,7 +79,6 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />{" "}
-                {/* Added the profile route */}
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route
                   path="/reset-password/:token"
@@ -75,6 +87,7 @@ function App() {
                 <Route path="/weather" element={<WeatherPage />} />
                 <Route path="/checkout" element={<CheckoutFlow />} />
                 <Route path="/adminPanel" element={<AdminPanel />} />
+                    <Route path="/success" element={<SuccessPage />} />
               </Routes>
     </GuestProvider>
 
