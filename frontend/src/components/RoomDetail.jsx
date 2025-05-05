@@ -48,7 +48,7 @@ export default function RoomDetails() {
 
   const handleBookingClick = () => {
     const { arrive, departure, adult, child } = bookingData;
-    //test
+
     if (!arrive || !departure) {
       alert("Please select both arrival and departure dates.");
       return;
