@@ -1,9 +1,55 @@
-import React from 'react'
+import React, { useContext, useState } from "react";
+import AdminGuest from "../components/adminPanelComponents/AdminGuest";
+import AdminRoom from "../components/adminPanelComponents/AdminRoom";
+import AdminRestaurant from "../components/adminPanelComponents/AdminRestaurant";
+import AdminEvent from "../components/adminPanelComponents/AdminEvent";
+import AdminBookings from "../components/adminPanelComponents/AdminBookings";
+import { GuestContext } from "../context/GuestContext.jsx";
+import AdminProfileSidebar from "../components/adminPanelComponents/AdminProfileSidebar.jsx";
 
 export default function AdminPanel() {
+  const [activeSection, setActiveSection] = useState("guests");
+  const { guest } = useContext(GuestContext);
+
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case "guests":
+        return <AdminGuest />;
+      case "rooms":
+        return <AdminRoom />;
+      case "bookings":
+        return <AdminBookings />;
+      case "events":
+        return <AdminEvent />;
+      case "restaurant":
+        return <AdminRestaurant />;
+      default:
+        return <AdminGuest />;
+    }
+  };
+
   return (
-    <div>
-      <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, quod distinctio modi exercitationem numquam nesciunt saepe veritatis cupiditate. Distinctio exercitationem similique pariatur mollitia ducimus repudiandae deleniti eius voluptas consequuntur corporis facilis, assumenda sequi quisquam iure deserunt ea tempore recusandae reiciendis dolorum debitis ipsum consequatur magni nostrum? Velit autem qui libero excepturi consequuntur dolorem, aspernatur eius dolores ad corporis ipsa quo itaque non repudiandae distinctio accusamus enim deleniti quasi animi possimus alias soluta reprehenderit commodi nemo. Perspiciatis, provident laborum? Ipsam, fugiat totam accusamus officia tempore quam aliquam porro laborum neque voluptate aperiam facilis id omnis provident, eos natus ipsum, ad voluptatem eum. Illo nam earum recusandae harum atque in libero corrupti reiciendis aut veritatis vel nobis, maxime officiis voluptatum! Suscipit asperiores, quisquam repudiandae, voluptatibus veritatis numquam cum voluptatum deleniti nesciunt, nisi ex? Quisquam enim quas distinctio magnam eos, eum ipsa et nisi praesentium eveniet perspiciatis ab alias voluptatum reiciendis doloribus totam ex saepe minus corporis beatae delectus. Inventore eveniet modi culpa necessitatibus beatae fugit repellendus iste, iusto omnis itaque ipsam blanditiis distinctio rerum odit, dicta, ullam deleniti voluptatem pariatur eius eaque. Cupiditate dolorem et ipsum aspernatur veritatis minus laboriosam quidem voluptatem! Cupiditate cumque placeat a! Nobis optio quos, quibusdam autem soluta labore, tempora architecto quasi repellat iure animi consequatur iste vel iusto recusandae. Laboriosam quae dolores porro, laudantium molestiae, distinctio tempore incidunt labore, perspiciatis iste animi fugiat debitis deserunt consequatur quos provident ullam modi iusto ex quis dignissimos minima beatae cum quam? Sunt harum saepe suscipit nobis, a deserunt expedita ab dicta beatae iste architecto accusamus laudantium ipsa ratione adipisci alias impedit repellat eius? Eum earum similique doloribus? Facilis necessitatibus adipisci, ullam magnam distinctio illum molestiae enim praesentium iusto, alias pariatur voluptatem eveniet non eum, consequatur aspernatur totam suscipit ratione cupiditate veniam iure. Atque rem, distinctio excepturi ad alias sequi enim iure rerum necessitatibus provident consequatur, in, laborum pariatur cum? Numquam voluptas fugit fuga temporibus magnam earum ipsa esse nulla quasi voluptatibus doloremque ratione itaque maxime perspiciatis laboriosam provident dolore doloribus assumenda, recusandae rerum omnis officiis! Quibusdam accusantium mollitia ex obcaecati temporibus consequatur nisi itaque quos illo consequuntur? Incidunt nostrum placeat nemo et repellendus consequatur delectus voluptatem quod earum cum. Impedit hic quas alias similique consectetur minima, recusandae officiis vitae obcaecati, quis repellendus harum, laboriosam eligendi pariatur consequatur. Ex explicabo tempora amet. Dolorum assumenda enim aliquam inventore quibusdam ea temporibus corrupti similique quis aperiam debitis, expedita est alias tempora nulla repudiandae? Dignissimos voluptatum quidem totam error modi reiciendis voluptates exercitationem quia voluptate laboriosam impedit quo accusantium est blanditiis culpa incidunt odit nam corrupti alias illo, aut in beatae ullam magni. Rem animi, facilis aspernatur incidunt, corporis praesentium voluptatem perspiciatis dolorem, atque illo sint illum. Distinctio placeat saepe veniam quae aliquam, ratione ipsum autem rerum tempora totam architecto eum voluptate corporis excepturi dolore? Quidem quae quas provident amet corrupti, velit nisi beatae sed libero eaque iure iste vel non, eligendi quos laudantium laboriosam aperiam! Adipisci, atque! Totam beatae perferendis esse fugiat! Sit optio qui temporibus eligendi obcaecati consequuntur et facilis, quaerat beatae?</h1>
+    <div className="container mx-auto px-4 py-8 mt-40">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {/* Sidebar with Logout */}
+        <div className="md:col-span-1">
+          <AdminProfileSidebar
+            guest={guest}
+            activeSection={activeSection}
+            onSectionChange={setActiveSection}
+          />
+        </div>
+
+        {/* Main Content */}
+        <div className="md:col-span-2 lg:col-span-3">
+          <div className="space-y-6">
+            <h1 className="text-3xl font-bold text-[#8E7037]">
+              {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}
+            </h1>
+            {renderActiveSection()}
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
