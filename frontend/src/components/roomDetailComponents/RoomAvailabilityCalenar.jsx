@@ -29,18 +29,17 @@ const RoomAvailabilityCalendar = ({ slug }) => {
                     .flat();
 
                 setUnavailableDates(bookedDates);
-                setLoading(false); // Data has been successfully fetched
+                setLoading(false);
             } catch (err) {
                 setError('Error fetching room details');
-                setLoading(false); // Even if there's an error, stop loading
+                setLoading(false);
             }
         };
 
         fetchRoomDetails();
-    }, [slug]); // Fetch data again if slug changes
+    }, [slug]);
 
     const tileClassName = ({ date }) => {
-        // Format both dates to yyyy-mm-dd format (ignoring time)
         const formattedDate = date.toISOString().split('T')[0];
         return unavailableDates.some(d => d.toISOString().split('T')[0] === formattedDate)
             ? 'unavailable'

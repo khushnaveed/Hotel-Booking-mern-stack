@@ -1,4 +1,3 @@
-// components/RoomGallery.jsx
 import React from "react";
 
 export default function RoomGallery({ images, currentImageIndex, setCurrentImageIndex }) {
