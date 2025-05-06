@@ -23,11 +23,13 @@ export const getEventById = async (req, res) => {
 
 // POST create a new event
 export const createEvent = async (req, res) => {
-  const newEvent = new Event(req.body);
+
   try {
+    const newEvent = new Event(req.body);
     const savedEvent = await newEvent.save();
     res.status(201).json(savedEvent);
   } catch (err) {
+    console.error("Create Event Error:", err);
     res.status(400).json({ message: err.message });
   }
 };
