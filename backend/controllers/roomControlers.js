@@ -1,7 +1,6 @@
 
 import RoomModel from "../models/roomsSchema.js";
 
-// GET: Get room by slug
 export const getRoomBySlug = async (req, res, next) => {
     try {
         const { slug } = req.params;
@@ -16,7 +15,7 @@ export const getRoomBySlug = async (req, res, next) => {
         next(err);
     }
 };
-//GET:Get all rooms
+
 export const getAllRooms = async (req, res, next) => {
     try {
 
@@ -33,7 +32,6 @@ export const getAllRooms = async (req, res, next) => {
 };
 
 
-// POST: Create a new room
 export const createRoom = async (req, res, next) => {
     try {
         const {
@@ -58,9 +56,9 @@ export const createRoom = async (req, res, next) => {
             packages: packages || [],
             ratings: ratings || [],
             calendar: calendar || [],
-            //test
-            bookings: bookings || []
-            //test
+
+            // bookings: bookings || []
+
         });
 
         const savedRoom = await newRoom.save();
@@ -70,8 +68,7 @@ export const createRoom = async (req, res, next) => {
         res.status(500).json({ success: false, message: "Server Error", error: err.message });
     }
 };
-//testing calendar
-// GET: Get unavailable dates for a specific room
+
 
 
 export const getAvailableRooms = async (req, res, next) => {
@@ -97,4 +94,26 @@ export const getAvailableRooms = async (req, res, next) => {
     }
 };
 
-//testing calendar
+export const updateRoom = async (req, res, next) => {
+    try {
+        console.log(req.body, req.params.slug)
+        const updatedRoom = await RoomModel.findByIdAndUpdate(req.params.slug, req.body, { new: true });
+        if (!updatedRoom) return res.status(404).json({ success: false, message: "Room not found" });
+        res.json({ success: true, data: updatedRoom });
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const deleteRoom = async (req, res, next) => {
+    try {
+        const { slug } = req.params;
+        const deletedRoom = await RoomModel.findOneAndDelete({ _id: slug });
+        if (!deletedRoom) return res.status(404).json({ success: false, message: "Room not found" });
+        res.json({ success: true, message: "Room deleted successfully" });
+    } catch (err) {
+        next(err);
+    }
+};
+
+

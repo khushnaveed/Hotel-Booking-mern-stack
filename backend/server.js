@@ -16,7 +16,7 @@ console.clear();
 const app = express();
 app.use(cors({
   origin: "http://localhost:5173",
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "PATCH", "DELETE"],
   exposedHeaders: ["token"]
 }));
 
@@ -32,7 +32,7 @@ try {
   console.log(err.message);
 }
 app.use((req, res, next) => {
-  console.log(req.url)
+  //console.log(req.url)
   next()
 })
 //routes
