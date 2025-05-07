@@ -15,7 +15,7 @@ export default function PaymentMethod() {
       const formattedCartItems = cartItems.map(item => ({
         name: item.title || item.slug,
         description: item.date
-          ? "Event Date:${item.date}"
+          ? `Event Date:${item.date}`
           : `Check-in: ${item.arrivalDate},
          Check-out: ${item.departureDate},
           ${item.numAdults} Adults,

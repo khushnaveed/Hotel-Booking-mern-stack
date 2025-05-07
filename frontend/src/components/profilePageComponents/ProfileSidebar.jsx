@@ -24,9 +24,9 @@ const ProfileSidebar = ({
           </span>
         </div>
         <h2 className="text-xl font-semibold text-[#8E7037]">
-          {guest.firstName} {guest.lastName}
+          {guest?.firstName} {guest?.lastName}
         </h2>
-        <p className="text-sm text-gray-500">{guest.email}</p>
+        <p className="text-sm text-gray-500">{guest?.email}</p>
       </div>
 
       <nav className="mb-8">
