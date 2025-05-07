@@ -5,16 +5,16 @@ import ProfileData from "../components/profilePageComponents/ProfileData";
 import ReservationHistory from "../components/profilePageComponents/ReservationHistory";
 import PaymentMethod from "../components/profilePageComponents/PaymentMethod";
 import HelpCenter from "../components/profilePageComponents/HelpCenter";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { logout, guest } = useContext(GuestContext);
   const [activeSection, setActiveSection] = useState("profile");
-  const navigate = useNavigate();
+ // const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    //navigate("/login");
   };
 
   const renderActiveSection = () => {
