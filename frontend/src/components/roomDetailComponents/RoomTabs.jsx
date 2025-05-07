@@ -34,10 +34,10 @@ export default function RoomTabs({ roomData, calendarRef }) {
                     <p>{roomData.descOverview}</p>
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-5 mt-4 text-gray-600">
                         <li><strong>SPECIAL ROOM</strong></li>
-                        <li><strong>Max:</strong> {roomData.additionalDetails.maxPersons} Person(s)</li>
-                        <li><strong>Size:</strong> {roomData.additionalDetails.size}</li>
-                        <li><strong>View:</strong> {roomData.additionalDetails.view}</li>
-                        <li><strong>Bed:</strong> {roomData.additionalDetails.bed}</li>
+                        <li><strong>Max:</strong> {roomData?.additionalDetails?.maxPersons} Person(s)</li>
+                        <li><strong>Size:</strong> {roomData?.additionalDetails?.size}</li>
+                        <li><strong>View:</strong> {roomData?.additionalDetails?.view}</li>
+                        <li><strong>Bed:</strong> {roomData?.additionalDetails?.bed}</li>
                     </ul>
                 </>
             ),
@@ -49,7 +49,7 @@ export default function RoomTabs({ roomData, calendarRef }) {
                 <>
                     <p className="text-gray-600 mb-4">Located in the heart of Aspen...</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                        {Object.entries(roomData.amenities).map(([roomType, items], idx) => (
+                        {roomData.amenities && Object.entries(roomData.amenities).map(([roomType, items], idx) => (
                             <div key={idx} className="mb-6">
                                 <h4 className="text-lg font-semibold text-gray-700">{roomType}</h4>
                                 <ul className="list-disc pl-5 text-gray-600">
@@ -57,6 +57,9 @@ export default function RoomTabs({ roomData, calendarRef }) {
                                 </ul>
                             </div>
                         ))}
+                        {!roomData.amenities && (
+                            <p className="text-gray-500 italic">No amenities listed for this room.</p>
+                        )}
                     </div>
                 </>
             ),

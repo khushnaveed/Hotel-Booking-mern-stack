@@ -16,7 +16,6 @@ export default function RoomDetails() {
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const calendarRef = useRef(null)
   const { addToCart } = useCart();
-
   const { roomSlug } = useParams();
   const navigate = useNavigate();
 
@@ -126,13 +125,11 @@ export default function RoomDetails() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto m-5 ">
 
 
-        {/* Room Gallery */}
         <RoomGallery
           images={roomData.images}
           currentImageIndex={currentImageIndex}
           setCurrentImageIndex={setCurrentImageIndex}
         />
-        {/* Booking Form */}
         <BookingForm
           bookingData={bookingData}
           setBookingData={setBookingData}
@@ -142,7 +139,6 @@ export default function RoomDetails() {
           currencySymbols={currencySymbols}
         />
       </div>
-      {/* Room Tabs Section */}
       <div className="p-6 max-w-6xl mx-auto">
         <RoomTabs roomData={roomData} calendarRef={calendarRef} />
       </div>

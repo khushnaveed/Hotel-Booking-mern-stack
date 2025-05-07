@@ -1,4 +1,3 @@
-
 import RoomModel from "../models/roomsSchema.js";
 
 export const getRoomBySlug = async (req, res, next) => {
@@ -43,7 +42,8 @@ export const createRoom = async (req, res, next) => {
             defaultPrice,
             packages,
             ratings,
-            calendar
+            calendar,
+            additionalDetails
         } = req.body;
 
         const newRoom = new RoomModel({
@@ -56,9 +56,8 @@ export const createRoom = async (req, res, next) => {
             packages: packages || [],
             ratings: ratings || [],
             calendar: calendar || [],
-
+            additionalDetails
             // bookings: bookings || []
-
         });
 
         const savedRoom = await newRoom.save();
