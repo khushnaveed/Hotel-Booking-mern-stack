@@ -116,9 +116,15 @@ export default function AdminEvent() {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6">
-        Event Management ({events.length} events)
-      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
+          <p className="text-sm font-medium text-gray-500">Total Events</p>
+          <p className="mt-1 text-3xl font-semibold text-gray-900">
+            {events.length}
+          </p>
+        </div>
+      </div>
+
       <div className="bg-white p-6 rounded-xl shadow-lg mb-10 space-y-4">
         <h3 className="text-xl font-bold text-gray-800">Create New Event</h3>
         <div className="grid grid-cols-2 gap-6">
@@ -178,7 +184,7 @@ export default function AdminEvent() {
         </div>
         <button
           onClick={handleCreate}
-          className="bg-[#8E7037] text-white px-6 py-2  hover:bg-gray-700 transition-all duration-200 font-bold">
+          className="bg-[#8E7037] text-white px-6 py-2  hover:bg-white  hover:text-[#8E7037] border-2 border-[#8E7037] transition-all duration-200 font-bold">
           Create Event
         </button>
       </div>
@@ -196,7 +202,7 @@ export default function AdminEvent() {
               <img
                 src={event.image}
                 alt={event.title?.en || "Event Image"}
-                className="w-28 h-28 object-cover rounded-lg mr-6"
+                className="w-28 h-28 object-cover  mr-6"
               />
               {editingEventId === event._id ? (
                 <div className="flex-1 space-y-3">
