@@ -1,5 +1,6 @@
 import React from "react";
-import { galleryData } from "../assets/galleryData.js"; // Adjust the path based on your file structure
+import { galleryData } from "../assets/galleryData.js";
+import HeroSection from "../components/HeroSection";
 
 export default function Gallery() {
   const scrollToTop = () => {
@@ -8,30 +9,11 @@ export default function Gallery() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section
-        className="relative top-16 left-0 w-full h-[80vh] md:h-[34vh] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('/src/assets/galleryHero.jpg')" }}>
-        <div className="absolute inset-0 bg-opacity-40"></div>
-        <div className="relative text-white text-center mt-10">
-          <h1
-            className="text-5xl font-bold uppercase"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            Visual Elegance
-          </h1>
-          <p
-            className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            Welcome to Royal Grand Gallery of Luxury
-          </p>
-          <p
-            className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            Step into the World of Luxurious Retreat
-          </p>
-        </div>
-      </section>
-
+      <HeroSection
+        title="Visual Elegance"
+        subtitle={`Welcome to Royal Grand Gallery of Luxury`}
+        backgroundImage="/src/assets/galleryHero.jpg"
+      />
 
       {/* Wrapper to avoid overlap */}
       <div className="relative">

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useCurrency } from "../../context/CurrencyContext";
+import { Pencil, Trash2 } from "lucide-react";
 
 export default function AdminEvent() {
+  const { currency } = useCurrency();
+  const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -45,6 +49,7 @@ export default function AdminEvent() {
           price: Number(newEvent.price),
           date: new Date(newEvent.date).toISOString(),
           showCountdown: newEvent.showCountdown,
+          currency: currency,
         },
 
         { headers: { token: localStorage.getItem("token") } }
@@ -62,44 +67,6 @@ export default function AdminEvent() {
       })
       .catch((err) => console.error("Create failed:", err));
   };
-
-  /* try {
-      const eventToCreate = {
-          id: uuidv4(),
-        title: { en: newEvent.title },
-        excerpt: { en: newEvent.excerpt },
-        image: newEvent.image,
-        price: Number(newEvent.price),
-        date: new Date(newEvent.date).toISOString(),
-        showCountdown: newEvent.showCountdown,
-      };
-      console.log("Sending eventToCreate:", eventToCreate);
-      const res = await fetch("http://localhost:5005/events", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(eventToCreate),
-      });
-
-      if (!res.ok) throw new Error("Failed to create event");
-
-      const savedEvent = await res.json();
-      setEvents([savedEvent, ...events]);
-      setNewEvent({
-        title: "",
-        excerpt: "",
-        date: "",
-        price: "",
-        image: "",
-        showCountdown: false,
-      });
-    } catch (err) {
-      console.error("Create failed:", err.message);
-      setError(true);
-    }
-  }; */
 
   const handleDelete = (id) => {
     axios
@@ -138,6 +105,7 @@ export default function AdminEvent() {
         price: editedEvent.price,
         image: editedEvent.image,
         showCountdown: editedEvent.showCountdown,
+        currency: currency,
       })
       .then(() => {
         setEditingEventId(null);
@@ -151,8 +119,6 @@ export default function AdminEvent() {
       <h2 className="text-3xl font-semibold text-gray-800 mb-6">
         Event Management ({events.length} events)
       </h2>
-
-      {/* Create New Event Form */}
       <div className="bg-white p-6 rounded-xl shadow-lg mb-10 space-y-4">
         <h3 className="text-xl font-bold text-gray-800">Create New Event</h3>
         <div className="grid grid-cols-2 gap-6">
@@ -212,7 +178,7 @@ export default function AdminEvent() {
         </div>
         <button
           onClick={handleCreate}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all duration-200">
+          className="bg-[#8E7037] text-white px-6 py-2  hover:bg-gray-700 transition-all duration-200 font-bold">
           Create Event
         </button>
       </div>
@@ -250,10 +216,8 @@ export default function AdminEvent() {
                     <input
                       name="date"
                       type="date"
-                      value={newEvent.date?.split("T")[0] || ""}
-                      onChange={(e) =>
-                        setNewEvent({ ...newEvent, date: e.target.value })
-                      }
+                      value={editedEvent.date?.split("T")[0] || ""}
+                      onChange={handleEditChange}
                       className="w-full border-gray-300 rounded-lg p-3 shadow-sm"
                     />
                     <input
@@ -283,12 +247,12 @@ export default function AdminEvent() {
                   <div className="flex justify-end gap-4 pt-2">
                     <button
                       onClick={() => handleEditSave(event._id)}
-                      className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
+                      className="bg-green-600 text-white px-6 py-2  hover:bg-green-700">
                       Save
                     </button>
                     <button
                       onClick={() => setEditingEventId(null)} // Cancel editing
-                      className="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400">
+                      className="bg-gray-300 text-gray-800 px-6 py-2  hover:bg-gray-400">
                       Cancel
                     </button>
                   </div>
@@ -302,25 +266,29 @@ export default function AdminEvent() {
                     {event.excerpt?.en || "No Excerpt Available"}
                   </p>
                   <p className="text-sm mt-1">📅 Date: {event.date}</p>
-                  <p className="text-sm">💶 Price: {event.price} €</p>
+                  <p className="text-md font-bold">
+                    {currencySymbols[currency]}
+                    {Number(event.price).toLocaleString()}
+                  </p>
+
                   {event.showCountdown && (
                     <p className="text-sm text-red-500">⏳ Countdown active</p>
                   )}
                 </div>
               )}
-              <div className="ml-4 space-x-2">
+              <div className="flex gap-4 col-span-2 justify-center">
                 {!editingEventId && (
                   <>
-                    <button
+                    <Pencil
                       onClick={() => startEditing(event)}
-                      className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600">
-                      Edit
-                    </button>
-                    <button
+                      className="text-yellow-600 cursor-pointer hover:scale-110 transition-transform"
+                      size={18}
+                    />
+                    <Trash2
                       onClick={() => handleDelete(event._id)}
-                      className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600">
-                      Delete
-                    </button>
+                      className="text-red-600 cursor-pointer hover:scale-110 transition-transform"
+                      size={18}
+                    />
                   </>
                 )}
               </div>

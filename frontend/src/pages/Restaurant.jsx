@@ -3,6 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import emailjs from "emailjs-com";
 import { useCurrency } from "../context/CurrencyContext.jsx";
+import HeroSection from "../components/HeroSection";
+
 export default function Restaurant() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -143,32 +145,14 @@ export default function Restaurant() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section
-        className="relative top-10 left-0 w-full h-[80vh] md:h-[36vh] bg-cover bg-center flex items-center justify-center"
-        style={{
-          backgroundImage: `url(https://img.freepik.com/premium-photo/chef-is-carefully-plating-dish-restaurant-kitchen-plate-is-arranged-with-variety-colorful-vegetables-small-portion-meat_36682-6799.jpg)`,
-        }}
-      >
-        <div className="absolute inset-0 bg-black opacity-30" />
-        <div className="relative text-white text-center z-10">
-          <h1
-            className="text-5xl font-bold uppercase mt-5"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            Culinary Elegance
-          </h1>
-          <p
-            className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            Indulge in an Exquisite Culinary Journey
-          </p>
-        </div>
-      </section>
+      <HeroSection
+        title="Culinary Elegance"
+        subtitle="Indulge in an Exquisite Culinary Journey"
+        backgroundImage="https://img.freepik.com/premium-photo/chef-is-carefully-plating-dish-restaurant-kitchen-plate-is-arranged-with-variety-colorful-vegetables-small-portion-meat_36682-6799.jpg"
+      />
 
       {/* Meal Selection */}
-      <div className="flex justify-center space-x-10 mt-18 mb-20">
+      <div className="flex justify-center space-x-10 mt-10 mb-20">
         {["Breakfast", "Lunch", "Dinner"].map((meal) => (
           <button
             key={meal}
@@ -192,13 +176,13 @@ export default function Restaurant() {
           {/* Loading and Error States */}
           {loading && (
             <div className="text-center py-8">
-              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#8E7037] border-r-transparent"></div>
+              <div className="inline-block h-8 w-8 animate-spin -full border-4 border-solid border-[#8E7037] border-r-transparent"></div>
               <p className="mt-2">Loading menu items...</p>
             </div>
           )}
 
           {error && !loading && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3  relative mb-4">
               <strong className="font-bold">Error:</strong>
               <span className="block sm:inline"> {error}</span>
               <p className="mt-2">Using sample menu data instead.</p>
@@ -285,13 +269,13 @@ export default function Restaurant() {
           </h2>
 
           {isSubmitted ? (
-            <div className="bg-green-200 text-black-800 p-4 rounded text-center">
+            <div className="bg-green-200 text-black-800 p-4  text-center">
               Thank you for selecting Royal Grand Dining! Our team will be in
               touch shortly.
             </div>
           ) : (
             <form
-              className="bg-white p-6 rounded shadow space-y-4"
+              className="bg-white p-6  shadow space-y-4"
               onSubmit={handleFormSubmit}
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -300,7 +284,7 @@ export default function Restaurant() {
                     type="text"
                     name="name"
                     placeholder="Name"
-                    className="border border-[#8E7037] p-2 rounded w-full"
+                    className="border border-[#8E7037] p-2  w-full"
                   />
                   {formErrors.name && (
                     <span className="text-red-500 text-sm">
@@ -313,7 +297,7 @@ export default function Restaurant() {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    className="border border-[#8E7037] p-2 rounded w-full"
+                    className="border border-[#8E7037] p-2  w-full"
                   />
                   {formErrors.email && (
                     <span className="text-red-500 text-sm">
@@ -324,7 +308,7 @@ export default function Restaurant() {
                 <div className="flex space-x-2 relative">
                   <select
                     name="countryCode"
-                    className="border border-[#8E7037] p-2 rounded w-1/3"
+                    className="border border-[#8E7037] p-2  w-1/3"
                     defaultValue="+1"
                   >
                     {[
@@ -345,7 +329,7 @@ export default function Restaurant() {
                     name="phone"
                     type="text"
                     placeholder="Phone"
-                    className="border border-[#8E7037] p-2 rounded w-full"
+                    className="border border-[#8E7037] p-2  w-full"
                   />
                 </div>
                 {formErrors.phone && (
@@ -357,7 +341,7 @@ export default function Restaurant() {
                   <input
                     name="date"
                     type="date"
-                    className="border border-[#8E7037] p-2 rounded w-full"
+                    className="border border-[#8E7037] p-2  w-full"
                   />
                   {formErrors.date && (
                     <span className="text-red-500 text-sm">
@@ -368,7 +352,7 @@ export default function Restaurant() {
 
                 <select
                   name="guests"
-                  className="border border-[#8E7037] p-2 rounded w-full"
+                  className="border border-[#8E7037] p-2  w-full"
                 >
                   <option value="">Number of Guests</option>
                   {Array.from({ length: 10 }, (_, i) => (
@@ -386,12 +370,12 @@ export default function Restaurant() {
               <textarea
                 name="message"
                 placeholder="Message"
-                className="border border-[#8E7037] p-2 rounded w-full"
+                className="border border-[#8E7037] p-2  w-full"
                 rows="4"
               ></textarea>
               <button
                 type="submit"
-                className="bg-[#8E7037] text-white py-2 px-4 rounded hover:bg-[#a28344]"
+                className="bg-[#8E7037] text-white py-2 px-4  hover:bg-[#a28344]"
               >
                 Book Table
               </button>
@@ -410,7 +394,7 @@ export default function Restaurant() {
 
         {loading ? (
           <div className="text-center py-8">
-            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#8E7037] border-r-transparent"></div>
+            <div className="inline-block h-8 w-8 animate-spin -full border-4 border-solid border-[#8E7037] border-r-transparent"></div>
             <p className="mt-2">Loading gallery...</p>
           </div>
         ) : (
@@ -457,7 +441,7 @@ export default function Restaurant() {
                 <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-2 text-center truncate">
                   {item.name}
                 </div>
-                <div className="absolute top-0 right-0 bg-[#8E7037] text-white text-[10px] px-1 py-0.5 rounded-bl-md">
+                <div className="absolute top-0 right-0 bg-[#8E7037] text-white text-[10px] px-1 py-0.5 -bl-md">
                   {item.title}
                 </div>
               </div>
@@ -489,7 +473,7 @@ export default function Restaurant() {
                   )}`
                 }
                 alt={selectedItem.name}
-                className="w-full h-auto rounded"
+                className="w-full h-auto "
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = `/placeholder.svg?height=400&width=600&text=${encodeURIComponent(
@@ -497,9 +481,9 @@ export default function Restaurant() {
                   )}`;
                 }}
               />
-              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+              <div className="mt-4 p-4 bg-gray-50 -lg">
                 <h4 className="text-xl font-semibold">{selectedItem.name}</h4>
-                <span className="inline-block bg-[#8E7037] text-white text-xs px-2 py-1 rounded mt-1 mb-2">
+                <span className="inline-block bg-[#8E7037] text-white text-xs px-2 py-1  mt-1 mb-2">
                   {selectedItem.title}
                 </span>
                 <p className="text-gray-600">{selectedItem.desc}</p>

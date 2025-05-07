@@ -5,6 +5,7 @@ import BlogCard from "../components/BlogCard.jsx";
 import { useCurrency } from "../context/CurrencyContext";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import HeroSection from "../components/HeroSection";
 
 function Events() {
   const navigate = useNavigate();
@@ -40,24 +41,11 @@ function Events() {
 
   return (
     <>
-      {/* HERO SECTION */}
-      <section
-        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('src/assets/heroImage.jpg')" }}>
-        <div className="absolute inset-0 bg-opacity-40"></div>
-        <div className="relative text-white text-center mt-8">
-          <h1
-            className="text-5xl font-bold uppercase"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            {t("events")}
-          </h1>
-          <p
-            className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            {t("checkUpcomingEvents")}
-          </p>
-        </div>
-      </section>
+      <HeroSection
+        title="Events"
+        subtitle="Experience Unforgettable Moments"
+        backgroundImage="/src/assets/heroImage.jpg"
+      />
 
       {/* MAIN BLOG CONTENT */}
       <div className="container mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -87,7 +75,8 @@ function Events() {
                 <div className="absolute bottom-2 left-2 bg-white rounded-none font-bold">
                   <Link
                     to={`/rooms/${luxuryRoom.slug}`}
-                    className="block text-sm text-black text-center px-2 py-1 transition duration-300 hover:bg-[#6f5525] hover:text-white">
+                    className="block text-sm text-black text-center px-2 py-1 transition duration-300 hover:bg-[#6f5525] hover:text-white"
+                  >
                     {luxuryRoom.title?.toUpperCase()}
                     <p className="text-xs font-semibold mt-1">
                       {t("price")}: {currencySymbols[currency]}
@@ -126,7 +115,8 @@ function Events() {
                       className="px-4 sm:px-6 py-2 sm:pb-2 pb-4 text-sm sm:text-base 
                     bg-[#8E7037] font-semibold text-white 
                      hover:bg-white hover:text-[#8E7037] 
-                     border-2 border-[#8E7037] w-max mt-4 ml-2 sm:ml-6">
+                     border-2 border-[#8E7037] w-max mt-4 ml-2 sm:ml-6"
+                    >
                       View Details
                     </button>
                   }
