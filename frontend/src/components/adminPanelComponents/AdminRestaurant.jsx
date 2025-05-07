@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useCurrency } from "../../context/CurrencyContext";
 import { Pencil, Trash2 } from "lucide-react";
+import { motion } from "framer-motion";
+import CountUp from "react-countup";
 
 export default function AdminRestaurant() {
   const { currency } = useCurrency();
@@ -115,33 +117,32 @@ export default function AdminRestaurant() {
 
   return (
     <div className="p-4 bg-gray-50 min-h-screen">
-      {/* Total Menu items */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
-          <p className="text-sm font-medium text-gray-500">Total Menus</p>
-          <p className="mt-1 text-3xl font-semibold text-gray-900">
-            {menuItems.length}
-          </p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
-          <p className="text-sm font-medium text-gray-500">Breakfast Menus</p>
-          <p className="mt-1 text-3xl font-semibold text-gray-900">
-            {breakfastCount}
-          </p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
-          <p className="text-sm font-medium text-gray-500">Lunch Menus</p>
-          <p className="mt-1 text-3xl font-semibold text-gray-900">
-            {lunchCount}
-          </p>
-        </div>
-        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
-          <p className="text-sm font-medium text-gray-500">Dinner Menus</p>
-          <p className="mt-1 text-3xl font-semibold text-gray-900">
-            {dinnerCount}
-          </p>
-        </div>
-      </div>
+      {/* Summary Cards */}
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+      >
+        {[
+          ["Total Menus", menuItems.length],
+          ["Breakfast Menus", breakfastCount],
+          ["Lunch Menus", lunchCount],
+          ["Dinner Menus", dinnerCount],
+        ].map(([label, count], i) => (
+          <motion.div
+            key={label}
+            className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]"
+            whileHover={{ scale: 1.03 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <p className="text-sm font-medium text-gray-500">{label}</p>
+            <p className="mt-1 text-3xl font-semibold text-gray-900">
+              <CountUp end={count} duration={1.5} />
+            </p>
+          </motion.div>
+        ))}
+      </motion.div>
 
       <div className="overflow-x-auto">
         <div className="min-w-[1000px]">
@@ -155,17 +156,20 @@ export default function AdminRestaurant() {
             <div className="flex justify-center">
               <span>Image</span>
             </div>
-
             <span>Meal Type</span>
             <span className="text-center">Action</span>
           </div>
 
           {/* Add New Item */}
-          <div className="grid grid-cols-[1fr_100px_2fr_200px_100px_100px] gap-2 bg-white p-4 mb-2 rounded-lg shadow text-sm items-center">
+          <motion.div
+            className="grid grid-cols-[1fr_100px_2fr_200px_100px_100px] gap-2 bg-white p-4 mb-2 rounded-lg shadow text-sm items-center"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <input
               value={newItem.name}
               onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-              className="border-gray-500 shadow-sm  p-2 rounded text-sm w-full"
+              className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
               placeholder="Name"
             />
             <input
@@ -173,13 +177,13 @@ export default function AdminRestaurant() {
               onChange={(e) =>
                 setNewItem({ ...newItem, price: e.target.value })
               }
-              className="border-gray-500 shadow-sm  p-2 rounded text-sm w-full"
+              className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
               placeholder="Price"
             />
             <input
               value={newItem.desc}
               onChange={(e) => setNewItem({ ...newItem, desc: e.target.value })}
-              className="border-gray-500 shadow-sm  p-2 rounded text-sm w-full"
+              className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
               placeholder="Description"
             />
             <input
@@ -191,14 +195,14 @@ export default function AdminRestaurant() {
                 reader.onload = (data) =>
                   setNewItem({ ...newItem, img: data.target.result });
               }}
-              className="border-gray-500 shadow-sm  p-2 rounded text-sm w-full"
+              className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
             />
             <select
               value={newItem.title}
               onChange={(e) =>
                 setNewItem({ ...newItem, title: e.target.value })
               }
-              className="border-gray-500 shadow-sm  p-2 rounded text-sm w-full"
+              className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
             >
               <option>Breakfast</option>
               <option>Lunch</option>
@@ -207,13 +211,13 @@ export default function AdminRestaurant() {
             </select>
             <button
               onClick={handleAddItem}
-              className="bg-[#8E7037] text-white text-sm px-3 py-1 rounded hover:text-[#8E7037] hover:bg-white hover:border-[#8E7037] hover:border "
+              className="bg-[#8E7037] text-white px-3 py-2 hover:bg-white hover:text-[#8E7037] hover:border hover:border-[#8E7037] transition-all duration-200"
             >
               Add
             </button>
-          </div>
+          </motion.div>
 
-          {/* Conditional Rendering */}
+          {/* Items */}
           {loading ? (
             <div className="text-center py-4 text-sm">Loading...</div>
           ) : error ? (
@@ -221,29 +225,32 @@ export default function AdminRestaurant() {
           ) : menuItems.length === 0 ? (
             <div className="text-center py-4 text-sm">No menu items found.</div>
           ) : (
-            menuItems.map((item) => (
-              <div
+            menuItems.map((item, index) => (
+              <motion.div
                 key={item._id}
                 className="grid grid-cols-[1fr_100px_2fr_200px_100px_100px] gap-2 bg-white p-4 mb-2 rounded-lg shadow text-sm items-center"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
               >
                 {editItemId === item._id ? (
                   <>
                     <input
                       value={editFormData.name}
                       onChange={(e) => handleEditChange("name", e.target.value)}
-                      className="border p-1 rounded text-sm w-full"
+                      className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                     />
                     <input
                       value={editFormData.price}
                       onChange={(e) =>
                         handleEditChange("price", e.target.value)
                       }
-                      className="border p-1 rounded text-sm w-full"
+                      className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                     />
                     <input
                       value={editFormData.desc}
                       onChange={(e) => handleEditChange("desc", e.target.value)}
-                      className="border p-1 rounded text-sm w-full"
+                      className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                     />
                     <span className="text-gray-500 text-xs">[unchanged]</span>
                     <select
@@ -251,24 +258,24 @@ export default function AdminRestaurant() {
                       onChange={(e) =>
                         handleEditChange("title", e.target.value)
                       }
-                      className="border p-1 rounded text-sm w-full"
+                      className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                     >
                       <option>Breakfast</option>
                       <option>Lunch</option>
                       <option>Dinner</option>
                       <option>Drink</option>
                     </select>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-col pl-4">
                       <button
                         onClick={handleSave}
-                        className="bg-blue-500 text-white text-sm px-2 py-1 rounded"
-                      >
+                        className="bg-[#8E7037] w-18 text-white px-3 py-1 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037]"
+                        >
                         Save
                       </button>
                       <button
                         onClick={() => setEditItemId(null)}
-                        className="bg-gray-300 text-sm px-2 py-1 rounded"
-                      >
+                        className="bg-white w-18 border border-[#8E7037] text-[#8E7037] px-3 py-1  hover:bg-gray-100"
+                        >
                         Cancel
                       </button>
                     </div>
@@ -285,12 +292,10 @@ export default function AdminRestaurant() {
                       <img
                         src={item.img}
                         alt={item.name}
-                        className="w-25 h-20 object-cover"
+                        className="w-24 h-20 object-cover rounded shadow-sm"
                       />
                     </div>
-
                     <span>{item.title}</span>
-
                     <div className="flex gap-2 justify-center">
                       <Pencil
                         onClick={() => handleEditClick(item)}
@@ -305,7 +310,7 @@ export default function AdminRestaurant() {
                     </div>
                   </>
                 )}
-              </div>
+              </motion.div>
             ))
           )}
         </div>

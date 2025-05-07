@@ -103,14 +103,14 @@ const AdminGuest = () => {
                     name="firstName"
                     value={editedGuest.firstName}
                     onChange={handleInputChange}
-                    className="border p-2 rounded"
+                    className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <input
                     type="text"
                     name="lastName"
                     value={editedGuest.lastName}
                     onChange={handleInputChange}
-                    className="border p-2 rounded"
+                    className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                  
                   <input
@@ -118,53 +118,53 @@ const AdminGuest = () => {
                     name="country"
                     value={editedGuest.country}
                     onChange={handleInputChange}
-                    className="border p-2 rounded "
+                    className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <input
                     type="text"
                     name="city"
                     value={editedGuest.city}
                     onChange={handleInputChange}
-                    className="border p-2 rounded"
+                    className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <input
                     type="text"
                     name="phonenumber"
                     value={editedGuest.phonenumber}
                     onChange={handleInputChange}
-                    className="border p-2 rounded "
+                    className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <input
                     type="text"
                     name="zipcode"
                     value={editedGuest.zipcode}
                     onChange={handleInputChange}
-                    className="border p-2 rounded"
+                    className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <input
                     type="email"
                     name="email"
                     value={editedGuest.email}
                     onChange={handleInputChange}
-                    className="border p-2 rounded"
+                    className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                     <input
                     type="text"
                     name="role"
                     value={editedGuest.role}
                     onChange={handleInputChange}
-                    className="border p-2 rounded"
+                    className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <div className="flex gap-2 col-span-2">
                     <button
                       onClick={updateGuest}
-                      className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                      className="bg-[#8E7037] w-18 text-white px-3 py-1 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037]"
                     >
                       Save
                     </button>
                     <button
                       onClick={() => setEditingGuestId(null)}
-                      className="bg-gray-300 text-gray-800 px-3 py-1 rounded hover:bg-gray-400"
+                      className="bg-white w-18 border border-[#8E7037] text-[#8E7037] px-3 py-1  hover:bg-gray-100"
                     >
                       Cancel
                     </button>
@@ -186,12 +186,12 @@ const AdminGuest = () => {
                     <Pencil
                       onClick={() => startEditing(guest)}
                       className="text-yellow-600 cursor-pointer hover:scale-110 transition-transform"
-                      size={20}
+                      size={18}
                     />
                     <Trash2
                       onClick={() => deleteGuest(guest._id)}
                       className="text-red-600 cursor-pointer hover:scale-110 transition-transform"
-                      size={20}
+                      size={18}
                     />
                   </div>
                 </>
