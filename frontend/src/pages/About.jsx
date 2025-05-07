@@ -7,7 +7,6 @@ import {
   FaTripadvisor,
 } from "react-icons/fa";
 
-import heroImage from "../assets/heroImage.jpg";
 import about1 from "../assets/about.jpg";
 import about2 from "../assets/about2.jpg";
 import statsBg from "../assets/stats-bg.jpg";
@@ -16,6 +15,7 @@ import member2 from "../assets/member2.jpg";
 import member3 from "../assets/member3.jpg";
 import member4 from "../assets/member4.jpg";
 import member5 from "../assets/member5.jpg";
+import HeroSection from "../components/HeroSection";
 
 const teamMembers = [
   { name: "SHAMEEM", role: "Pixelated Perfectionist", img: member1 },
@@ -28,27 +28,11 @@ const teamMembers = [
 export default function About() {
   return (
     <>
-      {/* Hero Section */}
-      <section
-        className=" relative w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
-        <div className="absolute inset-0 bg-black opacity-30" />
-        <div className="relative text-white text-center z-10 mt-5">
-          <h1
-            className="text-5xl font-bold uppercase"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            About Us
-          </h1>
-          <p
-            className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            Lorem Ipsum is simply dummy text of the printing
-          </p>
-        </div>
-      </section>
+      <HeroSection
+        title="About Us"
+        subtitle="Discover Our Story. Driven by Passion, Defined by Excellence."
+        backgroundImage="/src/assets/heroImage.jpg"
+      />
 
       {/* Wrapper Content */}
       <div className=" relative mt-10">

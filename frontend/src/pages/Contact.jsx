@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaMapMarkerAlt, FaPhone, FaEnvelope } from "react-icons/fa";
-import emailjs from "emailjs-com"; // Import EmailJS
+import emailjs from "emailjs-com";
+import HeroSection from "../components/HeroSection";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -54,35 +55,13 @@ export default function Contact() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section
-        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('/src/assets/heroImage.jpg')" }}
-      >
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black opacity-30"></div>
-
-        {/* Centered Text */}
-        <div className="relative text-white text-center mt-5">
-          <h1
-            className="text-5xl font-bold uppercase "
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            CONTACT US{" "}
-          </h1>
-          <p
-            className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            Lorem Ipsum is simply dummy text of the printing
-          </p>
-        </div>
-      </section>
-
-
+      <HeroSection
+        title="Contact Us"
+        subtitle="We’re here to help. Reach out with any questions or inquiries."
+        backgroundImage="/src/assets/heroImage.jpg"
+      />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 flex flex-col lg:flex-row justify-between space-y-12 lg:space-y-0 lg:space-x-8">
-
         <div className="flex-1">
           <h2 className="text-2xl mb-4 font-bold">Get In Touch</h2>
           <p>

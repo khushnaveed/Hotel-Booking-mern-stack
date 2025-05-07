@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import HeroSection from "../components/HeroSection";
 import { Calendar, Minus, Plus, ArrowLeft } from "lucide-react";
 import { useCurrency } from "../context/CurrencyContext";
 import { useTranslation } from "react-i18next";
@@ -65,26 +65,11 @@ function EventDetails() {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <section
-        className="relative top-0 left-0 w-full h-[30vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('/src/assets/heroImage.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black opacity-30"></div>
-        <div className="relative text-white text-center">
-          <h1
-            className="text-5xl font-bold uppercase"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            Events
-          </h1>
-          <p
-            className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            Discover unforgettable experiences
-          </p>
-        </div>
-      </section>
+      <HeroSection
+        title="Events"
+        subtitle="Experience Unforgettable Moments."
+        backgroundImage="/src/assets/heroImage.jpg"
+      />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <button
@@ -125,7 +110,7 @@ function EventDetails() {
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-4">
                   {event.title.en}
                 </h1>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 text-gray-700">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5  bg-gray-100 text-gray-700">
                   <Calendar size={16} className="text-gray-500" />
                   <span className="text-sm font-medium">{event.date}</span>
                 </div>
@@ -143,7 +128,7 @@ function EventDetails() {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="sticky top-8 rounded-2xl bg-white shadow-md border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg">
+            <div className="sticky top-8 bg-white shadow-md border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg">
               <div className="p-8">
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">
                   Reserve Tickets
