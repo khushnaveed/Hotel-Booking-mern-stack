@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCurrency } from "../context/CurrencyContext.jsx";
+import HeroSection from "../components/HeroSection";
+
 export default function Rooms() {
   const navigate = useNavigate();
   const [rooms, setRooms] = useState([]); // Initialize the rooms state
@@ -33,30 +35,11 @@ export default function Rooms() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section
-        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}
-      >
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black opacity-30"></div>
-
-        {/* Centered Text */}
-        <div className="relative text-white text-center mt-5">
-          <h1
-            className="text-5xl font-bold uppercase "
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            ROOMS{" "}
-          </h1>
-          <p
-            className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            Lorem Ipsum is simply dummy text of the printing
-          </p>
-        </div>
-      </section>
+      <HeroSection
+        title="Rooms"
+        subtitle="Experience comfort and elegance in every stay. Discover your perfect room today."
+        backgroundImage="/src/assets/heroImage.jpg"
+      />
 
       <div className="mt-[5vh] md:mt-[5vh] lg:mt-[5vh] mb-1 flex flex-row flex-wrap gap-4 justify-center items-center">
         {error && <p className="text-red-600">{error}</p>}{" "}
@@ -87,8 +70,12 @@ export default function Rooms() {
                   {room.defaultPrice} per day
                 </h6>
 
-                <p className={`mt-4 ${expandedRoom === room._id ? "text-[12px]" : ""}`}>
-                {expandedRoom === room._id
+                <p
+                  className={`mt-4 ${
+                    expandedRoom === room._id ? "text-[12px]" : ""
+                  }`}
+                >
+                  {expandedRoom === room._id
                     ? room.descOverview
                     : `${room.descOverview.slice(0, 200)}...`}
                 </p>
