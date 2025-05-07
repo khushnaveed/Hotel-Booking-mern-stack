@@ -16,9 +16,9 @@ export default function AnotherAccommodation({ relatedRooms }) {
                             />
                             <ul className="text-gray-600 text-sm">
                                 <li className="font-semibold text-center">{room.title}</li>
-                                <li><strong>Max:</strong> {room.additionalDetails.maxPersons} Person(s)</li>
-                                <li><strong>Bed:</strong> {room.additionalDetails.bed}</li>
-                                <li><strong>View:</strong> {room.additionalDetails.view}</li>
+                                <li><strong>Max:</strong> {room?.additionalDetails?.maxPersons} Person(s)</li>
+                                <li><strong>Bed:</strong> {room?.additionalDetails?.bed}</li>
+                                <li><strong>View:</strong> {room?.additionalDetails?.view}</li>
                             </ul>
                         </div>
                     </Link>
