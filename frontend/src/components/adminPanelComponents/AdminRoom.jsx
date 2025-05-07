@@ -257,7 +257,7 @@ export default function AdminRoom() {
         </div>
         <button
           onClick={handleCreate}
-          className="bg-[#8E7037] text-white px-6 py-2  hover:bg-white  hover:text-[#8E7037]  transition-all duration-200 font-bold"
+          className="bg-[#8E7037] text-white px-6 py-2  hover:bg-white  hover:text-[#8E7037] border-2 border-[#8E7037] transition-all duration-200 font-bold"
         >
           Create Room
         </button>
