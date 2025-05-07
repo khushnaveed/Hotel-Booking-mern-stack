@@ -7,6 +7,7 @@ import {
   deleteEvent,
 } from '../controllers/eventController.js';
 import {isAdmin} from "../middlewares/isAdmin.js"
+import {auth} from "../middlewares/authentication.js"
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.get('/', getAllEvents);
 router.get('/:id', getEventById);
 
 // POST new event
-router.post('/', isAdmin, createEvent);
+router.post('/', auth, isAdmin, createEvent);
 
 // PUT update event
 router.put('/:id', updateEvent);

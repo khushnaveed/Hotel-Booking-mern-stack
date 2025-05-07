@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const eventSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: true,
-  },
   date: {
     type: String,
     required: true,
@@ -12,7 +8,7 @@ const eventSchema = new mongoose.Schema({
   title: {
     en: {
       type: String,
-      required: true,  // Ensure 'en' is a string
+      required: true,
     },
   },
   image: {
@@ -21,13 +17,13 @@ const eventSchema = new mongoose.Schema({
   },
   excerpt: {
     en: {
-      type: String,  // Make sure it's a string, not a Map
+      type: String,
       required: true,
     },
   },
   showCountdown: {
     type: Boolean,
-    default: false, // Optional field
+    default: false,
   },
   price: {
     type: Number,

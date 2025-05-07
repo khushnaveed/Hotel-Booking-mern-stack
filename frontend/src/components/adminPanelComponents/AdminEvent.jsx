@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AdminEvent() {
   const [events, setEvents] = useState([]);
@@ -36,14 +37,19 @@ export default function AdminEvent() {
 
   const handleCreate = () => {
     axios
-      .post("http://localhost:5005/events", {
-        title: { en: newEvent.title },
-        excerpt: { en: newEvent.excerpt },
-        date: newEvent.date,
-        price: newEvent.price,
-        image: newEvent.image,
-        showCountdown: newEvent.showCountdown,
-      })
+      .post(
+        "http://localhost:5005/events",
+        {
+          title: { en: newEvent.title },
+          excerpt: { en: newEvent.excerpt },
+          image: newEvent.image,
+          price: Number(newEvent.price),
+          date: new Date(newEvent.date).toISOString(),
+          showCountdown: newEvent.showCountdown,
+        },
+
+        { headers: { token: localStorage.getItem("token") } }
+      )
       .then(() => {
         setNewEvent({
           title: "",
@@ -57,6 +63,44 @@ export default function AdminEvent() {
       })
       .catch((err) => console.error("Create failed:", err));
   };
+
+  /* try {
+      const eventToCreate = {
+          id: uuidv4(),
+        title: { en: newEvent.title },
+        excerpt: { en: newEvent.excerpt },
+        image: newEvent.image,
+        price: Number(newEvent.price),
+        date: new Date(newEvent.date).toISOString(),
+        showCountdown: newEvent.showCountdown,
+      };
+      console.log("Sending eventToCreate:", eventToCreate);
+      const res = await fetch("http://localhost:5005/events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(eventToCreate),
+      });
+
+      if (!res.ok) throw new Error("Failed to create event");
+
+      const savedEvent = await res.json();
+      setEvents([savedEvent, ...events]);
+      setNewEvent({
+        title: "",
+        excerpt: "",
+        date: "",
+        price: "",
+        image: "",
+        showCountdown: false,
+      });
+    } catch (err) {
+      console.error("Create failed:", err.message);
+      setError(true);
+    }
+  }; */
 
   const handleDelete = (id) => {
     axios
@@ -134,9 +178,7 @@ export default function AdminEvent() {
           <input
             type="date"
             value={newEvent.date}
-            onChange={(e) =>
-              setNewEvent({ ...newEvent, date: e.target.value })
-            }
+            onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
             className="border-gray-300 rounded-lg p-3 shadow-sm w-full"
           />
           <input
@@ -209,8 +251,10 @@ export default function AdminEvent() {
                     <input
                       name="date"
                       type="date"
-                      value={editedEvent.date}
-                      onChange={handleEditChange}
+                      value={newEvent.date?.split("T")[0] || ""}
+                      onChange={(e) =>
+                        setNewEvent({ ...newEvent, date: e.target.value })
+                      }
                       className="w-full border-gray-300 rounded-lg p-3 shadow-sm"
                     />
                     <input
@@ -240,14 +284,12 @@ export default function AdminEvent() {
                   <div className="flex justify-end gap-4 pt-2">
                     <button
                       onClick={() => handleEditSave(event._id)}
-                      className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
-                    >
+                      className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
                       Save
                     </button>
                     <button
                       onClick={() => setEditingEventId(null)} // Cancel editing
-                      className="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400"
-                    >
+                      className="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400">
                       Cancel
                     </button>
                   </div>
