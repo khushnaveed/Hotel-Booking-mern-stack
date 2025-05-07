@@ -29,6 +29,10 @@ const eventSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  currency: {
+    type: String,
+    default: "USD", 
+  },
 });
 
 const Event = mongoose.model("Event", eventSchema);
