@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 
 export default function AdminEvent() {
   const [events, setEvents] = useState([]);
