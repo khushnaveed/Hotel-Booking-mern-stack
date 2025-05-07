@@ -1,4 +1,89 @@
+
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useCurrency } from "../context/CurrencyContext.jsx";
+import HeroSection from "../components/HeroSection.jsx";
+import RoomList from "../components/roomComponents/RoomList.jsx";
+
+export default function Rooms() {
+  const [rooms, setRooms] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [expandedRoom, setExpandedRoom] = useState(null);
+  const { currency } = useCurrency();
+
+  const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5005/room")
+      .then((res) => {
+        setRooms(res.data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError("Error fetching rooms, please try again later.");
+        setLoading(false);
+        console.error("Error fetching rooms:", err);
+      });
+  }, []);
+
+  const handleReadMoreToggle = (roomId) => {
+    setExpandedRoom((prev) => (prev === roomId ? null : roomId));
+  };
+
+  if (loading) return <p>Loading rooms...</p>;
+
+  return (
+    <>
+      <HeroSection
+        title="Rooms"
+        subtitle="Experience comfort and elegance in every stay. Discover your perfect room today."
+        backgroundImage="/src/assets/heroImage.jpg"
+      />
+      <div className="mt-[5vh] mb-1 flex flex-row flex-wrap gap-4 justify-center items-center">
+        {error && <p className="text-red-600">{error}</p>}
+        {rooms.length > 0 ? (
+          <RoomList
+            rooms={rooms}
+            currency={currency}
+            currencySymbols={currencySymbols}
+            expandedRoom={expandedRoom}
+            onToggle={handleReadMoreToggle}
+          />
+        ) : (
+          <p>No rooms available at the moment.</p>
+        )}
+      </div>
+    </>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCurrency } from "../context/CurrencyContext.jsx";
@@ -6,22 +91,21 @@ import HeroSection from "../components/HeroSection";
 
 export default function Rooms() {
   const navigate = useNavigate();
-  const [rooms, setRooms] = useState([]); // Initialize the rooms state
-  const [error, setError] = useState(""); // For storing error messages
-  const [loading, setLoading] = useState(true); // For loading state
+  const [rooms, setRooms] = useState([]); 
+  const [error, setError] = useState(""); 
+  const [loading, setLoading] = useState(true); 
   const { currency } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const [expandedRoom, setExpandedRoom] = useState(null);
-  // Fetch room data from the backend when the component mounts
   useEffect(() => {
     axios
-      .get("http://localhost:5005/room") // API endpoint to get room data
+      .get("http://localhost:5005/room") 
       .then((res) => {
-        setRooms(res.data.data); // Set rooms data in state
-        setLoading(false); // Set loading to false once data is fetched
+        setRooms(res.data.data);
+        setLoading(false); 
       })
       .catch((err) => {
-        setError("Error fetching rooms, please try again later."); // Handle error
+        setError("Error fetching rooms, please try again later."); 
         setLoading(false); // Set loading to false on error
         console.error("Error fetching rooms:", err);
       });
@@ -30,7 +114,7 @@ export default function Rooms() {
     setExpandedRoom((prevState) => (prevState === roomId ? null : roomId));
   };
   if (loading) {
-    return <p>Loading rooms...</p>; // Show a loading message while data is being fetched
+    return <p>Loading rooms...</p>; 
   }
 
   return (
@@ -43,7 +127,6 @@ export default function Rooms() {
 
       <div className="mt-[5vh] md:mt-[5vh] lg:mt-[5vh] mb-1 flex flex-row flex-wrap gap-4 justify-center items-center">
         {error && <p className="text-red-600">{error}</p>}{" "}
-        {/* Show error message if any */}
         {rooms.length > 0 ? (
           rooms.map((room, index) => (
             <div
@@ -114,3 +197,4 @@ export default function Rooms() {
     </>
   );
 }
+*/
