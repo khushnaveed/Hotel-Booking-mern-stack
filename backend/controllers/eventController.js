@@ -23,8 +23,15 @@ export const getEventById = async (req, res) => {
 
 // POST create a new event
 export const createEvent = async (req, res) => {
-
   try {
+    console.log("Received request body:", req.body); // Log the body to check it
+
+    // Ensure the necessary fields are present
+    const { title, excerpt, image, price, date } = req.body;
+    if (!title || !excerpt || !image || !price || !date) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     const newEvent = new Event(req.body);
     const savedEvent = await newEvent.save();
     res.status(201).json(savedEvent);
