@@ -1,10 +1,11 @@
 // src/components/ReservationSummary.js
 import React, { useEffect } from "react";
 import { useCart } from "../../context/CartContext.jsx";
-
+import { useCurrency } from "../../context/CurrencyContext.jsx";
 const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
   const { cartItems, removeFromCart, updateItemQuantity } = useCart();
-
+  const { currency } = useCurrency();
+  const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   // Function to update the total price of an event item based on its quantity
   const updateTotalPrice = (item) => {
     return (item.totalPrice = item.price * item.quantity); // Price is multiplied by quantity to get total price
@@ -59,7 +60,8 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
             ) : (
               <p>Total Tickets: {item.quantity}</p>
             )}
-            <p className="text-[#8E7037] font-medium">${item.totalPrice ? item.totalPrice.toFixed(2) : '0.00'}</p>
+            <p className="text-[#8E7037] font-medium">
+              {currencySymbols[currency]}{item.totalPrice ? item.totalPrice.toFixed(2) : '0.00'}</p>
           </div>
 
           {/* X Button to Remove Item (Only visible if not in confirmation step) */}

@@ -32,13 +32,13 @@ const HelpCenter = () => {
           <h3 className="font-medium text-[#8E7037]">Email Support</h3>
           <p className="text-sm text-gray-600">grandroyal825@gmail.com</p>
         </div>
-        
+
         <div>
           <Phone className="h-6 w-6 text-[#8E7037] mb-2" />
           <h3 className="font-medium text-[#8E7037]">Phone Support</h3>
           <p className="text-sm text-gray-600">+41 (0)61 5603-497</p>
         </div>
-        
+
         <div>
           <MessageSquare className="h-6 w-6 text-[#8E7037] mb-2" />
           <h3 className="font-medium text-[#8E7037]">Live Chat</h3>
@@ -50,7 +50,7 @@ const HelpCenter = () => {
         <h2 className="text-xl font-semibold text-[#8E7037] mb-4">Frequently Asked Questions</h2>
         {faqs.map((faq, index) => (
           <div key={index} className="border-b pb-4">
-            <div 
+            <div
               className="flex items-center cursor-pointer"
               onClick={() => handleToggle(index)}
             >
