@@ -1,4 +1,4 @@
-export default function MenuList({ items = [], loading, error, currencySymbol, activeMeal }) {
+/* export default function MenuList({ items = [], loading, error, currencySymbol, activeMeal }) {
     if (loading) {
         return (
             <div className="text-center py-8">
@@ -48,4 +48,4 @@ export default function MenuList({ items = [], loading, error, currencySymbol, a
             )}
         </div>
     );
-}
+} */

@@ -1,42 +1,4 @@
-/* export default function RestaurantGallery({ allItems, openModal }) {
-    return (
-        <section className="py-16 bg-white px-4">
-            <h2 className="text-3xl font-semibold text-center mb-8">
-                Choose from the Gallery
-            </h2>
-            <p className="text-center text-gray-600 mb-8">
-                Explore our collection of 40 culinary creations
-            </p>
-
-            <div className="max-w-screen-xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
-                {allItems.map((item, index) => (
-                    <div
-                        key={index}
-                        className="cursor-pointer group relative overflow-hidden shadow-lg"
-                        onClick={() => openModal(item)}
-                    >
-                        <img
-                            src={item.img || `/placeholder.svg?height=160&width=120&text=${encodeURIComponent(item.name)}`}
-                            alt={item.name}
-                            className="w-full h-40 object-cover transform group-hover:scale-105 transition duration-300"
-                            onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = `/placeholder.svg?height=160&width=120&text=${encodeURIComponent(item.name)}`;
-                            }}
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-2 text-center truncate">
-                            {item.name}
-                        </div>
-                        <div className="absolute top-0 right-0 bg-[#8E7037] text-white text-[10px] px-1 py-0.5">
-                            {item.title}
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </section>
-    );
-}
- */
+/* 
 import React from "react";
 
 export default function RestaurantGallery({
@@ -115,7 +77,6 @@ export default function RestaurantGallery({
                 </div>
             )}
 
-            {/* Image Modal */}
             {modalOpen && selectedItem && (
                 <div
                     className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
@@ -165,3 +126,4 @@ export default function RestaurantGallery({
         </section>
     );
 }
+ */

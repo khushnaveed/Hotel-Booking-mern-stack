@@ -1,4 +1,4 @@
-export default function MealSelector({ activeMeal, setActiveMeal }) {
+/* export default function MealSelector({ activeMeal, setActiveMeal }) {
     return (
         <div className="flex justify-center space-x-10 mt-10 mb-20">
             {["Breakfast", "Lunch", "Dinner"].map((meal) => (
@@ -13,4 +13,4 @@ export default function MealSelector({ activeMeal, setActiveMeal }) {
             ))}
         </div>
     );
-}
+} */
