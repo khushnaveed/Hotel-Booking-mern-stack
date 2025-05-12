@@ -7,14 +7,16 @@ import RoomTabs from "./roomDetailComponents/RoomTabs.jsx";
 import BookingForm from "./roomDetailComponents/BookingForm.jsx";
 import { useCart } from "../context/CartContext";
 import { useRoomDetail } from "../context/RoomDetailContext.jsx";
-export default function RoomDetails() {
+import HeroSection from "../components/HeroSection";
 
-  const { roomData, setRoomData, bookingData, setBookingData } = useRoomDetail();
+export default function RoomDetails() {
+  const { roomData, setRoomData, bookingData, setBookingData } =
+    useRoomDetail();
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { currency, conversionRates } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
-  const calendarRef = useRef(null)
+  const calendarRef = useRef(null);
   const { addToCart } = useCart();
   const { roomSlug } = useParams();
   const navigate = useNavigate();
@@ -94,37 +96,20 @@ export default function RoomDetails() {
     const token = localStorage.getItem("token");
     navigate(token ? "/checkout" : "/login");
     console.log("Token:", localStorage.getItem("token"));
-
   };
   if (loading) return <div>Loading...</div>;
   if (!roomData) return <div>Room information not found.</div>;
 
   return (
-    <div className="relative" >
-      <section
-        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('/src/assets/aboutHero.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-opacity-30"></div>
-        <div className="relative text-white text-center px-4 sm:px-6 md:px-10 pt-25">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
-            {roomData.title}
-          </h1>
-          <p
-            className="text-lg mt-2"
-            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
-          >
-            Royal Grand Hotel is where timeless elegance meets modern luxury in every detail.
-          </p>
-        </div>
-      </section>
+    <div className="relative">
+      <HeroSection
+        title={roomData.title}
+        subtitle=" Royal Grand Hotel is where timeless elegance meets modern luxury in every detail."
+        backgroundImage="/src/assets/aboutHero.jpg"
+      />
 
-      <div >
-      </div>
+      <div></div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto m-5 ">
-
-
         <RoomGallery
           images={roomData.images}
           currentImageIndex={currentImageIndex}
@@ -143,8 +128,5 @@ export default function RoomDetails() {
         <RoomTabs roomData={roomData} calendarRef={calendarRef} />
       </div>
     </div>
-
   );
 }
-
-

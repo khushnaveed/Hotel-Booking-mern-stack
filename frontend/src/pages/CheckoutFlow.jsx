@@ -8,6 +8,7 @@ import BookingDetails from "../components/checkoutPageComponents/BookingDetails"
 import { CheckCircle } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import HeroSection from "../components/HeroSection";
 
 const steps = ["guest", "payment", "confirmation"];
 const stepLabels = {
@@ -29,7 +30,7 @@ const CheckoutFlow = () => {
     total: 0,
   });
 
-/*   const next = () => setStep(steps[steps.indexOf(step) + 1]); */
+  /*   const next = () => setStep(steps[steps.indexOf(step) + 1]); */
   const next = () => {
     if (step === "guest" && cartItems.length === 0) {
       alert("Please Book your rooms and Events Before checkout.");
@@ -37,7 +38,7 @@ const CheckoutFlow = () => {
     }
     setStep(steps[steps.indexOf(step) + 1]);
   };
-  
+
   const prev = () => setStep(steps[steps.indexOf(step) - 1]);
   const navigate = useNavigate();
 
@@ -104,34 +105,11 @@ const CheckoutFlow = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero */}
-      <section
-        className="relative top-0 left-0 w-full h-[80vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center"
-        style={{
-          backgroundImage:
-            "url('https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",
-        }}
-      >
-        <div className="absolute inset-0 bg-black opacity-30" />
-        <div className="relative text-white text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl font-bold uppercase"
-          >
-            Complete Your Booking
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg mt-2"
-          >
-            Just a few steps away from your perfect stay
-          </motion.p>
-        </div>
-      </section>
+      <HeroSection
+        title="Complete Your Booking"
+        subtitle=" Just a few steps away from your perfect stay"
+        backgroundImage="/src/assets/heroImage.jpg"
+      />
 
       {/* Step Indicator */}
       <div className="max-w-5xl mx-auto px-6 md:px-12 py-10">
