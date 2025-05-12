@@ -1,4 +1,5 @@
-import React from "react";
+import { useCurrency } from "../../context/CurrencyContext";
+
 
 export default function BookingForm({
     bookingData,
@@ -8,12 +9,17 @@ export default function BookingForm({
     currency,
     currencySymbols,
 }) {
+    const { conversionRates } = useCurrency();
+    const convertedPrice = roomData?.defaultPrice
+        ? (roomData.defaultPrice * conversionRates[currency]).toFixed(2)
+        : "0.00";
     return (
         <div className="bg-gray-100 p-6 shadow-lg h-fit">
             <h5 className="text-xl font-semibold mb-4">
                 ROOM PRICE{" "}
                 <strong className="text-[#8E7037]">
-                    {currencySymbols[currency]} {roomData.defaultPrice}/day
+                    {currencySymbols[currency]} {convertedPrice}/day
+
                 </strong>
             </h5>
 
