@@ -98,17 +98,17 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
 
       <div className="flex justify-between text-gray-600 text-sm">
         <span>Subtotal</span>
-        <span>${subtotal.toFixed(2)}</span>
+        <span>{currencySymbols[currency]}{subtotal.toFixed(2)}</span>
       </div>
 
       <div className="flex justify-between text-gray-600 text-sm">
         <span>Taxes</span>
-        <span>${taxes.toFixed(2)}</span>
+        <span>{currencySymbols[currency]}{taxes.toFixed(2)}</span>
       </div>
 
       <div className="border-t pt-4 flex justify-between text-lg font-semibold">
         <span>Total</span>
-        <span className="text-[#8E7037]">${total.toFixed(2)}</span>
+        <span className="text-[#8E7037]">{currencySymbols[currency]}{total.toFixed(2)}</span>
       </div>
     </div>
   );
