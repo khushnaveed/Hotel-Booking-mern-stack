@@ -12,7 +12,7 @@ export default function RoomDetails() {
   const { roomData, setRoomData, bookingData, setBookingData } = useRoomDetail();
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const { currency } = useCurrency();
+  const { currency, conversionRates } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const calendarRef = useRef(null)
   const { addToCart } = useCart();
@@ -78,7 +78,7 @@ export default function RoomDetails() {
       totalPrice += (numAdults - 2) * extraAdultFee * nights;
     }
     totalPrice += numChildren * childFee * nights;
-
+    totalPrice *= conversionRates[currency];
     const payload = {
       slug: roomSlug,
       arrivalDate: arrive,

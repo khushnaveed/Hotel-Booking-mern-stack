@@ -1,18 +1,48 @@
-// src/components/ReservationSummary.js
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "../../context/CartContext.jsx";
 import { useCurrency } from "../../context/CurrencyContext.jsx";
 const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
-  const { cartItems, removeFromCart, updateItemQuantity } = useCart();
-  const { currency } = useCurrency();
+  const { cartItems, setCartItems, removeFromCart, updateItemQuantity } = useCart();
+  const { currency, conversionRates, prevCurreny, setPrevCurrency } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   // Function to update the total price of an event item based on its quantity
+  const conversionRate = parseFloat(conversionRates?.[currency]) || 1;
   const updateTotalPrice = (item) => {
-    return (item.totalPrice = item.price * item.quantity); // Price is multiplied by quantity to get total price
+    const price = parseFloat(item.price) || 0;
+    const quantity = parseInt(item.quantity) || 0;
+    item.totalPrice = price * quantity * conversionRate;
+    return item.totalPrice;
   };
 
+  useEffect(() => {
+    console.log(cartItems)
+    console.log(currency)
+    console.log(prevCurreny)
+    setCartItems(cartItems.map(item => {
+      const exchangeRates = {
+        USD: { USD: 1, EUR: 0.93, GBP: 0.80 },
+        EUR: { USD: 1.08, EUR: 1, GBP: 0.86 },
+        GBP: { USD: 1.25, EUR: 1.16, GBP: 1 },
+      };
+
+      return (
+        { ...item, totalPrice: item.totalPrice * exchangeRates[prevCurreny][currency] }
+
+      )
+    }))
+    setPrevCurrency(currency)
+  }, [currency])
+
+
   // Calculate the total of all items in the cart
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.totalPrice || 0), 0);
+
+  const subtotal = cartItems.reduce((sum, item) => {
+    //const price = parseFloat(item.price) || 0;
+    //const quantity = parseInt(item.quantity) || 0;
+    return sum + item.totalPrice * item.quantity;
+  }, 0);
+
+
   const taxes = subtotal * 0.1; // Assume 10% tax
   const total = subtotal + taxes;
 
@@ -42,14 +72,12 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
 
       {cartItems.map((item) => (
         <div key={item.slug} className="flex gap-4 border-b pb-4 mb-4 relative">
-          {/* Image */}
           <img
             src={item.image || "https://via.placeholder.com/80"}
             alt={item.slug}
             className="w-20 h-20 object-cover "
           />
 
-          {/* Item Info */}
           <div className="text-sm flex-1">
             <p className="font-semibold capitalize">{item.slug.replace(/-/g, " ")}</p>
             {item.arrivalDate && item.departureDate ? (
@@ -64,17 +92,15 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
               {currencySymbols[currency]}{item.totalPrice ? item.totalPrice.toFixed(2) : '0.00'}</p>
           </div>
 
-          {/* X Button to Remove Item (Only visible if not in confirmation step) */}
           {!isConfirmationStep && (
             <button
               onClick={() => handleRemoveItem(item.slug)} // Remove by slug
               className="absolute top-2 right-2 text-black text-xl cursor-pointer hover:text-[#8E7037]"
             >
-              &times; {/* X button */}
+              &times;
             </button>
           )}
 
-          {/* Quantity Controls (Only visible if not in confirmation step and the item doesn't have arrival/departure dates) */}
           {!isConfirmationStep && !item.arrivalDate && !item.departureDate && (
             <div className="flex items-center gap-2 mt-2">
               <button
@@ -115,3 +141,8 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
 };
 
 export default ReservationSummary;
+
+
+
+
+
