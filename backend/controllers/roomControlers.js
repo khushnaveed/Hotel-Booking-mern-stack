@@ -95,7 +95,7 @@ export const getAvailableRooms = async (req, res, next) => {
 
 export const updateRoom = async (req, res, next) => {
     try {
-        console.log(req.body, req.params.slug)
+        //console.log(req.body, req.params.slug)
         const updatedRoom = await RoomModel.findByIdAndUpdate(req.params.slug, req.body, { new: true });
         if (!updatedRoom) return res.status(404).json({ success: false, message: "Room not found" });
         res.json({ success: true, data: updatedRoom });
