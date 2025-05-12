@@ -195,7 +195,7 @@ function NavItem({ text, path, hasSubmenu, submenuItems, onSubmenuClick }) {
         )}
       </div>
       {hasSubmenu && (
-        <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+        <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
           <div className="py-2">
             {submenuItems.map((item, index) => (
               <button

@@ -4,7 +4,7 @@ import { User, Mail, Phone, MapPin, Pencil } from "lucide-react";
 
 const ProfileData = ({ guest }) => {
   const labelClass = " text-gray-500";
-  const valueClass = "border-gray-300 rounded-lg p-3 shadow-sm w-full";
+  const valueClass = "border-gray-300 mt-2 p-3 shadow-sm w-full";
 
   // State to manage the edit form
   const [isEditing, setIsEditing] = useState(false);

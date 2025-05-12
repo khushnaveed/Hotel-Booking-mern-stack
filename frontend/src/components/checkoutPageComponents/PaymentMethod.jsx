@@ -1,6 +1,4 @@
-
-
-import React from 'react';
+import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useCart } from "../../context/CartContext";
 
@@ -12,7 +10,7 @@ export default function PaymentMethod() {
     //console.log("debugging");
     //console.log(cartItems)
     try {
-      const formattedCartItems = cartItems.map(item => ({
+      const formattedCartItems = cartItems.map((item) => ({
         name: item.title || item.slug,
         description: item.date
           ? `Event Date:${item.date}`
@@ -22,16 +20,19 @@ export default function PaymentMethod() {
            ${item.numChildren} Children`,
         price: item.totalPrice * 100,
         quantity: item.quantity,
-        image: item.image
+        image: item.image,
       }));
 
-      const response = await fetch("http://localhost:5005/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ cartItems: formattedCartItems }),
-      });
+      const response = await fetch(
+        "http://localhost:5005/create-checkout-session",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ cartItems: formattedCartItems }),
+        }
+      );
 
       const session = await response.json();
       console.log(session);
@@ -49,16 +50,14 @@ export default function PaymentMethod() {
     }
   };
 
-
   return (
     <div className="flex items-center justify-center ">
       <button
         onClick={handleCheckout}
-        className="bg-[#8E7037] text-white font-semibold cursor-pointer hover:bg-white hover:text-[#8E7037] py-2 px-6  transition duration-300"
-      >
+        className="px-6 py-3 bg-[#8E7037] w-6/12 text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
+        >
         Checkout
       </button>
     </div>
   );
 }
-

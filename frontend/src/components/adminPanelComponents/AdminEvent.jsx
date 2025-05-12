@@ -125,7 +125,7 @@ export default function AdminEvent() {
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow-lg mb-10 space-y-4">
+      <div className="bg-white p-6  shadow-lg mb-10 space-y-4">
         <h3 className="text-xl font-bold text-gray-800">Create New Event</h3>
         <div className="grid grid-cols-2 gap-6">
           <input
@@ -135,7 +135,7 @@ export default function AdminEvent() {
             onChange={(e) =>
               setNewEvent({ ...newEvent, title: e.target.value })
             }
-            className="border-gray-300 rounded-lg p-3 shadow-sm w-full"
+            className="border-gray-300  p-3 shadow-sm w-full"
           />
           <input
             type="text"
@@ -144,13 +144,13 @@ export default function AdminEvent() {
             onChange={(e) =>
               setNewEvent({ ...newEvent, excerpt: e.target.value })
             }
-            className="border-gray-300 rounded-lg p-3 shadow-sm w-full"
+            className="border-gray-300  p-3 shadow-sm w-full"
           />
           <input
             type="date"
             value={newEvent.date}
             onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
-            className="border-gray-300 rounded-lg p-3 shadow-sm w-full"
+            className="border-gray-300 p-3 shadow-sm w-full"
           />
           <input
             type="number"
@@ -159,7 +159,7 @@ export default function AdminEvent() {
             onChange={(e) =>
               setNewEvent({ ...newEvent, price: e.target.value })
             }
-            className="border-gray-300 rounded-lg p-3 shadow-sm w-full"
+            className="border-gray-300  p-3 shadow-sm w-full"
           />
           <input
             type="text"
@@ -168,7 +168,7 @@ export default function AdminEvent() {
             onChange={(e) =>
               setNewEvent({ ...newEvent, image: e.target.value })
             }
-            className="border-gray-300 rounded-lg p-3 shadow-sm w-full col-span-2"
+            className="border-gray-300 p-3 shadow-sm w-full col-span-2"
           />
           <label className="flex items-center gap-2 col-span-2">
             <input
@@ -184,7 +184,7 @@ export default function AdminEvent() {
         </div>
         <button
           onClick={handleCreate}
-          className="bg-[#8E7037] text-white px-6 py-2  hover:bg-white  hover:text-[#8E7037] border-2 border-[#8E7037] transition-all duration-200 font-bold">
+          className="bg-[#8E7037] text-white px-6 py-2 hover:bg-white  hover:text-[#8E7037] border border-[#8E7037] transition-all duration-200 ">
           Create Event
         </button>
       </div>
@@ -198,11 +198,11 @@ export default function AdminEvent() {
           {events.map((event) => (
             <div
               key={event._id}
-              className="bg-white p-6 rounded-xl shadow-lg flex justify-between items-center transition-transform hover:scale-105">
+              className="bg-white p-6 shadow-lg flex justify-between items-center transition-transform hover:scale-105">
               <img
                 src={event.image}
                 alt={event.title?.en || "Event Image"}
-                className="w-28 h-28 object-cover  mr-6"
+                className="w-40 h-40 object-cover mr-3"
               />
               {editingEventId === event._id ? (
                 <div className="flex-1 space-y-3">
@@ -210,13 +210,13 @@ export default function AdminEvent() {
                     name="title"
                     value={editedEvent.title}
                     onChange={handleEditChange}
-                    className="w-full border-gray-300 rounded-lg p-3 shadow-sm"
+                    className="w-full border-gray-300  p-3 shadow-sm"
                   />
                   <input
                     name="excerpt"
                     value={editedEvent.excerpt}
                     onChange={handleEditChange}
-                    className="w-full border-gray-300 rounded-lg p-3 shadow-sm"
+                    className="w-full border-gray-300  p-3 shadow-sm"
                   />
                   <div className="flex gap-4">
                     <input
@@ -224,21 +224,21 @@ export default function AdminEvent() {
                       type="date"
                       value={editedEvent.date?.split("T")[0] || ""}
                       onChange={handleEditChange}
-                      className="w-full border-gray-300 rounded-lg p-3 shadow-sm"
+                      className="w-full border-gray-300  p-3 shadow-sm"
                     />
                     <input
                       name="price"
                       type="number"
                       value={editedEvent.price}
                       onChange={handleEditChange}
-                      className="w-full border-gray-300 rounded-lg p-3 shadow-sm"
+                      className="w-full border-gray-300 p-3 shadow-sm"
                     />
                   </div>
                   <input
                     name="image"
                     value={editedEvent.image}
                     onChange={handleEditChange}
-                    className="w-full border-gray-300 rounded-lg p-3 shadow-sm"
+                    className="w-full border-gray-300 p-3 shadow-sm"
                   />
                   <label className="flex items-center gap-2">
                     <input
@@ -253,7 +253,7 @@ export default function AdminEvent() {
                   <div className="flex justify-end gap-4 pt-2">
                     <button
                       onClick={() => handleEditSave(event._id)}
-                      className="bg-green-600 text-white px-6 py-2  hover:bg-green-700">
+                      className="bg-[#8E7037] text-white hover:border hover:border-[#8E7037] hover:text-[#8E7037] px-6 py-2  hover:bg-white">
                       Save
                     </button>
                     <button
@@ -268,17 +268,17 @@ export default function AdminEvent() {
                   <h3 className="text-xl font-semibold">
                     {event.title?.en || "No Title"}
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-justify mr-5 mb-5 mt-2">
                     {event.excerpt?.en || "No Excerpt Available"}
                   </p>
-                  <p className="text-sm mt-1">📅 Date: {event.date}</p>
-                  <p className="text-md font-bold">
+                  <p className="text-sm">📅 Date: {event.date}</p>
+                  <p className="text-md font-bold mt-1">
                     {currencySymbols[currency]}
                     {Number(event.price).toLocaleString()}
                   </p>
 
                   {event.showCountdown && (
-                    <p className="text-sm text-red-500">⏳ Countdown active</p>
+                    <p className="text-sm text-red-500 mt-1">⏳ Countdown active</p>
                   )}
                 </div>
               )}
