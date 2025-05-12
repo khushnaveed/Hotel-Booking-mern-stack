@@ -8,7 +8,6 @@ const guestSchema = new Schema({
   phonenumber: {
     type: String,
     required: true,
-    unique: true,
     validate: {
       validator: function (v) {
         return /^\+?[1-9]\d{1,14}$/.test(v); // E.164 format
