@@ -19,7 +19,7 @@ export default function Login() {
     if (token) {
       navigate("/profile");
     }
-  }, [navigate]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

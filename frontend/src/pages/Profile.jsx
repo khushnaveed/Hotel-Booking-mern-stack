@@ -5,6 +5,7 @@ import ProfileData from "../components/profilePageComponents/ProfileData";
 import ReservationHistory from "../components/profilePageComponents/ReservationHistory";
 import PaymentMethod from "../components/profilePageComponents/PaymentMethod";
 import HelpCenter from "../components/profilePageComponents/HelpCenter";
+import { Navigate } from "react-router-dom";
 //import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
@@ -33,6 +34,7 @@ const Profile = () => {
   };
 
   return (
+    guest?
     <div className="container mx-auto px-4 py-8 mt-40">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {/* Sidebar with Logout */}
@@ -55,7 +57,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div> :<Navigate  to="/login"/>
   );
 };
 
