@@ -1,4 +1,5 @@
 import React from "react";
+import { XCircle } from "lucide-react";
 
 export default function RestaurantGallery({
   loading,
@@ -85,11 +86,12 @@ export default function RestaurantGallery({
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-2 right-2 text-gray-700 hover:text-black text-xl"
+              className="absolute top-2 right-2 text-[#8E7037] hover:text-white hover:bg-[#8E7037] hover:border hover: border-[#8E7037] rounded-full"
               onClick={closeModal}
             >
-              &times;
+              <XCircle size={22} />
             </button>
+
             <img
               src={
                 selectedItem.img ||
@@ -98,7 +100,7 @@ export default function RestaurantGallery({
                 )}`
               }
               alt={selectedItem.name}
-              className="w-full h-auto"
+              className="w-full h-auto p-4"
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src = `/placeholder.svg?height=400&width=600&text=${encodeURIComponent(
@@ -106,7 +108,7 @@ export default function RestaurantGallery({
                 )}`;
               }}
             />
-            <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+            <div className="mt-4 p-5 bg-gray-50">
               <h4 className="text-xl font-semibold">{selectedItem.name}</h4>
               <span className="inline-block bg-[#8E7037] text-white text-xs px-2 py-1 mt-1 mb-2">
                 {selectedItem.title}

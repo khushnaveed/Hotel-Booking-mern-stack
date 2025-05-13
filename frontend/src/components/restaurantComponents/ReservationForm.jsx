@@ -160,7 +160,7 @@ export default function ReservationForm() {
             ></textarea>
             <button
               type="submit"
-              className="bg-[#8E7037] text-white py-2 px-4  hover:bg-[#a28344]"
+              className="px-6 py-3 mt-5 bg-[#8E7037] text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
             >
               Book Table
             </button>

@@ -31,7 +31,7 @@ export default function RoomTabs({ roomData, calendarRef }) {
             label: "OVERVIEW",
             content: (
                 <>
-                    <p>{roomData.descOverview}</p>
+                    <p className="text-justify">{roomData.descOverview}</p>
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-5 mt-4 text-gray-600">
                         <li><strong>SPECIAL ROOM</strong></li>
                         <li><strong>Max:</strong> {roomData?.additionalDetails?.maxPersons} Person(s)</li>

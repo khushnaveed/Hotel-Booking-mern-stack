@@ -106,7 +106,7 @@ export default function HomePageRooms() {
 
                 <Link
                   to={`/rooms/${room.slug}`}
-                  className="inline-block mx-auto text-sm text-white bg-[#8E7037] font-semibold border border-[#8E7037] px-4 py-2 hover:bg-white hover:text-[#8E7037] transition rounded"
+                  className="inline-block mx-auto text-sm text-white bg-[#8E7037] border border-[#8E7037] px-4 py-2 hover:bg-white hover:text-[#8E7037] transition"
                 >
                   Book Now
                 </Link>

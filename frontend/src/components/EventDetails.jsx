@@ -119,7 +119,7 @@ function EventDetails() {
                 <h2 className="text-xl font-semibold text-gray-900">
                   About This Event
                 </h2>
-                <p className="text-gray-700 leading-relaxed text-lg">
+                <p className="text-gray-700 leading-relaxed text-lg text-justify">
                   {event.excerpt.en}
                 </p>
               </div>
@@ -185,8 +185,8 @@ function EventDetails() {
 
                 <button
                   onClick={handleBookNow}
-                  className="w-full py-3 px-6 bg-[#8E7037] text-white text-lg font-semibold hover:bg-[#705832] transition-colors"
-                >
+                  className="px-6 py-3 bg-[#8E7037] w-full text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
+                  >
                   Book Now
                 </button>
               </div>

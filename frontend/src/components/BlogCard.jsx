@@ -59,7 +59,7 @@ function BlogCard({
         </div>
 
         {showCountdown && (
-          <div className="absolute bottom-0 left-0 w-full bg-yellow-900/90 text-white px-4 py-2 flex justify-around text-center text-[10px] md:text-xs font-semibold uppercase tracking-wider">
+          <div className="absolute bottom-0 left-0 w-full bg-[#8E7037]/90 text-white px-4 py-2 flex justify-around text-center text-[10px] md:text-xs font-semibold uppercase tracking-wider">
             <div>
               <p className="text-base md:text-xl">{timeLeft.days}</p>
               <p>Days</p>
@@ -86,7 +86,7 @@ function BlogCard({
         <h3 className="text-xl font-bold mb-2 group-hover:underline">
           {title}
         </h3>
-        <p className="text-gray-700 mb-2">{excerpt}</p>
+        <p className="text-gray-700 mb-2 text-justify">{excerpt}</p>
         <span className="text-blue-500">Read More</span>
         <p className="text-gray-800 font-semibold mt-2">
           Price:

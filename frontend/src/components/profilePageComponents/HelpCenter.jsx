@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  Mail,
+  Phone,
+  MessageSquare,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const HelpCenter = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const navigate = useNavigate();
 
   const faqs = [
     {
       question: "How do I modify my reservation?",
-      answer: "You can modify your reservation up to 48 hours before check-in through your reservations page. Select the booking you wish to modify and click 'Edit Reservation'."
+      answer:
+        "You can modify your reservation up to 48 hours before check-in through your reservations page. Select the booking you wish to modify and click 'Edit Reservation'.",
     },
     {
       question: "What is your cancellation policy?",
-      answer: "Our standard cancellation policy allows free cancellation up to 48 hours before check-in. Different properties may have varying policies, which will be clearly stated during booking."
+      answer:
+        "Our standard cancellation policy allows free cancellation up to 48 hours before check-in. Different properties may have varying policies, which will be clearly stated during booking.",
     },
     {
       question: "How do I update my payment information?",
-      answer: "You can update your payment information in the Payments section of your profile. Click on 'Add New Payment Method' or edit existing ones as needed."
-    }
+      answer:
+        "You can update your payment information in the Payments section of your profile. Click on 'Add New Payment Method' or edit existing ones as needed.",
+    },
   ];
 
   const handleToggle = (index) => {
@@ -47,14 +58,18 @@ const HelpCenter = () => {
       </div>
 
       <div className="space-y-6">
-        <h2 className="text-xl font-semibold text-[#8E7037] mb-4">Frequently Asked Questions</h2>
+        <h2 className="text-xl font-semibold text-[#8E7037] mb-4">
+          Frequently Asked Questions
+        </h2>
         {faqs.map((faq, index) => (
           <div key={index} className="border-b pb-4">
             <div
               className="flex items-center cursor-pointer"
               onClick={() => handleToggle(index)}
             >
-              <h3 className="font-medium text-[#8E7037] mb-2 flex-1">{faq.question}</h3>
+              <h3 className="font-medium text-[#8E7037] mb-2 flex-1">
+                {faq.question}
+              </h3>
               {expandedIndex === index ? (
                 <ChevronUp className="h-5 w-5 text-[#8E7037]" />
               ) : (
@@ -68,7 +83,10 @@ const HelpCenter = () => {
         ))}
       </div>
 
-      <button className="mt-6 p-5 py-2 bg-[#8E7037] text-white hover:bg-opacity-90 transition-colors duration-200">
+      <button
+        className="mt-6 p-5 py-2 bg-[#8E7037] text-white transition-colors duration-200 hover:bg-white hover:text-[#8E7037] hover:border hover:border-[#8E7037]"
+        onClick={() => navigate(`/contact`)}
+      >
         Contact Support
       </button>
     </div>

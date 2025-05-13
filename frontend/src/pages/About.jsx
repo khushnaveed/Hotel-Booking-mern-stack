@@ -50,7 +50,7 @@ export default function About() {
               <h2 className="text-4xl font-bold text-gray-800 mb-4">
                 About Our Hotel
               </h2>
-              <p className="text-gray-600 text-lg">
+              <p className="text-gray-600 text-lg text-justify">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Quibusdam neque magni, aliquid voluptatum debitis facere aliquam
                 voluptatibus nesciunt tempore voluptates rem perferendis tempora
@@ -71,7 +71,7 @@ export default function About() {
               <h2 className="text-4xl font-bold text-gray-800 mb-4">
                 WHY GUESTS CHOOSE SKYLINE HOTEL?
               </h2>
-              <p className="text-gray-600 text-lg">
+              <p className="text-gray-600 text-lg text-justify">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Quibusdam neque magni, aliquid voluptatum debitis facere aliquam
                 voluptatibus nesciunt tempore voluptates rem perferendis tempora
@@ -142,7 +142,7 @@ export default function About() {
 
           <div className="flex min-w-max justify-start">
             {teamMembers.map((member, idx) => (
-              <div key={idx} className="text-center w-64 flex-shrink-0">
+              <div key={idx} className="text-center w-60 flex-shrink-0">
                 <img
                   src={member.img}
                   alt={member.name}

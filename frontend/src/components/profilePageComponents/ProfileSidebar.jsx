@@ -1,5 +1,5 @@
 import React from "react";
-import { User, Calendar, CreditCard, HelpCircle, LogOut } from "lucide-react";
+import { User, Calendar, HelpCircle, LogOut } from "lucide-react";
 
 const ProfileSidebar = ({
   guest,
@@ -10,7 +10,6 @@ const ProfileSidebar = ({
   const navItems = [
     { id: "profile", label: "Profile", icon: User },
     { id: "reservations", label: "Reservations", icon: Calendar },
-    { id: "payments", label: "Payments", icon: CreditCard },
     { id: "help", label: "Help Center", icon: HelpCircle },
   ];
 

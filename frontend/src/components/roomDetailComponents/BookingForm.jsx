@@ -61,7 +61,7 @@ export default function BookingForm({
                 <div className="mt-4">
                     <button
                         type="submit"
-                        className="w-full p-3 bg-[#8E7037] text-white font-semibold cursor-pointer hover:bg-white hover:text-[#8E7037]"
+                        className="w-full p-3 bg-[#8E7037] text-white cursor-pointer hover:bg-white hover:text-[#8E7037] hover:border hover:border-[#8E7037]"
                         onClick={handleBookingClick}
                     >
                         Book Now

@@ -556,13 +556,9 @@ export default function AdminRoom() {
         </div>
       </div>
 
-      <h2 className="text-3xl rounded-lg font-semibold text-gray-800 mb-6">
-        Room Management ({rooms.length} rooms)
-      </h2>
-
-      <div className="bg-white rounded-lg p-6 shadow-lg mb-10 space-y-4">
+      <div className="bg-white  p-6 shadow-lg mb-10 space-y-4">
         <h3 className="text-xl font-bold text-gray-800">Create New Room</h3>
-        <div className="grid grid-cols-2 gap-6 rounded-lg">
+        <div className="grid grid-cols-2 gap-6 ">
           <input
             type="text"
             placeholder="Title"
@@ -666,7 +662,7 @@ export default function AdminRoom() {
         </div>
         <button
           onClick={handleCreate}
-          className="bg-[#8E7037] text-white px-6 py-2 hover:bg-white hover:text-[#8E7037] border-2 border-[#8E7037] transition-all duration-200 font-bold"
+          className="bg-[#8E7037] text-white px-6 py-2 hover:bg-white hover:text-[#8E7037] border border-[#8E7037] transition-all duration-200"
         >
           Create Room
         </button>
@@ -683,7 +679,7 @@ export default function AdminRoom() {
           {rooms.map((room) => (
             <div
               key={room._id}
-              className="bg-white p-6 shadow-lg rounded-lg flex justify-between items-center transition-transform hover:scale-105"
+              className="bg-white p-6 shadow-lg flex justify-between items-center transition-transform hover:scale-105"
             >
               <img
                 src={room.images?.[0]}
@@ -758,7 +754,7 @@ export default function AdminRoom() {
                   <div className="flex justify-end gap-4 pt-2">
                     <button
                       onClick={() => handleEditSave(room._id)}
-                      className="bg-green-600 text-white px-6 py-2 hover:bg-green-700"
+                      className="bg-[#8E7037] text-white px-6 py-2 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037]"
                     >
                       Save
                     </button>
@@ -773,7 +769,7 @@ export default function AdminRoom() {
               ) : (
                 <div className="flex-1 text-gray-800">
                   <h3 className="text-xl font-semibold">{room.title}</h3>
-                  <p className={`text-gray-600 ${expandedRoomIds.includes(room._id) ? '' : 'line-clamp-2'}`}>
+                  <p className={`text-gray-600 text-justify ${expandedRoomIds.includes(room._id) ? '' : 'line-clamp-2'}`}>
                     {room.descOverview}
                   </p>
                   <button
@@ -782,10 +778,12 @@ export default function AdminRoom() {
                   >
                     {expandedRoomIds.includes(room._id) ? 'Read less' : 'Read more'}
                   </button>
-                  <p className="text-sm mt-1">💶 Price: {room.defaultPrice} {currencySymbols[currency]} </p>
-                  <p className="text-sm mt-1">Max Persons: {room?.additionalDetails?.maxPersons}</p>
-                  <p className="text-sm mt-1">Bed Type: {room?.additionalDetails?.bed}</p>
-                  <p className="text-sm mt-1">View: {room?.additionalDetails?.view}</p>
+                  <div className="mt-4">
+                    <p className="text-sm mt-1">💶 Price: {room.defaultPrice} {currencySymbols[currency]} </p>
+                    <p className="text-sm mt-1">Max Persons: {room?.additionalDetails?.maxPersons}</p>
+                    <p className="text-sm mt-1">Bed Type: {room?.additionalDetails?.bed}</p>
+                    <p className="text-sm mt-1">View: {room?.additionalDetails?.view}</p>
+                  </div>
                 </div>
               )}
               <div className="ml-4 space-x-2">

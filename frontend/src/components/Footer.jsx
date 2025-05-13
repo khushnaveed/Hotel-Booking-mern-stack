@@ -171,11 +171,11 @@ export default function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email address"
-                  className="w-full px-4 py-2 rounded bg-[#3e3e3e] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
+                  className="w-full px-4 py-2 bg-[#3e3e3e] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
                 />
                 <button
                   type="submit"
-                  className="w-full bg-[#8E7037] text-white px-4 py-2 rounded font-semibold hover:bg-[#3e3e3e] transition-colors"
+                  className="w-full bg-[#8E7037] text-white px-4 py-2 font-semibold hover:bg-[#3e3e3e] transition-colors"
                 >
                   Subscribe
                 </button>

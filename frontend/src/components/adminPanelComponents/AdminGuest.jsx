@@ -75,18 +75,15 @@ const AdminGuest = () => {
       <div className="overflow-x-auto">
         <div className="min-w-[1000px]">
           {/* Table Header */}
-          <div className="grid grid-cols-10 gap-2 bg-[#f8efe0] text-[#8E7037] font-semibold px-4 py-3 rounded-t-lg mb-2 text-sm">
+          <div className="grid grid-cols-10 gap-2 bg-[#f8efe0] text-[#8E7037] font-semibold px-4 py-3  mb-2 text-sm">
             <span>First Name</span>
             <span>Last Name</span>
             <span>Country</span>
             <span>City</span>
-                        <span>Phone</span>
-
+            <span>Phone</span>
             <span>Zip</span>
             <span>Email</span>
             <span>role</span>
-
-
             <span className="col-span-2 text-center">Actions</span>
           </div>
 
@@ -94,7 +91,7 @@ const AdminGuest = () => {
           {guests.map((guest) => (
             <div
               key={guest._id}
-              className="grid grid-cols-10 gap-2   sm:grid-cols-10 items-center bg-white p-4 mb-2 rounded-lg shadow text-sm"
+              className="grid grid-cols-10 gap-2  hover:bg-gray-50 sm:grid-cols-10 items-center bg-white p-4 mb-2  shadow text-sm"
             >
               {editingGuestId === guest._id ? (
                 <>
@@ -112,7 +109,7 @@ const AdminGuest = () => {
                     onChange={handleInputChange}
                     className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
-                 
+
                   <input
                     type="text"
                     name="country"
@@ -148,7 +145,7 @@ const AdminGuest = () => {
                     onChange={handleInputChange}
                     className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
-                    <input
+                  <input
                     type="text"
                     name="role"
                     value={editedGuest.role}
@@ -176,10 +173,12 @@ const AdminGuest = () => {
                   <span>{guest.lastName}</span>
                   <span>{guest.country}</span>
                   <span className="truncate break-words">{guest.city}</span>
-                 <span className="truncate break-words">{guest.phonenumber}</span>
+                  <span className="truncate break-words">
+                    {guest.phonenumber}
+                  </span>
 
                   <span>{guest.zipcode}</span>
-                  <span className="truncate break-words" >{guest.email}</span>
+                  <span className="truncate break-words">{guest.email}</span>
                   <span className="whitespace-nowrap">{guest.role}</span>
 
                   <div className="flex gap-4 col-span-2 justify-center">
