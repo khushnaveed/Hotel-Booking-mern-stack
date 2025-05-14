@@ -50,7 +50,6 @@ function EventDetails() {
       date: event.date,
     });
 
-    /* navigate("/checkout"); */
     const token = localStorage.getItem("token");
     navigate(token ? "/checkout" : "/login");
     console.log("Token:", localStorage.getItem("token"));
@@ -75,8 +74,7 @@ function EventDetails() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <button
           onClick={() => navigate("/events")}
-          className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors group"
-        >
+          className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors group">
           <ArrowLeft
             size={18}
             className="mr-2 group-hover:-translate-x-1 transition-transform duration-200"
@@ -91,9 +89,15 @@ function EventDetails() {
             <div className="overflow-hidden shadow-sm bg-white">
               <div className="relative aspect-[16/9] overflow-hidden">
                 <div
-                  className={`absolute inset-0 bg-gray-200 animate-pulse ${isImageLoaded ? "hidden" : "block"
+
+                  className={`absolute inset-0 bg-gray-200 animate-pulse ${
+                    isImageLoaded ? "hidden" : "block"
+                  }`}></div>
+
+                 /* className={`absolute inset-0 bg-gray-200 animate-pulse ${isImageLoaded ? "hidden" : "block"
                     }`}
-                ></div>
+                ></div>*/
+
                 <img
                   src={event.image}
                   alt={event.title.en}
@@ -150,8 +154,7 @@ function EventDetails() {
                     <button
                       onClick={decrement}
                       className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors"
-                      aria-label="Decrease ticket count"
-                    >
+                      aria-label="Decrease ticket count">
                       <Minus size={18} className="text-gray-700" />
                     </button>
 
@@ -162,8 +165,7 @@ function EventDetails() {
                     <button
                       onClick={increment}
                       className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors"
-                      aria-label="Increase ticket count"
-                    >
+                      aria-label="Increase ticket count">
                       <Plus size={18} className="text-gray-700" />
                     </button>
                   </div>
@@ -185,8 +187,12 @@ function EventDetails() {
 
                 <button
                   onClick={handleBookNow}
-                  className="px-6 py-3 bg-[#8E7037] w-full text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
-                  >
+
+                  className="w-full py-3 px-6 bg-[#8E7037] text-white text-lg font-semibold hover:bg-[#705832] transition-colors">
+
+                 /* className="px-6 py-3 bg-[#8E7037] w-full text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
+                  >*/
+
                   Book Now
                 </button>
               </div>

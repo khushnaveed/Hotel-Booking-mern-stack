@@ -10,8 +10,7 @@ import HeroSection from "../components/HeroSection";
 function Events() {
   const navigate = useNavigate();
   const { currency } = useCurrency();
-  const { t, i18n } = useTranslation(); // ✅ Use i18n to access the current language
-
+  const { t, i18n } = useTranslation();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(false);
@@ -47,9 +46,7 @@ function Events() {
         backgroundImage="/src/assets/heroImage.jpg"
       />
 
-      {/* MAIN BLOG CONTENT */}
       <div className="container mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* SIDEBAR */}
         <aside className="lg:col-span-1 space-y-8">
           <section>
             <h2 className="font-bold text-lg mb-4">{t("categories")}</h2>
@@ -61,7 +58,6 @@ function Events() {
             </ul>
           </section>
 
-          {/* DEAL CARD */}
           <section>
             <h2 className="font-bold text-lg mb-4">{t("deal")}</h2>
 
@@ -75,8 +71,7 @@ function Events() {
                 <div className="absolute bottom-2 left-2 bg-white rounded-none font-bold">
                   <Link
                     to={`/rooms/${luxuryRoom.slug}`}
-                    className="block text-sm text-black text-center px-2 py-1 transition duration-300 hover:bg-[#6f5525] hover:text-white"
-                  >
+                    className="block text-sm text-black text-center px-2 py-1 transition duration-300 hover:bg-[#6f5525] hover:text-white">
                     {luxuryRoom.title?.toUpperCase()}
                     <p className="text-xs font-semibold mt-1">
                       {t("price")}: {currencySymbols[currency]}
@@ -89,7 +84,6 @@ function Events() {
           </section>
         </aside>
 
-        {/* EVENT CARDS */}
         <main className="lg:col-span-3 space-y-8">
           {error && (
             <div className="text-red-500">{t("errorFetchingEvents")}</div>
@@ -112,8 +106,12 @@ function Events() {
                   button={
                     <button
                       onClick={() => navigate(`/events/${event.slug}`)}
-                      className="px-6 py-3 bg-[#8E7037] text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
-                    >
+
+                      className="px-4 sm:px-6 py-2 sm:pb-2 pb-4 text-sm sm:text-base 
+                    bg-[#8E7037] font-semibold text-white 
+                     hover:bg-white hover:text-[#8E7037] 
+                     border-2 border-[#8E7037] w-max mt-4 ml-2 sm:ml-6">
+
                       View Details
                     </button>
                   }
