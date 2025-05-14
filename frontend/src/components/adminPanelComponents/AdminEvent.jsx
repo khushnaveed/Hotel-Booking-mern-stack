@@ -8,7 +8,6 @@ export default function AdminEvent() {
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [newEvent, setNewEvent] = useState({
     title: "",
     excerpt: "",
@@ -19,6 +18,10 @@ export default function AdminEvent() {
   });
   const [editingEventId, setEditingEventId] = useState(null);
   const [editedEvent, setEditedEvent] = useState({});
+  const [expandedEvents, setExpandedEvents] = useState({});
+  const toggleExpanded = (id) => {
+    setExpandedEvents((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   useEffect(() => {
     fetchEvents();
@@ -30,11 +33,8 @@ export default function AdminEvent() {
       .get("http://localhost:5005/events")
       .then((response) => {
         setEvents(response.data);
-        setError(false);
       })
-      .catch(() => {
-        setError(true);
-      })
+      .catch(() => {})
       .finally(() => setLoading(false));
   };
 
@@ -257,7 +257,7 @@ export default function AdminEvent() {
                       Save
                     </button>
                     <button
-                      onClick={() => setEditingEventId(null)} // Cancel editing
+                      onClick={() => setEditingEventId(null)}
                       className="bg-gray-300 text-gray-800 px-6 py-2  hover:bg-gray-400">
                       Cancel
                     </button>
@@ -269,8 +269,19 @@ export default function AdminEvent() {
                     {event.title?.en || "No Title"}
                   </h3>
                   <p className="text-gray-600">
-                    {event.excerpt?.en || "No Excerpt Available"}
+                    {expandedEvents[event._id]
+                      ? event.excerpt?.en
+                      : (event.excerpt?.en?.slice(0, 100) || "") +
+                        (event.excerpt?.en?.length > 100 ? "..." : "")}
                   </p>
+                  {event.excerpt?.en?.length > 100 && (
+                    <button
+                      onClick={() => toggleExpanded(event._id)}
+                      className="text-sm text-blue-600 underline mt-1">
+                      {expandedEvents[event._id] ? "Read less" : "Read more"}
+                    </button>
+                  )}
+
                   <p className="text-sm mt-1">📅 Date: {event.date}</p>
                   <p className="text-md font-bold">
                     {currencySymbols[currency]}
