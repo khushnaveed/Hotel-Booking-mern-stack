@@ -11,16 +11,19 @@ export default function PaymentMethod() {
     //console.log(cartItems)
     try {
       const formattedCartItems = cartItems.map((item) => ({
-        name: item.title || item.slug,
-        description: item.date
-          ? `Event Date:${item.date}`
-          : `Check-in: ${item.arrivalDate},
-         Check-out: ${item.departureDate},
-          ${item.numAdults} Adults,
-           ${item.numChildren} Children`,
-        price: item.totalPrice * 100,
-        quantity: item.quantity,
-        image: item.image,
+        /*  name: item.title || item.slug,
+         description: item.date
+           ? `Event Date:${item.date}`
+           : `Check-in: ${item.arrivalDate},
+          Check-out: ${item.departureDate},
+           ${item.numAdults} Adults,
+            ${item.numChildren} Children`,
+         price: item.totalPrice * 100,
+         quantity: item.quantity,
+         image: item.image, */
+        ...item,
+
+
       }));
 
       const response = await fetch(
@@ -29,8 +32,13 @@ export default function PaymentMethod() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            token: localStorage.getItem("token")
           },
-          body: JSON.stringify({ cartItems: formattedCartItems }),
+          body: JSON.stringify({
+            cartItems: formattedCartItems, orderTotalAmount: cartItems.reduce((acc, each) => {
+              return acc + (each.totalPrice)
+            }, 0)
+          }),
         }
       );
 
@@ -55,7 +63,7 @@ export default function PaymentMethod() {
       <button
         onClick={handleCheckout}
         className="px-6 py-3 bg-[#8E7037] w-6/12 text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
-        >
+      >
         Checkout
       </button>
     </div>
