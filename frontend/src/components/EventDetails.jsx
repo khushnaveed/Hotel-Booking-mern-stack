@@ -89,20 +89,21 @@ function EventDetails() {
             <div className="overflow-hidden shadow-sm bg-white">
               <div className="relative aspect-[16/9] overflow-hidden">
                 <div
-
                   className={`absolute inset-0 bg-gray-200 animate-pulse ${
                     isImageLoaded ? "hidden" : "block"
                   }`}></div>
 
-                 /* className={`absolute inset-0 bg-gray-200 animate-pulse ${isImageLoaded ? "hidden" : "block"
-                    }`}
-                ></div>*/
+                <div
+                  className={`absolute inset-0 bg-gray-200 animate-pulse ${
+                    isImageLoaded ? "hidden" : "block"
+                  }`}></div>
 
                 <img
                   src={event.image}
                   alt={event.title.en}
-                  className={`w-full h-full object-cover object-center transition-opacity duration-700 ${isImageLoaded ? "opacity-100" : "opacity-0"
-                    }`}
+                  className={`w-full h-full object-cover object-center transition-opacity duration-700 ${
+                    isImageLoaded ? "opacity-100" : "opacity-0"
+                  }`}
                   onLoad={handleImageLoad}
                 />
               </div>
@@ -142,7 +143,6 @@ function EventDetails() {
                   <span className="text-2xl font-semibold text-gray-900">
                     {currencySymbols[currency]}
                     {(event.price * conversionRates[currency]).toFixed(2)}
-
                   </span>
                 </div>
 
@@ -176,8 +176,11 @@ function EventDetails() {
                   <div className="text-right">
                     <span className="text-2xl font-bold text-gray-900 block">
                       {currencySymbols[currency]}
-                      {(event.price * ticketCount * conversionRates[currency]).toFixed(2)}
-
+                      {(
+                        event.price *
+                        ticketCount *
+                        conversionRates[currency]
+                      ).toFixed(2)}
                     </span>
                     <span className="text-xs text-gray-500 block mt-1">
                       All taxes included
@@ -187,12 +190,7 @@ function EventDetails() {
 
                 <button
                   onClick={handleBookNow}
-
                   className="w-full py-3 px-6 bg-[#8E7037] text-white text-lg font-semibold hover:bg-[#705832] transition-colors">
-
-                 /* className="px-6 py-3 bg-[#8E7037] w-full text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
-                  >*/
-
                   Book Now
                 </button>
               </div>
