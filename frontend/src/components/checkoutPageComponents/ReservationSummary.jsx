@@ -68,7 +68,7 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
           className="flex gap-4 items-start border-b pb-5 relative"
         >
           <img
-            src={item.image || "https://via.placeholder.com/80"}
+            src={item.images || "https://via.placeholder.com/80"}
             alt={item.slug}
             className="w-20 h-20 object-cover shadow"
           />

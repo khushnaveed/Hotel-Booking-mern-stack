@@ -82,15 +82,17 @@ export default function RoomDetails() {
     totalPrice += numChildren * childFee * nights;
     totalPrice *= conversionRates[currency];
     const payload = {
+      _id: roomData._id,
       slug: roomSlug,
+      title: roomData.title,
       arrivalDate: arrive,
       departureDate: departure,
       numAdults,
       numChildren,
-      selectedPackages: [],
+
       totalPrice,
       nights,
-      image: roomData.images[0],
+      images: [roomData.images[0]],
     };
     addToCart(payload);
     const token = localStorage.getItem("token");

@@ -14,6 +14,34 @@ export default function SuccessPage() {
                 .then((res) => res.json())
                 .then((data) => {
                     console.log(data)
+                    let order = {
+                        guestId: data.metadata.guestId,
+                        roomsBooking: Array(data.metadata.productIds.split(",").lenght).fill(null).map((item, index) => {
+                            return {
+                                slug: data.metadata.slug.split(",")[index],
+                                title: data.metadata.title.split(",")[index],
+                                arrivalDate: data.metadata.arrivalDate.split(",")[index],
+                                departureDate: data.metadata.departureDate.split(",")[index],
+                                numAdults: data.metadata.numAdults.split(",")[index],
+                                numChildren: data.metadata.numChildren.split(",")[index],
+                                totalPrice: data.metadata.totalPrice.split(",")[index],
+                                nights: data.metadata.nights.split(",")[index],
+                            }
+                        }),
+                        orderTotalAmount: +data.metadata.orderTotalAmount
+
+                    }
+                    fetch(`http://localhost:5005/order`,
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                token: localStorage.getItem("token")
+                            },
+                            body: JSON.stringify(order),
+                        }
+                    ).then(res => res.json())
+                        .then(result => console.log(result))
                     setBookingData({
                         bookingNumber: data.bookingReference,
 

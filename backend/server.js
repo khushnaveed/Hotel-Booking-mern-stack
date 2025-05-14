@@ -7,6 +7,8 @@ import eventRoutes from "./routes/eventRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import cors from "cors"
 import restaurantRoutes from "./routes/restaurantRoutes.js"
+import orderRoutes from "./routes/orderRoutes.js"
+
 import { auth } from "./middlewares/authentication.js"
 import Stripe from "stripe";
 
@@ -44,10 +46,11 @@ app.use("/room", roomRoutes)
 app.use("/guest", guestRoutes)
 app.use('/events', eventRoutes);
 app.use('/menu', restaurantRoutes);
-app.post('/create-checkout-session', async (req, res) => {
+app.use("/order", orderRoutes)
+app.post('/create-checkout-session', auth, async (req, res) => {
 
-  const { cartItems } = req.body;
-  //console.log(cartItems)
+  const { cartItems, orderTotalAmount } = req.body;
+  console.log(cartItems, orderTotalAmount)
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -55,17 +58,34 @@ app.post('/create-checkout-session', async (req, res) => {
         price_data: {
           currency: 'usd',
           product_data: {
-            name: item.name,
-            description: item.description,
-            images: [item.image]
+            name: item.title,
+            /* description: item.description, */
+            images: item.images
           },
-          unit_amount: item.price,
+          unit_amount: item.totalPrice * 100,
         },
         quantity: item.quantity,
       })),
       mode: 'payment',
       success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+      metadata: {
+        productIds: cartItems.map((item) => item._id).join(","),
+        numAdults: cartItems.map((item) => item.numAdults).join(","),
+        numChildren: cartItems.map((item) => item.numChildren).join(","),
+        arrivalDate: cartItems.map((item) => item.arrivalDate).join(","),
+        departureDate: cartItems.map((item) => item.departureDate).join(","),
+        title: cartItems.map((item) => item.title).join(","),
+        nights: cartItems.map((item) => item.nights).join(","),
+        totalPrice: cartItems.map((item) => item.totalPrice).join(","),
+        slug: cartItems.map((item) => item.slug).join(","),
+        orderTotalAmount,
+
+
+
+
+        guestId: req.guest._id.toString(),
+      },
     });
 
     res.json({ id: session.id });
