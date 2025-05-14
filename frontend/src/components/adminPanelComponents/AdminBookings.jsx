@@ -118,7 +118,7 @@ const AdminBookings = () => {
         placeholder="Search by reference, method, transaction ..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4 p-2 border border-gray-300 bg-white rounded w-full max-w-md"
+        className="mb-4 p-2 border border-gray-300 bg-white w-full max-w-md"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2 }}
@@ -127,7 +127,7 @@ const AdminBookings = () => {
       {/* Booking Table */}
       <div className="overflow-x-auto">
         <div className="min-w-[1100px]">
-          <div className="grid grid-cols-8 gap-2 bg-[#f8efe0] text-[#8E7037] font-semibold px-4 py-3 rounded-t-lg mb-2 text-sm">
+          <div className="grid grid-cols-8 gap-2 bg-[#f8efe0] text-[#8E7037] font-semibold px-4 py-3  mb-2 text-sm">
             <span>Reference</span>
             <span>Payment Method</span>
             <span>Transaction ID</span>
@@ -153,7 +153,7 @@ const AdminBookings = () => {
                 return (
                   <motion.div
                     key={booking._id}
-                    className="grid grid-cols-8 gap-2 bg-white p-4 mb-2 rounded-lg shadow text-sm relative"
+                    className="grid grid-cols-8 gap-2 bg-white p-4 mb-2 shadow text-sm relative"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
@@ -178,7 +178,7 @@ const AdminBookings = () => {
 
                     {isExpanded && (
                       <motion.div
-                        className="col-span-8 mt-3 bg-gray-50 rounded-lg p-4 text-sm text-gray-800 border border-gray-200"
+                        className="col-span-8 mt-3 bg-gray-50  p-4 text-sm text-gray-800 border border-gray-200"
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
@@ -188,7 +188,7 @@ const AdminBookings = () => {
                           {booking.cartItems.map((item, idx) => (
                             <div
                               key={idx}
-                              className="bg-white p-4 rounded-md shadow-sm border border-gray-100"
+                              className="bg-white p-4  shadow-sm border border-gray-100"
                             >
                               <h4 className="font-semibold text-[#8E7037] text-base mb-2">
                                 {item.title || item.slug}

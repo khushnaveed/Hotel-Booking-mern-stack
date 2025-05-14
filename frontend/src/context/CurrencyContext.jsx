@@ -1,13 +1,51 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-
+/* import React, { createContext, useContext, useState, useEffect } from "react";
 const CurrencyContext = createContext();
 
 export const useCurrency = () => useContext(CurrencyContext);
 
-export const CurrencyProvider = ({ children }) => {
-  const [currency, setCurrency] = useState("USD");
+const conversionRates = {
+  USD: 1,
+  EUR: 0.93,
+  GBP: 0.80,
+};
 
-  // Load saved currency from localStorage
+let defaultCurrency = "USD"
+export const CurrencyProvider = ({ children }) => {
+  const [prevCurreny, setPrevCurrency] = useState(defaultCurrency)
+  const [currency, setCurrency] = useState(defaultCurrency);
+  useEffect(() => {
+    const saved = localStorage.getItem("currency");
+    if (saved) setCurrency(saved);
+  }, []);
+
+
+  const changeCurrency = (newCurrency) => {
+    setCurrency(newCurrency);
+    localStorage.setItem("currency", newCurrency);
+  };
+
+  return (
+    <CurrencyContext.Provider value={{ currency, changeCurrency, conversionRates, setPrevCurrency, setCurrency, prevCurreny }}>
+      {children}
+    </CurrencyContext.Provider>
+  );
+}; */
+import React, { createContext, useContext, useState, useEffect } from "react";
+
+const CurrencyContext = createContext();
+
+const conversionRates = {
+  USD: 1,
+  EUR: 0.93,
+  GBP: 0.80,
+};
+
+let defaultCurrency = "USD";
+
+export const CurrencyProvider = ({ children }) => {
+  const [prevCurreny, setPrevCurrency] = useState(defaultCurrency);
+  const [currency, setCurrency] = useState(defaultCurrency);
+
   useEffect(() => {
     const saved = localStorage.getItem("currency");
     if (saved) setCurrency(saved);
@@ -19,8 +57,24 @@ export const CurrencyProvider = ({ children }) => {
   };
 
   return (
-    <CurrencyContext.Provider value={{ currency, changeCurrency }}>
+    <CurrencyContext.Provider
+      value={{
+        currency,
+        changeCurrency,
+        conversionRates,
+        setPrevCurrency,
+        setCurrency,
+        prevCurreny,
+      }}
+    >
       {children}
     </CurrencyContext.Provider>
   );
 };
+
+const useCurrency = () => {
+  return useContext(CurrencyContext);
+};
+
+export { useCurrency };
+

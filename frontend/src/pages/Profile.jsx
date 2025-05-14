@@ -3,7 +3,6 @@ import { GuestContext } from "../context/GuestContext.jsx";
 import ProfileSidebar from "../components/profilePageComponents/ProfileSidebar";
 import ProfileData from "../components/profilePageComponents/ProfileData";
 import ReservationHistory from "../components/profilePageComponents/ReservationHistory";
-import PaymentMethod from "../components/profilePageComponents/PaymentMethod";
 import HelpCenter from "../components/profilePageComponents/HelpCenter";
 import { Navigate } from "react-router-dom";
 //import { useNavigate } from "react-router-dom";
@@ -24,8 +23,6 @@ const Profile = () => {
         return <ProfileData guest={guest} />;
       case "reservations":
         return <ReservationHistory guest={guest} />;
-      case "payments":
-        return <PaymentMethod />;
       case "help":
         return <HelpCenter />;
       default:

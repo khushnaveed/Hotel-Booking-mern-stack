@@ -106,10 +106,12 @@ function Events() {
                   button={
                     <button
                       onClick={() => navigate(`/events/${event.slug}`)}
+
                       className="px-4 sm:px-6 py-2 sm:pb-2 pb-4 text-sm sm:text-base 
                     bg-[#8E7037] font-semibold text-white 
                      hover:bg-white hover:text-[#8E7037] 
                      border-2 border-[#8E7037] w-max mt-4 ml-2 sm:ml-6">
+
                       View Details
                     </button>
                   }

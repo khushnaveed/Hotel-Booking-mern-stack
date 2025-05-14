@@ -12,13 +12,13 @@ export default function AnotherAccommodation({ relatedRooms }) {
                             <img
                                 src={room.images[0]}
                                 alt={room.title}
-                                className="w-full h-40 object-cover rounded"
+                                className="w-full h-40 object-cover"
                             />
                             <ul className="text-gray-600 text-sm">
-                                <li className="font-semibold text-center">{room.title}</li>
-                                <li><strong>Max:</strong> {room?.additionalDetails?.maxPersons} Person(s)</li>
-                                <li><strong>Bed:</strong> {room?.additionalDetails?.bed}</li>
-                                <li><strong>View:</strong> {room?.additionalDetails?.view}</li>
+                                <li className="font-semibold text-center m-2">{room.title}</li>
+                                <li className="m-1"><strong>Max:</strong> {room?.additionalDetails?.maxPersons} Person(s)</li>
+                                <li className="m-1"><strong>Bed:</strong> {room?.additionalDetails?.bed}</li>
+                                <li className="m-1"><strong>View:</strong> {room?.additionalDetails?.view}</li>
                             </ul>
                         </div>
                     </Link>

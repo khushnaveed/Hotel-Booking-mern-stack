@@ -25,9 +25,9 @@ export default function Gallery() {
                 <img
                   src={item.img}
                   alt={item.name}
-                  className="w-full h-72 object-cover transform transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-75 object-cover transform transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="p-2">
+                <div className="p-2 m-2">
                   <h2 className="text-lg font-semibold">{item.name}</h2>
                   <p className="text-sm text-gray-700">{item.desc}</p>
                 </div>
