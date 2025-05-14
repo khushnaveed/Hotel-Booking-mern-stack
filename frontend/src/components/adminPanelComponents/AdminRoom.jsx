@@ -154,7 +154,9 @@ export default function AdminRoom() {
           <p className="mt-1 text-3xl font-semibold text-gray-900">{rooms.length}</p>
         </div>
       </div>
-
+      <h2 className="text-3xl rounded-lg font-semibold text-gray-800 mb-6">
+        Room Management ({rooms.length} rooms)
+      </h2>
       <div className="bg-white  p-6 shadow-lg mb-10 space-y-4">
         <h3 className="text-xl font-bold text-gray-800">Create New Room</h3>
         <div className="grid grid-cols-2 gap-6 ">
