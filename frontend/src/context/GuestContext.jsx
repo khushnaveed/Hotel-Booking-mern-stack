@@ -21,18 +21,18 @@ export const GuestProvider = ({ children }) => {
       if (result.success) {
         setIsLoggedIn(true);
         setGuest(result.data);
-        setTimeout(() => {
+
+       /** setTimeout(() => {
           navigate("/profile")
-        }, 1000);
+        }, 1000);*/ 
       } else {
         setIsLoggedIn(false);
         setGuest(null);
-        setTimeout(() => {
+       /**  setTimeout(() => {
           navigate("/login")
-        }, 1000);
+        }, 1000);*/
       }   
      })
-    
     
 
     setLoading(false);
