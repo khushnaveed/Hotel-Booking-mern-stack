@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useContext } from "react";
 export default function Register() {
-  const { guest } = useContext(GuestContext); // Using context
+  const { guest } = useContext(GuestContext); 
 
   const navigate = useNavigate();
   useEffect(() => {

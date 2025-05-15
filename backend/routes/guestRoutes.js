@@ -14,7 +14,7 @@ router.get("/:id",auth, getGuestById);
 router.put("/:id", auth, updateGuest);
 router.delete("/:id",deleteGuest );
 router.post("/register", validators,addNewGuest);
-router.get("/confirm-email/:token", confirmEmail); // Confirm email route
+router.get("/confirm-email/:token", confirmEmail); 
 
 router.post("/login", loginGuest); 
 router.post("/forgot-password", forgotPassword);

@@ -22,15 +22,10 @@ export const GuestProvider = ({ children }) => {
         setIsLoggedIn(true);
         setGuest(result.data);
 
-       /** setTimeout(() => {
-          navigate("/profile")
-        }, 1000);*/ 
       } else {
         setIsLoggedIn(false);
         setGuest(null);
-       /**  setTimeout(() => {
-          navigate("/login")
-        }, 1000);*/
+       
       }   
      })
     
@@ -41,16 +36,10 @@ export const GuestProvider = ({ children }) => {
   const login = (token, guestData) => {
     localStorage.setItem("token", token); 
 
-
-
-
-
-    //localStorage.setItem("guestData", JSON.stringify(guestData)); 
     setIsLoggedIn(true);
     setGuest(guestData.data); 
     navigate("/profile");
   };
-  // Handle logout
   const logout = () => {
     localStorage.removeItem("token"); 
     localStorage.removeItem("guestData"); 
@@ -60,8 +49,7 @@ export const GuestProvider = ({ children }) => {
   };
 
   const register = (guestData) => {
-    // Assuming registration API is handled elsewhere
-    // You can directly call your API here, then call login if needed
+    
   };
 
   return (
