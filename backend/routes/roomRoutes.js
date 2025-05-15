@@ -3,10 +3,11 @@ import { createRoom, deleteRoom, getAllRooms, getAvailableRooms, getRoomBySlug, 
 import { isAdmin } from "../middlewares/isAdmin.js"
 import { auth } from "../middlewares/authentication.js"
 const router = Router()
+router.get("/available", getAvailableRooms)
 router.post("/", auth, isAdmin, createRoom)
 router.get("/:slug", getRoomBySlug);
 router.get("/", getAllRooms)
-router.get("/available", getAvailableRooms)
+//router.get("/available", getAvailableRooms)
 router.patch("/:slug", auth, isAdmin, updateRoom)
 router.delete("/:slug", auth, isAdmin, deleteRoom)
 
