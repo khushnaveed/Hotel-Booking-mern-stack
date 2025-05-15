@@ -20,18 +20,25 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
   };
 
   useEffect(() => {
+    console.log(cartItems)
+    console.log(currency)
+    console.log(prevCurreny)
     const exchangeRates = {
       USD: { USD: 1, EUR: 0.93, GBP: 0.8 },
-      EUR: { USD: 1.08, EUR: 1, GBP: 0.86 },
+      EUR: { USD: 1.0753, EUR: 1, GBP: 0.86 },
       GBP: { USD: 1.25, EUR: 1.16, GBP: 1 },
     };
 
     setCartItems(
-      cartItems.map((item) => ({
-        ...item,
-        totalPrice: item.totalPrice * exchangeRates[prevCurreny][currency],
+      cartItems.map((item) => {
+        console.log(item)
+        return ({
+          ...item,
+          totalPrice: +(item.totalPrice * exchangeRates[prevCurreny][currency]).toFixed(2)
+        })
+
       }))
-    );
+      ;
     setPrevCurrency(currency);
   }, [currency]);
 
