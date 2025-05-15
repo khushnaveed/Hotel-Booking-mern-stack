@@ -44,6 +44,8 @@ export default function HeroContentCarousel() {
         console.log("Available Rooms:", data.data);
         // Redirect to the room's details page and scroll to the calendar section
         const firstAvailableRoom = data.data[0];
+        console.log("First Room:", firstAvailableRoom); // Check if it has slug
+
         navigate(`/rooms/${firstAvailableRoom.slug}#calendar`);
       } else {
         alert("No rooms available or something went wrong.");
@@ -109,7 +111,7 @@ export default function HeroContentCarousel() {
               type="date"
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
-              
+
               className="w-full border border-[#8E7037] px-4 py-3 text-sm sm:text-base lg:text-xl text-gray-600"
             />
           </div>
@@ -161,7 +163,7 @@ export default function HeroContentCarousel() {
           </div>
           <div className="col-span-2 lg:col-span-1 w-full">
             <button
-            /*   type="button" */
+              /*   type="button" */
               onClick={handleCheckAvailability}
 
               type="submit"
