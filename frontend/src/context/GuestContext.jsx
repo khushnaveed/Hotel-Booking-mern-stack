@@ -5,63 +5,57 @@ export const GuestContext = createContext();
 
 export const GuestProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [guest, setGuest] = useState({});
+  const [guest, setGuest] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (token) {
+      fetch("http://localhost:5005/guest/verifytoken", {
+        method: "get",
+        headers: { token: token },
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          if (result.success) {
+            setIsLoggedIn(true);
+            setGuest(result.data);
 
-    fetch("http://localhost:5005/guest/verifytoken",{
-      method:"get",
-      headers:{token:token}
-    }).then(res=>res.json( 
-      
-    )) .then(result=>{
-      if (result.success) {
-        setIsLoggedIn(true);
-        setGuest(result.data);
+            navigate("/profile");
+          } else {
+            setIsLoggedIn(false);
+            setGuest(null);
 
-       /** setTimeout(() => {
-          navigate("/profile")
-        }, 1000);*/ 
-      } else {
-        setIsLoggedIn(false);
-        setGuest(null);
-       /**  setTimeout(() => {
-          navigate("/login")
-        }, 1000);*/
-      }   
-     })
-    
+            navigate("/login");
+          }
+        });
+    } else {
+      navigate("/login");
+    }
 
     setLoading(false);
   }, []);
 
   const login = (token, guestData) => {
-    localStorage.setItem("token", token); 
+    localStorage.setItem("token", token);
 
 
-
-
-
-    //localStorage.setItem("guestData", JSON.stringify(guestData)); 
     setIsLoggedIn(true);
-    setGuest(guestData.data); 
+    setGuest(guestData.data);
     navigate("/profile");
   };
-  // Handle logout
+ 
   const logout = () => {
-    localStorage.removeItem("token"); 
-    localStorage.removeItem("guestData"); 
-    setIsLoggedIn(false); 
-    setGuest(null); 
-    navigate("/login"); 
+    localStorage.removeItem("token");
+    localStorage.removeItem("guestData");
+    setIsLoggedIn(false);
+    setGuest(null);
+    navigate("/login");
   };
 
   const register = (guestData) => {
-    // Assuming registration API is handled elsewhere
-    // You can directly call your API here, then call login if needed
+
   };
 
   return (
@@ -75,8 +69,7 @@ export const GuestProvider = ({ children }) => {
         logout,
         register,
         loading,
-      }}
-    >
+      }}>
       {children}
     </GuestContext.Provider>
   );
