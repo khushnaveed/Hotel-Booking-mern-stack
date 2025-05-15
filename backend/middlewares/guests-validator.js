@@ -46,7 +46,6 @@ export const validators = [
     return true;
   }),
 
-  // Final middleware to check validation result
   (req, res, next) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
