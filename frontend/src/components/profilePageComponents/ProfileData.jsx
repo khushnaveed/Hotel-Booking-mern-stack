@@ -6,7 +6,6 @@ const ProfileData = ({ guest }) => {
   const labelClass = " text-gray-500";
   const valueClass = "border-gray-300 mt-2 p-3 shadow-sm w-full";
 
-  // State to manage the edit form
   const [isEditing, setIsEditing] = useState(false);
   const [editedGuest, setEditedGuest] = useState({
     firstName: guest?.firstName || "",
@@ -18,13 +17,11 @@ const ProfileData = ({ guest }) => {
     country: guest?.country || "",
   });
 
-  // Handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedGuest({ ...editedGuest, [name]: value });
   };
 
-  // Handle update request
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -41,7 +38,6 @@ const ProfileData = ({ guest }) => {
   return (
     <div className="bg-white p-6 shadow-md transition-all duration-300 hover:shadow-lg">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* First Name */}
         <div>
           <div className="flex items-center space-x-2">
             <User className="h-4 w-4 text-[#8E7037]" />
@@ -60,7 +56,6 @@ const ProfileData = ({ guest }) => {
           )}
         </div>
 
-        {/* Last Name */}
         <div>
           <div className="flex items-center space-x-2">
             <User className="h-4 w-4 text-[#8E7037]" />
@@ -79,7 +74,6 @@ const ProfileData = ({ guest }) => {
           )}
         </div>
 
-        {/* Email (non-editable) */}
         <div>
           <div className="flex items-center space-x-2">
             <Mail className="h-4 w-4 text-[#8E7037]" />
@@ -88,7 +82,6 @@ const ProfileData = ({ guest }) => {
           <p className={valueClass}>{guest?.email || "Not provided"}</p>
         </div>
 
-        {/* Phone */}
         <div>
           <div className="flex items-center space-x-2">
             <Phone className="h-4 w-4 text-[#8E7037]" />
@@ -108,7 +101,6 @@ const ProfileData = ({ guest }) => {
         </div>
       </div>
 
-      {/* Address Section */}
       <div className="mt-8 border-t pt-6">
         <div className="flex items-center space-x-2 mb-2">
           <MapPin className="h-4 w-4 text-[#8E7037]" />
@@ -172,7 +164,6 @@ const ProfileData = ({ guest }) => {
         </div>
       </div>
 
-      {/* Save/Cancel Buttons */}
       {isEditing && (
         <div className="mt-4 flex gap-4 justify-end">
           <button
@@ -190,7 +181,6 @@ const ProfileData = ({ guest }) => {
         </div>
       )}
 
-      {/* Edit Button */}
       {!isEditing && (
         <div className="mt-4 flex justify-end">
           <button

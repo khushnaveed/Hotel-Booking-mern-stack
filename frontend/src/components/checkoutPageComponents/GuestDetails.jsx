@@ -21,7 +21,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
 
   useEffect(() => {
     if (guest) {
-      console.log("GUEST DATA:", guest); // Debug line to check key names
+      console.log("GUEST DATA:", guest);
       setFormData((prev) => ({
         ...prev,
         firstName: guest.firstName || "",
