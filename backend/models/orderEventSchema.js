@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 const orderEventSchema = new Schema({
-  guestId: { type: Schema.Types.ObjectId, ref: "guest" },
+  guestId: { type: Schema.Types.ObjectId, ref: "Guest" },
   eventsBooking: [
     {
       eventId: { type: Schema.Types.ObjectId, ref: "Event" },

@@ -1,253 +1,257 @@
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import CountUp from "react-countup";
+import axios from "axios";
 import {
-  CalendarDays,
+  CalendarCheck,
+  CalendarX,
   Users,
-  User,
-  Baby,
-  DollarSign,
+  Moon,
+  Receipt,
+  Ticket,
+  Calendar,
 } from "lucide-react";
 
-const AdminBookings = () => {
-  const [bookings, setBookings] = useState([]);
-  const [filteredBookings, setFilteredBookings] = useState([]);
+export default function ReservationHistory() {
+  const [roomOrders, setRoomOrders] = useState([]);
+  const [eventOrders, setEventOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [expandedRows, setExpandedRows] = useState([]);
-
-  const formatDate = (iso) =>
-    new Date(iso).toLocaleString("en-US", {
-      dateStyle: "medium",
-      timeStyle: "short",
-    });
+  const [activeTab, setActiveTab] = useState("rooms");
 
   useEffect(() => {
-    const fetchBookings = async () => {
+    const fetchOrders = async () => {
       try {
         const token = localStorage.getItem("token");
-        if (!token) throw new Error("No token found. Please log in.");
+        if (!token) {
+          setError("No token found. Please login.");
+          setLoading(false);
+          return;
+        }
 
-        const response = await fetch("http://localhost:5005/bookings", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            token,
-          },
-        });
+        const [roomRes, eventRes] = await Promise.all([
+          axios.get("http://localhost:5005/order", { headers: { token } }),
+          axios.get("http://localhost:5005/order-events", {
+            headers: { token },
+          }),
+        ]);
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.message || "Failed to fetch bookings.");
+        if (roomRes.data.success) {
+          const sortedRooms = roomRes.data.data.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+          setRoomOrders(sortedRooms);
+        }
 
-        const bookingList = data.booking || [];
-        setBookings(bookingList);
-        setFilteredBookings(bookingList);
+        if (eventRes.data.success) {
+          const sortedEvents = eventRes.data.data.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+          setEventOrders(sortedEvents);
+        }
       } catch (err) {
-        setError(err.message || "Failed to fetch bookings.");
+        setError("Error fetching reservation history.");
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBookings();
+    fetchOrders();
   }, []);
 
-  useEffect(() => {
-    const lowerSearch = searchTerm.toLowerCase();
-
-    const filtered = bookings.filter((booking) => {
-      const refMatch = booking.bookingReference?.toLowerCase().includes(lowerSearch);
-      const methodMatch = booking.payment?.method?.toLowerCase().includes(lowerSearch);
-      const transactionMatch = booking.payment?.transactionId?.toLowerCase().includes(lowerSearch);
-      const itemMatch = booking.cartItems?.some((item) =>
-        item.title?.toLowerCase().includes(lowerSearch)
-      );
-      return refMatch || methodMatch || transactionMatch || itemMatch;
-    });
-
-    setFilteredBookings(filtered);
-  }, [searchTerm, bookings]);
-
-  const toggleRow = (id) => {
-    setExpandedRows((prev) =>
-      prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
+  if (loading)
+    return (
+      <div className="text-center py-6 text-lg font-medium text-gray-700">
+        Loading your reservation history...
+      </div>
     );
-  };
 
-  if (loading) return <p>Loading bookings...</p>;
-  if (error) return <p className="text-red-500">Error: {error}</p>;
+  if (error)
+    return <div className="text-center text-red-500 py-6">{error}</div>;
 
-  const totalRevenue = bookings.reduce((sum, booking) => sum + (booking.total || 0), 0);
+  const filteredRoomOrders = roomOrders
+    .map((order) => ({
+      ...order,
+      roomsBooking: order.roomsBooking.filter((r) => r.arrivalDate),
+    }))
+    .filter((order) => order.roomsBooking.length > 0);
+
+  const hasRoomOrders = filteredRoomOrders.length > 0;
+  const hasEventOrders = eventOrders.length > 0;
+
+  if (!hasRoomOrders && !hasEventOrders)
+    return (
+      <div className="text-center py-6 text-gray-500">
+        No reservations found yet.
+      </div>
+    );
 
   return (
-    <div className="overflow-x-auto p-4 bg-gray-50">
+    <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Summary Cards */}
-      <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 px-4 sm:px-0"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-      >
-        <motion.div
-          className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]"
-          whileHover={{ scale: 1.03 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
-          <p className="text-sm font-medium text-gray-500">Total Bookings</p>
-          <p className="mt-1 text-3xl font-semibold text-gray-900">
-            <CountUp end={bookings.length} duration={1.5} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
+          <p className="text-sm font-medium text-gray-500">
+            Total Room Bookings
           </p>
-        </motion.div>
-
-        <motion.div
-          className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]"
-          whileHover={{ scale: 1.03 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
-          <p className="text-sm font-medium text-gray-500">Total Revenue</p>
           <p className="mt-1 text-3xl font-semibold text-gray-900">
-            <CountUp end={totalRevenue} duration={1.5} prefix="$" separator="," decimals={2} />
+            {roomOrders.length}
           </p>
-        </motion.div>
-      </motion.div>
-
-      {/* Search Input */}
-      <motion.input
-        type="text"
-        placeholder="Search by reference, method, transaction ..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4 p-2 border border-gray-300 bg-white w-full max-w-md"
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.2 }}
-      />
-
-      {/* Booking Table */}
-      <div className="overflow-x-auto">
-        <div className="min-w-[1100px]">
-          <div className="grid grid-cols-8 gap-2 bg-[#f8efe0] text-[#8E7037] font-semibold px-4 py-3  mb-2 text-sm">
-            <span>Reference</span>
-            <span>Payment Method</span>
-            <span>Transaction ID</span>
-            <span>Subtotal</span>
-            <span>Taxes</span>
-            <span>Total</span>
-            <span>Created At</span>
-            <span className="text-center">Bookings</span>
-          </div>
-
-          <AnimatePresence>
-            {filteredBookings.length === 0 ? (
-              <motion.div
-                className="text-center p-4 text-gray-500"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                No bookings match your search.
-              </motion.div>
-            ) : (
-              filteredBookings.map((booking, index) => {
-                const isExpanded = expandedRows.includes(booking._id);
-                return (
-                  <motion.div
-                    key={booking._id}
-                    className="grid grid-cols-8 gap-2 bg-white p-4 mb-2 shadow text-sm relative"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <span>{booking.bookingReference}</span>
-                    <span>{booking.payment?.method}</span>
-                    <span>{booking.payment?.transactionId}</span>
-                    <span>${booking.subtotal?.toFixed(2)}</span>
-                    <span>${booking.taxes?.toFixed(2)}</span>
-                    <span>${booking.total?.toFixed(2)}</span>
-                    <span>{formatDate(booking.createdAt)}</span>
-
-                    <div className="text-center">
-                      <button
-                        onClick={() => toggleRow(booking._id)}
-                        className="text-[#8E7037] hover:underline focus:outline-none"
-                      >
-                        {isExpanded ? "Hide Details" : "Show Details"}
-                      </button>
-                    </div>
-
-                    {isExpanded && (
-                      <motion.div
-                        className="col-span-8 mt-3 bg-gray-50  p-4 text-sm text-gray-800 border border-gray-200"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {booking.cartItems.map((item, idx) => (
-                            <div
-                              key={idx}
-                              className="bg-white p-4  shadow-sm border border-gray-100"
-                            >
-                              <h4 className="font-semibold text-[#8E7037] text-base mb-2">
-                                {item.title || item.slug}
-                              </h4>
-                              <div className="space-y-2 text-gray-600">
-                                <div className="flex items-center gap-2">
-                                  <DollarSign size={16} className="text-[#8E7037]" />
-                                  <span className="font-medium">Price:</span> ${item.totalPrice}
-                                </div>
-
-                                {/* Dynamically changing label for quantity */}
-                                <div className="flex items-center gap-2">
-                                  <Users size={16} className="text-[#8E7037]" />
-                                  <span className="font-medium">
-                                    {item.arrivalDate ? "Number of Rooms" : "Number of Tickets"}:
-                                  </span>{" "}
-                                  {item.quantity}
-                                </div>
-
-                                {item.arrivalDate && (
-                                  <div className="flex items-center gap-2">
-                                    <CalendarDays size={16} className="text-[#8E7037]" />
-                                    <span className="font-medium">Arrival:</span> {item.arrivalDate}
-                                  </div>
-                                )}
-                                {item.departureDate && (
-                                  <div className="flex items-center gap-2">
-                                    <CalendarDays size={16} className="text-[#8E7037]" />
-                                    <span className="font-medium">Departure:</span>{" "}
-                                    {item.departureDate}
-                                  </div>
-                                )}
-                                {item.numAdults !== undefined && (
-                                  <div className="flex items-center gap-2">
-                                    <User size={16} className="text-[#8E7037]" />
-                                    <span className="font-medium">Adults:</span> {item.numAdults}
-                                  </div>
-                                )}
-                                {item.numChildren !== undefined && (
-                                  <div className="flex items-center gap-2">
-                                    <Baby size={16} className="text-[#8E7037]" />
-                                    <span className="font-medium">Children:</span> {item.numChildren}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </motion.div>
-                );
-              })
-            )}
-          </AnimatePresence>
+        </div>
+        <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
+          <p className="text-sm font-medium text-gray-500">
+            Total Event Bookings
+          </p>
+          <p className="mt-1 text-3xl font-semibold text-gray-900">
+            {eventOrders.length}
+          </p>
         </div>
       </div>
+
+      {/* Tabs */}
+      <div className="flex gap-4 border-b mb-6">
+        <button
+          onClick={() => setActiveTab("rooms")}
+          className={`px-4 py-2 font-medium ${
+            activeTab === "rooms"
+              ? "text-[#8E7037] border-b-2 border-[#8E7037]"
+              : "text-gray-500"
+          }`}
+        >
+          Room Reservations
+        </button>
+        <button
+          onClick={() => setActiveTab("events")}
+          className={`px-4 py-2 font-medium ${
+            activeTab === "events"
+              ? "text-[#8E7037] border-b-2 border-[#8E7037]"
+              : "text-gray-500"
+          }`}
+        >
+          Event Reservations
+        </button>
+      </div>
+
+      {/* Room Reservations */}
+      {activeTab === "rooms" && (
+        <div className="space-y-6">
+          {filteredRoomOrders.map((order) => (
+            <div
+              key={order._id}
+              className="bg-white shadow p-6 border border-gray-100"
+            >
+              <div className="mb-4 space-y-1">
+                <p className="text-lg font-semibold text-[#8E7037]">
+                  Booking ID: <span className="text-gray-800">{order._id}</span>
+                </p>
+                <p className="text-sm text-gray-600">
+                  <span className="font-medium">Total:</span>{" "}
+                  <span className="text-green-600 font-semibold">
+                    ${order.orderTotalAmount}
+                  </span>{" "}
+                  | <span className="font-medium">Status:</span>{" "}
+                  {order.paymentStatus}
+                </p>
+                <p className="flex items-center gap-2 text-gray-600 text-sm">
+                  <Calendar size={16} className="text-[#8E7037]" />
+                  <span className="font-medium">Created:</span>{" "}
+                  {new Date(order.createdAt).toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
+                  })}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-4 mt-4">
+                {order.roomsBooking.map((room, i) => (
+                  <div
+                    key={i}
+                    className="bg-gray-50 p-4 border border-gray-200 w-full sm:w-[48%] lg:w-[32%]"
+                  >
+                    <p className="font-semibold text-[#8E7037] mb-2">
+                      {room.title}
+                    </p>
+                    <div className="text-sm text-gray-700 space-y-1">
+                      <p className="flex items-center gap-2">
+                        <CalendarCheck size={16} className="text-[#8E7037]" />
+                        <strong>Check-in:</strong>{" "}
+                        {new Date(room.arrivalDate).toLocaleDateString()}
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <CalendarX size={16} className="text-[#8E7037]" />
+                        <strong>Check-out:</strong>{" "}
+                        {new Date(room.departureDate).toLocaleDateString()}
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <Users size={16} className="text-[#8E7037]" />
+                        <strong>Guests:</strong> {room.numAdults} Adults,{" "}
+                        {room.numChildren} Children
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <Moon size={16} className="text-[#8E7037]" />
+                        <strong>Nights:</strong> {room.nights}
+                      </p>
+                      <p className="flex items-center gap-2 text-green-700 font-medium">
+                        <Receipt size={16} className="text-green-700" />
+                        Total: ${room.totalPrice}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Event Reservations */}
+      {activeTab === "events" && (
+        <div className="space-y-6">
+          {eventOrders.map((order) => (
+            <div
+              key={order._id}
+              className="bg-white shadow p-6 border border-gray-100"
+            >
+              <div className="mb-4 space-y-1">
+                <p className="text-lg font-semibold text-[#8E7037]">
+                  Booking ID: <span className="text-gray-800">{order._id}</span>
+                </p>
+                <p className="flex items-center gap-2 text-gray-600 text-sm">
+                  <Calendar size={16} className="text-[#8E7037]" />
+                  <span className="font-medium">Created:</span>{" "}
+                  {new Date(order.createdAt).toLocaleString()}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-4 mt-4">
+                {order.eventsBooking.map((event, index) => (
+                  <div
+                    key={index}
+                    className="bg-gray-50 p-4 border border-gray-200 w-full sm:w-[48%] lg:w-[32%]"
+                  >
+                    <p className="font-semibold text-[#8E7037] mb-2">
+                      {event.title?.en}
+                    </p>
+                    <div className="text-sm text-gray-700 space-y-1">
+                      <p className="flex items-center gap-2">
+                        <Ticket size={16} className="text-[#8E7037]" />
+                        <strong>Quantity:</strong> {event.quantity}
+                      </p>
+                      <p className="flex items-center gap-2 text-green-700 font-medium">
+                        <Receipt size={16} className="text-green-700" />
+                        Total: ${event.totalPrice}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
-};
-
-export default AdminBookings;
+}
