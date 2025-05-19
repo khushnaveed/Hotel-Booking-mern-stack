@@ -6,7 +6,7 @@ import { XCircle, Users, Calendar, Ticket, Plus, Minus } from "lucide-react";
 const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
   const { cartItems, setCartItems, removeFromCart, updateItemQuantity } =
     useCart();
-  const { currency, conversionRates, prevCurreny, setPrevCurrency } =
+  const { currency, conversionRates, prevCurrency, setPrevCurrency } =
     useCurrency();
 
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
@@ -20,9 +20,9 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
   };
 
   useEffect(() => {
-    console.log(cartItems)
-    console.log(currency)
-    console.log(prevCurreny)
+    console.log(cartItems);
+    console.log(currency);
+    console.log(prevCurrency);
     const exchangeRates = {
       USD: { USD: 1, EUR: 0.93, GBP: 0.8 },
       EUR: { USD: 1.0753, EUR: 1, GBP: 0.86 },
@@ -31,14 +31,15 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
 
     setCartItems(
       cartItems.map((item) => {
-        console.log(item)
-        return ({
+        console.log(item);
+        return {
           ...item,
-          totalPrice: +(item.totalPrice * exchangeRates[prevCurreny][currency]).toFixed(2)
-        })
-
-      }))
-      ;
+          totalPrice: +(
+            item.totalPrice * exchangeRates[prevCurrency][currency]
+          ).toFixed(2),
+        };
+      })
+    );
     setPrevCurrency(currency);
   }, [currency]);
 
@@ -72,10 +73,13 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
       {cartItems.map((item) => (
         <div
           key={item.slug}
-          className="flex gap-4 items-start border-b pb-5 relative"
-        >
+          className="flex gap-4 items-start border-b pb-5 relative">
           <img
-            src={item.images || "https://via.placeholder.com/80"}
+            src={
+              (Array.isArray(item.images) ? item.images[0] : item.images) ||
+              item.image ||
+              "https://via.placeholder.com/80"
+            }
             alt={item.slug}
             className="w-20 h-20 object-cover shadow"
           />
@@ -106,9 +110,7 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
               !item.arrivalDate &&
               !item.departureDate && (
                 <div className="mt-4">
-                  {/* This container ensures the "Total Tickets" text and buttons are in the same block */}
                   <div className="space-y-2">
-                    {/* Quantity buttons on the next line */}
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() =>
@@ -116,8 +118,7 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
                         }
                         disabled={item.quantity <= 1}
                         className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        aria-label="Decrease ticket count"
-                      >
+                        aria-label="Decrease ticket count">
                         <Minus size={18} className="text-gray-700" />
                       </button>
 
@@ -130,8 +131,7 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
                           handleChangeQuantity(item.slug, item.quantity + 1)
                         }
                         className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors"
-                        aria-label="Increase ticket count"
-                      >
+                        aria-label="Increase ticket count">
                         <Plus size={18} className="text-gray-700" />
                       </button>
                     </div>
@@ -149,8 +149,7 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
             <button
               onClick={() => handleRemoveItem(item.slug)}
               className="absolute top-2 right-2 text-[#8E7037] hover:text-white hover:bg-[#8E7037] hover:border hover: border-[#8E7037] rounded-full"
-              aria-label="Remove item"
-            >
+              aria-label="Remove item">
               <XCircle size={20} />
             </button>
           )}

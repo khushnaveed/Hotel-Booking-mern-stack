@@ -5,68 +5,72 @@ import guestRoutes from "./routes/guestRoutes.js";
 import { config } from "dotenv";
 import eventRoutes from "./routes/eventRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
-import cors from "cors"
-import restaurantRoutes from "./routes/restaurantRoutes.js"
-import orderRoutes from "./routes/orderRoutes.js"
+import cors from "cors";
+import restaurantRoutes from "./routes/restaurantRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import orderEventRoutes from "./routes/orderEventRoutes.js";
 
-import { auth } from "./middlewares/authentication.js"
+import { auth } from "./middlewares/authentication.js";
 import Stripe from "stripe";
-
 
 config();
 console.clear();
 const app = express();
-app.use(cors({
-  origin: "http://localhost:5173",
+app.use(
+  cors({
+    origin: "http://localhost:5173",
 
-  methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
 
-  exposedHeaders: ["token"]
-}));
+    exposedHeaders: ["token"],
+  })
+);
 
 const PORT = process.env.PORT;
 app.use(express.json());
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-
 try {
-  await mongoose.connect(process.env.MONGO_URI, { dbName: "hotel-booking" })
-  console.log("Data Base connected successfully!")
+  await mongoose.connect(process.env.MONGO_URI, { dbName: "hotel-booking" });
+  console.log("Data Base connected successfully!");
 } catch (err) {
   console.log(err.message);
 }
 app.use((req, res, next) => {
-  //console.log(req.url)
-  next()
-})
-//routes
+  /*   console.log(req.url,req.method) */
+  next();
+});
+
 
 app.use("/bookings", auth, bookingRoutes);
-app.use("/room", roomRoutes)
-app.use("/guest", guestRoutes)
-app.use('/events', eventRoutes);
-app.use('/menu', restaurantRoutes);
-app.use("/order", orderRoutes)
-app.post('/create-checkout-session', auth, async (req, res) => {
-
+app.use("/room", roomRoutes);
+app.use("/guest", guestRoutes);
+app.use("/events", eventRoutes);
+app.use("/menu", restaurantRoutes);
+app.use("/order", orderRoutes);
+app.use("/order-events", auth, orderEventRoutes);
+app.post("/create-checkout-session", auth, async (req, res) => {
   const { cartItems, orderTotalAmount } = req.body;
-  console.log(cartItems, orderTotalAmount)
+  console.log(cartItems, orderTotalAmount);
   try {
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: cartItems.map(item => ({
+      payment_method_types: ["card"],
+      line_items: cartItems.map((item) => ({
         price_data: {
-          currency: 'usd',
+          currency: "usd",
           product_data: {
             name: item.title,
-            /* description: item.description, */
-            images: item.images
+            images: item.image
+              ? [item.image]
+              : item.images && Array.isArray(item.images)
+              ? item.images.slice(0, 1)
+              : [],
           },
           unit_amount: item.totalPrice * 100,
         },
         quantity: item.quantity,
       })),
-      mode: 'payment',
+      mode: "payment",
       success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL}/cancel`,
       metadata: {
@@ -81,9 +85,6 @@ app.post('/create-checkout-session', auth, async (req, res) => {
         slug: cartItems.map((item) => item.slug).join(","),
         orderTotalAmount,
 
-
-
-
         guestId: req.guest._id.toString(),
       },
     });
@@ -91,12 +92,14 @@ app.post('/create-checkout-session', auth, async (req, res) => {
     res.json({ id: session.id });
   } catch (error) {
     console.error("Error creating checkout session:", error);
-    res.status(500).json({ error: 'Failed to create checkout session' });
+    res.status(500).json({ error: "Failed to create checkout session" });
   }
 });
 app.get("/checkout-session/:sessionId", async (req, res) => {
   try {
-    const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
+    const session = await stripe.checkout.sessions.retrieve(
+      req.params.sessionId
+    );
     res.json(session);
   } catch (err) {
     console.error("Error fetching session:", err.message);
@@ -104,22 +107,15 @@ app.get("/checkout-session/:sessionId", async (req, res) => {
   }
 });
 
-
-//error handling middlewares
 app.use((err, req, res, next) => {
   res.status(err.status || 500).send({ success: false, message: err.message });
 });
 
-//page not found error handler
 app.use((req, res, next) => {
-  //console.log(req.url, req.method)
+
   res
     .status(404)
     .send({ success: false, message: "No such route exist in our server!" });
 });
 
-
-
-
 app.listen(PORT, () => console.log("Server is running on port:", PORT));
-
