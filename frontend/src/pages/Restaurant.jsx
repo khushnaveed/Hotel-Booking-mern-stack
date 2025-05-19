@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 import { useState, useEffect, useCallback } from "react";
 import emailjs from "emailjs-com";
 import { useCurrency } from "../context/CurrencyContext.jsx";
@@ -74,10 +74,10 @@ export default function Restaurant() {
         i % 4 === 0
           ? "Breakfast"
           : i % 4 === 1
-          ? "Lunch"
-          : i % 4 === 2
-          ? "Dinner"
-          : "Drink",
+            ? "Lunch"
+            : i % 4 === 2
+              ? "Dinner"
+              : "Drink",
     }));
   };
 

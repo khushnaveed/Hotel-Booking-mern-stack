@@ -1,4 +1,4 @@
-//npm install leaflet react-leaflet
+
 import 'leaflet/dist/leaflet.css';
 import React from "react";
 import { useWeather } from "../context/WeatherContext";
@@ -41,8 +41,7 @@ const WeatherPage = () => {
                     </p>
                 </div>
 
-                {/* Responsive Map */}
-                {/* <div className="h-64 sm:h-72 w-full overflow-hidden mt-[85px] sm:mt-[100px] md:mt-[200px]"> */}
+
                 <div className="h-64 sm:h-72 w-full overflow-hidden" style={{ paddingTop: '70px' }}>
 
                     <MapContainer

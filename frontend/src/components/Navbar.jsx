@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 import React, { useState } from "react";
 import Logo from "../assets/Logo.svg";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
@@ -6,7 +6,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, CalendarCheck } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
-import { useTranslation } from "react-i18next"; // ✅ Import useTranslation
+import { useTranslation } from "react-i18next";
 import { useContext } from "react";
 import { GuestContext } from "../context/GuestContext.jsx";
 function Navbar() {
@@ -15,9 +15,9 @@ function Navbar() {
   const location = useLocation();
   const isHome = location.pathname === "/";
 
-  const { cartItems } = useCart(); // ✅ Get cart items from context
+  const { cartItems } = useCart();
 
-  const { t } = useTranslation(); // ✅
+  const { t } = useTranslation();
   const { guest, isLoggedIn } = useContext(GuestContext);
 
   const handleRoomClick = (roomType) => {
@@ -28,15 +28,14 @@ function Navbar() {
   return (
     <div className="fixed top-0 left-0 w-full z-[100] text-white font-bold pb-4 mt-16">
       <div
-        className={`${
-          isHome
-            ? "bg-black/80 backdrop-blur-md"
-            : "bg-black/80 backdrop-blur-md"
-        }`}
+        className={`${isHome
+          ? "bg-black/80 backdrop-blur-md"
+          : "bg-black/80 backdrop-blur-md"
+          }`}
       >
         <div className="container mx-auto px-3">
           <div className="flex justify-between items-center h-20">
-            {/* Logo */}
+
             <NavLink to="/" className="w-60 block group">
               <img
                 src={Logo}
@@ -45,7 +44,7 @@ function Navbar() {
               />
             </NavLink>
 
-            {/* Desktop Menu */}
+
             <div className="hidden md:flex items-center space-x-8">
               <NavItem text={t("home").toUpperCase()} path="/" />
               <NavItem
@@ -72,15 +71,14 @@ function Navbar() {
               <NavItem text={t("about").toUpperCase()} path="/about" />
               <NavItem text={t("contact").toUpperCase()} path="/contact" />
               {isLoggedIn && guest?.role === "admin" && (
-             <NavItem text="ADMIN" path="/adminPanel" />
-               )}
+                <NavItem text="ADMIN" path="/adminPanel" />
+              )}
 
-              {/* Cart Icon */}
+
               <div
                 className="relative cursor-pointer"
                 onClick={() => {
-                 /*  navigate("/checkout");
-                  console.log(cartItems); */
+
                   const token = localStorage.getItem("token");
                   if (!token) {
                     alert("Please log in first to view your cart.");
@@ -98,7 +96,7 @@ function Navbar() {
               </div>
             </div>
 
-            {/* Mobile Menu Button */}
+
             <div className="md:hidden z-[101] flex items-center gap-4">
               <div
                 className="relative cursor-pointer"
@@ -127,7 +125,7 @@ function Navbar() {
             </div>
           </div>
 
-          {/* Mobile Menu */}
+
           {isMenuOpen && (
             <div className="md:hidden py-4 mt-16 bg-black/90 text-white z-50 relative rounded-b-lg">
               <MobileNavItem text={t("home").toUpperCase()} path="/" />
@@ -160,8 +158,8 @@ function Navbar() {
                 path="/contact"
               />
               {isLoggedIn && guest?.role === "admin" && (
-            <MobileNavItem text="ADMIN" path="/adminPanel" />
-            )}
+                <MobileNavItem text="ADMIN" path="/adminPanel" />
+              )}
 
             </div>
           )}
@@ -238,9 +236,8 @@ function MobileNavItem({
         {hasSubmenu && (
           <ChevronDown
             size={16}
-            className={`text-white transition-transform ${
-              isOpen ? "rotate-180" : ""
-            }`}
+            className={`text-white transition-transform ${isOpen ? "rotate-180" : ""
+              }`}
           />
         )}
       </div>

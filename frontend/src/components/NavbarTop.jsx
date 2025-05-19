@@ -45,8 +45,8 @@ function LanguageSelector() {
               {lang === "EN"
                 ? "English"
                 : lang === "ES"
-                ? "Español"
-                : "Français"}
+                  ? "Español"
+                  : "Français"}
             </a>
           ))}
         </div>
@@ -80,7 +80,7 @@ function NavbarTop() {
               </span>
             </Link>
             <div className="hidden md:flex items-center space-x-6">
-              {/* Phone */}
+
               <div className="flex items-center space-x-2">
                 <Phone size={16} />
                 <span className="text-sm">+41 (0)61 5603-497</span>
@@ -107,11 +107,10 @@ function NavbarTop() {
                     <a
                       key={cur}
                       onClick={() => changeCurrency(cur)}
-                      className={`block px-4 py-2 text-sm ${
-                        currency === cur
+                      className={`block px-4 py-2 text-sm ${currency === cur
                           ? "text-[#8E7037] font-semibold"
                           : "text-gray-700"
-                      } hover:bg-gray-100 cursor-pointer`}>
+                        } hover:bg-gray-100 cursor-pointer`}>
                       {cur}
                     </a>
                   ))}

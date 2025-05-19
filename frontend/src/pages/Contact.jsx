@@ -27,17 +27,16 @@ export default function Contact() {
     setIsSending(true);
     setStatusMessage("Sending...");
 
-    // Your EmailJS Service ID, Template ID, and Public Key
-    const serviceID = "service_j2sur5t"; // This is your Service ID
-    const templateID = "template_3nt27xs"; // This is your Template ID
-    const userID = "7s3fyFXl9tvcHb_P8"; // This is your Public Key
+    const serviceID = "service_j2sur5t";
+    const templateID = "template_3nt27xs";
+    const userID = "7s3fyFXl9tvcHb_P8";
 
     emailjs
       .send(
-        serviceID, // Your Service ID
-        templateID, // Your Template ID
-        formData, // The form data to send
-        userID // Your Public Key
+        serviceID,
+        templateID,
+        formData,
+        userID
       )
       .then(
         (result) => {

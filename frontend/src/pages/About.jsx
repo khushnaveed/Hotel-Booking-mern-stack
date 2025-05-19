@@ -34,9 +34,9 @@ export default function About() {
         backgroundImage="/src/assets/heroImage.jpg"
       />
 
-      {/* Wrapper Content */}
+
       <div className=" relative mt-10">
-        {/* Section 1 */}
+
         <section className="py-16 px-6 md:px-20">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div className="overflow-hidden shadow-lg group">
@@ -64,7 +64,7 @@ export default function About() {
           </div>
         </section>
 
-        {/* Section 2 */}
+
         <section className="py-16 px-6 md:px-20">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -93,7 +93,7 @@ export default function About() {
         </section>
       </div>
 
-      {/* Stats Section */}
+
       <section
         className=" text-white py-16 px-4 relative bg-fixed"
         style={{
@@ -130,7 +130,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Team Members */}
+
       <section className=" py-10 text-center overflow-x-auto">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-gray-800 mb-2 uppercase">
