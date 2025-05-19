@@ -5,22 +5,20 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 dotenv.config();
 
-//// This is the route to get all guests from the database.
-// It retrieves all the guest records and returns them in the response.
+
 export const getAllguests = async (req, res) => {
   try {
-    const guests = await GuestModel.find(); // Use await to get the result
+    const guests = await GuestModel.find(); 
     res.json({ success: true, data: guests });
   } catch (err) {
     res.status(500).send({ success: false, message: err.message });
   }
 };
 
-// This is the route to get a guest by their unique ID.
-// It searches the database for a guest with the provided ID and returns the guest's details.
+
 export const getGuestById = async (req, res) => {
   try {
-    const guest = await GuestModel.findById(req.params.id); // Use await and pass the id parameter
+    const guest = await GuestModel.findById(req.params.id); 
     if (!guest) {
       return res
         .status(404)
@@ -32,7 +30,7 @@ export const getGuestById = async (req, res) => {
   }
 };
 
-// sendEmail.js
+
 
 export const sendConfirmationEmail = async (
   email,
@@ -67,7 +65,6 @@ export const sendConfirmationEmail = async (
   }
 };
 
-// Register Route
 export const addNewGuest = async (req, res) => {
   try {
     const {
@@ -94,13 +91,12 @@ export const addNewGuest = async (req, res) => {
     const newGuest = new GuestModel({
       ...req.body,
       password: hashedPassword,
-      isEmailConfirmed: false, // Initially, email is not confirmed
+      isEmailConfirmed: false, 
     });
-    console.log(req.body); // Log the incoming request data
+    //console.log(req.body); 
 
     await newGuest.save();
 
-    // Generate a confirmation token
     const confirmationToken = jwt.sign(
       { guestId: newGuest._id, email: newGuest.email },
       process.env.SECRET_KEY,
@@ -132,7 +128,6 @@ export const confirmEmail = async (req, res) => {
   try {
     const { token } = req.params;
 
-    // Verify the confirmation token
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     const guest = await GuestModel.findById(decoded.guestId);
 
@@ -159,8 +154,7 @@ export const confirmEmail = async (req, res) => {
   }
 };
 
-// This is the route to update an existing guest's details.
-// It finds the guest by their ID and updates their data with the provided information.
+
 export const updateGuest = async (req, res) => {
   try {
     const guest = await GuestModel.findByIdAndUpdate(req.params.id, req.body, {
@@ -177,8 +171,7 @@ export const updateGuest = async (req, res) => {
   }
 };
 
-// This is the route to delete a guest by their ID.
-//  It searches the database for the guest and deletes them if they exist.
+
 export const deleteGuest = async (req, res) => {
   try {
     const guest = await GuestModel.findByIdAndDelete(req.params.id); // Use await, pass id to delete
@@ -193,12 +186,10 @@ export const deleteGuest = async (req, res) => {
   }
 };
 
-//Guest Login
 export const loginGuest = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find the guest by their email
     const guest = await GuestModel.findOne({ email }).populate("bookings");
 
     if (!guest) {
@@ -207,10 +198,8 @@ export const loginGuest = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    // Log guest data for debugging (optional)
-    console.log("Guest data retrieved:", guest);
+   // console.log("Guest data retrieved:", guest);
 
-    // Ensure password comparison is async and correct
     const isPasswordValid = await bcrypt.compare(password, guest.password);
 
     if (!isPasswordValid) {
@@ -223,19 +212,17 @@ export const loginGuest = async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: "1d" }
     );
-    // Send a response with the guest data (could also send a JWT token if needed)
     res.header("token",token).json({
       success: true,
       message: "Login successful",
-      data: guest, // Or send token instead of guest data for security reasons
+      data: guest, 
     });
   } catch (error) {
-    console.error("Error during login:", error); // Log error for debugging
+    console.error("Error during login:", error); 
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
-// 1. Forgot Password (send email)
 export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -253,7 +240,7 @@ export const forgotPassword = async (req, res) => {
       { expiresIn: "15m" }
     );
 
-    const resetLink = `http://localhost:5173/reset-password/${resetToken}`; // Adjust frontend port
+    const resetLink = `http://localhost:5173/reset-password/${resetToken}`; 
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -282,7 +269,6 @@ export const forgotPassword = async (req, res) => {
   }
 };
 
-// 2. Reset Password (update the password in DB)
 export const resetPassword = async (req, res) => {
   try {
     const { token } = req.params;
