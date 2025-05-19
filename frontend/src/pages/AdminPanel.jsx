@@ -31,7 +31,7 @@ export default function AdminPanel() {
   return (
     <div className="container mx-auto px-4 py-8 mt-40">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {/* Sidebar with Logout */}
+
         <div className="md:col-span-1">
           <AdminProfileSidebar
             guest={guest}
@@ -40,7 +40,6 @@ export default function AdminPanel() {
           />
         </div>
 
-        {/* Main Content */}
         <div className="md:col-span-2 lg:col-span-3">
           <div className="space-y-6">
             <h1 className="text-3xl font-bold text-[#8E7037]">

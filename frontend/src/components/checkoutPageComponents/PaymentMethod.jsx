@@ -5,25 +5,12 @@ import { useCart } from "../../context/CartContext";
 export default function PaymentMethod() {
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
   const { cartItems, formatCartForStripe } = useCart();
-
   const handleCheckout = async () => {
-    //console.log("debugging");
-    //console.log(cartItems)
+
     try {
       const formattedCartItems = cartItems.map((item) => ({
-        /*  name: item.title || item.slug,
-         description: item.date
-           ? `Event Date:${item.date}`
-           : `Check-in: ${item.arrivalDate},
-          Check-out: ${item.departureDate},
-           ${item.numAdults} Adults,
-            ${item.numChildren} Children`,
-         price: item.totalPrice * 100,
-         quantity: item.quantity,
-         image: item.image, */
+
         ...item,
-
-
       }));
 
       const response = await fetch(

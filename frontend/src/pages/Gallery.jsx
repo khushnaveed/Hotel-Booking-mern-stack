@@ -15,9 +15,9 @@ export default function Gallery() {
         backgroundImage="/src/assets/galleryHero.jpg"
       />
 
-      {/* Wrapper to avoid overlap */}
+
       <div className="relative">
-        {/* Gallery Section */}
+
         <section className="py-25 px-6 md:px-0">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
             {galleryData[0].items.map((item, index) => (
@@ -37,7 +37,7 @@ export default function Gallery() {
         </section>
       </div>
 
-      {/* Back to Top Button */}
+
       <button
         onClick={scrollToTop}
         className="fixed bottom-10 right-10 bg-yellow-600 text-white rounded-full p-3 shadow-lg hover:bg-blue-700 transition duration-300"

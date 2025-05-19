@@ -129,7 +129,7 @@ export default function RoomTabs({ roomData, calendarRef }) {
 
     return (
         <>
-            {/* Mobile View */}
+
             <div className="block md:hidden">
                 <div className="flex flex-col items-center space-y-2 mb-6">
                     {tabs.map((tab) => (
@@ -147,7 +147,6 @@ export default function RoomTabs({ roomData, calendarRef }) {
                 </div>
             </div>
 
-            {/* Desktop View */}
             <div className="hidden md:grid md:grid-cols-5 gap-6 mt-10">
                 <div className="col-span-1 space-y-4 text-sm font-semibold">
                     {tabs.map((tab) => (

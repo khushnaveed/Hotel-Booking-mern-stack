@@ -1,5 +1,5 @@
 import OrderModel from "../models/orderRoomSchema.js";
-import OrderEventModel from "../models/orderEventSchema.js"; 
+import OrderEventModel from "../models/orderEventSchema.js";
 
 export const createOrder = async (req, res, next) => {
   try {

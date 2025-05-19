@@ -1,12 +1,7 @@
-
-
-//final code
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Pencil, Trash2 } from "lucide-react";
 import { useCurrency } from "../../context/CurrencyContext.jsx";
-
-
 export default function AdminRoom() {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(false);
