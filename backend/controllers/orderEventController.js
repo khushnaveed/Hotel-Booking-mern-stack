@@ -37,9 +37,11 @@ export const getAllOrderEvents = async (req, res) => {
   try {
     const orders = await OrderEventModel.find().populate(
       "guestId",
-      "name email"
+      "email"
     );
-    res.status(200).json(orders);
+    /* res.status(200).json(orders); */
+    res.json({ success: true, data: orders });
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
