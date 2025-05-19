@@ -117,7 +117,6 @@ export default function AdminRestaurant() {
 
   return (
     <div className="p-4 bg-gray-50 min-h-screen">
-      {/* Summary Cards */}
       <motion.div
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
         initial={{ opacity: 0, y: 20 }}
@@ -146,7 +145,6 @@ export default function AdminRestaurant() {
 
       <div className="overflow-x-auto">
         <div className="min-w-[1000px]">
-          {/* Header */}
           <div className="grid grid-cols-[1fr_100px_2fr_200px_100px_100px] gap-2 bg-[#f8efe0] text-[#8E7037] font-semibold px-4 py-3 mb-2 text-sm">
             <span>Name</span>
             <span>Price</span>
@@ -160,7 +158,6 @@ export default function AdminRestaurant() {
             <span className="text-center">Action</span>
           </div>
 
-          {/* Add New Item */}
           <motion.div
             className="grid grid-cols-[1fr_100px_2fr_200px_100px_100px] gap-2 bg-white p-4 mb-2  shadow text-sm items-center"
             initial={{ opacity: 0, y: 10 }}
@@ -217,7 +214,6 @@ export default function AdminRestaurant() {
             </button>
           </motion.div>
 
-          {/* Items */}
           {loading ? (
             <div className="text-center py-4 text-sm">Loading...</div>
           ) : error ? (

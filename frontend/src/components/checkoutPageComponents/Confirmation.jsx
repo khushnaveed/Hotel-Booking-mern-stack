@@ -18,7 +18,6 @@ const Confirmation = ({ bookingNumber, bookingDetails }) => {
 
   const { payment } = bookingDetails || {};
 
-  // Format the date to include both date and time
   const formattedDate = new Date().toLocaleString("en-US", {
     year: "numeric",
     month: "long",
@@ -26,7 +25,7 @@ const Confirmation = ({ bookingNumber, bookingDetails }) => {
     hour: "numeric",
     minute: "numeric",
     second: "numeric",
-    hour12: true, // Optional: uses 12-hour clock with AM/PM
+    hour12: true,
   });
 
   const copyToClipboard = () => {
@@ -51,7 +50,6 @@ const Confirmation = ({ bookingNumber, bookingDetails }) => {
       className="bg-white shadow-lg p-8 max-w-3xl mx-auto  mt-40"
     >
       <div id="confirmation-content">
-        {/* Header */}
         <div className="text-center mb-8">
           <motion.div
             className="flex justify-center mb-4"
@@ -70,35 +68,6 @@ const Confirmation = ({ bookingNumber, bookingDetails }) => {
           </p>
         </div>
 
-        {/* Booking Reference */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center bg-gray-100 p-4">
-            <div>
-              <span className="text-sm text-gray-500">Booking Reference</span>
-              <h3 className="text-2xl font-bold">{bookingNumber}</h3>
-            </div>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={copyToClipboard}
-              className="flex items-center text-[#8E7037] hover:text-[#7a602f] transition-colors"
-            >
-              {copied ? (
-                <>
-                  <CheckCircle size={18} className="mr-1" />
-                  <span>Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy size={18} className="mr-1" />
-                  <span>Copy</span>
-                </>
-              )}
-            </motion.button>
-          </div>
-        </div>
-
-        {/* Guest Details */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <div>
             <h3 className="text-lg font-bold mb-4 border-b pb-2">
@@ -150,7 +119,6 @@ const Confirmation = ({ bookingNumber, bookingDetails }) => {
           </div>
         </div>
 
-        {/* Payment Information */}
         <div className="mb-8">
           <h3 className="text-lg font-bold mb-4 border-b pb-2">
             Payment Information
@@ -166,7 +134,6 @@ const Confirmation = ({ bookingNumber, bookingDetails }) => {
           </div>
         </div>
 
-        {/* Important Info */}
         <div className="bg-blue-50 border border-blue-200 p-4 mb-8 flex items-start">
           <Info size={20} className="text-blue-500 mt-0.5 mr-3 flex-shrink-0" />
           <div>
@@ -174,14 +141,11 @@ const Confirmation = ({ bookingNumber, bookingDetails }) => {
               Important Information
             </h4>
             <p className="text-blue-800 text-sm mt-1">
-              A confirmation email has been sent to {guest?.email}. Please check
-              your inbox. Check-in starts at 3:00 PM and checkout is by 12:00
-              PM.
+              Check-in starts at 3:00 PM and checkout is by 12:00 PM.
             </p>
           </div>
         </div>
 
-        {/* Footer Actions */}
         <div className="text-center">
           <p className="text-gray-600 mb-6">Booking date: {formattedDate}</p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">

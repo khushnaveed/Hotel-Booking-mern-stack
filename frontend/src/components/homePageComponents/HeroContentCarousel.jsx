@@ -11,7 +11,7 @@ const images = [
 
 export default function HeroContentCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const isPausedRef = useRef(false); // Ref to track pause state
+  const isPausedRef = useRef(false);
   const navigate = useNavigate()
 
   const nextSlide = () => {
@@ -27,7 +27,6 @@ export default function HeroContentCarousel() {
   };
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-  //testin
   const handleCheckAvailability = async (e) => {
     e.preventDefault();
 
@@ -42,10 +41,8 @@ export default function HeroContentCarousel() {
 
       if (data.success && data.data.length > 0) {
         console.log("Available Rooms:", data.data);
-        // Redirect to the room's details page and scroll to the calendar section
         const firstAvailableRoom = data.data[0];
-        console.log("First Room:", firstAvailableRoom); // Check if it has slug
-
+        console.log("First Room:", firstAvailableRoom); 
         navigate(`/rooms/${firstAvailableRoom.slug}#calendar`);
       } else {
         alert("No rooms available or something went wrong.");
@@ -56,7 +53,6 @@ export default function HeroContentCarousel() {
     }
   };
 
-  //testing
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isPausedRef.current) {
@@ -73,7 +69,6 @@ export default function HeroContentCarousel() {
     <div className="relative w-full h-screen overflow-hidden z-0">
       <NavbarTop />
 
-      {/* Image Carousel */}
       <div
         className="flex transition-transform duration-700 ease-in-out h-full"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -96,7 +91,6 @@ export default function HeroContentCarousel() {
         </p>
       </div>
 
-      {/* Booking Form */}
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/80 p-6 shadow-lg max-w-6xl w-full">
         <form className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
           <div className="w-full">
@@ -163,7 +157,6 @@ export default function HeroContentCarousel() {
           </div>
           <div className="col-span-2 lg:col-span-1 w-full">
             <button
-              /*   type="button" */
               onClick={handleCheckAvailability}
 
               type="submit"
@@ -175,7 +168,6 @@ export default function HeroContentCarousel() {
         </form>
       </div>
 
-      {/* Prev & Next Buttons */}
       <button
         onClick={prevSlide}
         className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-800 p-3 border border-white shadow-md hover:bg-white/75 transition hidden sm:block"
@@ -210,7 +202,6 @@ export default function HeroContentCarousel() {
         </svg>
       </button>
 
-      {/* Dot Indicators */}
       <div className="absolute bottom-6 w-full flex justify-center items-center gap-2">
         {images.map((_, index) => (
           <button
@@ -221,7 +212,6 @@ export default function HeroContentCarousel() {
         ))}
       </div>
 
-      {/* Pause Auto Slide on Navbar Hover */}
       <div
         className="absolute top-0 left-0 w-full h-20 z-10"
         onMouseEnter={() => (isPausedRef.current = true)}

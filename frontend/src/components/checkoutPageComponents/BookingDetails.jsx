@@ -43,18 +43,9 @@ function BookingDetails({ bookingReference }) {
         Reservation Summary
       </h3>
 
-      {/* Cart Items */}
       <div className="mb-4">
         {cartItems.map((item, index) => (
           <div key={index} className="flex gap-4 border-b pb-4 mb-4">
-            {/* Image */}
-            {/* <img
-              src={item.image || "https://via.placeholder.com/80"}
-              alt={item.slug}
-              className="w-20 h-20 object-cover"
-            />
- */}
-            {/* Item Info */}
             <div className="text-sm flex-1">
               <p className="font-semibold capitalize">
                 {item.slug.replace(/-/g, " ")}
@@ -79,7 +70,6 @@ function BookingDetails({ bookingReference }) {
         ))}
       </div>
 
-      {/* Price Details */}
       <div className="flex justify-between text-gray-600 text-sm">
         <span>Subtotal</span>
         <span>${subtotal.toFixed(2)}</span>

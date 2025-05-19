@@ -43,7 +43,7 @@ const HomePageGallery = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {images.map((image, index) => (
             <Link
-              to="/gallery" // 👈 Change this if you want individual pages like `/gallery/elegant-lobby`
+              to="/gallery" 
               key={index}
               className="group relative overflow-hidden block"
             >

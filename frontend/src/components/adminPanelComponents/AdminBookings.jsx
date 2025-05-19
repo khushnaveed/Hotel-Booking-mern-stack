@@ -87,7 +87,6 @@ export default function ReservationHistory() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
         <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
           <p className="text-sm font-medium text-gray-500">
@@ -107,7 +106,6 @@ export default function ReservationHistory() {
         </div>
       </div>
 
-      {/* Tabs */}
       <div className="flex gap-4 border-b mb-6">
         <button
           onClick={() => setActiveTab("rooms")}
@@ -131,7 +129,6 @@ export default function ReservationHistory() {
         </button>
       </div>
 
-      {/* Room Reservations */}
       {activeTab === "rooms" && (
         <div className="space-y-6">
           {filteredRoomOrders.map((order) => (
@@ -207,7 +204,6 @@ export default function ReservationHistory() {
         </div>
       )}
 
-      {/* Event Reservations */}
       {activeTab === "events" && (
         <div className="space-y-6">
           {eventOrders.map((order) => (

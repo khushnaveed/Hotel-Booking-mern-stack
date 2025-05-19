@@ -1,10 +1,10 @@
 import React from "react";
 import {
-  Users,          // For Guests
-  BedDouble,      // For Rooms
-  CalendarCheck2, // For Bookings
-  CalendarHeart,  // For Events
-  Utensils,       // For Restaurant
+  Users,          
+  BedDouble,      
+  CalendarCheck2,
+  CalendarHeart,  
+  Utensils,       
 } from "lucide-react";
 
 const ProfileSidebar = ({ guest, activeSection, onSectionChange }) => {
