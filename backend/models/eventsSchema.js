@@ -33,6 +33,7 @@ const eventSchema = new mongoose.Schema({
     type: String,
     default: "USD", 
   },
+  type:{type:String, default:"event"}
 });
 
 const Event = mongoose.model("Event", eventSchema);

@@ -31,7 +31,8 @@ const roomSchema = new Schema({
     }],
     defaultPrice: { type: Number, default: 100 },
     packages: [{ type: String }],
-    additionalDetails: {}
+    additionalDetails: {}, 
+    type:{type:String, default:"room"}
 });
 
 const RoomModel = model("Rooms", roomSchema);
