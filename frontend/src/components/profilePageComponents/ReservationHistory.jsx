@@ -48,7 +48,6 @@ export default function ReservationHistory() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
 
-      {/* Room Reservations */}
       {roomOrders.length > 0 && (
         <>
           <h2 className="text-2xl font-bold text-[#8E7037] mb-6">Room Reservations</h2>
@@ -87,7 +86,6 @@ export default function ReservationHistory() {
         </>
       )}
 
-      {/* Event Reservations */}
       {eventOrders.length > 0 && (
         <>
           <h2 className="text-2xl font-bold text-[#8E7037] mb-6">Event Reservations</h2>
@@ -103,7 +101,6 @@ export default function ReservationHistory() {
                   <div key={index} className="bg-gray-50 p-4 border border-gray-200">
                     <p className="font-semibold text-[#8E7037] mb-2">{event.title?.en}</p>
                     <div className="text-sm text-gray-700 space-y-1">
-                      <p><span className="font-medium">Date:</span> {event.date}</p>
                       <p><span className="font-medium">Quantity:</span> {event.quantity}</p>
                       <p><span className="font-medium text-green-700">Total Price:</span> ${event.totalPrice}</p>
                     </div>
