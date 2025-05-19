@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 const orderSchema = new Schema({
-    guestId: { type: Schema.Types.ObjectId, ref: "User" },
+    guestId: { type: Schema.Types.ObjectId, ref: "guest" },
     roomsBooking: [{
         slug: { type: String },
         title: { type: String },

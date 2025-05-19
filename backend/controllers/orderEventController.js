@@ -1,41 +1,25 @@
 import OrderEventModel from "../models/orderEventSchema.js";
-import Event from "../models/eventsSchema.js";
 
 export const createOrderEvent = async (req, res) => {
   try {
     const { guestId, roomsBooking,
       orderTotalAmount, } = req.body;
 
-    /* if (!eventsBooking || !Array.isArray(eventsBooking)) {
-      return res.status(400).json({ message: "Invalid events booking data." });
-    } */
-
-    /* let orderTotalAmount = 0;
-    const populatedEvents = await Promise.all(
-      eventsBooking.map(async (item) => {
-        const event = await Event.findById(item.eventId);
-        if (!event) throw new Error(`Event with ID ${item.eventId} not found`);
-
-        const totalPrice = event.price * (item.quantity || 1);
-        orderTotalAmount += totalPrice;
-
-        return {
-          eventId: event._id,
-          title: { en: event.title.en },
-          image: event.image,
-          date: event.date,
-          price: event.price,
-          quantity: item.quantity || 1,
-          totalPrice,
-        };
-      })
-    ); */
 console.log(roomsBooking,"testing event orders")
-    const newOrder = new OrderEventModel({
-      guestId,
-      eventsBooking: roomsBooking.map(item=>({...item,title:{en:item.title}})),
-      orderTotalAmount,
-    });
+const newOrder = new OrderEventModel({
+  guestId,
+  eventsBooking: roomsBooking.map(item => ({
+    eventId: item.eventId, 
+    title: { en: item.title },
+    image: item.image,
+    date: item.date,
+    price: item.price,
+    quantity: item.quantity || 1,
+    totalPrice: item.totalPrice,
+  })),
+  orderTotalAmount,
+});
+
 console.log(newOrder)
 try{
   const savedOrder = await newOrder.save();
@@ -63,12 +47,13 @@ export const getAllOrderEvents = async (req, res) => {
 
 export const getMyOrderEvents = async (req, res) => {
   try {
-    const orders = await OrderEventModel.find({ guestId: req.user._id });
-    res.status(200).json(orders);
+    const orders = await OrderEventModel.find({ guestId: req.guest._id }).populate("eventsBooking.eventId");
+    res.status(200).json({ success: true, data: orders });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 export const updateOrderEventPaymentStatus = async (req, res) => {
   try {
