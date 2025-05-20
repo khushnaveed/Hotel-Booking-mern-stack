@@ -25,7 +25,7 @@ const ProfileData = ({ guest }) => {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.put(`http://localhost:5005/guest/${guest._id}`, editedGuest, {
+      await axios.put(`/guest/${guest._id}`, editedGuest, {
         headers: { token },
       });
       setIsEditing(false);
@@ -168,14 +168,12 @@ const ProfileData = ({ guest }) => {
         <div className="mt-4 flex gap-4 justify-end">
           <button
             onClick={handleUpdate}
-            className="bg-[#8E7037] w-20 text-white px-4 py-2 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037] transition duration-300"
-          >
+            className="bg-[#8E7037] w-20 text-white px-4 py-2 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037] transition duration-300">
             Save
           </button>
           <button
             onClick={() => setIsEditing(false)}
-            className="bg-white w-20 text-[#8E7037] border border-[#8E7037] px-4 py-2 hover:bg-gray-200 transition duration-300"
-          >
+            className="bg-white w-20 text-[#8E7037] border border-[#8E7037] px-4 py-2 hover:bg-gray-200 transition duration-300">
             Cancel
           </button>
         </div>
@@ -185,8 +183,7 @@ const ProfileData = ({ guest }) => {
         <div className="mt-4 flex justify-end">
           <button
             onClick={() => setIsEditing(true)}
-            className="bg-[#8E7037] flex text-white px-4 py-2  hover:bg-white hover:text-[#8E7037] hover:border hover:border-[#8E7037] transition duration-300"
-          >
+            className="bg-[#8E7037] flex text-white px-4 py-2  hover:bg-white hover:text-[#8E7037] hover:border hover:border-[#8E7037] transition duration-300">
             <Pencil size={16} className="mr-2 m-1" />
             Edit Profile
           </button>

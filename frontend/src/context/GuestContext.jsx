@@ -12,45 +12,40 @@ export const GuestProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:5005/guest/verifytoken",{
-      method:"get",
-      headers:{token:token}
-    }).then(res=>res.json( 
-      
-    )) .then(result=>{
-      if (result.success) {
-        setIsLoggedIn(true);
-        setGuest(result.data);
-
-      } else {
-        setIsLoggedIn(false);
-        setGuest(null);
-       
-      }   
-     })
-    
+    fetch("/guest/verifytoken", {
+      method: "get",
+      headers: { token: token },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          setIsLoggedIn(true);
+          setGuest(result.data);
+        } else {
+          setIsLoggedIn(false);
+          setGuest(null);
+        }
+      });
 
     setLoading(false);
   }, []);
 
   const login = (token, guestData) => {
-    localStorage.setItem("token", token); 
+    localStorage.setItem("token", token);
 
     setIsLoggedIn(true);
-    setGuest(guestData.data); 
+    setGuest(guestData.data);
     navigate("/profile");
   };
   const logout = () => {
-    localStorage.removeItem("token"); 
-    localStorage.removeItem("guestData"); 
-    setIsLoggedIn(false); 
-    setGuest(null); 
-    navigate("/login"); 
+    localStorage.removeItem("token");
+    localStorage.removeItem("guestData");
+    setIsLoggedIn(false);
+    setGuest(null);
+    navigate("/login");
   };
 
-  const register = (guestData) => {
-    
-  };
+  const register = (guestData) => {};
 
   return (
     <GuestContext.Provider
@@ -63,8 +58,7 @@ export const GuestProvider = ({ children }) => {
         logout,
         register,
         loading,
-      }}
-    >
+      }}>
       {children}
     </GuestContext.Provider>
   );

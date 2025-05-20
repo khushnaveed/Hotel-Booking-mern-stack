@@ -30,7 +30,7 @@ export default function AdminEvent() {
   const fetchEvents = () => {
     setLoading(true);
     axios
-      .get("http://localhost:5005/events")
+      .get("/events")
       .then((response) => {
         setEvents(response.data);
       })
@@ -41,7 +41,7 @@ export default function AdminEvent() {
   const handleCreate = () => {
     axios
       .post(
-        "http://localhost:5005/events",
+        "/events",
         {
           title: { en: newEvent.title },
           excerpt: { en: newEvent.excerpt },
@@ -70,7 +70,7 @@ export default function AdminEvent() {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5005/events/${id}`)
+      .delete(`/events/${id}`)
       .then(() => fetchEvents())
       .catch((err) => console.error("Delete failed:", err));
   };
@@ -98,7 +98,7 @@ export default function AdminEvent() {
 
   const handleEditSave = (id) => {
     axios
-      .put(`http://localhost:5005/events/${id}`, {
+      .put(`/events/${id}`, {
         title: { en: editedEvent.title },
         excerpt: { en: editedEvent.excerpt },
         date: editedEvent.date,
@@ -285,14 +285,14 @@ export default function AdminEvent() {
 
                   <p className="text-sm mt-1">📅 Date: {event.date}</p>
                   <p className="text-md font-bold">
-
-
                     {currencySymbols[currency]}
                     {Number(event.price).toLocaleString()}
                   </p>
 
                   {event.showCountdown && (
-                    <p className="text-sm text-red-500 mt-1">⏳ Countdown active</p>
+                    <p className="text-sm text-red-500 mt-1">
+                      ⏳ Countdown active
+                    </p>
                   )}
                 </div>
               )}

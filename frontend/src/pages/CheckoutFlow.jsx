@@ -56,7 +56,7 @@ const CheckoutFlow = () => {
       };
 
       try {
-        const response = await fetch("http://localhost:5005/bookings", {
+        const response = await fetch("/bookings", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -131,8 +131,7 @@ const CheckoutFlow = () => {
                       }`}
                       initial={{ scale: 0.9 }}
                       animate={{ scale: isActive ? 1.1 : 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
+                      transition={{ duration: 0.3 }}>
                       {isCompleted ? <CheckCircle size={20} /> : index + 1}
                     </motion.div>
                     <span className="mt-2 text-sm font-medium text-gray-600">
@@ -178,8 +177,7 @@ const CheckoutFlow = () => {
               step === "payment"
                 ? "ml-20 mr-20"
                 : "lg:grid lg:grid-cols-3 lg:gap-8"
-            }
-          >
+            }>
             {/* Left/Main Column */}
             <div className={step === "payment" ? "w-full" : "lg:col-span-2"}>
               <AnimatePresence mode="wait">
@@ -189,8 +187,7 @@ const CheckoutFlow = () => {
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  transition={{ duration: 0.4 }}
-                >
+                  transition={{ duration: 0.4 }}>
                   {step === "guest" && (
                     <GuestDetails onNext={next} setGuestData={setGuestData} />
                   )}
@@ -211,14 +208,12 @@ const CheckoutFlow = () => {
                       <div className="flex flex-col sm:flex-row sm:justify-center gap-4 mt-8">
                         <button
                           onClick={() => navigate("/rooms")}
-                          className="px-6 py-3 bg-white text-[#8E7037] border border-[#8E7037]  hover:bg-[#8E7037] hover:text-white transition-colors duration-200"
-                        >
+                          className="px-6 py-3 bg-white text-[#8E7037] border border-[#8E7037]  hover:bg-[#8E7037] hover:text-white transition-colors duration-200">
                           Continue to book more rooms
                         </button>
                         <button
                           onClick={() => navigate("/events")}
-                          className="px-6 py-3 bg-white text-[#8E7037] border border-[#8E7037]  hover:bg-[#8E7037] hover:text-white transition-colors duration-200"
-                        >
+                          className="px-6 py-3 bg-white text-[#8E7037] border border-[#8E7037]  hover:bg-[#8E7037] hover:text-white transition-colors duration-200">
                           Continue to book more events
                         </button>
                       </div>
@@ -244,17 +239,15 @@ const CheckoutFlow = () => {
                       setPriceDetails={setPriceDetails}
                       isConfirmationStep={false}
                     />
-                    <div className="flex-col sm:flex-row justify-center gap-4 text-center" >
+                    <div className="flex-col sm:flex-row justify-center gap-4 text-center">
                       <button
                         onClick={() => navigate("/rooms")}
-                        className="px-6 py-3 bg-[#8E7037] text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
-                      >
+                        className="px-6 py-3 bg-[#8E7037] text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200">
                         Continue to book more rooms
                       </button>
                       <button
                         onClick={() => navigate("/events")}
-                        className="px-6 py-3 mt-5 bg-[#8E7037] text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
-                      >
+                        className="px-6 py-3 mt-5 bg-[#8E7037] text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200">
                         Continue to book more events
                       </button>
                     </div>

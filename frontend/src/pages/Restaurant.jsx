@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from "react";
 import emailjs from "emailjs-com";
 import { useCurrency } from "../context/CurrencyContext.jsx";
@@ -36,7 +35,7 @@ export default function Restaurant() {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5005/menu/foods");
+      const response = await fetch("/menu/foods");
       console.log(response);
 
       if (!response.ok) {
@@ -74,10 +73,10 @@ export default function Restaurant() {
         i % 4 === 0
           ? "Breakfast"
           : i % 4 === 1
-            ? "Lunch"
-            : i % 4 === 2
-              ? "Dinner"
-              : "Drink",
+          ? "Lunch"
+          : i % 4 === 2
+          ? "Dinner"
+          : "Drink",
     }));
   };
 

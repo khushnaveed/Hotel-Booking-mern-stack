@@ -12,12 +12,9 @@ function BookingDetails({ bookingReference }) {
     const fetchBooking = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `http://localhost:5005/bookings/${bookingReference}`,
-          {
-            headers: { token },
-          }
-        );
+        const response = await axios.get(`/bookings/${bookingReference}`, {
+          headers: { token },
+        });
         setBooking(response.data.booking);
       } catch (error) {
         console.error("Error fetching booking:", error);

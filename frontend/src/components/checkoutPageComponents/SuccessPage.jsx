@@ -10,7 +10,7 @@ export default function SuccessPage() {
 
   useEffect(() => {
     if (sessionId) {
-      fetch(`http://localhost:5005/checkout-session/${sessionId}`)
+      fetch(`/checkout-session/${sessionId}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -34,7 +34,7 @@ export default function SuccessPage() {
             orderTotalAmount: +data.metadata.orderTotalAmount,
           };
           if (order.roomsBooking[0]["arrivalDate"]) {
-            fetch(`http://localhost:5005/order`, {
+            fetch(`/order`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export default function SuccessPage() {
               },
             });
           } else {
-            fetch(`http://localhost:5005/order-events`, {
+            fetch(`/order-events`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

@@ -14,7 +14,7 @@ const AdminGuest = () => {
   const fetchGuests = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5005/guest", {
+      const res = await axios.get("/guest", {
         headers: { token },
       });
       setGuests(res.data.data);
@@ -26,7 +26,7 @@ const AdminGuest = () => {
   const deleteGuest = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5005/guest/${id}`, {
+      await axios.delete(`/guest/${id}`, {
         headers: { token },
       });
       fetchGuests();
@@ -47,11 +47,9 @@ const AdminGuest = () => {
   const updateGuest = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.put(
-        `http://localhost:5005/guest/${editingGuestId}`,
-        editedGuest,
-        { headers: { token } }
-      );
+      await axios.put(`/guest/${editingGuestId}`, editedGuest, {
+        headers: { token },
+      });
       setEditingGuestId(null);
       fetchGuests();
     } catch (err) {
@@ -91,8 +89,7 @@ const AdminGuest = () => {
           {guests.map((guest) => (
             <div
               key={guest._id}
-              className="grid grid-cols-10 gap-2  hover:bg-gray-50 sm:grid-cols-10 items-center bg-white p-4 mb-2  shadow text-sm"
-            >
+              className="grid grid-cols-10 gap-2  hover:bg-gray-50 sm:grid-cols-10 items-center bg-white p-4 mb-2  shadow text-sm">
               {editingGuestId === guest._id ? (
                 <>
                   <input
@@ -155,14 +152,12 @@ const AdminGuest = () => {
                   <div className="flex gap-2 col-span-2">
                     <button
                       onClick={updateGuest}
-                      className="bg-[#8E7037] w-18 text-white px-3 py-1 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037]"
-                    >
+                      className="bg-[#8E7037] w-18 text-white px-3 py-1 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037]">
                       Save
                     </button>
                     <button
                       onClick={() => setEditingGuestId(null)}
-                      className="bg-white w-18 border border-[#8E7037] text-[#8E7037] px-3 py-1  hover:bg-gray-100"
-                    >
+                      className="bg-white w-18 border border-[#8E7037] text-[#8E7037] px-3 py-1  hover:bg-gray-100">
                       Cancel
                     </button>
                   </div>

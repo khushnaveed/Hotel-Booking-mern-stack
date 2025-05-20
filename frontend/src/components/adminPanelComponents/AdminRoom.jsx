@@ -15,8 +15,8 @@ export default function AdminRoom() {
     additionalDetails: {
       maxPersons: "",
       bed: "",
-      view: ""
-    }
+      view: "",
+    },
   });
   const { currency } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
@@ -39,7 +39,7 @@ export default function AdminRoom() {
   const fetchRooms = () => {
     setLoading(true);
     axios
-      .get("http://localhost:5005/room")
+      .get("/room")
       .then((response) => {
         setRooms(response.data.data);
         setError(false);
@@ -60,12 +60,12 @@ export default function AdminRoom() {
       additionalDetails: {
         maxPersons: newRoom.additionalDetails.maxPersons,
         bed: newRoom.additionalDetails.bed,
-        view: newRoom.additionalDetails.view
-      }
+        view: newRoom.additionalDetails.view,
+      },
     };
     axios
-      .post("http://localhost:5005/room", data, {
-        headers: { token: localStorage.getItem("token") }
+      .post("/room", data, {
+        headers: { token: localStorage.getItem("token") },
       })
       .then(() => {
         setNewRoom({
@@ -77,8 +77,8 @@ export default function AdminRoom() {
           additionalDetails: {
             maxPersons: "",
             bed: "",
-            view: ""
-          }
+            view: "",
+          },
         });
         fetchRooms();
       })
@@ -87,8 +87,8 @@ export default function AdminRoom() {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5005/room/${id}`, {
-        headers: { token: localStorage.getItem("token") }
+      .delete(`/room/${id}`, {
+        headers: { token: localStorage.getItem("token") },
       })
       .then(() => fetchRooms())
       .catch((err) => console.error("Delete failed:", err));
@@ -107,8 +107,8 @@ export default function AdminRoom() {
       additionalDetails: {
         maxPersons: room.additionalDetails?.maxPersons || "",
         bed: room.additionalDetails?.bed || "",
-        view: room.additionalDetails?.view || ""
-      }
+        view: room.additionalDetails?.view || "",
+      },
     });
   };
 
@@ -120,7 +120,7 @@ export default function AdminRoom() {
   const handleEditSave = (id) => {
     axios
       .patch(
-        `http://localhost:5005/room/${id}`,
+        `/room/${id}`,
         {
           title: editedRoom.title,
           descOverview: editedRoom.descOverview,
@@ -129,8 +129,8 @@ export default function AdminRoom() {
           additionalDetails: {
             maxPersons: editedRoom.additionalDetails.maxPersons,
             bed: editedRoom.additionalDetails.bed,
-            view: editedRoom.additionalDetails.view
-          }
+            view: editedRoom.additionalDetails.view,
+          },
         },
         { headers: { token: localStorage.getItem("token") } }
       )
@@ -146,7 +146,9 @@ export default function AdminRoom() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
           <p className="text-sm font-medium text-gray-500">Total Rooms</p>
-          <p className="mt-1 text-3xl font-semibold text-gray-900">{rooms.length}</p>
+          <p className="mt-1 text-3xl font-semibold text-gray-900">
+            {rooms.length}
+          </p>
         </div>
       </div>
       <h2 className="text-3xl rounded-lg font-semibold text-gray-800 mb-6">
@@ -217,8 +219,8 @@ export default function AdminRoom() {
                 ...newRoom,
                 additionalDetails: {
                   ...newRoom.additionalDetails,
-                  maxPersons: e.target.value
-                }
+                  maxPersons: e.target.value,
+                },
               })
             }
             className="border-gray-300 p-3 shadow-sm w-full"
@@ -233,8 +235,8 @@ export default function AdminRoom() {
                 ...newRoom,
                 additionalDetails: {
                   ...newRoom.additionalDetails,
-                  bed: e.target.value
-                }
+                  bed: e.target.value,
+                },
               })
             }
             className="border-gray-300 p-3 shadow-sm w-full"
@@ -249,8 +251,8 @@ export default function AdminRoom() {
                 ...newRoom,
                 additionalDetails: {
                   ...newRoom.additionalDetails,
-                  view: e.target.value
-                }
+                  view: e.target.value,
+                },
               })
             }
             className="border-gray-300 p-3 shadow-sm w-full"
@@ -258,8 +260,7 @@ export default function AdminRoom() {
         </div>
         <button
           onClick={handleCreate}
-          className="bg-[#8E7037] text-white px-6 py-2 hover:bg-white hover:text-[#8E7037] border border-[#8E7037] transition-all duration-200"
-        >
+          className="bg-[#8E7037] text-white px-6 py-2 hover:bg-white hover:text-[#8E7037] border border-[#8E7037] transition-all duration-200">
           Create Room
         </button>
       </div>
@@ -275,8 +276,7 @@ export default function AdminRoom() {
           {rooms.map((room) => (
             <div
               key={room._id}
-              className="bg-white p-6 shadow-lg flex justify-between items-center transition-transform hover:scale-105"
-            >
+              className="bg-white p-6 shadow-lg flex justify-between items-center transition-transform hover:scale-105">
               <img
                 src={room.images?.[0]}
                 alt={room.title}
@@ -326,8 +326,8 @@ export default function AdminRoom() {
                         ...editedRoom,
                         additionalDetails: {
                           ...editedRoom.additionalDetails,
-                          bed: e.target.value
-                        }
+                          bed: e.target.value,
+                        },
                       })
                     }
                     className="w-full border-gray-300 p-3 shadow-sm"
@@ -341,8 +341,8 @@ export default function AdminRoom() {
                         ...editedRoom,
                         additionalDetails: {
                           ...editedRoom.additionalDetails,
-                          view: e.target.value
-                        }
+                          view: e.target.value,
+                        },
                       })
                     }
                     className="w-full border-gray-300 p-3 shadow-sm"
@@ -350,14 +350,12 @@ export default function AdminRoom() {
                   <div className="flex justify-end gap-4 pt-2">
                     <button
                       onClick={() => handleEditSave(room._id)}
-                      className="bg-[#8E7037] text-white px-6 py-2 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037]"
-                    >
+                      className="bg-[#8E7037] text-white px-6 py-2 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037]">
                       Save
                     </button>
                     <button
                       onClick={() => setEditingRoomId(null)}
-                      className="bg-gray-300 text-gray-800 px-6 py-2 hover:bg-gray-400"
-                    >
+                      className="bg-gray-300 text-gray-800 px-6 py-2 hover:bg-gray-400">
                       Cancel
                     </button>
                   </div>
@@ -365,20 +363,32 @@ export default function AdminRoom() {
               ) : (
                 <div className="flex-1 text-gray-800">
                   <h3 className="text-xl font-semibold">{room.title}</h3>
-                  <p className={`text-gray-600 text-justify ${expandedRoomIds.includes(room._id) ? '' : 'line-clamp-2'}`}>
+                  <p
+                    className={`text-gray-600 text-justify ${
+                      expandedRoomIds.includes(room._id) ? "" : "line-clamp-2"
+                    }`}>
                     {room.descOverview}
                   </p>
                   <button
                     onClick={() => toggleReadMore(room._id)}
-                    className="text-sm text-blue-600 hover:underline mt-1"
-                  >
-                    {expandedRoomIds.includes(room._id) ? 'Read less' : 'Read more'}
+                    className="text-sm text-blue-600 hover:underline mt-1">
+                    {expandedRoomIds.includes(room._id)
+                      ? "Read less"
+                      : "Read more"}
                   </button>
                   <div className="mt-4">
-                    <p className="text-sm mt-1">💶 Price: {room.defaultPrice} {currencySymbols[currency]} </p>
-                    <p className="text-sm mt-1">Max Persons: {room?.additionalDetails?.maxPersons}</p>
-                    <p className="text-sm mt-1">Bed Type: {room?.additionalDetails?.bed}</p>
-                    <p className="text-sm mt-1">View: {room?.additionalDetails?.view}</p>
+                    <p className="text-sm mt-1">
+                      💶 Price: {room.defaultPrice} {currencySymbols[currency]}{" "}
+                    </p>
+                    <p className="text-sm mt-1">
+                      Max Persons: {room?.additionalDetails?.maxPersons}
+                    </p>
+                    <p className="text-sm mt-1">
+                      Bed Type: {room?.additionalDetails?.bed}
+                    </p>
+                    <p className="text-sm mt-1">
+                      View: {room?.additionalDetails?.view}
+                    </p>
                   </div>
                 </div>
               )}

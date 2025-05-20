@@ -22,7 +22,7 @@ function EventDetails() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5005/events/${id}`)
+      .get(`/events/${id}`)
       .then((res) => setEvent(res.data))
       .catch((err) => console.error("Error fetching event:", err));
   }, [id]);

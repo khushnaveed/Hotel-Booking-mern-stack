@@ -20,7 +20,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const res = await axios.post(`http://localhost:5005/guest/reset-password/${token}`, {
+      const res = await axios.post(`/guest/reset-password/${token}`, {
         password,
         confirmPassword,
       });
@@ -34,15 +34,11 @@ const ResetPassword = () => {
 
   return (
     <>
-      <section
-        className="absolute top-0 left-0 w-full h-[20vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center "
-      >
-        <div className="absolute inset-0 bg-white
+      <section className="absolute top-0 left-0 w-full h-[20vh] md:h-[40vh] bg-cover bg-center flex items-center justify-center ">
+        <div
+          className="absolute inset-0 bg-white
         "></div>
-
-
       </section>
-
 
       <div className="max-w-md mx-auto mt-100 mb-50">
         <h2 className="text-xl font-bold mb-4">Reset Password</h2>
@@ -63,15 +59,17 @@ const ResetPassword = () => {
             required
             className="w-full border p-2 rounded"
           />
-          <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
+          <button
+            type="submit"
+            className="bg-green-600 text-white px-4 py-2 rounded">
             Reset Password
           </button>
         </form>
 
         {message && <p className="text-green-600 mt-4">{message}</p>}
         {error && <p className="text-red-600 mt-4">{error}</p>}
-      </div></>
-
+      </div>
+    </>
   );
 };
 

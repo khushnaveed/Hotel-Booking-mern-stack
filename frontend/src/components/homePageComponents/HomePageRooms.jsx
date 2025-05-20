@@ -1,9 +1,8 @@
-
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Bed } from "lucide-react";
-import { useCurrency } from "../../context/CurrencyContext.jsx"
-import { Link } from 'react-router-dom';
+import { useCurrency } from "../../context/CurrencyContext.jsx";
+import { Link } from "react-router-dom";
 
 export default function HomePageRooms() {
   const [rooms, setRooms] = useState([]);
@@ -16,25 +15,24 @@ export default function HomePageRooms() {
   useEffect(() => {
     const fetchRoomData = async () => {
       try {
-        const response = await axios.get("http://localhost:5005/room");
+        const response = await axios.get("/room");
         const allRooms = response.data.data;
 
         const filtered = allRooms
-          .filter(room => {
+          .filter((room) => {
             const title = room.title.toLowerCase();
             return (
-              title.includes('presidential') ||
-              title.includes('luxury') ||
-              title.includes('deluxe')
+              title.includes("presidential") ||
+              title.includes("luxury") ||
+              title.includes("deluxe")
             );
           })
           .slice(0, 3);
 
         setRooms(filtered);
         setActiveRoom(filtered[0]);
-
       } catch (error) {
-        console.error('Error fetching room data:', error);
+        console.error("Error fetching room data:", error);
       } finally {
         setLoading(false);
       }
@@ -66,10 +64,10 @@ export default function HomePageRooms() {
           {rooms.map((room) => (
             <div
               key={room._id}
-              className={`bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 ${activeRoom?._id === room._id ? "ring-2 ring-[#8E7037]" : ""
-                }`}
-              onClick={() => setActiveRoom(room)}
-            >
+              className={`bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 ${
+                activeRoom?._id === room._id ? "ring-2 ring-[#8E7037]" : ""
+              }`}
+              onClick={() => setActiveRoom(room)}>
               <div className="relative h-64 overflow-hidden">
                 <img
                   src={room.images[0]}
@@ -90,9 +88,8 @@ export default function HomePageRooms() {
                 </p>
                 <button
                   onClick={() => handleReadMoreToggle(room._id)}
-                  className="text-blue-500 text-sm"
-                >
-                  {expandedRoom === room._id ? 'Read Less' : 'Read More'}
+                  className="text-blue-500 text-sm">
+                  {expandedRoom === room._id ? "Read Less" : "Read More"}
                 </button>
                 <div className="flex justify-between text-sm text-gray-500 mb-4">
                   <div className="flex items-center">
@@ -100,14 +97,18 @@ export default function HomePageRooms() {
                     <span>{room.additionalDetails.bed}</span>
                   </div>
                   <div className="flex items-center">
-                    <span>{room.additionalDetails.maxPersons} {room.additionalDetails.maxPersons === 1 ? 'Guest' : 'Guests'}</span>
+                    <span>
+                      {room.additionalDetails.maxPersons}{" "}
+                      {room.additionalDetails.maxPersons === 1
+                        ? "Guest"
+                        : "Guests"}
+                    </span>
                   </div>
                 </div>
 
                 <Link
                   to={`/rooms/${room.slug}`}
-                  className="inline-block mx-auto text-sm text-white bg-[#8E7037] border border-[#8E7037] px-4 py-2 hover:bg-white hover:text-[#8E7037] transition"
-                >
+                  className="inline-block mx-auto text-sm text-white bg-[#8E7037] border border-[#8E7037] px-4 py-2 hover:bg-white hover:text-[#8E7037] transition">
                   Book Now
                 </Link>
               </div>
@@ -117,6 +118,4 @@ export default function HomePageRooms() {
       </div>
     </section>
   );
-
 }
-

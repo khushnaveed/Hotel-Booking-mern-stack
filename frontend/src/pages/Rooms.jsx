@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useCurrency } from "../context/CurrencyContext.jsx";
@@ -16,7 +15,7 @@ export default function Rooms() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5005/room")
+      .get("/room")
       .then((res) => {
         setRooms(res.data.data);
         setLoading(false);
@@ -59,30 +58,6 @@ export default function Rooms() {
   );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -99,7 +74,7 @@ export default function Rooms() {
   const [expandedRoom, setExpandedRoom] = useState(null);
   useEffect(() => {
     axios
-      .get("http://localhost:5005/room") 
+      .get("/room") 
       .then((res) => {
         setRooms(res.data.data);
         setLoading(false); 

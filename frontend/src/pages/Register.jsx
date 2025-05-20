@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useContext } from "react";
 export default function Register() {
-  const { guest } = useContext(GuestContext); 
+  const { guest } = useContext(GuestContext);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function Register() {
     }
     console.log(formData);
     try {
-      const response = await fetch("http://localhost:5005/guest/register", {
+      const response = await fetch("/guest/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,12 +54,12 @@ export default function Register() {
         alert("Registration successful!");
         navigate("/login");
       } else {
-        console.log(data)
+        console.log(data);
         const messages = Array.isArray(data.errors)
           ? data.errors.map((err) => err.msg).join("\n")
           : data.message;
 
-      alert(messages || "Something went wrong.");
+        alert(messages || "Something went wrong.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -85,8 +85,7 @@ export default function Register() {
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-4 text-white"
-        >
+          className="flex flex-col gap-4 text-white">
           <input
             name="firstName"
             placeholder="First Name *"
@@ -169,8 +168,7 @@ export default function Register() {
 
           <button
             type="submit"
-            className="text-white py-2 border border-white hover:bg-[#8E7037] hover:text-white transition-colors"
-          >
+            className="text-white py-2 border border-white hover:bg-[#8E7037] hover:text-white transition-colors">
             REGISTER
           </button>
           <a href="/login">

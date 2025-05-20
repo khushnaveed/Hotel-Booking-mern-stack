@@ -12,7 +12,7 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); 
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,7 +25,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5005/guest/login", {
+      const response = await fetch("/guest/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export default function Login() {
 
       if (data.success) {
         alert("Login successful!");
-        login(token, data); 
+        login(token, data);
 
         navigate("/profile");
       } else {
@@ -50,7 +50,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error("Login error:", error);
-      setError(error.message); 
+      setError(error.message);
     }
   };
 
@@ -86,8 +86,7 @@ export default function Login() {
           />
           <button
             type="submit"
-            className="text-white py-2 border border-white hover:bg-[#8E7037] hover:text-white transition-colors"
-          >
+            className="text-white py-2 border border-white hover:bg-[#8E7037] hover:text-white transition-colors">
             LOGIN
           </button>
           <p className=" p-2 bg-transparent text-white">

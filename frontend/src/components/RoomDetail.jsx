@@ -24,7 +24,7 @@ export default function RoomDetails() {
   useEffect(() => {
     const fetchRoom = async () => {
       try {
-        const res = await axios.get(`http://localhost:5005/room/${roomSlug}`);
+        const res = await axios.get(`/room/${roomSlug}`);
         setRoomData(res.data.data);
       } catch (error) {
         console.error("Error fetching room:", error);

@@ -12,7 +12,7 @@ const images = [
 export default function HeroContentCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const isPausedRef = useRef(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -36,13 +36,15 @@ export default function HeroContentCarousel() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5005/room/available?start=${checkIn}&end=${checkOut}`);
+      const response = await fetch(
+        `/room/available?start=${checkIn}&end=${checkOut}`
+      );
       const data = await response.json();
 
       if (data.success && data.data.length > 0) {
         console.log("Available Rooms:", data.data);
         const firstAvailableRoom = data.data[0];
-        console.log("First Room:", firstAvailableRoom); 
+        console.log("First Room:", firstAvailableRoom);
         navigate(`/rooms/${firstAvailableRoom.slug}#calendar`);
       } else {
         alert("No rooms available or something went wrong.");
@@ -60,8 +62,6 @@ export default function HeroContentCarousel() {
       }
     }, 5000);
 
-
-
     return () => clearInterval(interval);
   }, []);
 
@@ -71,8 +71,7 @@ export default function HeroContentCarousel() {
 
       <div
         className="flex transition-transform duration-700 ease-in-out h-full"
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-      >
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
         {images.map((src, index) => (
           <img
             key={index}
@@ -96,8 +95,7 @@ export default function HeroContentCarousel() {
           <div className="w-full">
             <label
               htmlFor="check-in"
-              className="text-[#8E7037] text-base sm:text-xl lg:text-2xl font-medium mb-2 flex items-center"
-            >
+              className="text-[#8E7037] text-base sm:text-xl lg:text-2xl font-medium mb-2 flex items-center">
               <Calendar size={30} className="mr-2 text-gold" />
               Check In
             </label>
@@ -105,15 +103,13 @@ export default function HeroContentCarousel() {
               type="date"
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
-
               className="w-full border border-[#8E7037] px-4 py-3 text-sm sm:text-base lg:text-xl text-gray-600"
             />
           </div>
           <div className="w-full">
             <label
               htmlFor="check-out"
-              className="text-[#8E7037] text-base sm:text-xl lg:text-2xl font-medium mb-2 flex items-center"
-            >
+              className="text-[#8E7037] text-base sm:text-xl lg:text-2xl font-medium mb-2 flex items-center">
               <Calendar size={30} className="mr-2 text-gold" />
               Check Out
             </label>
@@ -121,15 +117,13 @@ export default function HeroContentCarousel() {
               type="date"
               value={checkOut}
               onChange={(e) => setCheckOut(e.target.value)}
-
               className="w-full border border-[#8E7037] px-4 py-3 text-sm sm:text-base lg:text-xl text-gray-600"
             />
           </div>
           <div className="w-full">
             <label
               htmlFor="guests"
-              className="text-[#8E7037] text-base sm:text-xl lg:text-2xl font-medium mb-2 flex items-center"
-            >
+              className="text-[#8E7037] text-base sm:text-xl lg:text-2xl font-medium mb-2 flex items-center">
               <Users size={30} className="mr-2 text-gold" />
               Adult
             </label>
@@ -143,8 +137,7 @@ export default function HeroContentCarousel() {
           <div className="w-full">
             <label
               htmlFor="guests"
-              className="text-[#8E7037] text-base sm:text-xl lg:text-2xl font-medium mb-2 flex items-center"
-            >
+              className="text-[#8E7037] text-base sm:text-xl lg:text-2xl font-medium mb-2 flex items-center">
               <Users size={30} className="mr-2 text-gold" />
               Child
             </label>
@@ -158,10 +151,8 @@ export default function HeroContentCarousel() {
           <div className="col-span-2 lg:col-span-1 w-full">
             <button
               onClick={handleCheckAvailability}
-
               type="submit"
-              className="w-full bg-[#8E7037] text-white text-xl sm:text-2xl lg:text-2xl px-4 py-2 border border-transparent hover:border-[#8E7037] hover:text-[#8E7037] hover:bg-white/80 transition"
-            >
+              className="w-full bg-[#8E7037] text-white text-xl sm:text-2xl lg:text-2xl px-4 py-2 border border-transparent hover:border-[#8E7037] hover:text-[#8E7037] hover:bg-white/80 transition">
               Check Availability
             </button>
           </div>
@@ -170,15 +161,13 @@ export default function HeroContentCarousel() {
 
       <button
         onClick={prevSlide}
-        className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-800 p-3 border border-white shadow-md hover:bg-white/75 transition hidden sm:block"
-      >
+        className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-800 p-3 border border-white shadow-md hover:bg-white/75 transition hidden sm:block">
         <svg
           className="w-6 h-6 text-white"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          viewBox="0 0 24 24"
-        >
+          viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -189,15 +178,13 @@ export default function HeroContentCarousel() {
 
       <button
         onClick={nextSlide}
-        className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-800 p-3 border border-white shadow-md hover:bg-white/75 transition hidden sm:block"
-      >
+        className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-800 p-3 border border-white shadow-md hover:bg-white/75 transition hidden sm:block">
         <svg
           className="w-6 h-6 text-white"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          viewBox="0 0 24 24"
-        >
+          viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
         </svg>
       </button>
@@ -207,16 +194,16 @@ export default function HeroContentCarousel() {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`h-3 w-3 rounded-full transition-all duration-300 ${index === currentIndex ? "bg-[#8E7037] scale-125" : "bg-white/70"}`}
-          ></button>
+            className={`h-3 w-3 rounded-full transition-all duration-300 ${
+              index === currentIndex ? "bg-[#8E7037] scale-125" : "bg-white/70"
+            }`}></button>
         ))}
       </div>
 
       <div
         className="absolute top-0 left-0 w-full h-20 z-10"
         onMouseEnter={() => (isPausedRef.current = true)}
-        onMouseLeave={() => (isPausedRef.current = false)}
-      ></div>
+        onMouseLeave={() => (isPausedRef.current = false)}></div>
     </div>
   );
 }

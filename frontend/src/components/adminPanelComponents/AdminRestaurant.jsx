@@ -27,7 +27,7 @@ export default function AdminRestaurant() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const API = "http://localhost:5005/menu/foods";
+  const API = "/menu/foods";
 
   useEffect(() => {
     fetchMenuItems();
@@ -121,8 +121,7 @@ export default function AdminRestaurant() {
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-      >
+        transition={{ delay: 0.1 }}>
         {[
           ["Total Menus", menuItems.length],
           ["Breakfast Menus", breakfastCount],
@@ -133,8 +132,7 @@ export default function AdminRestaurant() {
             key={label}
             className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]"
             whileHover={{ scale: 1.03 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
+            transition={{ type: "spring", stiffness: 300 }}>
             <p className="text-sm font-medium text-gray-500">{label}</p>
             <p className="mt-1 text-3xl font-semibold text-gray-900">
               <CountUp end={count} duration={1.5} />
@@ -161,8 +159,7 @@ export default function AdminRestaurant() {
           <motion.div
             className="grid grid-cols-[1fr_100px_2fr_200px_100px_100px] gap-2 bg-white p-4 mb-2  shadow text-sm items-center"
             initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
+            animate={{ opacity: 1, y: 0 }}>
             <input
               value={newItem.name}
               onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
@@ -199,8 +196,7 @@ export default function AdminRestaurant() {
               onChange={(e) =>
                 setNewItem({ ...newItem, title: e.target.value })
               }
-              className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
-            >
+              className="border-gray-300 p-3 shadow-sm w-full bg-gray-100">
               <option>Breakfast</option>
               <option>Lunch</option>
               <option>Dinner</option>
@@ -208,8 +204,7 @@ export default function AdminRestaurant() {
             </select>
             <button
               onClick={handleAddItem}
-              className="bg-[#8E7037] text-white px-3 py-2 hover:bg-white hover:text-[#8E7037] hover:border hover:border-[#8E7037] transition-all duration-200"
-            >
+              className="bg-[#8E7037] text-white px-3 py-2 hover:bg-white hover:text-[#8E7037] hover:border hover:border-[#8E7037] transition-all duration-200">
               Add
             </button>
           </motion.div>
@@ -227,8 +222,7 @@ export default function AdminRestaurant() {
                 className="grid grid-cols-[1fr_100px_2fr_200px_100px_100px] gap-2 bg-white p-4 mb-2 shadow text-sm items-center"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-              >
+                transition={{ delay: index * 0.05 }}>
                 {editItemId === item._id ? (
                   <>
                     <input
@@ -254,8 +248,7 @@ export default function AdminRestaurant() {
                       onChange={(e) =>
                         handleEditChange("title", e.target.value)
                       }
-                      className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
-                    >
+                      className="border-gray-300 p-3 shadow-sm w-full bg-gray-100">
                       <option>Breakfast</option>
                       <option>Lunch</option>
                       <option>Dinner</option>
@@ -264,14 +257,12 @@ export default function AdminRestaurant() {
                     <div className="flex gap-2 flex-col pl-4">
                       <button
                         onClick={handleSave}
-                        className="bg-[#8E7037] w-18 text-white px-3 py-1 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037]"
-                        >
+                        className="bg-[#8E7037] w-18 text-white px-3 py-1 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037]">
                         Save
                       </button>
                       <button
                         onClick={() => setEditItemId(null)}
-                        className="bg-white w-18 border border-[#8E7037] text-[#8E7037] px-3 py-1  hover:bg-gray-100"
-                        >
+                        className="bg-white w-18 border border-[#8E7037] text-[#8E7037] px-3 py-1  hover:bg-gray-100">
                         Cancel
                       </button>
                     </div>

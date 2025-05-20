@@ -28,8 +28,8 @@ export default function ReservationHistory() {
         }
 
         const [roomRes, eventRes] = await Promise.all([
-          axios.get("http://localhost:5005/order", { headers: { token } }),
-          axios.get("http://localhost:5005/order-events", {
+          axios.get("/order", { headers: { token } }),
+          axios.get("/order-events", {
             headers: { token },
           }),
         ]);
@@ -113,8 +113,7 @@ export default function ReservationHistory() {
             activeTab === "rooms"
               ? "text-[#8E7037] border-b-2 border-[#8E7037]"
               : "text-gray-500"
-          }`}
-        >
+          }`}>
           Room Reservations
         </button>
         <button
@@ -123,8 +122,7 @@ export default function ReservationHistory() {
             activeTab === "events"
               ? "text-[#8E7037] border-b-2 border-[#8E7037]"
               : "text-gray-500"
-          }`}
-        >
+          }`}>
           Event Reservations
         </button>
       </div>
@@ -134,8 +132,7 @@ export default function ReservationHistory() {
           {filteredRoomOrders.map((order) => (
             <div
               key={order._id}
-              className="bg-white shadow p-6 border border-gray-100"
-            >
+              className="bg-white shadow p-6 border border-gray-100">
               <div className="mb-4 space-y-1">
                 <p className="text-lg font-semibold text-[#8E7037]">
                   Booking ID: <span className="text-gray-800">{order._id}</span>
@@ -166,8 +163,7 @@ export default function ReservationHistory() {
                 {order.roomsBooking.map((room, i) => (
                   <div
                     key={i}
-                    className="bg-gray-50 p-4 border border-gray-200 w-full sm:w-[48%] lg:w-[32%]"
-                  >
+                    className="bg-gray-50 p-4 border border-gray-200 w-full sm:w-[48%] lg:w-[32%]">
                     <p className="font-semibold text-[#8E7037] mb-2">
                       {room.title}
                     </p>
@@ -209,8 +205,7 @@ export default function ReservationHistory() {
           {eventOrders.map((order) => (
             <div
               key={order._id}
-              className="bg-white shadow p-6 border border-gray-100"
-            >
+              className="bg-white shadow p-6 border border-gray-100">
               <div className="mb-4 space-y-1">
                 <p className="text-lg font-semibold text-[#8E7037]">
                   Booking ID: <span className="text-gray-800">{order._id}</span>
@@ -226,8 +221,7 @@ export default function ReservationHistory() {
                 {order.eventsBooking.map((event, index) => (
                   <div
                     key={index}
-                    className="bg-gray-50 p-4 border border-gray-200 w-full sm:w-[48%] lg:w-[32%]"
-                  >
+                    className="bg-gray-50 p-4 border border-gray-200 w-full sm:w-[48%] lg:w-[32%]">
                     <p className="font-semibold text-[#8E7037] mb-2">
                       {event.title?.en}
                     </p>
