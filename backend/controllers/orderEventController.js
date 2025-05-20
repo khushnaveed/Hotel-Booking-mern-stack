@@ -5,14 +5,12 @@ export const createOrderEvent = async (req, res) => {
     const { guestId, roomsBooking,
       orderTotalAmount, } = req.body;
 
-console.log(roomsBooking,"testing event orders")
 const newOrder = new OrderEventModel({
   guestId,
   eventsBooking: roomsBooking.map(item => ({
     eventId: item.eventId, 
     title: { en: item.title },
     image: item.image,
-    date: item.date,
     price: item.price,
     quantity: item.quantity || 1,
     totalPrice: item.totalPrice,
@@ -20,7 +18,6 @@ const newOrder = new OrderEventModel({
   orderTotalAmount,
 });
 
-console.log(newOrder)
 try{
   const savedOrder = await newOrder.save();
     res.status(201).json(savedOrder);
@@ -39,7 +36,6 @@ export const getAllOrderEvents = async (req, res) => {
       "guestId",
       "email"
     );
-    /* res.status(200).json(orders); */
     res.json({ success: true, data: orders });
 
   } catch (error) {

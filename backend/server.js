@@ -37,7 +37,7 @@ try {
   console.log(err.message);
 }
 app.use((req, res, next) => {
-  /*   console.log(req.url,req.method) */
+ 
   next();
 });
 
@@ -51,7 +51,7 @@ app.use("/order", orderRoutes);
 app.use("/order-events", auth, orderEventRoutes);
 app.post("/create-checkout-session", auth, async (req, res) => {
   const { cartItems, orderTotalAmount } = req.body;
-  console.log(cartItems, orderTotalAmount);
+
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
