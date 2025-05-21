@@ -6,8 +6,6 @@ const AdminGuest = () => {
   const [guests, setGuests] = useState([]);
   const [editingGuestId, setEditingGuestId] = useState(null);
   const [editedGuest, setEditedGuest] = useState({});
-  const baseUrl =
-  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     fetchGuests();
@@ -16,7 +14,7 @@ const AdminGuest = () => {
   const fetchGuests = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(baseUrl +"/guest", {
+      const res = await axios.get("http://localhost:5005/guest", {
         headers: { token },
       });
       setGuests(res.data.data);
@@ -28,7 +26,7 @@ const AdminGuest = () => {
   const deleteGuest = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(baseUrl + `/guest/${id}`, {
+      await axios.delete(`http://localhost:5005/guest/${id}`, {
         headers: { token },
       });
       fetchGuests();
@@ -50,7 +48,7 @@ const AdminGuest = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        baseUrl + `/guest/${editingGuestId}`,
+        `http://localhost:5005/guest/${editingGuestId}`,
         editedGuest,
         { headers: { token } }
       );
@@ -101,14 +99,14 @@ const AdminGuest = () => {
                     type="text"
                     name="firstName"
                     value={editedGuest.firstName}
-                    onChange={handleInputChange}
+                    readonly
                     className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <input
                     type="text"
                     name="lastName"
                     value={editedGuest.lastName}
-                    onChange={handleInputChange}
+                    readonly
                     className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
 
@@ -116,35 +114,35 @@ const AdminGuest = () => {
                     type="text"
                     name="country"
                     value={editedGuest.country}
-                    onChange={handleInputChange}
+                    readonly
                     className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <input
                     type="text"
                     name="city"
                     value={editedGuest.city}
-                    onChange={handleInputChange}
+                    readonly
                     className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <input
                     type="text"
                     name="phonenumber"
                     value={editedGuest.phonenumber}
-                    onChange={handleInputChange}
+                    readonly
                     className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <input
                     type="text"
                     name="zipcode"
                     value={editedGuest.zipcode}
-                    onChange={handleInputChange}
+                    readonly
                     className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <input
                     type="email"
                     name="email"
                     value={editedGuest.email}
-                    onChange={handleInputChange}
+                    readonly
                     className="border-gray-300 p-3 shadow-sm w-full bg-gray-100"
                   />
                   <input
