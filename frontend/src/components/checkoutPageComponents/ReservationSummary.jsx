@@ -65,15 +65,16 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
   };
 
   return (
-    <div className="bg-white shadow-lg p-6 space-y-6 border border-gray-100">
-      <h3 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
+    <div className="bg-white shadow-lg p-4 sm:p-6 space-y-6 border border-gray-100">
+      <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 border-b pb-2">
         Reservation Summary
       </h3>
 
       {cartItems.map((item) => (
         <div
           key={item.slug}
-          className="flex gap-4 items-start border-b pb-5 relative">
+          className="flex flex-col sm:flex-row gap-4 items-start sm:items-center border-b pb-5 relative"
+        >
           <img
             src={
               (Array.isArray(item.images) ? item.images[0] : item.images) ||
@@ -84,58 +85,57 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
             className="w-20 h-20 object-cover shadow"
           />
 
-          <div className="text-sm flex-1 space-y-1">
-            <p className="font-semibold mr-15 capitalize text-gray-800 text-base">
+          <div className="flex-1 w-full space-y-2">
+            <p className="font-semibold capitalize text-gray-800 text-base">
               {item.slug.replace(/-/g, " ")}
             </p>
 
             {item.arrivalDate && item.departureDate ? (
               <>
-                <p className="flex items-center gap-1 text-gray-500">
+                <p className="flex items-center gap-2 text-gray-500 text-sm">
                   <Calendar size={16} className="text-[#8E7037]" />
                   {item.arrivalDate} to {item.departureDate}
                 </p>
-                <p className="flex items-center gap-1 text-gray-500">
+                <p className="flex items-center gap-2 text-gray-500 text-sm">
                   <Users size={16} className="text-[#8E7037]" />
                   {item.numAdults} Adults, {item.numChildren} Children
                 </p>
               </>
             ) : (
-              <p className="flex items-center gap-1 text-gray-500">
+              <p className="flex items-center gap-2 text-gray-500 text-sm">
                 <Ticket size={16} className="text-[#8E7037]" />
                 Total Tickets: {item.quantity}
               </p>
             )}
+
             {!isConfirmationStep &&
               !item.arrivalDate &&
               !item.departureDate && (
-                <div className="mt-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() =>
-                          handleChangeQuantity(item.slug, item.quantity - 1)
-                        }
-                        disabled={item.quantity <= 1}
-                        className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        aria-label="Decrease ticket count">
-                        <Minus size={18} className="text-gray-700" />
-                      </button>
+                <div className="flex items-center gap-3 mt-2">
+                  <button
+                    onClick={() =>
+                      handleChangeQuantity(item.slug, item.quantity - 1)
+                    }
+                    disabled={item.quantity <= 1}
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition disabled:opacity-50"
+                    aria-label="Decrease"
+                  >
+                    <Minus size={18} />
+                  </button>
 
-                      <span className="font-medium text-gray-900">
-                        {item.quantity}
-                      </span>
+                  <span className="font-medium text-gray-900">
+                    {item.quantity}
+                  </span>
 
-                      <button
-                        onClick={() =>
-                          handleChangeQuantity(item.slug, item.quantity + 1)
-                        }
-                        className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors"
-                        aria-label="Increase ticket count">
-                        <Plus size={18} className="text-gray-700" />
-                      </button>
-                    </div>
-                  </div>
+                  <button
+                    onClick={() =>
+                      handleChangeQuantity(item.slug, item.quantity + 1)
+                    }
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition"
+                    aria-label="Increase"
+                  >
+                    <Plus size={18} />
+                  </button>
                 </div>
               )}
 
@@ -148,8 +148,9 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
           {!isConfirmationStep && (
             <button
               onClick={() => handleRemoveItem(item.slug)}
-              className="absolute top-2 right-2 text-[#8E7037] hover:text-white hover:bg-[#8E7037] hover:border hover: border-[#8E7037] rounded-full"
-              aria-label="Remove item">
+              className="absolute top-2 right-2 sm:static sm:self-start text-[#8E7037] hover:text-white hover:bg-[#8E7037] rounded-full p-1"
+              aria-label="Remove item"
+            >
               <XCircle size={20} />
             </button>
           )}
@@ -174,7 +175,7 @@ const ReservationSummary = ({ setPriceDetails, isConfirmationStep }) => {
       </div>
 
       <div className="border-t pt-4 flex justify-between text-lg font-bold">
-        <span>Total</span>
+        <span>Total:</span>
         <span className="text-[#8E7037]">
           {currencySymbols[currency]}
           {total.toFixed(2)}
