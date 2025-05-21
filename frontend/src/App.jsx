@@ -1,6 +1,6 @@
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Rooms from "./pages/Rooms";
 import RoomDetail from "./components/RoomDetail";
@@ -36,7 +36,7 @@ function App() {
       <CurrencyProvider>
         <CartProvider>
           <Elements stripe={stripePromise}>
-            <BrowserRouter>
+            <HashRouter>
               <GuestProvider>
                 <NavbarTop />
                 <Navbar />
@@ -73,7 +73,7 @@ function App() {
               </GuestProvider>
 
               <Footer />
-            </BrowserRouter>
+            </HashRouter>
           </Elements>
         </CartProvider>
       </CurrencyProvider>

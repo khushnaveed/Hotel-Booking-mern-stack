@@ -27,6 +27,8 @@ export default function HeroContentCarousel() {
   };
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
   const handleCheckAvailability = async (e) => {
     e.preventDefault();
 
@@ -36,7 +38,7 @@ export default function HeroContentCarousel() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5005/room/available?start=${checkIn}&end=${checkOut}`);
+      const response = await fetch(baseUrl + `/room/available?start=${checkIn}&end=${checkOut}`);
       const data = await response.json();
 
       if (data.success && data.data.length > 0) {

@@ -26,8 +26,10 @@ export default function AdminRestaurant() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
-  const API = "http://localhost:5005/menu/foods";
+  const API = baseUrl + "/menu/foods";
 
   useEffect(() => {
     fetchMenuItems();

@@ -16,6 +16,8 @@ const ProfileData = ({ guest }) => {
     zipcode: guest?.zipcode || "",
     country: guest?.country || "",
   });
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,7 +27,7 @@ const ProfileData = ({ guest }) => {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.put(`http://localhost:5005/guest/${guest._id}`, editedGuest, {
+      await axios.put(baseUrl +`/guest/${guest._id}`, editedGuest, {
         headers: { token },
       });
       setIsEditing(false);

@@ -16,10 +16,12 @@ function Events() {
   const [error, setError] = useState(false);
   const [luxuryRoom, setLuxuryRoom] = useState(null);
   const roomSlug = "luxury-suite";
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     axios
-      .get("http://localhost:5005/events")
+      .get(baseUrl + "/events")
       .then((response) => {
         setEvents(response.data);
         setError(false);
@@ -29,7 +31,7 @@ function Events() {
       });
 
     axios
-      .get(`http://localhost:5005/room/${roomSlug}`)
+      .get(baseUrl + `/room/${roomSlug}`)
       .then((res) => {
         setLuxuryRoom(res.data.data);
       })
@@ -43,13 +45,13 @@ function Events() {
       <HeroSection
         title="Events"
         subtitle="Experience Unforgettable Moments"
-        backgroundImage="/src/assets/heroImage.jpg"
+        backgroundImage="/heroImage.jpg"
       />
 
       <div className="container mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-4 gap-8">
         <aside className="lg:col-span-1 space-y-8">
           <section>
-            <h2 className="font-bold text-lg mb-4">{t("categories")}</h2>
+            <h2 className="font-bold text-lg 5173">{t("categories")}</h2>
             <ul className="space-y-2 text-gray-700">
               <li>{t("foodDrink")} (4)</li>
               <li>{t("rendering")} (2)</li>

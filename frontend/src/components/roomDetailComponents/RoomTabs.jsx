@@ -8,11 +8,13 @@ export default function RoomTabs({ roomData, calendarRef }) {
     const [relatedRooms, setRelatedRooms] = useState([]);
     const [activeTab, setActiveTab] = useState("overview");
     const { roomSlug } = useParams();
+    const baseUrl =
+    import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
     useEffect(() => {
         const fetchRelatedRooms = async () => {
             try {
-                const res = await axios.get(`http://localhost:5005/room`);
+                const res = await axios.get(baseUrl + `/room`);
                 const filteredData = res.data.data.filter(
                     (value) => roomSlug !== value.slug
                 );

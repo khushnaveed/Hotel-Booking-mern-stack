@@ -16,6 +16,8 @@ export default function ReservationHistory() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState("rooms");
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -28,8 +30,8 @@ export default function ReservationHistory() {
         }
 
         const [roomRes, eventRes] = await Promise.all([
-          axios.get("http://localhost:5005/order", { headers: { token } }),
-          axios.get("http://localhost:5005/order-events", {
+          axios.get(baseUrl + "/order", { headers: { token } }),
+          axios.get(baseUrl + "/order-events", {
             headers: { token },
           }),
         ]);

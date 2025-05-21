@@ -5,6 +5,8 @@ function BookingDetails({ bookingReference }) {
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     if (!bookingReference) return;
@@ -13,7 +15,7 @@ function BookingDetails({ bookingReference }) {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:5005/bookings/${bookingReference}`,
+          baseUrl + `/bookings/${bookingReference}`,
           {
             headers: { token },
           }

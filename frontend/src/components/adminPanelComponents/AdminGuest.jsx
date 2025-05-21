@@ -6,6 +6,8 @@ const AdminGuest = () => {
   const [guests, setGuests] = useState([]);
   const [editingGuestId, setEditingGuestId] = useState(null);
   const [editedGuest, setEditedGuest] = useState({});
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     fetchGuests();
@@ -14,7 +16,7 @@ const AdminGuest = () => {
   const fetchGuests = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5005/guest", {
+      const res = await axios.get(baseUrl +"/guest", {
         headers: { token },
       });
       setGuests(res.data.data);
@@ -26,7 +28,7 @@ const AdminGuest = () => {
   const deleteGuest = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5005/guest/${id}`, {
+      await axios.delete(baseUrl + `/guest/${id}`, {
         headers: { token },
       });
       fetchGuests();
@@ -48,7 +50,7 @@ const AdminGuest = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5005/guest/${editingGuestId}`,
+        baseUrl + `/guest/${editingGuestId}`,
         editedGuest,
         { headers: { token } }
       );

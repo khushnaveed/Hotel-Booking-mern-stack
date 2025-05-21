@@ -22,6 +22,8 @@ export default function AdminEvent() {
   const toggleExpanded = (id) => {
     setExpandedEvents((prev) => ({ ...prev, [id]: !prev[id] }));
   };
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     fetchEvents();
@@ -30,7 +32,7 @@ export default function AdminEvent() {
   const fetchEvents = () => {
     setLoading(true);
     axios
-      .get("http://localhost:5005/events")
+      .get(baseUrl + "/events")
       .then((response) => {
         setEvents(response.data);
       })
@@ -41,7 +43,7 @@ export default function AdminEvent() {
   const handleCreate = () => {
     axios
       .post(
-        "http://localhost:5005/events",
+        baseUrl + "/events",
         {
           title: { en: newEvent.title },
           excerpt: { en: newEvent.excerpt },
@@ -70,7 +72,7 @@ export default function AdminEvent() {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5005/events/${id}`)
+      .delete(baseUrl + `/events/${id}`)
       .then(() => fetchEvents())
       .catch((err) => console.error("Delete failed:", err));
   };
@@ -98,7 +100,7 @@ export default function AdminEvent() {
 
   const handleEditSave = (id) => {
     axios
-      .put(`http://localhost:5005/events/${id}`, {
+      .put(baseUrl + `/events/${id}`, {
         title: { en: editedEvent.title },
         excerpt: { en: editedEvent.excerpt },
         date: editedEvent.date,

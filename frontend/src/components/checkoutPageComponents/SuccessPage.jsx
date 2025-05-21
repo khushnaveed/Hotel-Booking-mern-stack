@@ -7,10 +7,12 @@ export default function SuccessPage() {
   const [bookingData, setBookingData] = useState(null);
 
   const sessionId = searchParams.get("session_id");
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     if (sessionId) {
-      fetch(`http://localhost:5005/checkout-session/${sessionId}`)
+      fetch(baseUrl + `/checkout-session/${sessionId}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -34,7 +36,7 @@ export default function SuccessPage() {
             orderTotalAmount: +data.metadata.orderTotalAmount,
           };
           if (order.roomsBooking[0]["arrivalDate"]) {
-            fetch(`http://localhost:5005/order`, {
+            fetch(baseUrl + `/order`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -55,7 +57,7 @@ export default function SuccessPage() {
               },
             });
           } else {
-            fetch(`http://localhost:5005/order-events`, {
+            fetch(baseUrl + `/order-events`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

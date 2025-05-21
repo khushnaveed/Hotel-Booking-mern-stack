@@ -13,6 +13,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); 
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,7 +27,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5005/guest/login", {
+      const response = await fetch(baseUrl + "/guest/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +59,7 @@ export default function Login() {
   return (
     <div className="relative w-full h-screen">
       <img
-        src="/src/assets/login.jpg"
+        src="/login.jpg"
         alt="background"
         className="w-full h-full object-cover"
       />

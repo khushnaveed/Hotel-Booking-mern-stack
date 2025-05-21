@@ -12,7 +12,7 @@ export default function Gallery() {
       <HeroSection
         title="Visual Elegance"
         subtitle={`Welcome to Royal Grand Gallery of Luxury`}
-        backgroundImage="/src/assets/galleryHero.jpg"
+        backgroundImage="/galleryHero.jpg"
       />
 
 

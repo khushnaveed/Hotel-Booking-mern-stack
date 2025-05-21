@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { GuestContext } from "../context/GuestContext.jsx";
-import bgImage from "../assets/login.jpg";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useContext } from "react";
 export default function Register() {
   const { guest } = useContext(GuestContext); 
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function Register() {
     }
     console.log(formData);
     try {
-      const response = await fetch("http://localhost:5005/guest/register", {
+      const response = await fetch(baseUrl + "/guest/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +71,7 @@ export default function Register() {
   return (
     <div className="relative w-full h-screen">
       <img
-        src={bgImage}
+        src="/login.jpg"
         alt="background"
         className="w-full h-full object-cover"
       />

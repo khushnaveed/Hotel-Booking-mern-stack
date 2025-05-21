@@ -57,7 +57,7 @@ export default function Contact() {
       <HeroSection
         title="Contact Us"
         subtitle="We’re here to help. Reach out with any questions or inquiries."
-        backgroundImage="/src/assets/heroImage.jpg"
+        backgroundImage="/heroImage.jpg"
       />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 flex flex-col lg:flex-row justify-between space-y-12 lg:space-y-0 lg:space-x-8">

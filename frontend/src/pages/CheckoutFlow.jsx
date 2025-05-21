@@ -16,6 +16,8 @@ const stepLabels = {
   payment: "Payment",
   confirmation: "Confirmation",
 };
+const baseUrl =
+import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
 const CheckoutFlow = () => {
   const { cartItems, clearCart } = useCart();
@@ -56,7 +58,7 @@ const CheckoutFlow = () => {
       };
 
       try {
-        const response = await fetch("http://localhost:5005/bookings", {
+        const response = await fetch(baseUrl + "/bookings", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

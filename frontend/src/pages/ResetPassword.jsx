@@ -9,6 +9,8 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   const handleReset = async (e) => {
     e.preventDefault();
@@ -20,7 +22,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const res = await axios.post(`http://localhost:5005/guest/reset-password/${token}`, {
+      const res = await axios.post(baseUrl + `/guest/reset-password/${token}`, {
         password,
         confirmPassword,
       });
