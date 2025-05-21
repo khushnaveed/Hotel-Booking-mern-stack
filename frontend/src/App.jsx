@@ -27,6 +27,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import CheckoutFlow from "./pages/CheckoutFlow.jsx";
 import SuccessPage from "./components/checkoutPageComponents/SuccessPage.jsx";
 import AdminPanel from "./pages/AdminPanel.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 const stripePromise = loadStripe("your-publishable-key-here");
 
@@ -38,6 +39,7 @@ function App() {
           <Elements stripe={stripePromise}>
             <HashRouter>
               <GuestProvider>
+                <ScrollToTop/>
                 <NavbarTop />
                 <Navbar />
                 <Routes>
