@@ -47,7 +47,7 @@ export default function PaymentMethod() {
     <div className="flex items-center justify-center ">
       <button
         onClick={handleCheckout}
-        className="px-6 py-3 bg-[#8E7037] w-6/12 text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200">
+        className="w-full px-6 py-3 bg-[#8E7037] lg:w-4/12 text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200">
         Checkout
       </button>
     </div>

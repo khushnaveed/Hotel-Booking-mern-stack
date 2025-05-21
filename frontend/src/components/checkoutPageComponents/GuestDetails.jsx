@@ -114,11 +114,11 @@ const GuestDetails = ({ onNext, setGuestData }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-white shadow-lg p-8"
+      className="bg-white shadow-lg p-4 sm:p-6 md:p-8"
     >
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Guest Details</h2>
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
           <div>
             <label className="block text-gray-700 mb-2">First Name</label>
             <div className="relative">
@@ -140,6 +140,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
               <p className={errorClasses}>{errors.firstName}</p>
             )}
           </div>
+
           <div>
             <label className="block text-gray-700 mb-2">Last Name</label>
             <div className="relative">
@@ -163,7 +164,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
           <div>
             <label className="block text-gray-700 mb-2">Email</label>
             <div className="relative">
@@ -183,6 +184,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
             </div>
             {errors.email && <p className={errorClasses}>{errors.email}</p>}
           </div>
+
           <div>
             <label className="block text-gray-700 mb-2">Phone Number</label>
             <div className="relative">
@@ -226,7 +228,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
           {errors.address && <p className={errorClasses}>{errors.address}</p>}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6">
           <div>
             <label className="block text-gray-700 mb-2">City</label>
             <input
@@ -243,6 +245,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
             />
             {errors.city && <p className={errorClasses}>{errors.city}</p>}
           </div>
+
           <div>
             <label className="block text-gray-700 mb-2">Zip Code</label>
             <input
@@ -259,6 +262,7 @@ const GuestDetails = ({ onNext, setGuestData }) => {
             />
             {errors.zipcode && <p className={errorClasses}>{errors.zipcode}</p>}
           </div>
+
           <div>
             <label className="block text-gray-700 mb-2">Country</label>
             <select
@@ -301,12 +305,12 @@ const GuestDetails = ({ onNext, setGuestData }) => {
           </div>
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex justify-center sm:justify-end">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
-            className="px-6 py-3 bg-[#8E7037]  text-white border border-[#8E7037]  hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
+            className="w-full sm:w-auto px-6 py-3 bg-[#8E7037] text-white border border-[#8E7037] hover:bg-white hover:text-[#8E7037] transition-colors duration-200"
           >
             Continue to Payment
           </motion.button>
