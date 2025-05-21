@@ -9,6 +9,8 @@ import {
   Instagram,
   Youtube,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+
 import emailjs from "emailjs-com";
 
 export default function Footer() {
@@ -116,44 +118,49 @@ export default function Footer() {
               <h3 className="text-xl font-bold mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
-                  <a
-                    href="/rooms"
+                  <Link
+                    to="/rooms"
+                    onClick={() => window.scrollTo(0, 0)}
                     className="text-gray-300 hover:text-[#8E7037] transition-colors"
                   >
                     Our Rooms
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/restaurant"
+                  <Link
+                    to="/restaurant"
+                    onClick={() => window.scrollTo(0, 0)}
                     className="text-gray-300 hover:text-[#8E7037] transition-colors"
                   >
                     Restaurant
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/gallery"
+                  <Link
+                    to="/gallery"
+                    onClick={() => window.scrollTo(0, 0)}
                     className="text-gray-300 hover:text-[#8E7037] transition-colors"
                   >
                     Gallery
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/about"
+                  <Link
+                    to="/about"
+                    onClick={() => window.scrollTo(0, 0)}
                     className="text-gray-300 hover:text-[#8E7037] transition-colors"
                   >
                     About Us
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/contact"
+                  <Link
+                    to="/contact"
+                    onClick={() => window.scrollTo(0, 0)}
                     className="text-gray-300 hover:text-[#8E7037] transition-colors"
                   >
                     Contact
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
