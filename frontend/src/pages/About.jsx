@@ -10,19 +10,14 @@ import {
 import about1 from "../assets/about.jpg";
 import about2 from "../assets/about2.jpg";
 import statsBg from "../assets/stats-bg.jpg";
-import member1 from "../assets/member1.jpg";
-import member2 from "../assets/member2.jpg";
-import member3 from "../assets/member3.jpg";
-import member4 from "../assets/member4.jpg";
-import member5 from "../assets/member5.jpg";
 import HeroSection from "../components/HeroSection";
 
 const teamMembers = [
-  { name: "SHAMEEM", role: "Pixelated Perfectionist", img: member1 },
-  { name: "KHUSH BAKHT", role: "Debugging Ninja", img: member2 },
-  { name: "LUIS", role: "UX/UI Wizard", img: member3 },
-  { name: "ZAHRA", role: "Debugging Detective", img: member4 },
-  { name: "MILLION", role: "Ctrl+Z Heroes", img: member5 },
+  { name: "SHAMEEM", role: "Pixelated Perfectionist", img: "/member1.jpg" },
+  { name: "KHUSH BAKHT", role: "Debugging Ninja", img: "/member2.jpg" },
+  { name: "LUIS", role: "UX/UI Wizard", img: "/member3.jpg" },
+  { name: "ZAHRA", role: "Debugging Detective", img: "/member4.jpg" },
+  { name: "MILLION", role: "Ctrl+Z Heroes", img: "/member5.jpg" },
 ];
 
 export default function About() {
@@ -31,7 +26,7 @@ export default function About() {
       <HeroSection
         title="About Us"
         subtitle="Discover Our Story. Driven by Passion, Defined by Excellence."
-        backgroundImage="/src/assets/heroImage.jpg"
+        backgroundImage="/heroImage.jpg"
       />
 
 

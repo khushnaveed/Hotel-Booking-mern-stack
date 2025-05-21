@@ -59,7 +59,7 @@ export default function Login() {
   return (
     <div className="relative w-full h-screen">
       <img
-        src="/src/assets/login.jpg"
+        src="/login.jpg"
         alt="background"
         className="w-full h-full object-cover"
       />

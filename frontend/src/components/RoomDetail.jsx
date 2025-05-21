@@ -109,7 +109,7 @@ export default function RoomDetails() {
       <HeroSection
         title={roomData.title}
         subtitle=" Royal Grand Hotel is where timeless elegance meets modern luxury in every detail."
-        backgroundImage="/src/assets/aboutHero.jpg"
+        backgroundImage="/aboutHero.jpg"
       />
 
       <div></div>

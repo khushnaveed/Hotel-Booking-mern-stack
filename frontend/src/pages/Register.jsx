@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { GuestContext } from "../context/GuestContext.jsx";
-import bgImage from "../assets/login.jpg";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useContext } from "react";
@@ -72,7 +71,7 @@ export default function Register() {
   return (
     <div className="relative w-full h-screen">
       <img
-        src={bgImage}
+        src="/login.jpg"
         alt="background"
         className="w-full h-full object-cover"
       />

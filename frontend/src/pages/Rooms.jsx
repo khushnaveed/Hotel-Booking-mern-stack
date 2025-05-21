@@ -40,7 +40,7 @@ export default function Rooms() {
       <HeroSection
         title="Rooms"
         subtitle="Experience comfort and elegance in every stay. Discover your perfect room today."
-        backgroundImage="/src/assets/heroImage.jpg"
+        backgroundImage="/heroImage.jpg"
       />
       <div className="mt-[5vh] mb-1 flex flex-row flex-wrap gap-4 justify-center items-center">
         {error && <p className="text-red-600">{error}</p>}

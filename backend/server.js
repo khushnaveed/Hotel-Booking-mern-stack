@@ -28,6 +28,8 @@ app.use(
 
 const PORT = process.env.PORT;
 app.use(express.json());
+app.use(express.static("views"));
+
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 try {
@@ -37,11 +39,13 @@ try {
   console.log(err.message);
 }
 app.use((req, res, next) => {
- 
   next();
 });
-
-
+app.get("/", (req,res)=>{
+res.sendFile("./views/index.html", {
+  root:"."
+})
+})
 app.use("/bookings", auth, bookingRoutes);
 app.use("/room", roomRoutes);
 app.use("/guest", guestRoutes);
@@ -112,7 +116,6 @@ app.use((err, req, res, next) => {
 });
 
 app.use((req, res, next) => {
-
   res
     .status(404)
     .send({ success: false, message: "No such route exist in our server!" });
