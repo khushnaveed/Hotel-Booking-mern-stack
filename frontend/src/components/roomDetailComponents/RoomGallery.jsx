@@ -15,12 +15,13 @@ export default function RoomGallery({ images, currentImageIndex, setCurrentImage
                 <img
                     src={images[currentImageIndex]}
                     alt="Room"
-                    className="w-full h-[400px] object-cover"
+
+                    className="w-full h-[250px] sm:h-[300px] md:h-[400px] object-cover"
                 />
                 <button onClick={prevImage} className="absolute top-1/2 left-2 transform -translate-y-1/2 p-1 rounded-full shadow">⬅</button>
                 <button onClick={nextImage} className="absolute top-1/2 right-2 transform -translate-y-1/2 p-1 rounded-full shadow">➡</button>
             </div>
-            <div className="flex mt-4 space-x-2">
+            <div className="flex mt-4 space-x-2 overflow-x-auto scrollbar-hide">
                 {images.map((img, index) => (
                     <img
                         key={index}

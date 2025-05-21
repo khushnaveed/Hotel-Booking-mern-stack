@@ -9,7 +9,7 @@ export default function RoomTabs({ roomData, calendarRef }) {
     const [activeTab, setActiveTab] = useState("overview");
     const { roomSlug } = useParams();
     const baseUrl =
-    import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
+        import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
     useEffect(() => {
         const fetchRelatedRooms = async () => {
@@ -133,7 +133,7 @@ export default function RoomTabs({ roomData, calendarRef }) {
         <>
 
             <div className="block md:hidden">
-                <div className="flex flex-col items-center space-y-2 mb-6">
+                <div className="flex flex-col items-center space-y-4 mb-6">
                     {tabs.map((tab) => (
                         <div key={tab.key}>
                             <button

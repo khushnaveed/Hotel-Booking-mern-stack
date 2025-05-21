@@ -21,7 +21,7 @@ export default function RoomDetails() {
   const { roomSlug } = useParams();
   const navigate = useNavigate();
   const baseUrl =
-  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
+    import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     const fetchRoom = async () => {
@@ -105,15 +105,16 @@ export default function RoomDetails() {
   if (!roomData) return <div>Room information not found.</div>;
 
   return (
-    <div className="relative">
+    <div className="relative overflow-x-hidden w-full">
       <HeroSection
         title={roomData.title}
         subtitle=" Royal Grand Hotel is where timeless elegance meets modern luxury in every detail."
         backgroundImage="/aboutHero.jpg"
       />
 
-      <div></div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 max-w-6xl mx-auto m-5 ">
+
+      <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+
         <RoomGallery
           images={roomData.images}
           currentImageIndex={currentImageIndex}

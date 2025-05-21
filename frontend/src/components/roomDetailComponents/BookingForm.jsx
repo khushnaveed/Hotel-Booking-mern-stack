@@ -14,7 +14,8 @@ export default function BookingForm({
         ? (roomData.defaultPrice * conversionRates[currency]).toFixed(2)
         : "0.00";
     return (
-        <div className="bg-gray-100 p-6 shadow-lg h-fit">
+
+        <div className="bg-gray-100 p-4 sm:p-6 shadow-lg h-fit w-full">
             <h5 className="text-xl font-semibold mb-4">
                 ROOM PRICE{" "}
                 <strong className="text-[#8E7037]">
