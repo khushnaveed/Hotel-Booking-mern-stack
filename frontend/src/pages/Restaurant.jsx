@@ -20,6 +20,8 @@ export default function Restaurant() {
   const [error, setError] = useState(null);
   const { currency } = useCurrency();
   const currencySymbols = { USD: "$", EUR: "€", GBP: "£" };
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   const openModal = (item) => {
     setSelectedItem(item);
@@ -36,7 +38,7 @@ export default function Restaurant() {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5005/menu/foods");
+      const response = await fetch(baseUrl + "/menu/foods");
       console.log(response);
 
       if (!response.ok) {

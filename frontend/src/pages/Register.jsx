@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useContext } from "react";
 export default function Register() {
   const { guest } = useContext(GuestContext); 
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -40,7 +42,7 @@ export default function Register() {
     }
     console.log(formData);
     try {
-      const response = await fetch("http://localhost:5005/guest/register", {
+      const response = await fetch(baseUrl + "/guest/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

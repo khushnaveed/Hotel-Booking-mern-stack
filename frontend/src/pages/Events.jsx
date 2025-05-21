@@ -16,10 +16,12 @@ function Events() {
   const [error, setError] = useState(false);
   const [luxuryRoom, setLuxuryRoom] = useState(null);
   const roomSlug = "luxury-suite";
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     axios
-      .get("http://localhost:5005/events")
+      .get(baseUrl + "/events")
       .then((response) => {
         setEvents(response.data);
         setError(false);
@@ -29,7 +31,7 @@ function Events() {
       });
 
     axios
-      .get(`http://localhost:5005/room/${roomSlug}`)
+      .get(baseUrl + `/room/${roomSlug}`)
       .then((res) => {
         setLuxuryRoom(res.data.data);
       })

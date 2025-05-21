@@ -5,6 +5,8 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -12,7 +14,7 @@ const ForgotPassword = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:5005/guest/forgot-password", {
+      const response = await axios.post(baseUrl +"/guest/forgot-password", {
         email,
       });
 

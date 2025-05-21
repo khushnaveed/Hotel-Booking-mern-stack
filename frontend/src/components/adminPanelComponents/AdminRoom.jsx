@@ -31,6 +31,8 @@ export default function AdminRoom() {
         : [...prev, roomId]
     );
   };
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     fetchRooms();
@@ -39,7 +41,7 @@ export default function AdminRoom() {
   const fetchRooms = () => {
     setLoading(true);
     axios
-      .get("http://localhost:5005/room")
+      .get(baseUrl + "/room")
       .then((response) => {
         setRooms(response.data.data);
         setError(false);
@@ -64,7 +66,7 @@ export default function AdminRoom() {
       }
     };
     axios
-      .post("http://localhost:5005/room", data, {
+      .post(baseUrl + "/room", data, {
         headers: { token: localStorage.getItem("token") }
       })
       .then(() => {
@@ -87,7 +89,7 @@ export default function AdminRoom() {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5005/room/${id}`, {
+      .delete(baseUrl + `/room/${id}`, {
         headers: { token: localStorage.getItem("token") }
       })
       .then(() => fetchRooms())
@@ -120,7 +122,7 @@ export default function AdminRoom() {
   const handleEditSave = (id) => {
     axios
       .patch(
-        `http://localhost:5005/room/${id}`,
+        baseUrl + `/room/${id}`,
         {
           title: editedRoom.title,
           descOverview: editedRoom.descOverview,

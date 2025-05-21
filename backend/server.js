@@ -71,8 +71,8 @@ app.post("/create-checkout-session", auth, async (req, res) => {
         quantity: item.quantity,
       })),
       mode: "payment",
-      success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+      success_url: `${process.env.FRONTEND_URL}/#/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND_URL}/#/cancel`,
       metadata: {
         productIds: cartItems.map((item) => item._id).join(","),
         numAdults: cartItems.map((item) => item.numAdults).join(","),

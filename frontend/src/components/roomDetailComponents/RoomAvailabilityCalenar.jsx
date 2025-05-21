@@ -7,11 +7,13 @@ const RoomAvailabilityCalendar = ({ slug }) => {
     const [unavailableDates, setUnavailableDates] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const baseUrl =
+    import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
     useEffect(() => {
         const fetchRoomDetails = async () => {
             try {
-                const { data } = await axios.get(`http://localhost:5005/room/${slug}`);
+                const { data } = await axios.get(baseUrl + `/room/${slug}`);
                 const bookings = data.data.bookings;
 
                 const bookedDates = bookings

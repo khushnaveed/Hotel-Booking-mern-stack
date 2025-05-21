@@ -6,6 +6,8 @@ export default function ReservationHistory() {
   const [eventOrders, setEventOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -18,8 +20,8 @@ export default function ReservationHistory() {
         }
 
         const [roomRes, eventRes] = await Promise.all([
-          axios.get("http://localhost:5005/order/my-orders", { headers: { token } }),
-          axios.get("http://localhost:5005/order-events/my-orders", { headers: { token } }), // <-- fixed path
+          axios.get(baseUrl + "/order/my-orders", { headers: { token } }),
+          axios.get(baseUrl + "/order-events/my-orders", { headers: { token } }), // <-- fixed path
         ]);
         
 

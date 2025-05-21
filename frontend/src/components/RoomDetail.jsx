@@ -20,11 +20,13 @@ export default function RoomDetails() {
   const { addToCart } = useCart();
   const { roomSlug } = useParams();
   const navigate = useNavigate();
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     const fetchRoom = async () => {
       try {
-        const res = await axios.get(`http://localhost:5005/room/${roomSlug}`);
+        const res = await axios.get(baseUrl + `/room/${roomSlug}`);
         setRoomData(res.data.data);
       } catch (error) {
         console.error("Error fetching room:", error);

@@ -8,11 +8,13 @@ export const GuestProvider = ({ children }) => {
   const [guest, setGuest] = useState({});
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:5005/guest/verifytoken",{
+    fetch(baseUrl + "/guest/verifytoken",{
       method:"get",
       headers:{token:token}
     }).then(res=>res.json( 

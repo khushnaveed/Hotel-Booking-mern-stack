@@ -19,10 +19,12 @@ function EventDetails() {
   const [event, setEvent] = useState(null);
   const [ticketCount, setTicketCount] = useState(1);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5005/events/${id}`)
+      .get(baseUrl + `/events/${id}`)
       .then((res) => setEvent(res.data))
       .catch((err) => console.error("Error fetching event:", err));
   }, [id]);
