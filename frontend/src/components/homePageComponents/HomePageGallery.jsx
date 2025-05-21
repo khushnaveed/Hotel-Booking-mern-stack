@@ -6,27 +6,27 @@ const HomePageGallery = () => {
   const images = [
     {
       url: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80",
-      title: "Elegant Lobby",
+      title: "Swimming pool",
     },
     {
       url: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80",
-      title: "Infinity Pool",
+      title: "Double Room",
     },
     {
       url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0",
-      title: "Fine Dining",
+      title: "Restaurant",
     },
     {
       url: "https://images.unsplash.com/photo-1576675784201-0e142b423952?ixlib=rb-4.0.3&auto=format&fit=crop&w=1772&q=80",
-      title: "Spa Retreat",
+      title: "Single Room",
     },
     {
       url: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1760&q=80",
-      title: "Luxury Suite",
+      title: "Panoramic Views",
     },
     {
       url: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&auto=format&fit=crop&w=1932&q=80",
-      title: "Panoramic Views",
+      title: "Swimming View",
     },
   ];
 
@@ -43,7 +43,8 @@ const HomePageGallery = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {images.map((image, index) => (
             <Link
-              to="/gallery" 
+              to="/gallery"
+              onClick={() => window.scrollTo(0, 0)}
               key={index}
               className="group relative overflow-hidden block"
             >
