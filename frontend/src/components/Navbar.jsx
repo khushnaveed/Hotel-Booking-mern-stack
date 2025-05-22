@@ -173,23 +173,23 @@ function NavItem({
         {path ? (
           <NavLink
             to={path}
-            className="text-white hover:text-[#8E7037] transition-colors">
+            className="text-white md:hover:text-[#8E7037] transition-colors">
             {text}
           </NavLink>
         ) : (
-          <span className="text-white hover:text-[#8E7037] transition-colors">
+          <span className="text-white md:hover:text-[#8E7037] transition-colors">
             {text}
           </span>
         )}
         {hasSubmenu && (
           <ChevronDown
             size={16}
-            className="text-white group-hover:text-[#8E7037] transition-transform group-hover:rotate-180"
+            className="text-white md:group-hover:text-[#8E7037] transition-transform group-hover:rotate-180"
           />
         )}
       </div>
       {hasSubmenu && (
-        <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+        <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg opacity-0 invisible md:group-hover:opacity-100 md:group-hover:visible transition-all duration-300 z-50">
           <div className="py-2">
             {submenuItems.map((item, index) => (
               <button

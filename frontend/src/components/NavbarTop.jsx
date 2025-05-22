@@ -21,36 +21,94 @@ import { useTranslation } from "react-i18next";
 
 function LanguageSelector() {
   const [language, setLanguage] = useState("EN");
+  const [isOpen, setIsOpen] = useState(false);
   const { i18n } = useTranslation();
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
     i18n.changeLanguage(lang.toLowerCase());
+    setIsOpen(false);
   };
+  const toggleDropdown = (e) => {
+    e.stopPropagation();
+    setIsOpen(!isOpen);
+  };
+  useEffect(() => {
+    const handleClickOutside = () => setIsOpen(false);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   return (
-    <div className="group relative cursor-pointer">
+    <div className="relative" onClick={toggleDropdown}>
       <div className="flex items-center space-x-1 hover:text-[#8E7037] transition">
         <Globe size={16} />
         <span className="text-sm">{language}</span>
         <ChevronDown size={14} />
       </div>
-      <div className="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-        <div className="py-1">
-          {["EN", "ES", "FR"].map((lang) => (
-            <a
-              key={lang}
-              onClick={() => handleLanguageChange(lang)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
-              {lang === "EN"
-                ? "English"
-                : lang === "ES"
+      {isOpen && (
+        <div
+          className="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg z-50"
+          onClick={(e) => e.stopPropagation()} // prevent parent click
+        >
+          <div className="py-1">
+            {["EN", "ES", "FR"].map((lang) => (
+              <a
+                key={lang}
+                onClick={() => handleLanguageChange(lang)}
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                {lang === "EN"
+                  ? "English"
+                  : lang === "ES"
                   ? "Español"
                   : "Français"}
-            </a>
-          ))}
+              </a>
+            ))}
+          </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+function CurrencySelector() {
+  const [isOpen, setIsOpen] = useState(false);
+  const { currency, changeCurrency } = useCurrency();
+  const currencyIcons = {
+    USD: DollarSign,
+    EUR: Euro,
+    GBP: PoundSterling,
+  };
+  const CurrencyIcon = currencyIcons[currency] || Currency;
+
+  return (
+    <div className="relative cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
+      <div className="flex items-center space-x-1 hover:text-[#8E7037] transition">
+        <CurrencyIcon size={16} strokeWidth={2.5} />
+        <span className="text-sm">{currency}</span>
+        <ChevronDown size={14} />
       </div>
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg z-50">
+          <div className="py-1">
+            {["USD", "EUR", "GBP"].map((cur) => (
+              <a
+                key={cur}
+                onClick={() => {
+                  changeCurrency(cur);
+                  setIsOpen(false);
+                }}
+                className={`block px-4 py-2 text-sm ${
+                  currency === cur
+                    ? "text-[#8E7037] font-semibold"
+                    : "text-gray-700"
+                } hover:bg-gray-100 cursor-pointer`}>
+                {cur}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -80,7 +138,6 @@ function NavbarTop() {
               </span>
             </Link>
             <div className="hidden md:flex items-center space-x-6">
-
               <div className="flex items-center space-x-2">
                 <Phone size={16} />
                 <span className="text-sm">+41 (0)61 5603-497</span>
@@ -95,28 +152,8 @@ function NavbarTop() {
           </div>
           <div className="flex items-center space-x-6">
             <LanguageSelector />
-            <div className="group relative cursor-pointer">
-              <div className="flex items-center space-x-1 hover:text-[#8E7037] transition">
-                <CurrencyIcon size={16} strokeWidth={2.5} />
-                <span className="text-sm">{currency}</span>
-                <ChevronDown size={14} />
-              </div>
-              <div className="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                <div className="py-1">
-                  {["USD", "EUR", "GBP"].map((cur) => (
-                    <a
-                      key={cur}
-                      onClick={() => changeCurrency(cur)}
-                      className={`block px-4 py-2 text-sm ${currency === cur
-                          ? "text-[#8E7037] font-semibold"
-                          : "text-gray-700"
-                        } hover:bg-gray-100 cursor-pointer`}>
-                      {cur}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <CurrencySelector />
+
             <div className="flex items-center space-x-4 ml-4">
               {isLoggedIn ? (
                 <Link
