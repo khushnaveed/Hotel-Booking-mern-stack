@@ -32,7 +32,7 @@ export default function AdminRoom() {
     );
   };
   const baseUrl =
-  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
+    import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     fetchRooms();
@@ -145,7 +145,8 @@ export default function AdminRoom() {
 
   return (
     <div className="p-6 rounded-lg bg-gray-50 min-h-screen">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
           <p className="text-sm font-medium text-gray-500">Total Rooms</p>
           <p className="mt-1 text-3xl font-semibold text-gray-900">{rooms.length}</p>
@@ -156,108 +157,133 @@ export default function AdminRoom() {
       </h2>
       <div className="bg-white  p-6 shadow-lg mb-10 space-y-4">
         <h3 className="text-xl font-bold text-gray-800">Create New Room</h3>
-        <div className="grid grid-cols-2 gap-6 ">
-          <input
-            type="text"
-            placeholder="Title"
-            value={newRoom.title}
-            onChange={(e) => setNewRoom({ ...newRoom, title: e.target.value })}
-            className="border-gray-300 p-3 shadow-sm w-full"
-          />
-          <input
-            type="text"
-            placeholder="Slug"
-            value={newRoom.slug}
-            onChange={(e) => setNewRoom({ ...newRoom, slug: e.target.value })}
-            className="border-gray-300 p-3 shadow-sm w-full"
-          />
-          <input
-            type="text"
-            placeholder="Overview"
-            value={newRoom.descOverview}
-            onChange={(e) =>
-              setNewRoom({ ...newRoom, descOverview: e.target.value })
-            }
-            className="border-gray-300 p-3 shadow-sm w-full col-span-2"
-          />
-          <input
-            type="number"
-            placeholder="Default Price"
-            value={newRoom.defaultPrice}
-            onChange={(e) =>
-              setNewRoom({ ...newRoom, defaultPrice: e.target.value })
-            }
-            className="border-gray-300 p-3 shadow-sm w-full"
-          />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Title */}
+          <div className="w-full">
+            <input
+              type="text"
+              placeholder="Title"
+              value={newRoom.title}
+              onChange={(e) => setNewRoom({ ...newRoom, title: e.target.value })}
+              className="w-full border-gray-300 p-3 shadow-sm placeholder:text-sm placeholder:whitespace-normal"
+            />
+          </div>
+
+
+          <div className="w-full">
+            <input
+              type="text"
+              placeholder="Slug"
+              value={newRoom.slug}
+              onChange={(e) => setNewRoom({ ...newRoom, slug: e.target.value })}
+              className="w-full border-gray-300 p-3 shadow-sm placeholder:text-sm placeholder:whitespace-normal"
+            />
+          </div>
+
+
+          <div className="w-full col-span-1 sm:col-span-2">
+            <input
+              type="text"
+              placeholder="Overview"
+              value={newRoom.descOverview}
+              onChange={(e) =>
+                setNewRoom({ ...newRoom, descOverview: e.target.value })
+              }
+              className="w-full border-gray-300 p-3 shadow-sm placeholder:text-sm placeholder:whitespace-normal"
+            />
+          </div>
+
+
+          <div className="w-full">
+            <input
+              type="number"
+              placeholder="Default Price"
+              value={newRoom.defaultPrice}
+              onChange={(e) =>
+                setNewRoom({ ...newRoom, defaultPrice: e.target.value })
+              }
+              className="w-full border-gray-300 p-3 shadow-sm placeholder:text-sm placeholder:whitespace-normal"
+            />
+          </div>
+
 
           {newRoom.images.map((url, index) => (
-            <input
-              key={index}
-              type="text"
-              placeholder={`Image URL ${index + 1}`}
-              value={url}
-              onChange={(e) => {
-                const updatedImages = [...newRoom.images];
-                updatedImages[index] = e.target.value;
-                setNewRoom({ ...newRoom, images: updatedImages });
-              }}
-              className="border-gray-300 p-3 shadow-sm w-full"
-            />
+            <div className="w-full" key={index}>
+              <input
+                type="text"
+                placeholder={`Image URL ${index + 1}`}
+                value={url}
+                onChange={(e) => {
+                  const updatedImages = [...newRoom.images];
+                  updatedImages[index] = e.target.value;
+                  setNewRoom({ ...newRoom, images: updatedImages });
+                }}
+                className="w-full border-gray-300 p-3 shadow-sm placeholder:text-sm placeholder:whitespace-normal"
+              />
+            </div>
           ))}
 
-          <h3 className="text-xl font-bold text-gray-800 col-span-2 mt-4">
+          <h3 className="text-xl font-bold text-gray-800 col-span-1 sm:col-span-2 mt-4">
             Additional Details
           </h3>
+          <div className="w-full">
+            <input
+              name="maxPersons"
+              type="number"
+              placeholder="Max Persons"
+              value={newRoom.additionalDetails.maxPersons}
+              onChange={(e) =>
+                setNewRoom({
+                  ...newRoom,
+                  additionalDetails: {
+                    ...newRoom.additionalDetails,
+                    maxPersons: e.target.value
+                  }
+                })
+              }
+              className="w-full border-gray-300 p-3 shadow-sm placeholder:text-sm placeholder:whitespace-normal"
+            />
+          </div>
+          <div className="w-full">
+            <input
+              name="bed"
+              type="text"
+              placeholder="Bed Type"
+              value={newRoom.additionalDetails.bed}
+              onChange={(e) =>
+                setNewRoom({
+                  ...newRoom,
+                  additionalDetails: {
+                    ...newRoom.additionalDetails,
+                    bed: e.target.value
+                  }
+                })
+              }
+              className="w-full border-gray-300 p-3 shadow-sm placeholder:text-sm placeholder:whitespace-normal"
+            />
+          </div>
 
-          <input
-            name="maxPersons"
-            type="number"
-            placeholder="Max Persons"
-            value={newRoom.additionalDetails.maxPersons}
-            onChange={(e) =>
-              setNewRoom({
-                ...newRoom,
-                additionalDetails: {
-                  ...newRoom.additionalDetails,
-                  maxPersons: e.target.value
-                }
-              })
-            }
-            className="border-gray-300 p-3 shadow-sm w-full"
-          />
-          <input
-            name="bed"
-            type="text"
-            placeholder="Bed Type"
-            value={newRoom.additionalDetails.bed}
-            onChange={(e) =>
-              setNewRoom({
-                ...newRoom,
-                additionalDetails: {
-                  ...newRoom.additionalDetails,
-                  bed: e.target.value
-                }
-              })
-            }
-            className="border-gray-300 p-3 shadow-sm w-full"
-          />
-          <input
-            name="view"
-            type="text"
-            placeholder="View"
-            value={newRoom.additionalDetails.view}
-            onChange={(e) =>
-              setNewRoom({
-                ...newRoom,
-                additionalDetails: {
-                  ...newRoom.additionalDetails,
-                  view: e.target.value
-                }
-              })
-            }
-            className="border-gray-300 p-3 shadow-sm w-full"
-          />
+          <div className="w-full">
+            <input
+              name="view"
+              type="text"
+              placeholder="View"
+              value={newRoom.additionalDetails.view}
+              onChange={(e) =>
+                setNewRoom({
+                  ...newRoom,
+                  additionalDetails: {
+                    ...newRoom.additionalDetails,
+                    view: e.target.value
+                  }
+                })
+              }
+              className="w-full border-gray-300 p-3 shadow-sm placeholder:text-sm placeholder:whitespace-normal"
+            />
+          </div>
         </div>
+
         <button
           onClick={handleCreate}
           className="bg-[#8E7037] text-white px-6 py-2 hover:bg-white hover:text-[#8E7037] border border-[#8E7037] transition-all duration-200"
@@ -277,12 +303,12 @@ export default function AdminRoom() {
           {rooms.map((room) => (
             <div
               key={room._id}
-              className="bg-white p-6 shadow-lg flex justify-between items-center transition-transform hover:scale-105"
+              className="bg-white p-6 shadow-lg flex flex-col md:flex-row gap-4 md:items-center transition-transform hover:scale-105"
             >
               <img
                 src={room.images?.[0]}
                 alt={room.title}
-                className="w-28 h-28 object-cover mr-6"
+                className="w-full md:w-28 h-28 object-cover"
               />
               {editingRoomId === room._id ? (
                 <div className="flex-1 space-y-3">
@@ -349,7 +375,8 @@ export default function AdminRoom() {
                     }
                     className="w-full border-gray-300 p-3 shadow-sm"
                   />
-                  <div className="flex justify-end gap-4 pt-2">
+
+                  <div className="flex flex-col md:flex-row justify-end gap-2 pt-2 w-full">
                     <button
                       onClick={() => handleEditSave(room._id)}
                       className="bg-[#8E7037] text-white px-6 py-2 hover:bg-white hover:border hover:border-[#8E7037] hover:text-[#8E7037]"
@@ -386,7 +413,7 @@ export default function AdminRoom() {
               )}
               <div className="ml-4 space-x-2">
                 {!editingRoomId && (
-                  <div className="ml-4 flex items-center gap-2">
+                  <div className="flex items-center gap-2 mt-4 md:mt-0">
                     <Pencil
                       onClick={() => startEditing(room)}
                       className="text-yellow-600 cursor-pointer hover:scale-110 transition-transform"
