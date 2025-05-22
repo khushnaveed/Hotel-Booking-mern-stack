@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useContext } from "react";
 export default function Register() {
-  const { guest } = useContext(GuestContext); 
+  const { guest } = useContext(GuestContext);
   const baseUrl =
-  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
+    import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -55,12 +55,12 @@ export default function Register() {
         alert("Registration successful!");
         navigate("/login");
       } else {
-        console.log(data)
+        console.log(data);
         const messages = Array.isArray(data.errors)
           ? data.errors.map((err) => err.msg).join("\n")
           : data.message;
 
-      alert(messages || "Something went wrong.");
+        alert(messages || "Something went wrong.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -69,115 +69,125 @@ export default function Register() {
   };
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full min-h-screen overflow-y-auto ">
       <img
         src="/login.jpg"
         alt="background"
-        className="w-full h-full object-cover"
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
       />
 
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/3 p-8 max-w-xl w-full text-center bg-[rgba(17,16,16,0.79)] overflow-auto max-h-screen">
-        <h1 className="text-4xl font-extrabold mb-4 text-white">
-          REGISTER FORM
-        </h1>
-        <p className="mb-6 text-white">
-          Register now to begin your stay at the Royal Grand.
-        </p>
-
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-4 text-white"
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 mt-8">
+        <div
+          className="
+    w-[95%]
+    max-w-xs sm:max-w-xl
+    text-center bg-[rgba(17,16,16,0.79)]
+    sm:pt-8 p-2 sm:p-8
+    overflow-auto max-h-[80vh]
+    mt-25 mb-6
+  "
         >
-          <input
-            name="firstName"
-            placeholder="First Name *"
-            value={formData.firstName}
-            onChange={handleChange}
-            className="border border-white p-2 bg-transparent placeholder-white"
-          />
-          <input
-            name="lastName"
-            placeholder="Last Name *"
-            value={formData.lastName}
-            onChange={handleChange}
-            className="border border-white p-2 bg-transparent placeholder-white"
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email *"
-              value={formData.email}
-              onChange={handleChange}
-              className="border border-white p-2 bg-transparent placeholder-white"
-            />
-            <input
-              name="phonenumber"
-              placeholder="Phone Number (e.g. +491234567890) *"
-              value={formData.phonenumber}
-              onChange={handleChange}
-              className="border border-white p-2 bg-transparent placeholder-white"
-            />
-          </div>
-
-          <input
-            name="address"
-            placeholder="Address *"
-            value={formData.address}
-            onChange={handleChange}
-            className="border border-white p-2 bg-transparent placeholder-white"
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <input
-              name="city"
-              placeholder="City *"
-              value={formData.city}
-              onChange={handleChange}
-              className="border border-white p-2 bg-transparent placeholder-white"
-            />
-            <input
-              name="zipcode"
-              placeholder="Zip Code *"
-              value={formData.zipcode}
-              onChange={handleChange}
-              className="border border-white p-2 bg-transparent placeholder-white"
-            />
-            <input
-              name="country"
-              placeholder="Country *"
-              value={formData.country}
-              onChange={handleChange}
-              className="border border-white p-2 bg-transparent placeholder-white"
-            />
-          </div>
-          <input
-            type="password"
-            name="password"
-            placeholder="Password *"
-            value={formData.password}
-            onChange={handleChange}
-            className="border border-white p-2 bg-transparent placeholder-white"
-          />
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password *"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className="border border-white p-2 bg-transparent placeholder-white"
-          />
-
-          <button
-            type="submit"
-            className="text-white py-2 border border-white hover:bg-[#8E7037] hover:text-white transition-colors"
+          <h1 className="text-4xl font-extrabold mb-4 text-white">
+            REGISTER FORM
+          </h1>
+          <p className="mb-6 text-white">
+            Register now to begin your stay at the Royal Grand.
+          </p>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4 text-white"
           >
-            REGISTER
-          </button>
-          <a href="/login">
-            <p className="text-blue-500">Already have an Account </p>
-          </a>
-        </form>
+            <input
+              name="firstName"
+              placeholder="First Name *"
+              value={formData.firstName}
+              onChange={handleChange}
+              className="border border-white p-2 bg-transparent placeholder-white"
+            />
+            <input
+              name="lastName"
+              placeholder="Last Name *"
+              value={formData.lastName}
+              onChange={handleChange}
+              className="border border-white p-2 bg-transparent placeholder-white"
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email *"
+                value={formData.email}
+                onChange={handleChange}
+                className="border border-white p-2 bg-transparent placeholder-white"
+              />
+              <input
+                name="phonenumber"
+                placeholder="Phone Number (e.g. +491234567890) *"
+                value={formData.phonenumber}
+                onChange={handleChange}
+                className="border border-white p-2 bg-transparent placeholder-white"
+              />
+            </div>
+
+            <input
+              name="address"
+              placeholder="Address *"
+              value={formData.address}
+              onChange={handleChange}
+              className="border border-white p-2 bg-transparent placeholder-white"
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <input
+                name="city"
+                placeholder="City *"
+                value={formData.city}
+                onChange={handleChange}
+                className="border border-white p-2 bg-transparent placeholder-white"
+              />
+              <input
+                name="zipcode"
+                placeholder="Zip Code *"
+                value={formData.zipcode}
+                onChange={handleChange}
+                className="border border-white p-2 bg-transparent placeholder-white"
+              />
+              <input
+                name="country"
+                placeholder="Country *"
+                value={formData.country}
+                onChange={handleChange}
+                className="border border-white p-2 bg-transparent placeholder-white"
+              />
+            </div>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password *"
+              value={formData.password}
+              onChange={handleChange}
+              className="border border-white p-2 bg-transparent placeholder-white"
+            />
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password *"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="border border-white p-2 bg-transparent placeholder-white"
+            />
+
+            <button
+              type="submit"
+              className="text-white py-2 border border-white hover:bg-[#8E7037] hover:text-white transition-colors"
+            >
+              REGISTER
+            </button>
+            <a href="/login">
+              <p className="text-blue-500">Already have an Account </p>
+            </a>
+          </form>{" "}
+        </div>
       </div>
     </div>
   );
