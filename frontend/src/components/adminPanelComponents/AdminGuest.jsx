@@ -6,6 +6,8 @@ const AdminGuest = () => {
   const [guests, setGuests] = useState([]);
   const [editingGuestId, setEditingGuestId] = useState(null);
   const [editedGuest, setEditedGuest] = useState({});
+  const baseUrl =
+  import.meta.env.MODE === "development" ? "http://localhost:5005" : "";
 
   useEffect(() => {
     fetchGuests();
@@ -14,7 +16,7 @@ const AdminGuest = () => {
   const fetchGuests = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5005/guest", {
+      const res = await axios.get(baseUrl + "/guest", {
         headers: { token },
       });
       setGuests(res.data.data);
@@ -26,7 +28,7 @@ const AdminGuest = () => {
   const deleteGuest = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5005/guest/${id}`, {
+      await axios.delete(baseUrl + `/guest/${id}`, {
         headers: { token },
       });
       fetchGuests();
@@ -48,7 +50,7 @@ const AdminGuest = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5005/guest/${editingGuestId}`,
+        baseUrl + `/guest/${editingGuestId}`,
         editedGuest,
         { headers: { token } }
       );
@@ -61,7 +63,6 @@ const AdminGuest = () => {
 
   return (
     <div className="p-4 bg-gray-50 min-h-screen">
-      {/* Total Guests */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
           <p className="text-sm font-medium text-gray-500">Total Guests</p>
@@ -71,10 +72,8 @@ const AdminGuest = () => {
         </div>
       </div>
 
-      {/* Table with horizontal scroll */}
       <div className="overflow-x-auto">
         <div className="min-w-[1000px]">
-          {/* Table Header */}
           <div className="grid grid-cols-10 gap-2 bg-[#f8efe0] text-[#8E7037] font-semibold px-4 py-3  mb-2 text-sm">
             <span>First Name</span>
             <span>Last Name</span>
@@ -87,7 +86,6 @@ const AdminGuest = () => {
             <span className="col-span-2 text-center">Actions</span>
           </div>
 
-          {/* Guest Rows */}
           {guests.map((guest) => (
             <div
               key={guest._id}

@@ -118,7 +118,7 @@ export default function AdminEvent() {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#8E7037]">
           <p className="text-sm font-medium text-gray-500">Total Events</p>
           <p className="mt-1 text-3xl font-semibold text-gray-900">
@@ -200,11 +200,11 @@ export default function AdminEvent() {
           {events.map((event) => (
             <div
               key={event._id}
-              className="bg-white p-6 shadow-lg flex justify-between items-center transition-transform hover:scale-105">
+              className="bg-white p-4  md:p-6 shadow-lg flex flex-col md:flex-row gap-4 transition-transform hover:scale-[1.02]">
               <img
                 src={event.image}
                 alt={event.title?.en || "Event Image"}
-                className="w-40 h-40 object-cover mr-3"
+                className="w-full md:w-40 h-40 object-cover "
               />
               {editingEventId === event._id ? (
                 <div className="flex-1 space-y-3">
@@ -266,8 +266,8 @@ export default function AdminEvent() {
                   </div>
                 </div>
               ) : (
-                <div className="flex-1 text-gray-800">
-                  <h3 className="text-xl font-semibold">
+                <div className="flex-1 text-gray-800 break-words">
+                  <h3 className="text-lg md:text-xl font-semibold">
                     {event.title?.en || "No Title"}
                   </h3>
 
@@ -298,7 +298,7 @@ export default function AdminEvent() {
                   )}
                 </div>
               )}
-              <div className="flex gap-4 col-span-2 justify-center">
+              <div className="flex gap-4 justify-start mt-4 md:mt-0">
                 {!editingEventId && (
                   <>
                     <Pencil

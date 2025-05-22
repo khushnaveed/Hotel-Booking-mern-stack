@@ -70,7 +70,7 @@ function EventDetails() {
       <HeroSection
         title="Events"
         subtitle="Experience Unforgettable Moments."
-        backgroundImage="/src/assets/heroImage.jpg"
+        backgroundImage="/heroImage.jpg"
       />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
