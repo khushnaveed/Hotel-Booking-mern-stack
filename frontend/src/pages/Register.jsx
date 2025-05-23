@@ -3,6 +3,7 @@ import { GuestContext } from "../context/GuestContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 export default function Register() {
   const { guest } = useContext(GuestContext);
   const baseUrl =
@@ -183,9 +184,9 @@ export default function Register() {
             >
               REGISTER
             </button>
-            <a href="/login">
+            <Link to="/login">
               <p className="text-blue-500">Already have an Account </p>
-            </a>
+            </Link>
           </form>{" "}
         </div>
       </div>
